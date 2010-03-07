@@ -1,0 +1,30 @@
+<meta>
+	<info author="vG MTA Scripting Team" type="script" description="Gate System"/>
+	
+	<script src="pd_garage_gate1.lua" type="server"/>
+	<script src="pd_garage_gate2.lua" type="server"/>
+	<script src="pd_impound.lua" type="server"/>
+	<script src="pd_interior.lua"/>
+	<script src="pd_interior2.lua"/>
+	
+	<script src="ES Academy.lua" type="server"/>
+	
+	<script src="tow_door1.lua" type="server"/>
+	<script src="tow_door2.lua" type="server"/>
+	<script src="tow_door3.lua" type="server"/>
+	
+	<script src="ein_gate1.lua" type="server"/>
+	<script src="ein_gate2.lua" type="server"/>
+	
+	<script src="DanielsMansion.lua" type="server"/>
+	<script src="airport.lua" type="server"/>
+	
+	<script src="fd_interior.lua"/>
+	
+	<script src="Prison Ext.lua"/>
+	<script src="Prison Int Rec.lua"/>
+	<script src="Prison Int Cells.lua"/>
+	
+	<script src="MountIsland.lua" type="server"/>
+	<script src="c_doors.lua" type="client"/>
+</meta>
