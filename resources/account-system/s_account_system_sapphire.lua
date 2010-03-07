@@ -658,6 +658,8 @@ function loginPlayer(username, password, operatingsystem)
 			local blur = tonumber(data["blur"])
 			local adminreports = tonumber(data["adminreports"])
 			local pmblocked = tonumber(data["pmblocked"])
+			local adblocked = tonumber(data["adblocked"])
+			local newsblocked = tonumber(data["newsblocked"])
 			local warns = tonumber(data["warns"])
 			local chatbubbles = tonumber(data["chatbubbles"])
 			local appstate = tonumber(data["appstate"])
@@ -681,6 +683,21 @@ function loginPlayer(username, password, operatingsystem)
 				hiddenadmin = 0
 			end
 			
+			if donator > 0 then -- check if they're a donator
+				setElementData(source, "pmblocked", pmblocked, false)
+				setElementData(source, "tognews", newsblocked, false)
+				if (adblocked == 1) then
+					setElementData(source, "disableAds", true, false)
+				else
+					setElementData(source, "disableAds", false, false)
+				end
+			else -- no donator, set default things
+				setElementData(source, "pmblocked", 0, false)
+				setElementData(source, "disableAds", false, false)
+				setElementData(source, "tognews", 0, false)
+			end
+		
+			
 			setElementData(source, "donatorlevel", tonumber(donator))
 			setElementData(source, "adminlevel", tonumber(admin))
 			setElementData(source, "hiddenadmin", tonumber(hiddenadmin))
@@ -691,6 +708,12 @@ function loginPlayer(username, password, operatingsystem)
 				setPlayerBlurLevel(source, 0)
 			else
 				setPlayerBlurLevel(source, 38)
+			end
+			
+			if (disableads == 1) then
+			
+			else
+			
 			end
 			
 			if (appstate==0) then
@@ -719,7 +742,6 @@ function loginPlayer(username, password, operatingsystem)
 				setElementData(source, "globalooc", tonumber(globalooc), false)
 				setElementData(source, "muted", tonumber(muted))
 				setElementData(source, "adminreports", adminreports, false)
-				setElementData(source, "pmblocked", pmblocked, false)
 				setElementData(source, "warns", warns, false)
 				setElementData(source, "chatbubbles", chatbubbles, false)
 				
