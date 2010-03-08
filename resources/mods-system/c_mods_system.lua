@@ -27,12 +27,6 @@ function applyMods()
 	----------------
 	-- Gang Tags --
 	----------------
-	tag1 = engineLoadTXD("tags/tags_lafront.txd") -- vG logo
-	engineImportTXD(tag1, 1524)
-	
-	tag2 = engineLoadTXD("tags/tags_lakilo.txd") -- MTA 
-	engineImportTXD(tag2, 1525)
-
 	tag3 = engineLoadTXD ( "tags/tags_larifa.txd" ) -- Crips
 	engineImportTXD ( tag3, 1526 )
 
