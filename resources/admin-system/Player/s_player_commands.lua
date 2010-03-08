@@ -2536,3 +2536,34 @@ function divorce(thePlayer, commandName, targetPlayer)
 	end
 end
 addCommandHandler("divorce", divorce)
+
+function vehicleLimit(admin, command, player, limit)
+	if exports.global:isPlayerLeadAdmin(admin) then
+		if (not player and not limit) then
+			outputChatBox("SYNTAX: /" .. command .. " [Player] [Limit]", admin, 255, 194, 14)
+		else
+			local tplayer, targetPlayerName = exports.global:findPlayerByPartialNick(admin, player)
+			if (tplayer) then			
+				local query = mysql:query_fetch_assoc("SELECT maxvehicles FROM characters WHERE id = " .. getElementData(tplayer, "dbid"))
+				if (query) then
+					local newl = tonumber(limit)
+					if (newl) then
+						if (newl>0) then
+							mysql:query_free("UPDATE characters SET maxvehicles = " .. newl .. " WHERE id = " .. getElementData(tplayer, "dbid"))
+
+							setElementData(tplayer, "maxvehicles", newl)
+							
+							outputChatBox("You have set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit to " .. newl .. ".", admin, 255, 194, 14)
+							outputChatBox("Admin " .. getPlayerName(admin):gsub("_"," ") .. " has set your vehicle limit to " .. newl .. ".", tplayer, 255, 194, 14)
+						else
+							outputChatBox("You can not set a level below 0", admin, 255, 194, 14)
+						end
+					end
+				end
+			else
+				outputChatBox("Something went wrong with picking the player.", admin)
+			end			
+		end
+	end
+end
+addCommandHandler("setvehlimit", vehicleLimit)

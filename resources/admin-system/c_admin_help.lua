@@ -121,6 +121,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/showfactions", "/showfactions", "shows a list with factions" },
 
 					{ "/resetbackup", "/resetbackup", "Resets PD's backup system" },
+					{ "/resetassist", "/resetassist", "Resets ES's assist system" },
 					{ "/resettowbackup", "/resettowbackup", "Resets towing backup system" },
 					{ "/aremovespikes", "/aremovespikes", "Removes all the PD spikes" },
 					{ "/clearnearbytag", "/clearnearbytag", "Clears nearby tag" },
@@ -203,7 +204,8 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/givemoney", "/givemoney [player] [money]", "gives the player money in addition to his current cash" },
 					{ "/delveh", "/delveh [id]", "removes the vehicle with that id" },
 					{ "/delthisveh", "/delthisveh", "removes the vehicle you currently occupy" },
-					{ "/resetcharacter", "/resetcharacter [Firstname_Lastname]", "fully resets the character" }
+					{ "/resetcharacter", "/resetcharacter [Firstname_Lastname]", "fully resets the character" },
+					{ "/setvehlimit", "/setvehlimit [player] [limit]", "Set the players vehicle limit." }
 				},
 				-- level 5: Head Admins
 				{

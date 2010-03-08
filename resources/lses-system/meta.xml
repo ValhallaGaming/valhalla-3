@@ -8,4 +8,9 @@
 	<script src="c_bleedout.lua" type="client"/>
 
 	<script src="s_injuries.lua" type="server"/>
+	
+	<!--assist beacon-->
+	<script src="s_assist.lua" type="server"/>
+	<script src="c_assist.lua" type="client"/>
+	<script src="c_blips.lua" type="client"/>	
 </meta>

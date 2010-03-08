@@ -66,6 +66,7 @@ function commandsHelp()
 					{ "ES", "/heal [player]", "Heals a player from all injuries and gives them full health.", "/heal Joe" },
 					{ "ES", "/examine [player]", "Shows the player's injuries.", "/examine Harry" },
 					{ "ES", "/firefighter", "Goes on FD Duty", "/firefighter" },
+					{ "ES", "/assist", "Puts an assist beacon on your char showing other members where you are.", "/assist"},
 					{ "GOV", "/setbudget [faction] [amount]", "Gives a Government faction some cash into their faction bank.", "/setbudget 1 2000000" },
 					{ "GOV", "/settax [percent]", "Sets the General Taxes, e.g. for buying items.", "/settax 12" },
 					{ "GOV", "/setincometax [percent]", "Sets the income tax that is deducted from the wage each payday.", "/setincometax 10" },
