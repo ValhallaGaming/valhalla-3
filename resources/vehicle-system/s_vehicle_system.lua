@@ -52,7 +52,7 @@ function getCharacterName( id )
 				end
 			end
 		else
-			charCache[ id ] = "Civilian"
+			charCache[ id ] = false
 		end
 	end
 	return charCache[ id ]
