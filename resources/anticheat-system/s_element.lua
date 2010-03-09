@@ -1,9 +1,6 @@
--- things to protect from clients:
-mysql = exports.mysql
-
 addEventHandler("onResourceStart", getResourceRootElement(), 
 	function ()
-		exports.global:sendMessageToAdmins("[ANTICHEAT] Project Codename 'no-homo' loaded.")
+		exports.global:sendMessageToAdmins("[STATUS] Project Codename 'no-fucktards' loaded.")
 	end
 );
 
@@ -16,17 +13,19 @@ addEventHandler("onElementDataChange", getRootElement(),
 				-- get real source here
 				-- it aint source!
 				local sourceClient = source
-				outputDebugString("GUILTY: " .. tostring(sourceClient))
 				if (sourceClient) then
-					-- revert data
-					--changeProtectedElementDataEx(source, index, oldValue, true)
 					local newData = getElementData(source, index)
 					-- Get rid of the player
-					local msg = "[AdmWarn] " .. getPlayerName(sourceClient) .. " sent illegal data (index: "..index .." newvalue:".. tostring(newData) .. " oldvalue:".. tostring(oldValue)  ..")"
+					local msg = "[AdmWarn] " .. getPlayerIP(sourceClient) .. "/" .. getPlayerName(sourceClient) .. " sent illegal data (index: "..index .." newvalue:".. tostring(newData) .. " oldvalue:".. tostring(oldValue)  ..")"
 					exports.global:sendMessageToAdmins(msg)
-					exports.logs:logMessage(msg, 4)
+					exports.logs:logMessage(msg, 29)
+					
 					-- uncomment this when it works
 					--local ban = banPlayer(sourceClient, true, false, false, getRootElement(), "Hacked Client.", 0)
+					
+					-- revert data
+					--changeProtectedElementDataEx(source, index, oldValue, true)
+					cancelEvent()
 				end
 			end
 		end
@@ -59,11 +58,15 @@ function changeProtectedElementData(thePlayer, index, newvalue)
 end
 
 function changeProtectedElementDataEx(thePlayer, index, newvalue, sync)
-	allowElementData(thePlayer, index)
-	if (sync) then
-		setElementData(thePlayer, index, newvalue, sync)
-	else
-		setElementData(thePlayer, index, newvalue)
+	if (thePlayer) and (index) and (newvalue) then
+		allowElementData(thePlayer, index)
+		if (sync) then
+			setElementData(thePlayer, index, newvalue, sync)
+		else
+			setElementData(thePlayer, index, newvalue)
+		end
+		protectElementData(thePlayer, index)
+		return true
 	end
-	protectElementData(thePlayer, index)
+	return false
 end

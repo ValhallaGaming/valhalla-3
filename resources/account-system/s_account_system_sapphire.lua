@@ -360,56 +360,24 @@ function spawnCharacter(charname, version)
 		end
 		-- END FACTIONS
 		
-		--[[ Do we really need this? Takes a few secs + query
 		-- number of friends etc
 		local playercount = getPlayerCount()
 		local maxplayers = getMaxPlayers()
 		local percent = math.ceil((playercount/maxplayers)*100)
 		
-		local friendsonline = 0
 		local friends = mysql:query("SELECT friend FROM friends WHERE id = " .. getElementData( source, "gameaccountid" ) )
 		if friends then
 			local ids = {}
 			while true do
 				local row = mysql:fetch_assoc(friends)
+				if not row then break end
 				ids[ tonumber( row["friend"] ) ] = true
-			end
-			mysql:free_result( friends )
-			
-			for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
-				if isElement( value ) and ids[ getElementData( value, "gameaccountid" ) ] then
-					friendsonline = friendsonline + 1
-				end
 			end
 			
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "friends", ids, false)
 		end
-		
-		if friendsonline == 1 then
-			friendsonline = "1 Friend"
-		else
-			friendsonline = friendsonline .. " Friends"
-		end
-		
-		local factiononline = 0
-		if (isElement(theTeam)) then
-			factiononline = #getPlayersInTeam(theTeam)
-		end
-		
-		if factiononline == 1 then
-			factiononline = "1 Faction Member"
-		else
-			factiononline = factiononline .. " Faction Members"
-		end
-		
-		
-		if (factionName~="Citizen") then
-			outputChatBox("Players Online: " .. playercount .. "/" .. maxplayers .. " (" .. percent .. "%) - " .. factiononline .. " - " .. friendsonline .. ".", source, 255, 194, 14)
-		else
-			outputChatBox("Players Online: " .. playercount .. "/" .. maxplayers .. " (" .. percent .. "%) - " .. friendsonline .. ".", source, 255, 194, 14)
-		end
-		]]
-		
+		mysql:free_result( friends )
+
 		-- LAST LOGIN
 		mysql:query_free("UPDATE characters SET lastlogin=NOW() WHERE id='" .. id .. "'")
 			
@@ -621,7 +589,8 @@ end
 
 function loginPlayer(username, password, operatingsystem)
 	local safeusername = mysql:escape_string(username)
-	local result = mysql:query("SELECT * FROM accounts WHERE username='" .. safeusername .. "' AND password='" .. password .. "'")
+	local safepassword = mysql:escape_string(password)
+	local result = mysql:query("SELECT * FROM accounts WHERE username='" .. safeusername .. "' AND password='" .. safepassword .. "'")
 	
 	if (mysql:num_rows(result)>0) then
 		local data = mysql:fetch_assoc(result)
@@ -931,7 +900,8 @@ addEventHandler("sendAccounts", getRootElement(), sendAccounts)
 
 function storeEmail(email)
 	local accountid = getElementData(source, "gameaccountid")
-	mysql:query_free("UPDATE accounts SET email = '" .. email .. "' WHERE id = '" .. accountid .. "'")
+	local safeemail = mysql:escape_string(email)
+	mysql:query_free("UPDATE accounts SET email = '" .. safeemail .. "' WHERE id = '" .. accountid .. "'")
 end
 addEvent("storeEmail", true)
 addEventHandler("storeEmail", getRootElement(), storeEmail)

@@ -26,7 +26,8 @@ enumTypes = {
 	"stevie",
 	"connect",
 	"connectdangerous",
-	"takeguns"
+	"takeguns",
+	"elementdata"
 }
 
 
@@ -37,7 +38,7 @@ function logMessage(message, type)
 
 	if (partialname == nil) then return end
 
-	if partialname == "admincmds" or partialname == "moneyspawn" or partialname == "weaponspawn" or partialname == "sqlqueries" or partialname == "stevie" or partialname == "connect" or partialname == "connectdangerous" then
+	if partialname == "elementdata" or partialname == "admincmds" or partialname == "moneyspawn" or partialname == "weaponspawn" or partialname == "sqlqueries" or partialname == "stevie" or partialname == "connect" or partialname == "connectdangerous" then
 		filename = "/hiddenlogs/" .. partialname .. ".log"
 	else
 		filename = "/logs/" .. partialname .. ".log"

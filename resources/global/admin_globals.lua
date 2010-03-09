@@ -45,6 +45,7 @@ function getPlayerAdminTitle(thePlayer)
 	if (hiddenAdmin==1) then
 		text = text .. " (Hidden)"
 	end
+
 	return text
 end
 
