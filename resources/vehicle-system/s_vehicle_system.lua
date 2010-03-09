@@ -143,13 +143,13 @@ function createPermVehicle(thePlayer, commandName, ...)
 				if not (veh) then
 					outputChatBox("Invalid Vehicle ID.", thePlayer, 255, 0, 0)
 				else
-					setElementData(veh, "fuel", 100)
-					setElementData(veh, "Impounded", 0)
-					setElementData(veh, "handbrake", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
 						
 					local rx, ry, rz = getVehicleRotation(veh)
 					setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-					setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 					
 					setVehicleLocked(veh, true)
 							
@@ -175,19 +175,19 @@ function createPermVehicle(thePlayer, commandName, ...)
 							exports.global:giveItem(targetPlayer, 3, tonumber(insertid))
 						end
 						
-						setElementData(veh, "dbid", tonumber(insertid))
-						setElementData(veh, "fuel", 100)
-						setElementData(veh, "engine", 0, false)
-						setElementData(veh, "oldx", x, false)
-						setElementData(veh, "oldy", y, false)
-						setElementData(veh, "oldz", z, false)
-						setElementData(veh, "faction", factionVehicle)
-						setElementData(veh, "owner", factionVehicle == -1 and dbid or -1, false)
-						setElementData(veh, "job", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", tonumber(insertid))
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", x, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", y, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", z, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", factionVehicle)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", factionVehicle == -1 and dbid or -1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
 						
-						setElementData(veh, "dimension", dimension, false)
-						setElementData(veh, "interior", interior, false)
-						setElementData(veh, "handbrake", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
 						
 						setElementDimension(veh, dimension)
 						setElementInterior(veh, interior)
@@ -263,8 +263,8 @@ function createCivilianPermVehicle(thePlayer, commandName, ...)
 			if not (veh) then
 				outputChatBox("Invalid Vehicle ID.", thePlayer, 255, 0, 0)
 			else
-				setElementData(veh, "fuel", 100)
-				setElementData(veh, "handbrake", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
 					
 				if (job>0) then
 					toggleVehicleRespawn(veh, true)
@@ -274,7 +274,7 @@ function createCivilianPermVehicle(thePlayer, commandName, ...)
 					
 				local rx, ry, rz = getVehicleRotation(veh)
 				setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-				setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 				
 				setVehicleLocked(veh, false)
 					
@@ -287,9 +287,9 @@ function createCivilianPermVehicle(thePlayer, commandName, ...)
 				local dimension = getElementDimension(thePlayer)
 				local interior = getElementInterior(thePlayer)
 				
-				setElementData(veh, "dimension", dimension, false)
-				setElementData(veh, "interior", interior, false)
-				setElementData(veh, "job", job, job ~= 0)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", job, job ~= 0)
 				
 				-- Set the vehicle armored if it is armored
 				if (armoredCars[id]) then
@@ -301,16 +301,16 @@ function createCivilianPermVehicle(thePlayer, commandName, ...)
 				if (insertid) then
 					exports.pool:allocateElement(veh, insertid)
 					
-					setElementData(veh, "dbid", insertid)
-					setElementData(veh, "fuel", 100)
-					setElementData(veh, "engine", 0, false)
-					setElementData(veh, "oldx", x, false)
-					setElementData(veh, "oldy", y, false)
-					setElementData(veh, "oldz", z, false)
-					setElementData(veh, "faction", -1)
-					setElementData(veh, "owner", -2, false)
-					setElementData(veh, "job", job, job ~= 0)
-					setElementData(veh, "handbrake", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", insertid)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", x, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", y, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", z, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", -1)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", -2, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", job, job ~= 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
 					outputChatBox(getVehicleName(veh) .. " (Civilian) spawned with ID #" .. insertid .. ".", thePlayer, 255, 194, 14)
 					
 					exports.logs:logMessage("[MAKECIVVEH] " .. getPlayerName( thePlayer ) .. " created car #" .. insertid .. " (" .. getVehicleNameFromModel( id ) .. ")", 9)
@@ -329,7 +329,7 @@ function loadAllVehicles(res)
 	-- Reset player in vehicle states
 	local players = exports.pool:getPoolElementsByType("player")
 	for key, value in ipairs(players) do
-		setElementData(value, "realinvehicle", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(value, "realinvehicle", 0, false)
 	end
 	
 
@@ -375,7 +375,7 @@ function loadOneVehicle(row)
 			-- Spawn the vehicle
 			local veh = createVehicle(row.model, row.currx, row.curry, row.currz, row.currrx, row.currry, row.currrz, row.plate)
 			if veh then
-				setElementData(veh, "dbid", row.id)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", row.id)
 				exports.pool:allocateElement(veh, row.id)
 				
 				-- color
@@ -421,24 +421,24 @@ function loadOneVehicle(row)
 					toggleVehicleRespawn(veh, true)
 					setVehicleRespawnDelay(veh, 60000)
 					setVehicleIdleRespawnDelay(veh, 180000)
-					setElementData(veh, "job", row.job)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", row.job)
 				else
-					setElementData(veh, "job", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
 				end
 				
 				setVehicleRespawnPosition(veh, row.x, row.y, row.z, row.rotx, row.roty, row.rotz)
-				setElementData(veh, "respawnposition", {row.x, row.y, row.z, row.rotx, row.roty, row.rotz}, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {row.x, row.y, row.z, row.rotx, row.roty, row.rotz}, false)
 				
 				-- element data
-				setElementData(veh, "fuel", row.fuel, false)
-				setElementData(veh, "oldx", row.currx, false)
-				setElementData(veh, "oldy", row.curry, false)
-				setElementData(veh, "oldz", row.currz, false)
-				setElementData(veh, "faction", row.faction)
-				setElementData(veh, "owner", row.owner)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", row.fuel, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", row.currx, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", row.curry, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", row.currz, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", row.faction)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", row.owner)
 				
 				-- impound shizzle
-				setElementData(veh, "Impounded", tonumber(row.Impounded))
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", tonumber(row.Impounded))
 				if tonumber(row.Impounded) > 0 then
 					setVehicleDamageProof(veh, true)
 				end
@@ -447,8 +447,8 @@ function loadOneVehicle(row)
 				setElementDimension(veh, row.currdimension)
 				setElementInterior(veh, row.currinterior)
 				
-				setElementData(veh, "dimension", row.dimension, false)
-				setElementData(veh, "interior", row.interior, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", row.dimension, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", row.interior, false)
 				
 				-- lights
 				setVehicleOverrideLights(veh, row.lights == 0 and 1 or row.lights )
@@ -458,13 +458,13 @@ function loadOneVehicle(row)
 					setElementHealth(veh, 300)
 					setVehicleDamageProof(veh, true)
 					setVehicleEngineState(veh, false)
-					setElementData(veh, "engine", 0, false)
-					setElementData(veh, "enginebroke", 1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 1, false)
 				else
 					setElementHealth(veh, row.hp)
 					setVehicleEngineState(veh, row.engine == 1)
-					setElementData(veh, "engine", row.engine, false)
-			setElementData(veh, "enginebroke", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", row.engine, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
 		end
 		setVehicleFuelTankExplodable(veh, false)
 		
@@ -498,7 +498,7 @@ function vehicleRespawn(exploded)
 		setVehicleRespawnDelay(source, 60000)
 		setVehicleIdleRespawnDelay(source, 180000)
 		setVehicleFrozen(source, true)
-		setElementData(source, "handbrake", 1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "handbrake", 1, false)
 	end
 	
 	-- Set the vehicle armored if it is armored
@@ -513,19 +513,19 @@ function vehicleRespawn(exploded)
 	setVehicleEngineState(source, false)
 	setVehicleLandingGearDown(source, true)
 
-	setElementData(source, "enginebroke", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "enginebroke", 0, false)
 	
-	setElementData(source, "dbid", id)
-	setElementData(source, "fuel", 100)
-	setElementData(source, "engine", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid", id)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "fuel", 100)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "engine", 0, false)
 	
 	local x, y, z = getElementPosition(source)
-	setElementData(source, "oldx", x, false)
-	setElementData(source, "oldy", y, false)
-	setElementData(source, "oldz", z, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "oldx", x, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "oldy", y, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "oldz", z, false)
 	
-	setElementData(source, "faction", faction)
-	setElementData(source, "owner", owner, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "faction", faction)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "owner", owner, false)
 	
 	setVehicleOverrideLights(source, 1)
 	setVehicleFrozen(source, false)
@@ -546,7 +546,7 @@ function vehicleRespawn(exploded)
 	if owner == -2 then
 		setVehicleLocked(source, false)
 		setVehicleFrozen(source, true)
-		setElementData(source, "handbrake", 1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "handbrake", 1, false)
 	end
 end
 addEventHandler("onVehicleRespawn", getRootElement(), vehicleRespawn)
@@ -567,7 +567,7 @@ function setEngineStatusOnEnter(thePlayer, seat)
 			toggleControl(thePlayer, 'brake_reverse', true)
 			
 			setVehicleEngineState(source, true)
-			setElementData(source, "engine", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "engine", 1, false)
 		end
 	end
 end
@@ -578,7 +578,7 @@ function vehicleExit(thePlayer, seat)
 		toggleControl(thePlayer, 'brake_reverse', true)
 		-- For oldcar
 		local vehid = getElementData(source, "dbid")
-		setElementData(thePlayer, "lastvehid", vehid, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "lastvehid", vehid, false)
 	end
 end
 addEventHandler("onVehicleExit", getRootElement(), vehicleExit)
@@ -616,7 +616,7 @@ function damageTyres()
 	
 	if (tyretimer~=1) then
 		if (tyre1==1) or (tyre2==1) or (tyre3==1) or (tyre4==1) then
-			setElementData(source, "tyretimer", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "tyretimer", 1, false)
 			local randTime = math.random(5, 15)
 			randTime = randTime * 1000
 			setTimer(destroyTyre, randTime, 1, source)
@@ -679,7 +679,7 @@ function toggleEngine(source, key, keystate)
 						toggleControl(source, 'brake_reverse', true)
 						
 						setVehicleEngineState(veh, true)
-						setElementData(veh, "engine", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 1, false)
 					elseif fuel < 1 then
 						exports.global:sendLocalMeAction(source, "attempts to turn the engine on and fails.")
 						outputChatBox("This vehicle has no fuel.", source)
@@ -688,7 +688,7 @@ function toggleEngine(source, key, keystate)
 					toggleControl(source, 'brake_reverse', false)
 					
 					setVehicleEngineState(veh, false)
-					setElementData(veh, "engine", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
 				end
 			end
 		end
@@ -749,10 +749,10 @@ function toggleLights(source, key, keystate)
 			if (seat==0) then
 				if (lights~=2) then
 					setVehicleOverrideLights(veh, 2)
-					setElementData(veh, "lights", 1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "lights", 1, false)
 				elseif (lights~=1) then
 					setVehicleOverrideLights(veh, 1)
-					setElementData(veh, "lights", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "lights", 0, false)
 				end
 			end
 		end
@@ -776,11 +776,11 @@ addEventHandler("onVehicleStartEnter", getRootElement(), checkBikeLock)
 
 function setRealInVehicle(thePlayer)
 	if isVehicleLocked(source) then
-		setElementData(thePlayer, "realinvehicle", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 		removePedFromVehicle(thePlayer)
 		setVehicleLocked(source, true)
 	else
-		setElementData(thePlayer, "realinvehicle", 1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 1, false)
 		
 		-- 0000464: Car owner message. 
 		local owner = getElementData(source, "owner")
@@ -809,7 +809,7 @@ function setRealNotInVehicle(thePlayer)
 	
 	if not (locked) then
 		if (thePlayer) then
-			setElementData(thePlayer, "realinvehicle", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 		end
 	end
 end
@@ -833,13 +833,13 @@ function removeFromFactionVehicle(thePlayer)
 		if (faction~=vfaction) and (seat==0) then
 			if (CanTowDriverEnter) then
 				outputChatBox("(( This " .. getVehicleName(source) .. " belongs to '" .. factionName .. "'. ))", thePlayer, 255, 194, 14)
-				setElementData(source, "enginebroke", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "enginebroke", 1, false)
 				setVehicleDamageProof(source, true)
 				setVehicleEngineState(source, false)
 				return
 			end
 			outputChatBox("You are not a member of '" .. factionName .. "'.", thePlayer, 255, 194, 14)
-			setElementData(thePlayer, "realinvehicle", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 			removePedFromVehicle(thePlayer)
 			local x, y, z = getElementPosition(thePlayer)
 			setElementPosition(thePlayer, x, y, z)
@@ -849,7 +849,7 @@ function removeFromFactionVehicle(thePlayer)
 	end
 	local Impounded = getElementData(source,"Impounded")
 	if (Impounded and Impounded > 0) then
-		setElementData(source, "enginebroke", 1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "enginebroke", 1, false)
 		setVehicleDamageProof(source, true)
 		setVehicleEngineState(source, false)
 	end
@@ -869,7 +869,7 @@ function removeFromFactionVehicle(thePlayer)
 			elseif (vjob==3) then
 				outputChatBox("You are not a bus driver. Visit city hall to obtain this job.", thePlayer, 255, 0, 0)
 			end
-			setElementData(thePlayer, "realinvehicle", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 			removePedFromVehicle(thePlayer)
 			local x, y, z = getElementPosition(thePlayer)
 			setElementPosition(thePlayer, x, y, z)
@@ -894,8 +894,8 @@ function doBreakdown()
 			setElementHealth(source, 300)
 			setVehicleDamageProof(source, true)
 			setVehicleEngineState(source, false)
-			setElementData(source, "enginebroke", 1, false)
-			setElementData(source, "engine", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "enginebroke", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "engine", 0, false)
 			
 			local player = getVehicleOccupant(source)
 			if player then
@@ -942,7 +942,7 @@ function sellVehicle(thePlayer, commandName, targetPlayerName)
 									if exports.global:canPlayerBuyVehicle(targetPlayer) then
 										local query = mysql:query_free("UPDATE vehicles SET owner = '" .. getElementData(targetPlayer, "dbid") .. "' WHERE id='" .. vehicleID .. "'")
 										if query then
-											setElementData(theVehicle, "owner", getElementData(targetPlayer, "dbid"))
+											exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "owner", getElementData(targetPlayer, "dbid"))
 											
 											exports.global:takeItem(thePlayer, 3, vehicleID)
 											exports.global:giveItem(targetPlayer, 3, vehicleID)
@@ -1080,7 +1080,7 @@ function fillFuelTank(veh, fuel)
 		exports.global:takeItem(source, 57, fuel)
 		exports.global:giveItem(source, 57, math.ceil(fuel-fuelAdded))
 		
-		setElementData(veh, "fuel", currFuel+fuelAdded, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", currFuel+fuelAdded, false)
 		triggerClientEvent(source, "syncFuel", veh, currFuel+fuelAdded)
 		--triggerClientEvent(source, "setClientFuel", source, currFuel+fuelAdded)
 	end
@@ -1109,8 +1109,8 @@ function createShopVehicle(dbid, ...)
 	local veh = createVehicle(unpack({...}))
 	exports.pool:allocateElement(veh, dbid)
 	
-	setElementData(veh, "dbid", dbid)
-	setElementData(veh, "requires.vehpos", 1, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", dbid)
+	exports['anticheat-system']:changeProtectedElementDataEx(veh, "requires.vehpos", 1, false)
 	local timer = setTimer(checkVehpos, 3600000, 1, veh, dbid)
 	table.insert(destroyTimers, {timer, dbid})
 	
@@ -1176,9 +1176,9 @@ function setVehiclePosition(thePlayer, commandName)
 					
 					local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. dbid .. "'")
 					setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-					setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
-					setElementData(veh, "interior", interior)
-					setElementData(veh, "dimension", dimension)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension)
 					outputChatBox("Vehicle spawn position set.", thePlayer)
 					
 					for key, value in ipairs(destroyTimers) do
@@ -1223,9 +1223,9 @@ function setVehiclePosition2(thePlayer, commandName, vehicleID)
 				
 				local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. vehicleID .. "'")
 				setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-				setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
-				setElementData(veh, "interior", interior)
-				setElementData(veh, "dimension", dimension)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension)
 				outputChatBox("Vehicle spawn position for #" .. vehicleID .. " set.", thePlayer)
 				
 				for key, value in ipairs(destroyTimers) do
@@ -1285,9 +1285,9 @@ function setVehiclePosition3(veh)
 				
 				local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. dbid .. "'")
 				setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-				setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
-				setElementData(veh, "interior", interior)
-				setElementData(veh, "dimension", dimension)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension)
 				outputChatBox("Vehicle spawn position set.", source)
 				
 				for key, value in ipairs(destroyTimers) do
@@ -1335,9 +1335,9 @@ function quitPlayer ( quitReason )
 									local engine = getElementData(theVehicle, "engine")
 									if engine == 1 then -- stop the engine when its running
 										setVehicleEngineState(theVehicle, false)
-										setElementData(theVehicle, "engine", 0, false)
+										exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "engine", 0, false)
 									end
-									setElementData(theVehicle, "handbrake", 1, false)
+									exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "handbrake", 1, false)
 									setVehicleFrozen(theVehicle, true)
 								end
 							end

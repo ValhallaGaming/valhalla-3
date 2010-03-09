@@ -40,8 +40,8 @@ addEventHandler( "onResourceStart", getResourceRootElement( ),
 			local offset = tonumber( row["offset"] )
 			
 			local ped = createPed( skin, x, y, z )
-			setElementData( ped, "dbid", id, false )
-			setElementData( ped, "position", { x, y, z, rotation }, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( ped, "dbid", id, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( ped, "position", { x, y, z, rotation }, false )
 			setPedRotation( ped, rotation )
 			setElementInterior( ped, interior )
 			setElementDimension( ped, dimension )
@@ -77,8 +77,8 @@ addCommandHandler( "adddancer",
 						if ped then
 							local id = mysql:query_insert_free("INSERT INTO dancers (x,y,z,rotation,skin,type,interior,dimension,offset) VALUES (" .. x .. "," .. y .. "," .. z .. "," .. rotation .. "," .. skin .. "," .. type .. "," .. interior .. "," .. dimension .. "," .. offset .. ")" )
 							if id then
-								setElementData( ped, "dbid", id, false )
-								setElementData( ped, "position", { x, y, z, rotation }, false )
+								exports['anticheat-system']:changeProtectedElementDataEx( ped, "dbid", id, false )
+								exports['anticheat-system']:changeProtectedElementDataEx( ped, "position", { x, y, z, rotation }, false )
 								setPedRotation( ped, rotation )
 								setElementInterior( ped, interior )
 								setElementDimension( ped, dimension )
@@ -175,8 +175,8 @@ addEventHandler("onPedWasted", getResourceRootElement(),
 		local x, y, z, rotation = unpack( getElementData( source, "position" ) )
 		local newped = createPed( getElementModel( source ), x, y, z )
 		setPedRotation( newped, rotation )
-		setElementData( newped, "dbid", getElementData( source, "dbid" ), false )
-		setElementData( newped, "position", getElementData( source, "position" ), false )
+		exports['anticheat-system']:changeProtectedElementDataEx( newped, "dbid", getElementData( source, "dbid" ), false )
+		exports['anticheat-system']:changeProtectedElementDataEx( newped, "position", getElementData( source, "position" ), false )
 		
 		peds[ newped ] = options
 		setElementInterior( newped, getElementInterior( source ) )

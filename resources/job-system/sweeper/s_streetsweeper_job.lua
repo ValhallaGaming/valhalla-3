@@ -11,3 +11,9 @@ function respawnTruck(vehicle)
 end
 addEvent("respawnTruck", true)
 addEventHandler("respawnTruck", getRootElement(), respawnTruck)
+
+function playerQuitJob()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "job", 0, true)
+end
+addEvent("quitjob", true)
+addEventHandler("quitjob", getRootElement(), playerQuitJob)

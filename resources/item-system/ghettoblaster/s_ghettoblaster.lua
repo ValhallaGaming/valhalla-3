@@ -1,5 +1,5 @@
 local function updateWorldItemValue(item, newvalue)
-	setElementData(item, "itemValue", newvalue)
+	exports['anticheat-system']:changeProtectedElementDataEx(item, "itemValue", newvalue)
 	mysql_free_result(mysql_query(handler, "UPDATE worlditems SET itemvalue='" .. newvalue .. "' WHERE id=" .. getElementData(item, "id"))) 
 end
 

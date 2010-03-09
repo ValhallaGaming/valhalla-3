@@ -27,7 +27,7 @@ function knockout()
 		playerInjuries[source]['knockout'] = setTimer(killknockedout, 120000, 1, source)
 		
 		exports.global:applyAnimation( source, "CRACK", "crckidle2", -1, true, false, true)
-		setElementData(source, "injuriedanimation", true)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "injuriedanimation", true)
 	end
 end
 

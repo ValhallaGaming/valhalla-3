@@ -7,9 +7,9 @@ function respawnPed(ped)
 	setElementDimension(new, getElementDimension(ped))
 	
 	for k, v in next, getAllElementData(ped) do
-		setElementData(new, k, v)
+		exports['anticheat-system']:changeProtectedElementDataEx(new, k, v)
 	end
-	setElementData(new, "activeConvo", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(new, "activeConvo", 0)
 	
 	if ped == hunter then
 		hunter = new

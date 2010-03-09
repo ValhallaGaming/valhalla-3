@@ -76,13 +76,13 @@ function advertMessage(thePlayer, commandName, showNumber, ...)
 						end
 					end
 					outputChatBox("Thank you for placing your advert. Total Cost: $" .. cost .. ".", thePlayer)
-					setElementData(thePlayer, "ads", ( getElementData(thePlayer, "ads") or 0 ) + 1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "ads", ( getElementData(thePlayer, "ads") or 0 ) + 1, false)
 					setTimer(
 						function(p)
 							if isElement(p) then
 								local c =  getElementData(p, "ads") or 0
 								if c > 1 then
-									setElementData(p, "ads", c-1, false)
+									exports['anticheat-system']:changeProtectedElementDataEx(p, "ads", c-1, false)
 								else
 									removeElementData(p, "ads")
 								end
@@ -451,10 +451,10 @@ function playerToggleOOC(thePlayer, commandName)
 		
 		if (playerOOCEnabled==1) then
 			outputChatBox("You have now hidden Global OOC Chat.", thePlayer, 255, 194, 14)
-			setElementData(thePlayer, "globalooc", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "globalooc", 0, false)
 		else
 			outputChatBox("You have now enabled Global OOC Chat.", thePlayer, 255, 194, 14)
-			setElementData(thePlayer, "globalooc", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "globalooc", 1, false)
 		end
 		mysql:query_free("UPDATE accounts SET globalooc=" .. getElementData(thePlayer, "globalooc") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid"))
 	end
@@ -498,7 +498,7 @@ function pmPlayer(thePlayer, commandName, who, ...)
 
 			if not (pmblocked) then
 				pmblocked = 0
-				setElementData(targetPlayer, "pmblocked", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pmblocked", 0, false)
 			end
 			
 			if (logged==1) and not getElementData(targetPlayer, "disablePMs") and (pmblocked==0 or exports.global:isPlayerAdmin(thePlayer) or exports.global:isPlayerScripter(thePlayer) or getElementData(thePlayer, "reportadmin") == targetPlayer or isFriendOf(thePlayer, targetPlayer)) then
@@ -830,7 +830,7 @@ function toggleRadio(thePlayer, commandName, slot)
 			outputChatBox("You turned your radio off.", thePlayer, 255, 194, 14)
 			exports.global:sendLocalMeAction(thePlayer, "turns " .. genderm .. " radio off.")
 		end
-		--setElementData(thePlayer, "radiochannel", channel, false)
+		--exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "radiochannel", channel, false)
 		
 		local count = 0
 		for k, v in ipairs( items ) do
@@ -1057,7 +1057,7 @@ function playerChangeChatbubbleMode(thePlayer, commandName, mode)
 			elseif (mode == 2) then
 				outputChatBox("All chatbubbles are now visible.", thePlayer, 255, 194, 14)
 			end
-			setElementData(thePlayer, "chatbubbles", mode, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "chatbubbles", mode, false)
 			mysql:query_free("UPDATE accounts SET chatbubbles=" .. mode .. " WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
 		end
 	end
@@ -1106,10 +1106,10 @@ function togglePM(thePlayer, commandName)
 		local pmenabled = getElementData(thePlayer, "pmblocked")
 		
 		if (pmenabled==1) then
-			setElementData(thePlayer, "pmblocked", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "pmblocked", 0, false)
 			outputChatBox("PM's are now enabled.", thePlayer, 0, 255, 0)
 		else
-			setElementData(thePlayer, "pmblocked", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "pmblocked", 1, false)
 			outputChatBox("PM's are now disabled.", thePlayer, 255, 0, 0)
 		end
 		mysql:query_free("UPDATE accounts SET pmblocked=" .. getElementData(thePlayer, "pmblocked") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid"))
@@ -1124,11 +1124,11 @@ function toggleAds(thePlayer, commandName)
 	if(logged==1) and (exports.global:isPlayerGoldDonator(thePlayer))then
 		local adblocked = getElementData(thePlayer, "disableAds")
 		if (adblocked) then -- enable the ads again
-			setElementData(thePlayer, "disableAds", false, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "disableAds", false, false)
 			outputChatBox("Ads are now enabled.", thePlayer, 0, 255, 0)
 			mysql:query_free("UPDATE accounts SET adblocked=0 WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
 		else -- disable them D:
-			setElementData(thePlayer, "disableAds", true, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "disableAds", true, false)
 			outputChatBox("Ads are now disabled.", thePlayer, 255, 0, 0)
 			mysql:query_free("UPDATE accounts SET adblocked=1 WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
 		end
@@ -1375,10 +1375,10 @@ function togNews(thePlayer, commandName)
 		
 		if (newsTog~=1) then
 			outputChatBox("/news disabled.", thePlayer, 255, 194, 14)
-			setElementData(thePlayer, "tognews", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tognews", 1, false)
 		else
 			outputChatBox("/news enabled.", thePlayer, 255, 194, 14)
-			setElementData(thePlayer, "tognews", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tognews", 0, false)
 		end
 		mysql:query_free("UPDATE accounts SET newsblocked=" .. getElementData(thePlayer, "tognews") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
 	end
@@ -1404,7 +1404,7 @@ function StartInterview(thePlayer, commandName, targetPartialPlayer)
 						if(getElementData(targetPlayer,"interview"))then
 							outputChatBox("This player is already being interviewed.", thePlayer, 255, 0, 0)
 						else
-							setElementData(targetPlayer, "interview", true, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "interview", true, false)
 							local playerName = getPlayerName(thePlayer)
 							outputChatBox(playerName .." has offered you for an interview.", targetPlayer, 0, 255, 0)
 							outputChatBox("((Use /i to talk during the interview.))", targetPlayer, 0, 255, 0)
@@ -1613,7 +1613,7 @@ function bigEars(thePlayer, commandName, targetPlayerNick)
 			if targetPlayer then
 				outputChatBox("Now Listening to " .. targetPlayerName .. ".", thePlayer, 0, 255, 0)
 				exports.logs:logMessage("[/bigears] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." started bigear on " .. targetPlayerName, 4)
-				setElementData(thePlayer, "bigears", targetPlayer, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "bigears", targetPlayer, false)
 			end
 		end
 	end
@@ -1645,7 +1645,7 @@ function bigEarsFaction(thePlayer, commandName, factionID)
 				outputChatBox("No faction with that ID found.", thePlayer, 255, 0, 0)
 			else
 				outputChatBox("Now Listening to " .. getTeamName(team) .. " OOC Chat.", thePlayer, 0, 255, 0)
-				setElementData(thePlayer, "bigearsfaction", team, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "bigearsfaction", team, false)
 				exports.logs:logMessage("[/bigearsf] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." started bigear on " .. getTeamName(team), 4)
 			end
 		end

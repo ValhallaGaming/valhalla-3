@@ -9,15 +9,15 @@ setElementInterior(huntersCar, 2)
 hunter = createPed (250, 616.162109, -75.3720, 997.99)
 exports.pool:allocateElement(hunter)
 setPedRotation (hunter, 300)
-setElementData(hunter, "rotation", getPedRotation(hunter), false)
+exports['anticheat-system']:changeProtectedElementDataEx(hunter, "rotation", getPedRotation(hunter), false)
 setPedFrozen(hunter, true)
 setElementInterior (hunter, 2)
 setElementDimension (hunter, 1001)
 
 setPedAnimation(hunter, "CAR_CHAT", "car_talkm_loop", -1, true, false, true) -- Set the Peds Animation.
-setElementData (hunter, "activeConvo",  0) -- Set the convo state to 0 so people can start talking to him.
-setElementData(hunter, "name", "Hunter")
-setElementData(hunter, "talk", true)
+exports['anticheat-system']:changeProtectedElementDataEx (hunter, "activeConvo",  0) -- Set the convo state to 0 so people can start talking to him.
+exports['anticheat-system']:changeProtectedElementDataEx(hunter, "name", "Hunter")
+exports['anticheat-system']:changeProtectedElementDataEx(hunter, "talk", true)
 
 function hunterIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.	
 	-- Give the player the "Find Hunter" achievement.
@@ -35,7 +35,7 @@ function hunterIntro () -- When player enters the colSphere create GUI with intr
 			triggerClientEvent ( source, "hunterIntroEvent", getRootElement()) -- Trigger Client side function to create GUI.
 			
 			exports.global:sendLocalText( hunter, "* A muscular man works under the car's hood.", 255, 51, 102, 10 )
-			setElementData (hunter, "activeConvo", 1) -- set the NPCs conversation state to active so no one else can begin to talk to him.
+			exports['anticheat-system']:changeProtectedElementDataEx (hunter, "activeConvo", 1) -- set the NPCs conversation state to active so no one else can begin to talk to him.
 			talkingToHunter = source
 			addEventHandler("onPlayerQuit", source, resetHunterConvoStateDelayed)
 			addEventHandler("onPlayerWasted", source, resetHunterConvoStateDelayed)
@@ -166,7 +166,7 @@ addEvent( "hunterStatement12ServerEvent", true )
 addEventHandler( "hunterStatement12ServerEvent", getRootElement(), statement12_S )
 
 function resetHunterConvoState()
-	setElementData(hunter, "activeConvo", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(hunter, "activeConvo", 0)
 end
 
 function resetHunterConvoStateDelayed()

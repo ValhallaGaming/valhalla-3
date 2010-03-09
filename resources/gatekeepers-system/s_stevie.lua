@@ -23,16 +23,16 @@ function createStevie()
 	stevie = createPed (258, 2511.6015625, -1680.1962890625, 1049.6678466797)
 	exports.pool:allocateElement(stevie)
 	setPedRotation (stevie, 90)
-	setElementData(stevie, "rotation", getPedRotation(stevie), false)
+	exports['anticheat-system']:changeProtectedElementDataEx(stevie, "rotation", getPedRotation(stevie), false)
 	setElementInterior (stevie, 3)
 	setElementDimension (stevie, 10601)
 	setPedFrozen(stevie, true)
 	setPedAnimation(stevie, "FOOD", "FF_Sit_Loop",  -1, true, false, true) -- Set the Peds Animation.
-	setElementData(stevie, "name", "Steven Pullman")
-	setElementData(stevie, "deals", 0) -- reset how many deals he has made today. Stevie will do 5 deals over the phone each day. He can't be called while he is in the game world (19:00-22:00).
-	setElementData(stevie,"talk",true) -- allows the player to right click on him.
+	exports['anticheat-system']:changeProtectedElementDataEx(stevie, "name", "Steven Pullman")
+	exports['anticheat-system']:changeProtectedElementDataEx(stevie, "deals", 0) -- reset how many deals he has made today. Stevie will do 5 deals over the phone each day. He can't be called while he is in the game world (19:00-22:00).
+	exports['anticheat-system']:changeProtectedElementDataEx(stevie,"talk",true) -- allows the player to right click on him.
 	doneDeals = 0
-	setElementData( getRootElement( ), "stevie.done", 0, false )
+	exports['anticheat-system']:changeProtectedElementDataEx( getRootElement( ), "stevie.done", 0, false )
 	
 	hours,minues = getTime()
 	
@@ -57,7 +57,7 @@ function stevieIntro (thePlayer) -- When player enters the colSphere create GUI 
 		exports.global:sendLocalText(source, "* Stevie ignores the person trying to talk to him and contiues to eat.",  255, 51, 102, 5)
 	else
 		exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." met Stevie" , 25)
-		setElementData (stevie, "activeConvo", 1, false) -- set the NPCs conversation state to active so no one else can begin to talk to him.
+		exports['anticheat-system']:changeProtectedElementDataEx (stevie, "activeConvo", 1, false) -- set the NPCs conversation state to active so no one else can begin to talk to him.
 		outputDebugString("Stevie is talking.")
 		
 		exports.global:sendLocalText(source, "Steven Pulman says: Do you want something, pal?", 255, 255, 255, 5) -- Stevies next question
@@ -234,7 +234,7 @@ addEvent( "CloseButtonClickServerEvent", true )
 addEventHandler( "CloseButtonClickServerEvent", getRootElement(), CloseButtonClick_S )
 
 function resetStevieConvoState()
-	setElementData(stevie,"activeConvo", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(stevie,"activeConvo", 0, false)
 end
 
 
@@ -269,7 +269,7 @@ function startPhoneCall(thePlayer)
 						outputChatBox("The number you are trying to call is engaged.", thePlayer, 255, 0, 0)
 					else
 						phoneState = 1
-						setElementData(thePlayer, "calling", "stevie")
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", "stevie")
 						exports.global:sendLocalMeAction(thePlayer, "takes out a cell phone.")
 						exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
 						toggleAllControls(thePlayer, true, true, true)
@@ -370,7 +370,7 @@ function acceptDeal_S( dealNumber )
 			return
 		end
 		doneDeals = doneDeals + 1
-		setElementData( getRootElement( ), "stevie.done", doneDeals, false )
+		exports['anticheat-system']:changeProtectedElementDataEx( getRootElement( ), "stevie.done", doneDeals, false )
 		exports.logs:logMessage("[STEVIE-CALL] " .. getElementData(source, "gameaccountusername") .. "/".. getPlayerName(source) .." accepted deal no " .. dealNumber .. " for ".. cost , 25)
 		outputChatBox("You have sent Stevie $".. cost .." for the deal.", source, 0, 255, 0)
 		
@@ -383,8 +383,8 @@ function acceptDeal_S( dealNumber )
 		exports.pool:allocateElement(stevieMarker)
 		exports.pool:allocateElement(stevieCol)
 			
-		setElementData(stevieCol, "dealNumber", dealNumber, false)
-		setElementData(source, "stevie.money", cost, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(stevieCol, "dealNumber", dealNumber, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "stevie.money", cost, false)
 	
 		addEventHandler("onColShapeHit", stevieCol, giveGoods)		
 		endCall() -- end the call.
@@ -396,7 +396,7 @@ addEventHandler( "acceptSteviePhoneDeal", getRootElement(), acceptDeal_S )
 function decreaseDeals_S()
 	if getElementData(source, "stevie.money") and doneDeals > 0 then
 		doneDeals = doneDeals - 1
-		setElementData( getRootElement( ), "stevie.done", doneDeals, false )
+		exports['anticheat-system']:changeProtectedElementDataEx( getRootElement( ), "stevie.done", doneDeals, false )
 		
 		destroyElement(stevieCol)
 		stevieCol = nil

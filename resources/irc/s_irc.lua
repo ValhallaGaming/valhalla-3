@@ -24,7 +24,7 @@ end
 function initIRC()
 	if not getElementData(getRootElement(), "irc:init") then
 		ircInit()
-		setElementData(getRootElement(), "irc:init", true, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(getRootElement(), "irc:init", true, false)
 	end
 	--spawnBot(false)
 	--spawnBot(true)

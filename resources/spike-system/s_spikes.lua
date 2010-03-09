@@ -24,7 +24,7 @@ function PlacingSpikes(sourcePlayer, command)
 					exports.pool:allocateElement(Spike[value])
 					Shape[value] = createColCuboid ( x1-0.5, y1-0.5, z1-0.8, 2.0, 2.0, 2.5)
 					exports.pool:allocateElement(Shape[value])
-					setElementData(Shape[value], "type", "spikes")
+					exports['anticheat-system']:changeProtectedElementDataEx(Shape[value], "type", "spikes")
 					outputChatBox("Spawned spikes with ID:" .. value, sourcePlayer, 0, 194, 0)
 					
 					break
@@ -84,8 +84,8 @@ function ThrowSpikes(sourcePlayer, command)
 					exports.pool:allocateElement(Shape1[value])
 					Shape2[value] = createColRectangle( (nx), (ny), 5.0, 5.0 )
 					exports.pool:allocateElement(Shape2[value])
-					setElementData(Shape1[value], "type", "spikes")
-					setElementData(Shape2[value], "type", "spikes")
+					exports['anticheat-system']:changeProtectedElementDataEx(Shape1[value], "type", "spikes")
+					exports['anticheat-system']:changeProtectedElementDataEx(Shape2[value], "type", "spikes")
 					outputChatBox("Spawned spikes with ID:" .. value, sourcePlayer, 0, 194, 0)
 					break
 				end

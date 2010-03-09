@@ -3,7 +3,7 @@ mysql = exports.mysql
 local function updateAppCount( )
 	local result = mysql:query_fetch_assoc( "SELECT COUNT(*) AS count FROM accounts WHERE appstate = 1" )
 	if result then
-		setElementData( getResourceRootElement( ), "openapps", tonumber( result.count ) )
+		exports['anticheat-system']:changeProtectedElementDataEx( getResourceRootElement( ), "openapps", tonumber( result.count ) )
 		return tonumber( result.count )
 	end
 	return -1

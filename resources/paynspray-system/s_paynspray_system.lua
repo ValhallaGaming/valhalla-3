@@ -16,7 +16,7 @@ function createSpray(thePlayer, commandName)
 			exports.pool:allocateElement(shape)
 			setElementInterior(shape, interior)
 			setElementDimension(shape, dimension)
-			setElementData(shape, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(shape, "dbid", id, false)
 			
 			local sprayblip = createBlip(x, y, z, 63, 2, 255, 0, 0, 255, 0, 300)
 			exports.pool:allocateElement(sprayblip)
@@ -57,7 +57,7 @@ function loadAllSprays(res)
 			exports.pool:allocateElement(shape)
 			setElementInterior(shape, interior)
 			setElementDimension(shape, dimension)
-			setElementData(shape, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(shape, "dbid", id, false)
 				
 			count = count + 1
 		end
@@ -166,7 +166,7 @@ function sprayEffect(vehicle, thePlayer, shape, free)
 			setVehicleDamageProof(vehicle, false)
 		end
 		if (getElementData(vehicle, "Impounded") == 0) then
-			setElementData(vehicle, "enginebroke", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "enginebroke", 0, false)
 		end
 	else
 		outputChatBox("You forgot to wait for your repair!", thePlayer, 255, 0, 0)

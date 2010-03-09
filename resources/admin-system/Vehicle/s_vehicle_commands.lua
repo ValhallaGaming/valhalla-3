@@ -109,17 +109,17 @@ function createTempVehicle(thePlayer, commandName, ...)
 					setVehicleEngineState(veh, false)
 					setVehicleFuelTankExplodable(veh, false)
 					
-					setElementData(veh, "dbid", dbid)
-					setElementData(veh, "fuel", 100, false)
-					setElementData(veh, "Impounded", 0)
-					setElementData(veh, "engine", 0, false)
-					setElementData(veh, "oldx", x, false)
-					setElementData(veh, "oldy", y, false)
-					setElementData(veh, "oldz", z, false)
-					setElementData(veh, "faction", -1)
-					setElementData(veh, "owner", -1, false)
-					setElementData(veh, "job", 0, false)
-					setElementData(veh, "handbrake", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", dbid)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", x, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", y, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", z, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", -1)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", -1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
 					outputChatBox(getVehicleName(veh) .. " spawned with TEMP ID " .. dbid .. ".", thePlayer, 255, 194, 14)
 					
 					exports['vehicle-interiors']:add( veh )
@@ -280,7 +280,7 @@ function respawnCmdVehicle(thePlayer, commandName, id)
 						setVehicleDamageProof(theVehicle, false)
 					end
 					setVehicleWheelStates(theVehicle, 0, 0, 0, 0)
-					setElementData(theVehicle, "enginebroke", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "enginebroke", 0, false)
 				else
 					respawnVehicle(theVehicle)
 					if getElementData(theVehicle, "owner") == -2 and getElementData(theVehicle,"Impounded") == 0  then
@@ -406,7 +406,7 @@ function respawnAllVehicles(thePlayer, commandName, timeToRespawn)
 						if getElementData(theVehicle, "faction") ~= -1 then
 							fixVehicle(theVehicle)
 							if (getElementData(theVehicle, "Impounded") == 0) then
-								setElementData(theVehicle, "enginebroke", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "enginebroke", 0, false)
 								if armoredCars[ getElementModel( theVehicle ) ] then
 									setVehicleDamageProof(theVehicle, true)
 								else
@@ -654,7 +654,7 @@ function fixPlayerVehicle(thePlayer, commandName, target)
 					if (veh) then
 						fixVehicle(veh)
 						if (getElementData(veh, "Impounded") == 0) then
-							setElementData(veh, "enginebroke", 0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
 							if armoredCars[ getElementModel( veh ) ] then
 								setVehicleDamageProof(veh, true)
 							else
@@ -775,7 +775,7 @@ function fixAllVehicles(thePlayer, commandName)
 		for key, value in ipairs(exports.pool:getPoolElementsByType("vehicle")) do
 			fixVehicle(value)
 			if (not getElementData(value, "Impounded")) then
-				setElementData(value, "enginebroke", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(value, "enginebroke", 0, false)
 				if armoredCars[ getElementModel( value ) ] then
 					setVehicleDamageProof(value, true)
 				else
@@ -804,7 +804,7 @@ function fuelPlayerVehicle(thePlayer, commandName, target)
 				else
 					local veh = getPedOccupiedVehicle(targetPlayer)
 					if (veh) then
-						setElementData(veh, "fuel", 100, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100, false)
 						triggerClientEvent(targetPlayer, "syncFuel", veh)
 						outputChatBox("You refueled " .. targetPlayerName .. "'s vehicle.", thePlayer)
 						outputChatBox("Your vehicle was refueled by admin " .. username .. ".", targetPlayer)
@@ -822,7 +822,7 @@ function fuelAllVehicles(thePlayer, commandName)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		local username = getPlayerName(thePlayer)
 		for key, value in ipairs(exports.pool:getPoolElementsByType("vehicle")) do
-			setElementData(value, "fuel", 100, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(value, "fuel", 100, false)
 		end
 		outputChatBox("All vehicles refuelled by Admin " .. username .. ".")
 	end

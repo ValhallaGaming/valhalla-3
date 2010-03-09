@@ -38,7 +38,7 @@ function adminUncuff(thePlayer, commandName, targetPlayer)
 						toggleControl(targetPlayer, "accelerate", true)
 						toggleControl(targetPlayer, "brake_reverse", true)
 						toggleControl(targetPlayer, "aim_weapon", true)
-						setElementData(targetPlayer, "restrain", 0)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "restrain", 0)
 						removeElementData(targetPlayer, "restrainedBy")
 						removeElementData(targetPlayer, "restrainedObj")
 						exports.global:removeAnimation(targetPlayer)
@@ -149,11 +149,11 @@ function mutePlayer(thePlayer, commandName, targetPlayer)
 					local muted = getElementData(targetPlayer, "muted")
 					
 					if (muted==0) then
-						setElementData(targetPlayer, "muted", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "muted", 1)
 						outputChatBox(targetPlayerName .. " is now muted from OOC.", thePlayer, 255, 0, 0)
 						outputChatBox("You were muted by '" .. getPlayerName(thePlayer) .. "'.", targetPlayer, 255, 0, 0)
 					else
-						setElementData(targetPlayer, "muted", 0)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "muted", 0)
 						outputChatBox(targetPlayerName .. " is now unmuted from OOC.", thePlayer, 0, 255, 0)
 						outputChatBox("You were unmuted by '" .. getPlayerName(thePlayer) .. "'.", targetPlayer, 0, 255, 0)
 					end
@@ -294,7 +294,7 @@ function ckPlayer(thePlayer, commandName, targetPlayer)
 					local id = getElementData(targetPlayer, "gameaccountid")
 					showCursor(targetPlayer, false)
 					triggerEvent("sendAccounts", targetPlayer, targetPlayer, id, true)
-					setElementData(targetPlayer, "loggedin", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "loggedin", 0, false)
 					outputChatBox("Your character was CK'ed by " .. getPlayerName(thePlayer) .. ".", targetPlayer, 255, 194, 14)
 					showChat(targetPlayer, true)
 					outputChatBox("You have CK'ed ".. targetPlayerName ..".", thePlayer, 255, 194, 1, 14)
@@ -664,7 +664,7 @@ function asetPlayerName(thePlayer, commandName, targetPlayer, ...)
 					if (mysql:num_rows(result)>0) then
 						outputChatBox("This name is already in use.", thePlayer, 255, 0, 0)
 					else
-						setElementData(targetPlayer, "legitnamechange", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "legitnamechange", 1)
 						local name = setPlayerName(targetPlayer, tostring(newName))
 						
 						if (name) then
@@ -680,13 +680,13 @@ function asetPlayerName(thePlayer, commandName, targetPlayer, ...)
 								exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " changed " .. targetPlayerName .. "'s Name to " .. newName .. ".")
 							end
 							outputChatBox("You changed " .. targetPlayerName .. "'s Name to " .. tostring(newName) .. ".", thePlayer, 0, 255, 0)
-							setElementData(targetPlayer, "legitnamechange", 0)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "legitnamechange", 0)
 							
 							exports.logs:logMessage("[/CHANGENAME] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." changed ".. targetPlayerName .. " TO ".. tostring(newName) , 4)
 						else
 							outputChatBox("Failed to change name.", thePlayer, 255, 0, 0)
 						end
-						setElementData(targetPlayer, "legitnamechange", 0)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "legitnamechange", 0)
 					end
 					mysql:free_result(result)
 				end
@@ -702,10 +702,10 @@ function hideAdmin(thePlayer, commandName)
 		local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
 		
 		if (hiddenAdmin==0) then
-			setElementData(thePlayer, "hiddenadmin", 1)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "hiddenadmin", 1)
 			outputChatBox("You are now a hidden admin.", thePlayer, 255, 194, 14)
 		elseif (hiddenAdmin==1) then
-			setElementData(thePlayer, "hiddenadmin", 0)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "hiddenadmin", 0)
 			outputChatBox("You are no longer a hidden admin.", thePlayer, 255, 194, 14)
 		end
 		exports.global:updateNametagColor(thePlayer)
@@ -735,7 +735,7 @@ function slapPlayer(thePlayer, commandName, targetPlayer)
 					local x, y, z = getElementPosition(targetPlayer)
 					
 					if (isPedInVehicle(targetPlayer)) then
-						setElementData(targetPlayer, "realinvehicle", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "realinvehicle", 0, false)
 						removePedFromVehicle(targetPlayer)
 					end
 					
@@ -775,7 +775,7 @@ function hugeSlapPlayer(thePlayer, commandName, targetPlayer)
 					local x, y, z = getElementPosition(targetPlayer)
 					
 					if (isPedInVehicle(targetPlayer)) then
-						setElementData(targetPlayer, "realinvehicle", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "realinvehicle", 0, false)
 						removePedFromVehicle(targetPlayer)
 					end
 					
@@ -865,10 +865,10 @@ function reconPlayer(thePlayer, commandName, targetPlayer)
 				setElementInterior(thePlayer, reconinterior)
 				setCameraInterior(thePlayer, reconinterior)
 				
-				setElementData(thePlayer, "reconx", nil)
-				setElementData(thePlayer, "recony", nil, false)
-				setElementData(thePlayer, "reconz", nil, false)
-				setElementData(thePlayer, "reconrot", nil, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", nil)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "recony", nil, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconz", nil, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconrot", nil, false)
 				setCameraTarget(thePlayer, thePlayer)
 				setElementAlpha(thePlayer, 255)
 				outputChatBox("Recon turned off.", thePlayer, 255, 194, 14)
@@ -889,12 +889,12 @@ function reconPlayer(thePlayer, commandName, targetPlayer)
 						local rot = getPedRotation(thePlayer)
 						local dimension = getElementDimension(thePlayer)
 						local interior = getElementInterior(thePlayer)
-						setElementData(thePlayer, "reconx", x)
-						setElementData(thePlayer, "recony", y, false)
-						setElementData(thePlayer, "reconz", z, false)
-						setElementData(thePlayer, "reconrot", rot, false)
-						setElementData(thePlayer, "recondimension", dimension, false)
-						setElementData(thePlayer, "reconinterior", interior, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", x)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "recony", y, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconz", z, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconrot", rot, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "recondimension", dimension, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconinterior", interior, false)
 					end
 					setPedWeaponSlot(thePlayer, 0)
 					
@@ -1304,12 +1304,12 @@ function makePlayerAdmin(thePlayer, commandName, who, rank)
 				local username = getPlayerName(thePlayer)
 				local accountID = getElementData(targetPlayer, "gameaccountid")
 				
-				setElementData(targetPlayer, "adminlevel", tonumber(rank))
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "adminlevel", tonumber(rank))
 				
 				rank = tonumber(rank)
 				
 				if (rank<1337) then
-					setElementData(targetPlayer, "hiddenadmin", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "hiddenadmin", 0)
 				end
 				
 				local query = mysql:query_free("UPDATE accounts SET admin='" .. tonumber(rank) .. "', hiddenadmin='0' WHERE id='" .. accountID .. "'")
@@ -1320,9 +1320,9 @@ function makePlayerAdmin(thePlayer, commandName, who, rank)
 				-- Fix for scoreboard & nametags
 				local targetAdminTitle = exports.global:getPlayerAdminTitle(targetPlayer)
 				if (rank>0) or (rank==-999999999) then
-					setElementData(targetPlayer, "adminduty", 1)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "adminduty", 1)
 				else
-					setElementData(targetPlayer, "adminduty", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "adminduty", 0)
 				end
 				mysql:query_free("UPDATE accounts SET adminduty=" .. getElementData(targetPlayer, "adminduty") .. " WHERE id = " .. getElementData(targetPlayer, "gameaccountid") )
 				exports.global:updateNametagColor(targetPlayer)
@@ -1361,24 +1361,24 @@ function jailPlayer(thePlayer, commandName, who, minutes, ...)
 				end
 				
 				if (isPedInVehicle(targetPlayer)) then
-					setElementData(targetPlayer, "realinvehicle", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "realinvehicle", 0, false)
 					removePedFromVehicle(targetPlayer)
 				end
 				
 				if (minutes>=999) then
 					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. minutes .. "', adminjail_permanent='1', adminjail_by='" .. playerName .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. accountID .. "'")
 					minutes = "Unlimited"
-					setElementData(targetPlayer, "jailtimer", true, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailtimer", true, false)
 				else
 					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. minutes .. "', adminjail_permanent='0', adminjail_by='" .. playerName .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. tonumber(accountID) .. "'")
 					local theTimer = setTimer(timerUnjailPlayer, 60000, minutes, targetPlayer)
-					setElementData(targetPlayer, "jailserved", 0, false)
-					setElementData(targetPlayer, "jailtimer", theTimer, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailserved", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailtimer", theTimer, false)
 				end
-				setElementData(targetPlayer, "adminjailed", true)
-				setElementData(targetPlayer, "jailreason", reason, false)
-				setElementData(targetPlayer, "jailtime", minutes, false)
-				setElementData(targetPlayer, "jailadmin", getPlayerName(thePlayer), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "adminjailed", true)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailreason", reason, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailtime", minutes, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailadmin", getPlayerName(thePlayer), false)
 				
 				outputChatBox("You jailed " .. targetPlayerName .. " for " .. minutes .. " Minutes.", thePlayer, 255, 0, 0)
 				
@@ -1416,9 +1416,9 @@ function timerUnjailPlayer(jailedPlayer)
 		local timeLeft = getElementData(jailedPlayer, "jailtime")
 		local accountID = getElementData(jailedPlayer, "gameaccountid")
 		if (timeServed) then
-			setElementData(jailedPlayer, "jailserved", timeServed+1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailserved", timeServed+1, false)
 			local timeLeft = timeLeft - 1
-			setElementData(jailedPlayer, "jailtime", timeLeft, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime", timeLeft, false)
 		
 			if (timeLeft<=0) then
 				local query = mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. accountID .. "'")
@@ -1725,7 +1725,7 @@ function freezePlayer(thePlayer, commandName, target)
 				else	
 					toggleAllControls(targetPlayer, false, true, false)
 					setPedWeaponSlot(targetPlayer, 0)
-					setElementData(targetPlayer, "freeze", 1)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "freeze", 1)
 					outputChatBox(" You have been frozen by an admin. Take care when following instructions.", targetPlayer)
 					outputChatBox(" You have frozen " ..targetPlayerName.. ".", thePlayer)
 				end
@@ -1794,11 +1794,11 @@ function markPosition(thePlayer, command)
 			local interior = getElementInterior(thePlayer)
 			local dimension= getElementDimension(thePlayer)
 			
-			setElementData(thePlayer, "tempMark.x", x, false)
-			setElementData(thePlayer, "tempMark.y", y, false)
-			setElementData(thePlayer, "tempMark.z", z, false)
-			setElementData(thePlayer, "tempMark.interior", interior, false)
-			setElementData(thePlayer, "tempMark.dimension", dimension, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.x", x, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.y", y, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.z", z, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.interior", interior, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.dimension", dimension, false)
 						
 			outputChatBox("Mark set sucessfull.", thePlayer, 0, 255, 0, true)
 		
@@ -1832,13 +1832,13 @@ function gotoMark(thePlayer, command)
 					
 					if(vehicle and (seat ~= 0)) then
 						removePedFromVehicle (thePlayer )
-						setElementData(thePlayer, "realinvehicle", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 						setElementPosition(thePlayer, tonumber(getElementData(thePlayer, "tempMark.x")),tonumber(getElementData(thePlayer, "tempMark.y")),tonumber(getElementData(thePlayer, "tempMark.z")))
 						setElementInterior(thePlayer, getElementData(thePlayer, "tempMark.interior"))
 						setElementDimension(thePlayer, getElementData(thePlayer, "tempMark.dimension"))
 					elseif(vehicle and seat == 0) then
 						removePedFromVehicle (thePlayer )
-						setElementData(thePlayer, "realinvehicle", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 						setElementPosition(vehicle, tonumber(getElementData(thePlayer, "tempMark.x")),tonumber(getElementData(thePlayer, "tempMark.y")),tonumber(getElementData(thePlayer, "tempMark.z")))
 						setElementInterior(vehicle, getElementData(thePlayer, "tempMark.interior"))
 						setElementDimension(vehicle, getElementData(thePlayer, "tempMark.dimension"))
@@ -1889,35 +1889,35 @@ function makePlayerDonator(thePlayer, commandName, target, level)
 					local gameaccountID = getElementData(targetPlayer, "gameaccountid")
 					
 					if (level==0) then
-						setElementData(targetPlayer, "donatorlevel", 0)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 0)
 						mysql:query_free("UPDATE accounts SET donator='0' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Non-Donator"
 					elseif (level==1) then
-						setElementData(targetPlayer, "donatorlevel", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 1)
 						mysql:query_free("UPDATE accounts SET donator='1' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Bronze Donator"
 					elseif (level==2) then
-						setElementData(targetPlayer, "donatorlevel", 2)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 2)
 						mysql:query_free("UPDATE accounts SET donator='2' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Silver Donator"
 					elseif (level==3) then
-						setElementData(targetPlayer, "donatorlevel", 3)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 3)
 						mysql:query_free("UPDATE accounts SET donator='3' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Gold Donator"
 					elseif (level==4) then
-						setElementData(targetPlayer, "donatorlevel", 4)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 4)
 						mysql:query_free("UPDATE accounts SET donator='4' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Platinum Donator"
 					elseif (level==5) then
-						setElementData(targetPlayer, "donatorlevel", 5)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 5)
 						mysql:query_free("UPDATE accounts SET donator='5' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Pearl Donator"
 					elseif (level==6) then
-						setElementData(targetPlayer, "donatorlevel", 6)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 6)
 						mysql:query_free("UPDATE accounts SET donator='6' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Diamond Donator"
 					elseif (level==7) then
-						setElementData(targetPlayer, "donatorlevel", 7)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 7)
 						mysql:query_free("UPDATE accounts SET donator='7' WHERE id='" .. gameaccountID .. "'")
 						levelString = "Godly Donator"
 					end
@@ -1944,11 +1944,11 @@ function adminDuty(thePlayer, commandName)
 		local username = getPlayerName(thePlayer)
 		
 		if (adminduty==0) then
-			setElementData(thePlayer, "adminduty", 1)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "adminduty", 1)
 			outputChatBox("You went on admin duty.", thePlayer, 0, 255, 0)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " came on duty.")
 		elseif (adminduty==1) then
-			setElementData(thePlayer, "adminduty", 0)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "adminduty", 0)
 			outputChatBox("You went off admin duty.", thePlayer, 255, 0, 0)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " went off duty.")
 		end
@@ -1970,7 +1970,7 @@ function setMOTD(thePlayer, commandName, ...)
 			if (query) then
 				outputChatBox("MOTD set to '" .. message .. "'.", thePlayer, 0, 255, 0)
 				exports.logs:logMessage("[/SETMOTD] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." changed the MOTD TO " .. message , 4)
-				setElementData(getRootElement(), "account:motd", message, false )
+				exports['anticheat-system']:changeProtectedElementDataEx(getRootElement(), "account:motd", message, false )
 			else
 				outputChatBox("Failed to set MOTD.", thePlayer, 255, 0, 0)
 			end
@@ -2028,7 +2028,7 @@ function ejectPlayer(thePlayer, commandName, target)
 					else
 						outputChatBox("You have thrown " .. targetPlayerName .. " out of your vehicle.", thePlayer, 0, 255, 0)
 						removePedFromVehicle(targetPlayer)
-						setElementData(targetPlayer, "realinvehicle", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "realinvehicle", 0, false)
 					end
 				end
 			end
@@ -2056,7 +2056,7 @@ function warnPlayer(thePlayer, commandName, targetPlayer, ...)
 				outputChatBox("You have been given a warning by " .. getPlayerName(thePlayer) .. ".", targetPlayer, 255, 0, 0)
 				outputChatBox("Reason: " .. reason, targetPlayer, 255, 0, 0)
 				
-				setElementData(targetPlayer, "warns", warns, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "warns", warns, false)
 				
 				local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
 				mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',4,0,"' .. mysql:escape_string(reason) .. '")' )
@@ -2125,7 +2125,7 @@ function toggleFreecam(thePlayer)
             exports.freecam:setPlayerFreecamDisabled (thePlayer)
         else
 			removePedFromVehicle(thePlayer)
-            setElementData(thePlayer, "reconx", 0)
+            exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", 0)
             setElementAlpha(thePlayer, 0)
             setPedFrozen(thePlayer, true)
             exports.freecam:setPlayerFreecamEnabled (thePlayer)
@@ -2160,14 +2160,14 @@ function toggleInvisibility(thePlayer)
 		local enabled = getElementData(thePlayer, "invisible")
 		if (enabled == true) then
 			setElementAlpha(thePlayer, 255)
-			setElementData(thePlayer, "reconx", false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", false)
 			outputChatBox("You are now visible.", thePlayer, 255, 0, 0)
-			setElementData(thePlayer, "invisible", false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "invisible", false)
 		else
 			setElementAlpha(thePlayer, 0)
-			setElementData(thePlayer, "reconx", true)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", true)
 			outputChatBox("You are now invisible.", thePlayer, 0, 255, 0)
-			setElementData(thePlayer, "invisible", true)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "invisible", true)
 		end
 	end
 end
@@ -2181,11 +2181,11 @@ function toggleMyNametag(thePlayer)
 	if exports.global:isPlayerAdmin(thePlayer) then
 		if (visible == true) then
 			setPlayerNametagShowing(thePlayer, false)
-			setElementData(thePlayer, "reconx", false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", false)
 			outputChatBox("Your nametag is now visible.", thePlayer, 255, 0, 0)
 		else
 			setPlayerNametagShowing(thePlayer, false)
-			setElementData(thePlayer, "reconx", true)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", true)
 			outputChatBox("Your nametag is now hidden.", thePlayer, 0, 255, 0)
 		end
 	end
@@ -2221,7 +2221,7 @@ function resetCharacter(thePlayer, commandName, ...)
 				
 				-- un-rent all interiors
 				local old = getElementData( thePlayer, "dbid" )
-				setElementData( thePlayer, "dbid", charid )
+				exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "dbid", charid )
 				local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. charid .. " AND type != 2" )
 				if result then
 					local continue = true
@@ -2233,7 +2233,7 @@ function resetCharacter(thePlayer, commandName, ...)
 						call( getResourceFromName( "interior-system" ), "publicSellProperty", thePlayer, id, false, false )
 					end
 				end
-				setElementData( thePlayer, "dbid", old )
+				exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "dbid", old )
 				
 				-- get rid of all items, give him default items back
 				mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. charid )
@@ -2388,7 +2388,7 @@ function givePlayerLicense(thePlayer, commandName, targetPlayerName, licenseType
 					if getElementData(targetPlayer, "license."..licenseType) == 1 then
 						outputChatBox(getPlayerName(thePlayer).." has already a "..licenseTypeOutput.." license.", thePlayer, 255, 255, 0)
 					else
-						setElementData(targetPlayer, "license."..licenseType, 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license."..licenseType, 1)
 						mysql:query_free("UPDATE characters SET "..licenseType.."_license='1' WHERE id = "..getElementData(targetPlayer, "dbid").." LIMIT 1")
 						outputChatBox("Player "..targetPlayerName.." now has a "..licenseTypeOutput.." license.", thePlayer, 0, 255, 0)
 						outputChatBox("Admin "..getPlayerName(thePlayer):gsub("_"," ").." gives you a "..licenseTypeOutput.." license.", targetPlayer, 0, 255, 0)
@@ -2552,7 +2552,7 @@ function vehicleLimit(admin, command, player, limit)
 						if (newl>0) then
 							mysql:query_free("UPDATE characters SET maxvehicles = " .. newl .. " WHERE id = " .. getElementData(tplayer, "dbid"))
 
-							setElementData(tplayer, "maxvehicles", newl)
+							exports['anticheat-system']:changeProtectedElementDataEx(tplayer, "maxvehicles", newl)
 							
 							outputChatBox("You have set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit to " .. newl .. ".", admin, 255, 194, 14)
 							outputChatBox("Admin " .. getPlayerName(admin):gsub("_"," ") .. " has set your vehicle limit to " .. newl .. ".", tplayer, 255, 194, 14)

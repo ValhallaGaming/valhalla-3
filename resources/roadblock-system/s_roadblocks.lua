@@ -7,7 +7,7 @@ function roadblockCreateWorldObject(objectid, tempObjectPosX, tempObjectPosY, te
 		for i = 1, maxroadblocks do
 			if (roadblocksarr[i]==nil) then
 				roadblocksarr[i] = createObject ( objectid, tempObjectPosX, tempObjectPosY, tempObjectPosZ, 0, 0, tempObjectPosRot )
-				setElementData(roadblocksarr[i], "roadblock", "1", false)
+				exports['anticheat-system']:changeProtectedElementDataEx(roadblocksarr[i], "roadblock", "1", false)
 				setElementInterior ( roadblocksarr[i], getElementInterior ( source ) )
 				setElementDimension ( roadblocksarr[i], getElementDimension ( source ) )
 				slot = i

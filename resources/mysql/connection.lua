@@ -1,7 +1,7 @@
 -- connection settings
 local hostname = get( "hostname" ) or "localhost"
-local username = get( "username" ) or "mta"
-local password = get( "password" ) or ""
+local username = get( "username" ) or "root"
+local password = get( "password" ) or "rewt"
 local database = get( "mta" ) or "mta"
 local port = tonumber( get( "port" ) ) or 3306
 

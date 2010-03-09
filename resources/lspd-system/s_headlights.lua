@@ -1,4 +1,4 @@
 function vehicleBlown()
-	setElementData(source, "flashers", nil, true)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "flashers", nil, true)
 end
 addEventHandler("onVehicleRespawn", getRootElement(), vehicleBlown)

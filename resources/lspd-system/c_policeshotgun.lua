@@ -11,11 +11,11 @@ function switchModex()
 	if isPD() and (getPedWeapon(localPlayer)==25) and (getPedTotalAmmo(localPlayer)>0) then -- has an un-empty Shotgun
 		local mode = getElementData(localPlayer, "shotgunmode")
 		if mode == 0 then -- bean bag
-			setElementData(localPlayer, "shotgunmode", 1, true)
+			triggerServerEvent("shotgunmode", localPlayer, 1)
 			outputChatBox( "You switched your shotgun mode to Lethal mode", 0, 255, 0 )
 		elseif mode == 1 then -- lethal gun mode
 			outputChatBox( "You switched your shotgun mode to Beanbag mode", 0, 255, 0 )
-			setElementData(localPlayer, "shotgunmode", 0, true)
+			triggerServerEvent("shotgunmode", localPlayer, 0)
 		end
 		triggerServerEvent("sendLocalMeAction", localPlayer, localPlayer, "switches the mode on their shotgun")
 	end
@@ -25,7 +25,7 @@ function bindKeysX(res)
 	bindKey("n", "down", switchModex)
 	
 	local mode = getElementData(localPlayer, "shotgunmode")
-	if not (mode) then setElementData(localPlayer, "shotgunmode", 0, true) end
+	if not (mode) then triggerServerEvent("shotgunmode", localPlayer, 0) end
 end
 addEventHandler("onClientResourceStart", getResourceRootElement(), bindKeysX)
 

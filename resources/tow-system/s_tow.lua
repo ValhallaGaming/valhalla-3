@@ -72,8 +72,8 @@ function UnlockVehicle(element, matchingdimension)
 					if (source == towSphere2) then
 						--PD make sure its not marked as impounded so it cannot be recovered and unlock/undp it
 						setVehicleLocked(temp, false)
-						setElementData(temp, "Impounded", 0)
-						setElementData(temp, "enginebroke", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(temp, "Impounded", 0)
+						exports['anticheat-system']:changeProtectedElementDataEx(temp, "enginebroke", 0, false)
 						setVehicleDamageProof(temp, false)
 						setVehicleEngineState(temp, false)
 						outputChatBox("((Please remember to /park and /handbrake your vehicle in our car park.))", getVehicleOccupant(element), 255, 194, 14)
@@ -81,9 +81,9 @@ function UnlockVehicle(element, matchingdimension)
 						if (getElementData(temp, "faction") ~= 30) then
 							if (impounded == 0) then
 								--unlock it and impound it
-								setElementData(temp, "Impounded", getRealTime().yearday)
+								exports['anticheat-system']:changeProtectedElementDataEx(temp, "Impounded", getRealTime().yearday)
 								setVehicleLocked(temp, false)
-								setElementData(temp, "enginebroke", 1, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(temp, "enginebroke", 1, false)
 								setVehicleEngineState(temp, false)
 								outputChatBox("((Please remember to /park and /handbrake your vehicle in our car park.))", getVehicleOccupant(element), 255, 194, 14)
 							end
@@ -113,8 +113,8 @@ function setbikeimpound(player, matchingDimension)
 						if (source == towSphere2) then
 							--PD make sure its not marked as impounded so it cannot be recovered and unlock/undp it
 							setVehicleLocked(veh, false)
-							setElementData(veh, "Impounded", 0)
-							setElementData(veh, "enginebroke", 0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", 0)
+							exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
 							setVehicleDamageProof(veh, false)
 							setVehicleEngineState(veh, false)
 							outputChatBox("((Please remember to /park and /handbrake your vehicle in our car park.))", player, 255, 194, 14)
@@ -122,9 +122,9 @@ function setbikeimpound(player, matchingDimension)
 							if (tonumber(leader)==1) then
 								if (getElementData(veh, "faction") ~= 30) then
 									if (impounded == 0) then
-										setElementData(veh, "Impounded", getRealTime().yearday)
+										exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", getRealTime().yearday)
 										setVehicleLocked(veh, false)
-										setElementData(veh, "enginebroke", 1, false)
+										exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 1, false)
 										setVehicleEngineState(veh, false)
 										outputChatBox("(( The bike has been successfully impounded. ))", player, 50, 205, 50)
 										outputChatBox("((Please remember to /park and /handbrake your vehicle in our car park.))", player, 255, 194, 14)
@@ -163,11 +163,11 @@ function payRelease(vehID)
 		setElementPosition(vehID, getReleasePosition())
 		setVehicleRotation(vehID, 0, 0, 0) -- facing north
 		setVehicleLocked(vehID, true)
-		setElementData(vehID, "enginebroke", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehID, "enginebroke", 0, false)
 		setVehicleDamageProof(vehID, false)
 		setVehicleEngineState(vehID, false)
-		setElementData(vehID, "handbrake", 0, false)
-		setElementData(vehID, "Impounded", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehID, "handbrake", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehID, "Impounded", 0)
 		updateVehPos(vehID)
 		triggerEvent("parkVehicle", source, vehID)
 		outputChatBox("Your vehicle has been released. (( Please remember to /park your vehicle so it does not respawn in front of our carpark. ))", source, 255, 194, 14)
@@ -215,7 +215,7 @@ function updateVehPos(veh)
 	local dbid = getElementData(veh, "dbid")	
 	mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. dbid .. "'")
 	setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
-	setElementData(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 end
 
 function updateTowingVehicle(theTruck)
@@ -248,7 +248,7 @@ function updateTowingVehicle(theTruck)
 			-- fix for handbraked vehicles
 			local handbrake = getElementData(source, "handbrake")
 			if (handbrake == 1) then
-				setElementData(source, "handbrake",0,false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "handbrake",0,false)
 				setVehicleFrozen(source, false)
 			end
 		end

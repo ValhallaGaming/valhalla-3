@@ -77,7 +77,7 @@ function ticketPlayer(thePlayer, commandName, targetPlayerNick, amount, ...)
 						outputChatBox("You were ticketed for " .. amount .. "$ by " .. getPlayerName(thePlayer) .. ". Reason: " .. reason .. ".", targetPlayer)
 						if takeFromBank > 0 then
 							outputChatBox("Since you don't have enough money with you, $" .. takeFromBank .. " have been taken from your bank account.", targetPlayer)
-							setElementData(targetPlayer, "bankmoney", bankmoney - takeFromBank)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "bankmoney", bankmoney - takeFromBank)
 						end
 					else
 						outputChatBox("You are too far away from " .. targetPlayerName .. ".", thePlayer, 255, 0, 0)
@@ -116,7 +116,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 								mysql:query_free("UPDATE characters SET car_license='" .. -hours .. "' WHERE id=" .. getElementData(targetPlayer, "dbid") .. " LIMIT 1")
 								outputChatBox(name.." has revoked your driving license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s driving license.", thePlayer, 255, 194, 14)
-								setElementData(targetPlayer, "license.car", -hours)
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.car", -hours)
 							else
 								outputChatBox(targetPlayerName .. " does not have a driving license.", thePlayer, 255, 0, 0)
 							end
@@ -125,7 +125,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 								mysql:query_free("UPDATE characters SET gun_license='" .. -hours .. "' WHERE id=" .. getElementData(targetPlayer, "dbid") .. " LIMIT 1")
 								outputChatBox(name.." has revoked your weapon license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s weapon license.", thePlayer, 255, 194, 14)
-								setElementData(targetPlayer, "license.gun", -hours)
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.gun", -hours)
 							else
 								outputChatBox(targetPlayerName .. " does not have a weapon license.", thePlayer, 255, 0, 0)
 							end

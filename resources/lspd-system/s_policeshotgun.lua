@@ -4,7 +4,7 @@ function beanbagFired(x, y, z, target)
 
 	if (distance<35) then
 		if (isElement(target) and getElementType(target)=="player") then			
-			setElementData(target, "tazed", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(target, "tazed", 1, false)
 			toggleAllControls(target, false, true, false)
 			exports.global:applyAnimation(target, "ped", "FLOOR_hit_f", -1, false, false, true)
 			setTimer(removeAnimationX, 10005, 1, target)
@@ -20,3 +20,11 @@ function removeAnimationX(thePlayer)
 		toggleAllControls(thePlayer, true, true, true)
 	end
 end
+
+function updateShotgunMode(mode)
+	if ( tonumber(mode) and (tonumber(mode) >= 0 and tonumber(mode) <= 1) ) then
+		exports['anticheat-system']:changeProtectedElementDataEx(target, "shotgunmode", mode, true)
+	end
+end
+addEvent("shotgunmode", true)
+addEventHandler("shotgunmode", getRootElement(), updateShotgunMode)

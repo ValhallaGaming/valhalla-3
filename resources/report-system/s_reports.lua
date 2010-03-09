@@ -242,7 +242,7 @@ function handleReport(reportedPlayer, reportedReason)
 	local playerID = getElementData(source, "playerid")
 	local reportedID = getElementData(reportedPlayer, "playerid")
 	
-	setElementData(source, "report", slot)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "report", slot)
 	removeElementData(source, "reportadmin")
 	
 	local admins = exports.global:getAdmins()
@@ -453,9 +453,9 @@ function acceptReport(thePlayer, commandName, id)
 					end
 					
 					local adminreports = getElementData(thePlayer, "adminreports")
-					setElementData(thePlayer, "adminreports", adminreports+1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "adminreports", adminreports+1, false)
 					mysql:query_free("UPDATE accounts SET adminreports=adminreports+1 WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
-					setElementData(reportingPlayer, "reportadmin", thePlayer, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "reportadmin", thePlayer, false)
 					
 					local timestring = hours .. ":" .. minutes
 					local playerID = getElementData(reportingPlayer, "playerid")

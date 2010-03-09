@@ -12,8 +12,8 @@ function makeTagObject(cx, cy, cz, rot, interior, dimension)
 		
 		local id = mysql:query_insert_free("INSERT INTO tags SET x='" .. cx .. "', y='" .. cy .. "', z='" .. cz .. "', interior='" .. interior .. "', dimension='" .. dimension .. "', rx='0', ry='0', rz='" .. rot+90 .. "', modelid='" .. tags[tag] .. "', creationdate=NOW()")
 		exports.global:sendLocalMeAction(source, "tags the wall.")
-		setElementData(obj, "dbid", id, false)
-		setElementData(obj, "type", "tag")
+		exports['anticheat-system']:changeProtectedElementDataEx(obj, "dbid", id, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(obj, "type", "tag")
 		outputChatBox("You have tagged the wall!", source, 255, 194, 14)
 	else
 		local distance = 2
@@ -111,8 +111,8 @@ function loadAllTags(res)
 			exports.pool:allocateElement(object)
 			setElementInterior(object, interior)
 			setElementDimension(object, dimension)
-			setElementData(object, "dbid", id, false)
-			setElementData(object, "type", "tag")
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "type", "tag")
 			count = count + 1
 			if id > highest then
 				highest = id

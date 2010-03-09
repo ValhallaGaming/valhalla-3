@@ -9,6 +9,10 @@ sqlPort = exports.mysql:getMySQLPort()
 
 handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
 
+function hideFactionMenu()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 0, true)
+end
+
 function checkMySQL()
 	if not (mysql_ping(handler)) then
 		handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
@@ -71,9 +75,9 @@ function loadAllFactions(res)
 			
 			local theTeam = createTeam(tostring(name))
 			exports.pool:allocateElement(theTeam, id)
-			setElementData(theTeam, "type", factionType)
-			setElementData(theTeam, "money", money)
-			setElementData(theTeam, "id", id)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "type", factionType)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "money", money)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "id", id)
 			
 			local query2 = mysql_query(handler, "SELECT rank_1, rank_2, rank_3, rank_4, rank_5, rank_6, rank_7, rank_8, rank_9, rank_10, rank_11, rank_12, rank_13, rank_14, rank_15 FROM factions WHERE id='" .. id .. "' LIMIT 1")
 			local query3 = mysql_query(handler, "SELECT wage_1, wage_2, wage_3, wage_4, wage_5, wage_6, wage_7, wage_8, wage_9, wage_10, wage_11, wage_12, wage_13, wage_14, wage_15, motd FROM factions WHERE id='" .. id .. "' LIMIT 1")
@@ -87,9 +91,9 @@ function loadAllFactions(res)
 				factionWages[k] = tonumber(v)
 			end
 			local motd = mysql_result(query3, 1, 16)
-			setElementData(theTeam, "ranks", factionRanks, false)
-			setElementData(theTeam, "wages", factionWages, false)
-			setElementData(theTeam, "motd", motd, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "ranks", factionRanks, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "wages", factionWages, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", motd, false)
 								
 			mysql_free_result(query2)
 			mysql_free_result(query3)
@@ -110,8 +114,8 @@ function loadAllFactions(res)
 			if (result) then
 				local factionID = tonumber(mysql_result(result, 1, 1))
 
-				setElementData(thePlayer, "factionMenu", 0)
-				setElementData(thePlayer, "faction", factionID)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionMenu", 0)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", factionID)
 				
 				mysql_free_result(result)
 				if (factionID) then
@@ -217,7 +221,7 @@ function showFactionMenu(source)
 						end
 						i = i + 1
 					end
-					setElementData(source, "factionMenu", 1)
+					exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 1)
 					mysql_free_result(query)
 					
 					local theTeam = getPlayerTeam(source)
@@ -248,12 +252,12 @@ function callbackUpdateRanks(ranks, wages)
 		
 		local update = mysql_query(handler, "UPDATE factions SET wage_1='" .. wages[1] .. "', wage_2='" .. wages[2] .. "', wage_3='" .. wages[3] .. "', wage_4='" .. wages[4] .. "', wage_5='" .. wages[5] .. "', wage_6='" .. wages[6] .. "', wage_7='" .. wages[7] .. "', wage_8='" .. wages[8] .. "', wage_9='" .. wages[9] .. "', wage_10='" .. wages[10] .. "', wage_11='" .. wages[11] .. "', wage_12='" .. wages[12] .. "', wage_13='" .. wages[13] .. "', wage_14='" .. wages[14] .. "', wage_15='" .. wages[15] .. "' WHERE id='" .. factionID .. "'")
 		mysql_free_result(update)
-		setElementData(theTeam, "wages", wages, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "wages", wages, false)
 	end
 	
 	local query = mysql_query(handler, "UPDATE factions SET rank_1='" .. ranks[1] .. "', rank_2='" .. ranks[2] .. "', rank_3='" .. ranks[3] .. "', rank_4='" .. ranks[4] .. "', rank_5='" .. ranks[5] .. "', rank_6='" .. ranks[6] .. "', rank_7='" .. ranks[7] .. "', rank_8='" .. ranks[8] .. "', rank_9='" .. ranks[9] .. "', rank_10='" .. ranks[10] .. "', rank_11='" .. ranks[11] .. "', rank_12='" .. ranks[12] .. "', rank_13='" .. ranks[13] .. "', rank_14='" .. ranks[14] .. "', rank_15='" .. ranks[15] .. "' WHERE id='" .. factionID .. "'")
 	mysql_free_result(query)
-	setElementData(theTeam, "ranks", ranks, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "ranks", ranks, false)
 	
 	outputChatBox("Faction information updated successfully.", source, 0, 255, 0)
 	showFactionMenu(source)
@@ -285,7 +289,7 @@ function callbackRespawnVehicles()
 		end
 
 		setTimer(resetFactionCooldown, 600000, 1, theTeam)
-		setElementData(theTeam, "cooldown", true, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "cooldown", true, false)
 	else
 		outputChatBox("You currently cannot respawn your factions vehicles, Please wait a while.", source, 255, 0, 0)
 	end
@@ -308,7 +312,7 @@ function callbackUpdateMOTD(motd)
 		if (query) then
 			mysql_free_result(query)
 			outputChatBox("You changed your faction's MOTD to '" .. motd .. "'", source, 0, 255, 0)
-			setElementData(theTeam, "motd", safemotd, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", safemotd, false)
 		else
 			outputChatBox("Error 300000 - Ensure your MOTD does not include characters such as '@!,.", source, 255, 0, 0)
 		end
@@ -341,12 +345,12 @@ function callbackRemovePlayer(removedPlayerName)
 			end
 			outputChatBox(username .. " removed you from the faction '" .. tostring(theTeamName) .. "'", removedPlayer)
 			setPlayerTeam(removedPlayer, getTeamFromName("Citizen"))
-			setElementData(removedPlayer, "faction", -1, false)
-			setElementData(removedPlayer, "dutyskin", -1, false)
-			setElementData(removedPlayer, "factionleader", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "faction", -1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "dutyskin", -1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "factionleader", 0, false)
 			if getElementData(removedPlayer, "duty") and getElementData(removedPlayer, "duty") > 0 then
 				exports.global:takeAllWeapons(removedPlayer)
-				setElementData(removedPlayer, "duty", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "duty", 0, false)
 			end
 		end
 		
@@ -385,7 +389,7 @@ function callbackToggleLeader(playerName, isLeader)
 			
 			local thePlayer = getPlayerFromName(playerName)
 			if(thePlayer) then -- Player is online, tell them
-				setElementData(thePlayer, "factionleader", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", 1, false)
 			end
 		else
 			outputChatBox("Failed to promote " .. removedPlayerName .. " to faction leader, Contact an admin.", source, 255, 0, 0)
@@ -405,7 +409,7 @@ function callbackToggleLeader(playerName, isLeader)
 				if (getElementData(source, "factionMenu")==1) then
 					triggerClientEvent(thePlayer, "hideFactionMenu", getRootElement())
 				end
-				setElementData(thePlayer, "factionleader", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", 0, false)
 			end
 			
 			-- Send message to everyone in the faction
@@ -432,7 +436,7 @@ function callbackPromotePlayer(playerName, rankNum, oldRank, newRank)
 		mysql_free_result(query)
 		local thePlayer = getPlayerFromName(playerName)
 		if(thePlayer) then -- Player is online, set his rank
-			setElementData(thePlayer, "factionrank", rankNum)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", rankNum)
 		end
 		
 		-- Send message to everyone in the faction
@@ -460,7 +464,7 @@ function callbackDemotePlayer(playerName, rankNum, oldRank, newRank)
 		mysql_free_result(query)
 		local thePlayer = getPlayerFromName(playerName)
 		if(thePlayer) then -- Player is online, tell them
-			setElementData(thePlayer, "factionrank", rankNum)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", rankNum)
 		end
 		
 		-- Send message to everyone in the faction
@@ -492,11 +496,11 @@ function callbackQuitFaction()
 		
 		local newTeam = getTeamFromName("Citizen")
 		setPlayerTeam(source, newTeam)
-		setElementData(source, "faction", -1, false)
-		setElementData(source, "dutyskin", -1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "faction", -1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "dutyskin", -1, false)
 		if getElementData(source, "duty") and getElementData(source, "duty") > 0 then
 			exports.global:takeAllWeapons(source)
-			setElementData(source, "duty", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "duty", 0, false)
 		end
 		
 		-- Send message to everyone in the faction
@@ -533,13 +537,13 @@ function callbackInvitePlayer(invitedPlayer)
 			outputChatBox("Player is already in a faction.", source, 255, 0, 0)
 		else
 			setPlayerTeam(invitedPlayer, theTeam)
-			setElementData(invitedPlayer, "faction", faction)
+			exports['anticheat-system']:changeProtectedElementDataEx(invitedPlayer, "faction", faction)
 			outputChatBox("Player " .. invitedPlayerNick .. " is now a member of faction '" .. tostring(theTeamName) .. "'.", source, 0, 255, 0)
 							
 			if	(invitedPlayer) then
 				triggerEvent("onPlayerJoinFaction", invitedPlayer, theTeam)
-				setElementData(invitedPlayer, "factionrank", 1)
-				setElementData(invitedPlayer, "dutyskin", -1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(invitedPlayer, "factionrank", 1)
+				exports['anticheat-system']:changeProtectedElementDataEx(invitedPlayer, "dutyskin", -1, false)
 				outputChatBox("You were set to Faction '" .. tostring(theTeamName) .. ".", invitedPlayer, 255, 194, 14)
 			end
 		end
@@ -571,9 +575,9 @@ function createFaction(thePlayer, commandName, factionType, ...)
 					query = mysql_query(handler, "UPDATE factions SET rank_1='Dynamic Rank #1', rank_2='Dynamic Rank #2', rank_3='Dynamic Rank #3', rank_4='Dynamic Rank #4', rank_5='Dynamic Rank #5', rank_6='Dynamic Rank #6', rank_7='Dynamic Rank #7', rank_8='Dynamic Rank #8', rank_9='Dynamic Rank #9', rank_10='Dynamic Rank #10', rank_11='Dynamic Rank #11', rank_12='Dynamic Rank #12', rank_13='Dynamic Rank #13', rank_14='Dynamic Rank #14', rank_15='Dynamic Rank #15', motd='Welcome to the faction.' WHERE id='" .. id .. "'")
 					mysql_free_result(query)
 					outputChatBox("Faction " .. factionName .. " created with ID #" .. id .. ".", thePlayer, 0, 255, 0)
-					setElementData(theTeam, "type", tonumber(factionType))
-					setElementData(theTeam, "id", tonumber(id))
-					setElementData(theTeam, "money", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "type", tonumber(factionType))
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "id", tonumber(id))
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "money", 0)
 					
 					local factionRanks = {}
 					local factionWages = {}
@@ -581,9 +585,9 @@ function createFaction(thePlayer, commandName, factionType, ...)
 						factionRanks[i] = "Dynamic Rank #" .. i
 						factionWages[i] = 100
 					end
-					setElementData(theTeam, "ranks", factionRanks, false)
-					setElementData(theTeam, "wages", factionWages, false)
-					setElementData(theTeam, "motd", "Welcome to the faction.", false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "ranks", factionRanks, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "wages", factionWages, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", "Welcome to the faction.", false)
 				else
 					destroyElement(theTeam)
 					outputChatBox("Error creating faction.", thePlayer, 255, 0, 0)
@@ -645,12 +649,12 @@ function adminSetPlayerFaction(thePlayer, commandName, partialNick, factionID)
 				
 					setPlayerTeam(targetPlayer, theTeam)
 					if factionID > 0 then
-						setElementData(targetPlayer, "faction", factionID)
-						setElementData(targetPlayer, "factionrank", 1)
-						setElementData(targetPlayer, "dutyskin", -1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "faction", factionID)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "factionrank", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "dutyskin", -1, false)
 						if getElementData(targetPlayer, "duty") and getElementData(targetPlayer, "duty") > 0 then
 							exports.global:takeAllWeapons(targetPlayer)
-							setElementData(targetPlayer, "duty", 0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "duty", 0, false)
 						end
 						
 						outputChatBox("Player " .. targetPlayerNick .. " is now a member of faction '" .. getTeamName(theTeam) .. "' (#" .. factionID .. ").", thePlayer, 0, 255, 0)
@@ -660,12 +664,12 @@ function adminSetPlayerFaction(thePlayer, commandName, partialNick, factionID)
 						
 						exports.logs:logMessage("[FACTION] " .. getPlayerName( thePlayer ) .. " set " .. getPlayerName( targetPlayer ) .. " to faction " .. getTeamName(theTeam) .. " (#" .. factionID .. ")", 15)
 					else
-						setElementData(targetPlayer, "faction", -1)
-						setElementData(targetPlayer, "factionrank", 1)
-						setElementData(targetPlayer, "dutyskin", -1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "faction", -1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "factionrank", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "dutyskin", -1, false)
 						if getElementData(targetPlayer, "duty") and getElementData(targetPlayer, "duty") > 0 then
 							exports.global:takeAllWeapons(targetPlayer)
-							setElementData(targetPlayer, "duty", 0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "duty", 0, false)
 						end
 						
 						outputChatBox("Player " .. targetPlayerNick .. " was set to no faction.", thePlayer, 0, 255, 0)
@@ -700,12 +704,12 @@ function adminSetFactionLeader(thePlayer, commandName, partialNick, factionID)
 				if (query) then
 					mysql_free_result(query)
 					setPlayerTeam(targetPlayer, theTeam)
-					setElementData(targetPlayer, "faction", factionID, false)
-					setElementData(targetPlayer, "factionrank", 1)
-					setElementData(targetPlayer, "dutyskin", -1, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "faction", factionID, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "factionrank", 1)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "dutyskin", -1, false)
 					if getElementData(targetPlayer, "duty") and getElementData(targetPlayer, "duty") > 0 then
 						exports.global:takeAllWeapons(targetPlayer)
-						setElementData(targetPlayer, "duty", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "duty", 0, false)
 					end
 					
 					outputChatBox("Player " .. targetPlayerNick .. " is now a leader of faction '" .. getTeamName(theTeam) .. "' (#" .. factionID .. ").", thePlayer, 0, 255, 0)
@@ -745,7 +749,7 @@ function adminDeleteFaction(thePlayer, commandName, factionID)
 						local civTeam = getTeamFromName("Citizen")
 						for key, value in pairs( getPlayersInTeam( theTeam ) ) do
 							setPlayerTeam( value, civTeam )
-							setElementData( value, "faction", -1 )
+							exports['anticheat-system']:changeProtectedElementDataEx( value, "faction", -1 )
 						end
 						destroyElement( theTeam )
 					end
@@ -981,7 +985,7 @@ function payWage(player, pay, faction, tax)
 	
 	-- business money
 	local profit = getElementData(player, "businessprofit")
-	setElementData(player, "businessprofit", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "businessprofit", 0, false)
 	bankmoney = bankmoney + math.max( 0, pay ) + interest + profit + donatormoney
 
 	
@@ -1064,7 +1068,7 @@ function payWage(player, pay, faction, tax)
 	end
 
 	-- save the bankmoney
-	setElementData(player, "bankmoney", bankmoney)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "bankmoney", bankmoney)
 	
 	local grossincome = pay+profit+interest+donatormoney-rent-vtax-ptax
 		
@@ -1128,11 +1132,11 @@ function payAllWages(timer)
 		if (logged==1) and (timeinserver>=60) then
 			mysql_free_result( mysql_query( handler, "UPDATE characters SET jobcontract = jobcontract - 1 WHERE id = " .. getElementData( value, "dbid" ) .. " AND jobcontract > 0" ) )
 			if getElementData(value, "license.car") and getElementData(value, "license.car") < 0 then
-				setElementData(value, "license.car", getElementData(value, "license.car") + 1)
+				exports['anticheat-system']:changeProtectedElementDataEx(value, "license.car", getElementData(value, "license.car") + 1)
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET car_license = car_license + 1 WHERE id = " .. getElementData( value, "dbid" ) ) )
 			end
 			if getElementData(value, "license.gun") and getElementData(value, "license.gun") < 0 then
-				setElementData(value, "license.gun", getElementData(value, "license.gun") + 1)
+				exports['anticheat-system']:changeProtectedElementDataEx(value, "license.gun", getElementData(value, "license.gun") + 1)
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET gun_license = gun_license + 1 WHERE id = " .. getElementData( value, "dbid" ) ) )
 			end
 			local playerFaction = getElementData(value, "faction")
@@ -1175,10 +1179,10 @@ function payAllWages(timer)
 				govAmount = govAmount + payWage( value, unemployedPay, false, 0 )
 			end
 			
-			setElementData(value, "timeinserver", timeinserver-60, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(value, "timeinserver", timeinserver-60, false)
 
 			local hoursplayed = getElementData(value, "hoursplayed") or 0
-			setElementData(value, "hoursplayed", hoursplayed+1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(value, "hoursplayed", hoursplayed+1, false)
 			mysql_free_result( mysql_query( handler, "UPDATE characters SET hoursplayed = hoursplayed + 1, bankmoney = " .. getElementData( value, "bankmoney" ) .. " WHERE id = " .. getElementData( value, "dbid" ) ) )
 		elseif (logged==1) and (timeinserver) and (timeinserver<60) then
 			outputChatBox("You have not played long enough to recieve a payday. (You require another " .. 60-timeinserver .. " Minutes of play.)", value, 255, 0, 0)

@@ -7,7 +7,7 @@ local function saveGuns()
 			weapons[weapon] = ammo
 		end
 	end
-	setElementData(getLocalPlayer(),"dutyguns",weapons,true)
+	triggerServerEvent("storeDutyGuns", getLocalPlayer(), weapons)
 end
 
 addEvent("saveGunsDuty", true)

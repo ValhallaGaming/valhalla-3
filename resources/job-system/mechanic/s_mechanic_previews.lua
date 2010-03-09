@@ -1,7 +1,7 @@
 function previewColors( veh, color1, color2, color3, color4 )
 	if veh then
 		if not getElementData( veh, "oldcolors" ) then
-			setElementData( veh, "oldcolors", { getVehicleColor( veh ) }, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldcolors", { getVehicleColor( veh ) }, false )
 		end
 		local col = getElementData( veh, "oldcolors" )
 		color1 = color1 or col[1]
@@ -31,13 +31,13 @@ addEventHandler("colorEndPreview", getRootElement(), endColorPreview)
 function previewPaintjob( veh, paintjob )
 	if veh then
 		if not getElementData( veh, "oldpaintjob" ) then
-			setElementData( veh, "oldpaintjob", getVehiclePaintjob( veh ), false )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldpaintjob", getVehiclePaintjob( veh ), false )
 		end
 		if setVehiclePaintjob( veh, paintjob ) then
 			local col1, col2 = getVehicleColor( veh )
 			if col1 == 0 or col2 == 0 then
 				if not getElementData( veh, "oldcolors" ) then
-					setElementData( veh, "oldcolors", { getVehicleColor( veh ) }, false )
+					exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldcolors", { getVehicleColor( veh ) }, false )
 				end
 				setVehicleColor( veh, 1, 1, 1, 1 )
 			end
@@ -68,7 +68,7 @@ addEventHandler("paintjobEndPreview", getRootElement(), endPaintjobPreview)
 function previewUpgrade( veh, upgrade, slot )
 	if veh then
 		if not getElementData( veh, "oldupgrade" .. slot ) then
-			setElementData( veh, "oldupgrade" .. slot, getVehicleUpgradeOnSlot( veh, slot ), false )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldupgrade" .. slot, getVehicleUpgradeOnSlot( veh, slot ), false )
 		end
 		if addVehicleUpgrade( veh, upgrade ) then
 			setTimer(endUpgradePreview, 45000, 1, veh, slot)

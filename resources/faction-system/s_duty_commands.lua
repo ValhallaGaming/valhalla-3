@@ -96,7 +96,7 @@ function lvesHeal(thePlayer, commandName, targetPartialNick, price)
 									local takeFromBank = price - takeFromCash
 									exports.global:takeMoney(targetPlayer, takeFromCash)
 									if takeFromBank > 0 then
-										setElementData(targetPlayer, "bankmoney", bankmoney - takeFromBank)
+										exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "bankmoney", bankmoney - takeFromBank)
 									end
 									
 									local tax = exports.global:getTaxAmount()
@@ -182,7 +182,7 @@ function lvesduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their uniform from their locker.")
 						
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						
@@ -193,7 +193,7 @@ function lvesduty(thePlayer, commandName)
 						exports.global:giveItem(thePlayer, 70, 7) -- first aid kit
 						setElementModel(thePlayer, dutyskin)
 						
-						setElementData(thePlayer, "duty", 4, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 4, false)
 						
 						saveSkin(thePlayer)
 					end
@@ -201,7 +201,7 @@ function lvesduty(thePlayer, commandName)
 					restoreWeapons(thePlayer)
 					outputChatBox("You are now off Medic Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their uniform into their locker.")
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -230,7 +230,7 @@ function govduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "takes their uniform from their locker.")
 						
 					
-					if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 					end
 					
@@ -242,7 +242,7 @@ function govduty(thePlayer, commandName)
 					exports.global:giveWeapon(thePlayer, 22, 30) -- colt 45
 					exports.global:giveWeapon(thePlayer, 41, 1000) -- pepper spray
 					
-					setElementData(thePlayer, "duty", 7, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 7, false)
 						
 					saveSkin(thePlayer)
 				elseif (duty==7) then -- gov
@@ -251,7 +251,7 @@ function govduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "puts their uniform into their locker.")
 					exports.global:takeItem(thePlayer, 46)
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -284,7 +284,7 @@ function lvfdduty(thePlayer, commandName)
 						outputChatBox("You are now on Firefighter Duty.", thePlayer)
 						exports.global:sendLocalMeAction(thePlayer, "takes their firefighter gear from their locker.")
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						
@@ -297,7 +297,7 @@ function lvfdduty(thePlayer, commandName)
 						exports.global:giveItem(thePlayer, 70, 3) -- first aid kit
 						setElementModel(thePlayer, dutyskin)
 						
-						setElementData(thePlayer, "duty", 5, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 5, false)
 						
 						saveSkin(thePlayer)
 					end
@@ -305,7 +305,7 @@ function lvfdduty(thePlayer, commandName)
 					restoreWeapons(thePlayer)
 					outputChatBox("You are now off Firefighter Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their firefighter gear into their locker.")
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -352,7 +352,7 @@ function swatduty(thePlayer, commandName)
 						outputChatBox("You are now on SWAT Duty.", thePlayer)
 						exports.global:sendLocalMeAction(thePlayer, "takes their swat gear from their locker.")
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						
@@ -376,7 +376,7 @@ function swatduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, 285)
 						
-						setElementData(thePlayer, "duty", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 1, false)
 						
 						saveSkin(thePlayer)
 					else
@@ -387,7 +387,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -403,7 +403,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -415,7 +415,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -449,7 +449,7 @@ function policeduty(thePlayer, commandName)
 						outputChatBox("You are now on Police Duty.", thePlayer)
 						exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						
@@ -468,7 +468,7 @@ function policeduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						setElementData(thePlayer, "duty", 2, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 2, false)
 						
 						saveSkin(thePlayer)
 					end
@@ -477,7 +477,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -493,7 +493,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -505,7 +505,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -539,7 +539,7 @@ function cadetduty(thePlayer, commandName)
 						outputChatBox("You are now on Cadet Duty.", thePlayer)
 						exports.global:sendLocalMeAction(thePlayer, "takes their cadet gear from their locker.")
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						
@@ -556,7 +556,7 @@ function cadetduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						setElementData(thePlayer, "duty", 3, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 3, false)
 						
 						saveSkin(thePlayer)
 					end
@@ -565,7 +565,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -581,7 +581,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -593,7 +593,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -627,7 +627,7 @@ function fbiduty(thePlayer, commandName)
 						outputChatBox("You are now on FBI Duty.", thePlayer)
 						exports.global:sendLocalMeAction(thePlayer, "takes their FBI gear from their locker.")
 						
-						if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 						end
 						saveWeaponsOnDuty(thePlayer)
@@ -640,7 +640,7 @@ function fbiduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						setElementData(thePlayer, "duty", 6, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 6, false)
 						
 						saveSkin(thePlayer)
 					end
@@ -649,7 +649,7 @@ function fbiduty(thePlayer, commandName)
 					outputChatBox("You are now off FBI duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their FBI gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -659,7 +659,7 @@ function fbiduty(thePlayer, commandName)
 				else
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					saveSkin(thePlayer)
 				end
 			end
@@ -739,7 +739,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now on Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 					
-					if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 					end
 					
@@ -753,7 +753,7 @@ function sacfduty(thePlayer, commandName)
 					
 					setElementModel(thePlayer, 71)
 					
-					setElementData(thePlayer, "duty", 9, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 9, false)
 					
 					saveSkin(thePlayer)
 				elseif (duty==9) then
@@ -761,7 +761,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -788,7 +788,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now on Cert Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 					
-					if setElementData(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
 						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
 					end
 					
@@ -804,7 +804,7 @@ function sacfduty(thePlayer, commandName)
 					
 					setElementModel(thePlayer, 285)
 					
-					setElementData(thePlayer, "duty", 10, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 10, false)
 					
 					saveSkin(thePlayer)
 				elseif (duty==10) then
@@ -812,7 +812,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now off Cert duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					setElementData(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)

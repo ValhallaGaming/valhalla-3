@@ -36,7 +36,7 @@ local function addInterior( vehicle, targetx, targety, targetz, targetinterior )
 	setElementInterior( intpickup, targetinterior )
 	
 	vehicles[ vehicle ] = intpickup
-	setElementData( vehicle, "entrance", true )
+	exports['anticheat-system']:changeProtectedElementDataEx( vehicle, "entrance", true )
 end
 
 -- exported, called when a vehicle is created

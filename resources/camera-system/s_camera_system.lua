@@ -26,7 +26,7 @@ function monitorSpeed(element, matchingDimension)
 		local thePlayer = getVehicleOccupant(element)
 		if thePlayer then
 			local timer = setTimer(checkSpeed, 200, 40, element, thePlayer, source)
-			setElementData(thePlayer, "cameratimer", timer, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cameratimer", timer, false)
 		end
 	end
 end

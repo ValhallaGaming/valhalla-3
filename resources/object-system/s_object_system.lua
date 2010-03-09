@@ -22,7 +22,7 @@ function createNewObject(thePlayer, commandName, modelid)
 				if (object) then
 					setElementInterior(object, interior)
 					setElementDimension(object, dimension)
-					setElementData(object, "dbid", id, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(object, "dbid", id, false)
 					
 					outputChatBox("Object " .. modelid .. " spawned with ID #" .. id .. ".", thePlayer, 0, 255, 0)
 					exports.logs:logMessage("[/addobject] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." made object " .. id .." (model " .. modelid .. ")", 4)
@@ -66,7 +66,7 @@ function loadAllObjects(res)
 				exports.pool:allocateElement(object)
 				setElementInterior(object, interior)
 				setElementDimension(object, dimension)
-				setElementData(object, "dbid", id, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(object, "dbid", id, false)
 					
 				count = count + 1
 			end

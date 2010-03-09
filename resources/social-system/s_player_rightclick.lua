@@ -86,9 +86,9 @@ function restrainPlayer(player, restrainedObj)
 	
 	outputChatBox("You have been restrained by " .. username .. ".", player)
 	outputChatBox("You are restraining " .. targetPlayerName .. ".", source)
-	setElementData(player, "restrain", 1)
-	setElementData(player, "restrainedObj", restrainedObj)
-	setElementData(player, "restrainedBy", getElementData(source, "dbid"), false)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrain", 1)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedObj", restrainedObj)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedBy", getElementData(source, "dbid"), false)
 	mysql:query_free("UPDATE characters SET cuffed = 1, restrainedby = " .. getElementData(source, "dbid") .. ", restrainedobj = " .. restrainedObj .. " WHERE id = " .. dbid )
 	
 	exports.global:takeItem(source, restrainedObj)
@@ -111,7 +111,7 @@ function unrestrainPlayer(player, restrainedObj)
 	
 	setTimer(toggleCuffs, 200, 1, false, player)
 	
-	setElementData(player, "restrain", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrain", 0)
 	removeElementData(player, "restrainedBy")
 	removeElementData(player, "restrainedObj")
 	
@@ -136,7 +136,7 @@ function blindfoldPlayer(player)
 	outputChatBox("You blindfolded " .. targetPlayerName .. ".", source)
 	
 	exports.global:takeItem(source, 66) -- take their blindfold
-	setElementData(player, "blindfold", 1)
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "blindfold", 1)
 	mysql:query_free("UPDATE characters SET blindfold = 1 WHERE id = " .. getElementData( player, "dbid" ) )
 	fadeCamera(player, false)
 end

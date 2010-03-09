@@ -10,7 +10,7 @@ function tazerFired(x, y, z, target)
 				end
 			end
 			
-			setElementData(target, "tazed", 1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(target, "tazed", 1, false)
 			toggleAllControls(target, false, true, false)
 			exports.global:applyAnimation(target, "ped", "FLOOR_hit_f", -1, false, false, true)
 			setTimer(removeAnimation, 10005, 1, target)
@@ -26,3 +26,11 @@ function removeAnimation(thePlayer)
 		toggleAllControls(thePlayer, true, true, true)
 	end
 end
+
+function updateDeagleMode(mode)
+	if ( tonumber(mode) and (tonumber(mode) >= 0 and tonumber(mode) <= 2) ) then
+		exports['anticheat-system']:changeProtectedElementDataEx(target, "deaglemode", mode, true)
+	end
+end
+addEvent("deaglemode", true)
+addEventHandler("deaglemode", getRootElement(), updateDeagleMode)

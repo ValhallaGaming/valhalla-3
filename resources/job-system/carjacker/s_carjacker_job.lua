@@ -5,6 +5,13 @@ function createTimer(res)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), createTimer)
 
+-- UNSAFE
+function setMissionModel(vehicleID)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "missionModel", vehicleID, true)
+end
+addEvent("setMissionModel", true)
+addEventHandler("setMissionModel", getLocalPlayer(), setMissionModel)
+
 function selectPlayer()
 	-- get a random player
 	local theChosenOne = getRandomPlayer()
@@ -83,7 +90,7 @@ function dropOffCar()
 				exports.global:sendLocalText(thePlayer, "Hunter says: Thanks, man. Here's $" .. profit .. " for the car. I'll call you again soon.", nil, nil, nil, 20)
 				
 				-- cleanup
-				setElementData(thePlayer, "realinvehicle", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
 				removePedFromVehicle(thePlayer, vehicle)
 				
 				

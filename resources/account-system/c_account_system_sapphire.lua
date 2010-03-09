@@ -166,7 +166,7 @@ function showTutorial()
 	local thePlayer = getLocalPlayer()
 
 	-- set the player to not logged in so they don't see any other random chat
-	setElementData(thePlayer, "loggedin", 0)
+	triggerServerEvent("player:loggedout", getLocalPlayer())
 		
 	-- if the player hasn't got an element data, set it to 1
 	if not (getElementData(thePlayer, "tutorialStage")) then
@@ -281,7 +281,7 @@ function endTutorial()
 	local thePlayer = getLocalPlayer()
 	
 	-- set the player to not logged in so they don't see the chat
-	setElementData(thePlayer, "loggedin", 0)
+	triggerServerEvent("player:loggedout", getLocalPlayer())
 	toggleAllControls(false)
 			
 	
@@ -1628,7 +1628,7 @@ function changeAccount(button, state)
 		createMainUI(getThisResource(), true)
 		--destroyElement(bChangeAccount)
 		--bChangeAccount = nil
-		setElementData(getLocalPlayer(), "gameaccountloggedin", 0, true)
+		triggerServerEvent("account:loggedout", getLocalPlayer())
 	end
 end
 
@@ -1765,7 +1765,7 @@ function changeCharacter(button, state)
 		showCursor(false)
 		triggerEvent("onClientChangeChar", getLocalPlayer())
 		triggerServerEvent("sendAccounts", getLocalPlayer(), getLocalPlayer(), id, true)
-		setElementData(getLocalPlayer(), "loggedin", 0, true)
+		triggerServerEvent("player:loggedout", getLocalPlayer())
 	end
 end
 
@@ -3781,19 +3781,6 @@ end
 addCommandHandler("tognametags", toggleNametags)
 addCommandHandler("togglenametags", toggleNametags)
 
---[[
-function updateTimeInServer()
-	local logged = getElementData(getLocalPlayer(), "loggedin")
-	
-	if (logged==1) then
-		local timeinserver = getElementData(getLocalPlayer(), "timeinserver")
-		timeinserver = timeinserver + 1
-		setElementData(getLocalPlayer(), "timeinserver", timeinserver, true)
-	end
-end
-setTimer(updateTimeInServer, 60000, 0)
-]]--
-
 
 --/////////////////////////////////////////////////////////////////
 --DISPLAY CHARACTER EDITING
@@ -4765,8 +4752,7 @@ function selectItemFromVerticalMenu()
 		removeEventHandler("onClientRender", getRootElement(), drawBG)
 		state = 0
 		
-		setElementData(getLocalPlayer(), "loggedin", 0, true)
-		setElementData(getLocalPlayer(), "gameaccountloggedin", 0, true)
+		triggerServerEvent("accountplayer:loggedout", getLocalPlayer())
 		
 		unbindKey("arrow_l", "down", moveLeft)
 		unbindKey("arrow_r", "down", moveRight)

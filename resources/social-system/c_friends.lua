@@ -94,7 +94,7 @@ end
 
 function showFriendsUI(friends, fmess, myachievements)
 	if (fadeTimer) then return end
-	setElementData(getLocalPlayer(), "friends.visible", 1, true)
+	triggerServerEvent("showFriends", getLocalPlayer())
 	
 	local cx = 0.015
 	local cy = 0.025
@@ -402,7 +402,7 @@ function hideFriendsUI(informServer, fadeBackIn)
 	showCursor(false)
 	
 	if (informServer or informServer==nil) then
-		setElementData(getLocalPlayer(), "friends.visible", 0, true)
+		triggerServerEvent("hideFriends", getLocalPlayer())
 	end
 end
 addEvent("hideFriendsList", true)

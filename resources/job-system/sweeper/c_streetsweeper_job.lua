@@ -148,7 +148,8 @@ function endTruckJob()
 			destroyElement(endmarker)
 			destroyElement(endcolshape)
 			routescompleted = 0
-			setElementData(localPlayer, "job", 0, true)
+
+			triggerServerEvent("quitjob", localPlayer)
 		else
 			outputChatBox("You are not in the van.", 255, 0, 0)
 		end

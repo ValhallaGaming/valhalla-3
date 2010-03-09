@@ -407,6 +407,7 @@ local function switchIndicatorState ( indicator )
 				-- Switch the indicator state
 				local dataName = 'i:' .. indicator
 				local currentValue = getElementData(v, dataName) or false
+				-- UNSAFE
 				setElementData(v, dataName, not currentValue, true)
 			end
 		end

@@ -36,7 +36,7 @@ function toggleHelp( thePlayer, commandName )
 			showCursor( thePlayer, false )
 		else
 			-- save the old position
-			setElementData( thePlayer, "help", { getElementDimension( thePlayer ), getElementInterior( thePlayer ), getElementPosition( thePlayer ) }, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "help", { getElementDimension( thePlayer ), getElementInterior( thePlayer ), getElementPosition( thePlayer ) }, false )
 			
 			setElementDimension( thePlayer, 20 )
 			

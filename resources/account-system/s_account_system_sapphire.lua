@@ -66,7 +66,7 @@ function resourceStart()
 	setRuleValue("Author", "vG Scripting Team")
 	
 	local motdresult = mysql:query_fetch_assoc("SELECT value FROM settings WHERE name='motd' LIMIT 1")
-	setElementData(getRootElement(), "account:motd", motdresult["value" ], false )
+	exports['anticheat-system']:changeProtectedElementDataEx(getRootElement(), "account:motd", motdresult["value" ], false )
 
 	for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
 		triggerEvent("playerJoinResourceStart", value)
@@ -76,16 +76,16 @@ addEventHandler("onResourceStart", getResourceRootElement(getThisResource()), re
 	
 function onJoin()
 	-- Set the user as not logged in, so they can't see chat or use commands
-	setElementData(source, "loggedin", 0)
-	setElementData(source, "gameaccountloggedin", 0, false)
-	setElementData(source, "gameaccountusername", "")
-	setElementData(source, "gameaccountid", "")
-	setElementData(source, "adminlevel", 0)
-	setElementData(source, "hiddenadmin", 0)
-	setElementData(source, "globalooc", 1, false)
-	setElementData(source, "muted", 0)
-	setElementData(source, "loginattempts", 0, false)
-	setElementData(source, "timeinserver", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountloggedin", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountusername", "")
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountid", "")
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "adminlevel", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "hiddenadmin", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "globalooc", 1, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "muted", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "loginattempts", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "timeinserver", 0, false)
 	setElementDimension(source, 9999)
 	setElementInterior(source, 0)
 	clearChatBox(source)
@@ -160,12 +160,12 @@ function spawnCharacter(charname, version)
 		local maxvehicles = tonumber(data["maxvehicles"])
 		local factionleader = tonumber(data["faction_leader"])
 		
-		setElementData(source, "chardescription", desc)
-		setElementData(source, "age", age)
-		setElementData(source, "weight", weight)
-		setElementData(source, "height", height)
-		setElementData(source, "race", race)
-		setElementData(source, "maxvehicles", maxvehicles)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "chardescription", desc)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "age", age)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "weight", weight)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "height", height)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "race", race)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "maxvehicles", maxvehicles)
 		
 		-- LANGUAGES
 		local lang1 = tonumber(data["lang1"])
@@ -175,7 +175,7 @@ function spawnCharacter(charname, version)
 		local lang3 = tonumber(data["lang3"])
 		local lang3skill = tonumber(data["lang3skill"])
 		local currentLanguage = tonumber(data["currlang"])
-		setElementData(source, "languages.current", currentLanguage, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.current", currentLanguage, false)
 				
 		if lang1 == 0 then
 			lang1skill = 0
@@ -189,22 +189,22 @@ function spawnCharacter(charname, version)
 			lang3skill = 0
 		end
 		
-		setElementData(source, "languages.lang1", lang1, false)
-		setElementData(source, "languages.lang1skill", lang1skill, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang1", lang1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang1skill", lang1skill, false)
 		
-		setElementData(source, "languages.lang2", lang2, false)
-		setElementData(source, "languages.lang2skill", lang2skill, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang2", lang2, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang2skill", lang2skill, false)
 		
-		setElementData(source, "languages.lang3", lang3, false)
-		setElementData(source, "languages.lang3skill", lang3skill, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang3", lang3, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.lang3skill", lang3skill, false)
 		-- END OF LANGUAGES
 		
-		setElementData(source, "timeinserver", timeinserver, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "timeinserver", timeinserver, false)
 		
-		setElementData(source, "dbid", tonumber(id))
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid", tonumber(id))
 		exports['item-system']:loadItems( source, true )
 		
-		setElementData(source, "loggedin", 1)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 1)
 		
 		-- Check his name isn't in use by a squatter
 		local playerWithNick = getPlayerFromName(tostring(charname))
@@ -213,19 +213,19 @@ function spawnCharacter(charname, version)
 		end
 		
 		-- casual skin
-		setElementData(source, "casualskin", casualskin, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "casualskin", casualskin, false)
 		
 		-- bleeding
-		setElementData(source, "bleeding", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "bleeding", 0, false)
 		
 		-- Set their name to the characters
-		setElementData(source, "legitnamechange", 1)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "legitnamechange", 1)
 		setPlayerName(source, tostring(charname))
 		local pid = getElementData(source, "playerid")
 		local fixedName = string.gsub(tostring(charname), "_", " ")
 
 		setPlayerNametagText(source, tostring(fixedName))
-		setElementData(source, "legitnamechange", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "legitnamechange", 0)
 		
 		-- If their an admin change their nametag colour
 		local adminlevel = getElementData(source, "adminlevel")
@@ -302,16 +302,16 @@ function spawnCharacter(charname, version)
 			
 			if jailed_time ~= 999 then
 				local theTimer = setTimer(timerUnjailPlayer, 60000, jailed_time, source)
-				setElementData(source, "jailtime", jailed_time, false)
-				setElementData(source, "jailtimer", theTimer)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtime", jailed_time, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtimer", theTimer)
 			else
-				setElementData(source, "jailtime", "Unlimited", false)
-				setElementData(source, "jailtimer", true, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtime", "Unlimited", false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtimer", true, false)
 			end
-			setElementData(source, "jailserved", 0, false)
-			setElementData(source, "adminjailed", true)
-			setElementData(source, "jailreason", jailed_reason, false)
-			setElementData(source, "jailadmin", jailed_by, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "jailserved", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "adminjailed", true)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "jailreason", jailed_reason, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "jailadmin", jailed_by, false)
 			
 			setElementInterior(source, 6)
 			setCameraInterior(source, 6)
@@ -319,10 +319,10 @@ function spawnCharacter(charname, version)
 			outputChatBox("You still have " .. pdjail_time .. " minute(s) to serve of your state jail sentance.", source, 255, 0, 0)
 			
 			local theTimer = setTimer(timerPDUnjailPlayer, 60000, pdjail_time, source)
-			setElementData(source, "pd.jailserved", 0, false)
-			setElementData(source, "pd.jailtime", pdjail_time, false)
-			setElementData(source, "pd.jailtimer", theTimer, false)
-			setElementData(source, "pd.jailstation", pdjail_station, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailserved", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtime", pdjail_time, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtimer", theTimer, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailstation", pdjail_station, false)
 		end
 		
 		-- FACTIONS
@@ -348,8 +348,8 @@ function spawnCharacter(charname, version)
 		
 		local theTeam = getTeamFromName(tostring(factionName))
 		setPlayerTeam(source, theTeam)
-		setElementData(source, "factionrank", factionrank)
-		setElementData(source, "factionleader", factionleader, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "factionrank", factionrank)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "factionleader", factionleader, false)
 		
 		if factionID == 1 then
 			exports.global:givePlayerAchievement(source, 2)
@@ -382,7 +382,7 @@ function spawnCharacter(charname, version)
 				end
 			end
 			
-			setElementData(source, "friends", ids, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "friends", ids, false)
 		end
 		
 		if friendsonline == 1 then
@@ -424,44 +424,44 @@ function spawnCharacter(charname, version)
 			toggleControl(source, "brake_reverse", false)
 		end
 			
-		setElementData(source, "adminlevel", tonumber(adminlevel))
-		setElementData(source, "loggedin", 1)
-		setElementData(source, "businessprofit", 0, false)
-		setElementData(source, "hiddenadmin", tonumber(hiddenAdmin))
-		setElementData(source, "legitnamechange", 0)
-		setElementData(source, "muted", tonumber(muted))
-		setElementData(source, "hoursplayed", hoursplayed)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "adminlevel", tonumber(adminlevel))
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 1)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "businessprofit", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "hiddenadmin", tonumber(hiddenAdmin))
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "legitnamechange", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "muted", tonumber(muted))
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "hoursplayed", hoursplayed)
 		exports.global:setMoney(source, money)
 		exports.global:checkMoneyHacks(source)
 		
-		setElementData(source, "faction", factionID)
-		setElementData(source, "factionMenu", 0)
-		setElementData(source, "restrain", cuffed)
-		setElementData(source, "tazed", 0, false)
-		setElementData(source, "cellnumber", cellnumber, false)
-		setElementData(source, "cellphone.secret", cellphonesecret, false)
-		setElementData(source, "calling", nil, false)
-		setElementData(source, "calltimer", nil, false)
-		setElementData(source, "phonestate", 0, false)
-		setElementData(source, "realinvehicle", 0, false)
-		setElementData(source, "duty", duty, false)
-		setElementData(source, "job", job)
-		setElementData(source, "license.car", carlicense)
-		setElementData(source, "license.gun", gunlicense)
-		setElementData(source, "bankmoney", bankmoney)
-		setElementData(source, "fingerprint", fingerprint, false)
-		setElementData(source, "tag", tag)
-		setElementData(source, "dutyskin", dutyskin, false)
-		setElementData(source, "phoneoff", phoneoff, false)
-		setElementData(source, "blindfold", blindfold, false)
-		setElementData(source, "gender", gender)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "faction", factionID)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "restrain", cuffed)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "tazed", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "cellnumber", cellnumber, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "cellphone.secret", cellphonesecret, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "calling", nil, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "calltimer", nil, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "phonestate", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "realinvehicle", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "duty", duty, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "job", job)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "license.car", carlicense)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "license.gun", gunlicense)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", bankmoney)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "fingerprint", fingerprint, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "tag", tag)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "dutyskin", dutyskin, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "phoneoff", phoneoff, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "blindfold", blindfold, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "gender", gender)
 		
 		if (restrainedobj>0) then
-			setElementData(source, "restrainedObj", restrainedobj, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "restrainedObj", restrainedobj, false)
 		end
 		
 		if (restrainedby>0) then
-			setElementData(source, "restrainedBy", restrainedby, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "restrainedBy", restrainedby, false)
 		end
 		
 		if job == 1 then
@@ -527,7 +527,7 @@ function spawnCharacter(charname, version)
 		
 		-- blindfolds
 		if (blindfold==1) then
-			setElementData(source, "blindfold", 1)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "blindfold", 1)
 			outputChatBox("Your character is blindfolded. If this was an OOC action, please contact an administrator via F2.", source, 255, 194, 15)
 			--fadeCamera(player, false)
 		else
@@ -580,9 +580,9 @@ function timerUnjailPlayer(jailedPlayer)
 		local accountID = getElementData(jailedPlayer, "gameaccountid")
 		
 		if (timeServed) and (timeLeft) then
-			setElementData(jailedPlayer, "jailserved", timeServed+1)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailserved", timeServed+1)
 			local timeLeft = timeLeft - 1
-			setElementData(jailedPlayer, "jailtime", timeLeft)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime", timeLeft)
 			local result
 			if (timeLeft<=0) then
 				mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. accountID .. "'")
@@ -676,7 +676,7 @@ function loginPlayer(username, password, operatingsystem)
 			elseif username == "mcreary" then
 				country = "UK"
 			end
-			setElementData(source, "country", country)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "country", country)
 			
 			if tonumber(admin) == 0 then
 				adminduty = 0
@@ -684,26 +684,26 @@ function loginPlayer(username, password, operatingsystem)
 			end
 			
 			if donator > 0 then -- check if they're a donator
-				setElementData(source, "pmblocked", pmblocked, false)
-				setElementData(source, "tognews", newsblocked, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "pmblocked", pmblocked, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "tognews", newsblocked, false)
 				if (adblocked == 1) then
-					setElementData(source, "disableAds", true, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", true, false)
 				else
-					setElementData(source, "disableAds", false, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", false, false)
 				end
 			else -- no donator, set default things
-				setElementData(source, "pmblocked", 0, false)
-				setElementData(source, "disableAds", false, false)
-				setElementData(source, "tognews", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "pmblocked", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", false, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "tognews", 0, false)
 			end
 		
 			
-			setElementData(source, "donatorlevel", tonumber(donator))
-			setElementData(source, "adminlevel", tonumber(admin))
-			setElementData(source, "hiddenadmin", tonumber(hiddenadmin))
-			setElementData(source, "donator", tonumber(donator))
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "donatorlevel", tonumber(donator))
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "adminlevel", tonumber(admin))
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "hiddenadmin", tonumber(hiddenadmin))
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "donator", tonumber(donator))
 			
-			setElementData(source, "blur", blur)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "blur", blur)
 			if (blur==0) then
 				setPlayerBlurLevel(source, 0)
 			else
@@ -731,19 +731,19 @@ function loginPlayer(username, password, operatingsystem)
 			elseif (banned==1) then
 				triggerClientEvent(source, "loginFail", source, 3)
 			else
-				setElementData(source, "gameaccountloggedin", 1, false)
-				setElementData(source, "gameaccountusername", username)
-				setElementData(source, "gameaccountid", tonumber(id))
-				setElementData(source, "adminduty", tonumber(adminduty))
-				setElementData(source, "adminjailed", adminjail == 1, false)
-				setElementData(source, "jailtime", tonumber(adminjail_time), false)
-				setElementData(source, "jailadmin", tostring(adminjail_by), false)
-				setElementData(source, "jailreason", tostring(adminjail_reason), false)
-				setElementData(source, "globalooc", tonumber(globalooc), false)
-				setElementData(source, "muted", tonumber(muted))
-				setElementData(source, "adminreports", adminreports, false)
-				setElementData(source, "warns", warns, false)
-				setElementData(source, "chatbubbles", chatbubbles, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountloggedin", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountusername", username)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountid", tonumber(id))
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "adminduty", tonumber(adminduty))
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "adminjailed", adminjail == 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtime", tonumber(adminjail_time), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailadmin", tostring(adminjail_by), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailreason", tostring(adminjail_reason), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "globalooc", tonumber(globalooc), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "muted", tonumber(muted))
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "adminreports", adminreports, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "warns", warns, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "chatbubbles", chatbubbles, false)
 				
 				if ( hasBeta[source] ) then
 					triggerClientEvent(source, "loginOK", source)
@@ -777,7 +777,7 @@ function loginPlayer(username, password, operatingsystem)
 	else
 		local attempts = tonumber(getElementData(source, "loginattempts"))
 		attempts = attempts + 1
-		setElementData(source, "loginattempts", attempts, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "loginattempts", attempts, false)
 		
 		if (attempts>=3) then
 			kickPlayer(source, true, false, false, getRootElement(), "Too many login attempts")
@@ -836,7 +836,7 @@ addEvent("retrieveDetails", true)
 addEventHandler("retrieveDetails", getRootElement(), retrieveDetails)
 
 function sendAccounts(thePlayer, id, isChangeChar)
-	setElementData(thePlayer,"loggedin",0)
+	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer,"loggedin",0)
 	exports.global:updateNametagColor(thePlayer)
 	exports.global:takeAllWeapons(thePlayer)
 	local accounts = { }
@@ -1045,7 +1045,7 @@ function deleteCharacterByName(charname)
 
 		-- un-rent all interiors
 		local old = getElementData( source, "dbid" )
-		setElementData( source, "dbid", charid )
+		exports['anticheat-system']:changeProtectedElementDataEx( source, "dbid", charid )
 		local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. charid .. " AND type != 2" )
 		if result then
 			while true do
@@ -1056,7 +1056,7 @@ function deleteCharacterByName(charname)
 				call( getResourceFromName( "interior-system" ), "publicSellProperty", source, id, false, false )
 			end
 		end
-		setElementData( source, "dbid", old )
+		exports['anticheat-system']:changeProtectedElementDataEx( source, "dbid", old )
 		
 		-- get rid of all items
 		mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. charid )
@@ -1120,9 +1120,9 @@ addEvent("doesCharacterExist", true)
 addEventHandler("doesCharacterExist", getRootElement(), doesCharacterExist)
 
 function resetNick(oldNick, newNick)
-	setElementData(source, "legitnamechange", 1)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "legitnamechange", 1)
 	setPlayerName(source, oldNick)
-	setElementData(source, "legitnamechange", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "legitnamechange", 0)
 	exports.global:sendMessageToAdmins("AdmWrn: " .. tostring(oldNick) .. " tried to change name to " .. tostring(newNick) .. ".")
 end
 
@@ -1164,7 +1164,7 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 		local id = mysql:query_insert_free("INSERT INTO characters SET charactername='" .. safecharname .. "', x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', rotation='" .. r .. "', faction_id='-1', transport='" .. transport .. "', gender='" .. gender .. "', skincolor='" .. skincolour .. "', weight='" .. weight .. "', height='" .. height .. "', muscles='" .. muscles .. "', fat='" .. fatness .. "', description='" .. description .. "', account='" .. accountID .. "', skin='" .. skin .. "', lastarea='" .. lastarea .. "', age='" .. age .. "', fingerprint='" .. fingerprint .. "', lang1=" .. language .. ", lang1skill=100, currLang=1" )
 		
 		if (id) then
-			setElementData(source, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid", id, false)
 			exports.global:giveItem( source, 16, skin )
 			exports.global:giveItem( source, 17, 1 )
 			exports.global:giveItem( source, 18, 1 )
@@ -1194,10 +1194,10 @@ addEventHandler("createCharacter", getRootElement(), createCharacter)
 
 function serverToggleBlur(enabled)
 	if (enabled) then
-		setElementData(source, "blur", 1)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "blur", 1)
 		setPlayerBlurLevel(source, 38)
 	else
-		setElementData(source, "blur", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "blur", 0)
 		setPlayerBlurLevel(source, 0)
 	end
 	mysql:query_free("UPDATE accounts SET blur=" .. getElementData( source, "blur" ).. " WHERE id = " .. getElementData( source, "gameaccountid" ) )
@@ -1210,11 +1210,11 @@ function cmdToggleBlur(thePlayer, commandName)
 	
 	if (blur==0) then
 		outputChatBox("Vehicle blur enabled.", thePlayer, 255, 194, 14)
-		setElementData(thePlayer, "blur", 1)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "blur", 1)
 		setPlayerBlurLevel(thePlayer, 38)
 	elseif (blur==1) then
 		outputChatBox("Vehicle blur disabled.", thePlayer, 255, 194, 14)
-		setElementData(thePlayer, "blur", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "blur", 0)
 		setPlayerBlurLevel(thePlayer, 0)
 	end
 	mysql:query_free("UPDATE accounts SET blur=" .. ( 1 - blur ) .. " WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
@@ -1259,9 +1259,9 @@ function timerPDUnjailPlayer(jailedPlayer)
 			removeElementData(jailedPlayer, "pd.jailtimer")
 			return
 		end
-		setElementData(jailedPlayer, "pd.jailserved", timeServed+1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", timeServed+1, false)
 		local timeLeft = timeLeft - 1
-		setElementData(jailedPlayer, "pd.jailtime", timeLeft, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
 		if (timeLeft<=0) then
 			fadeCamera(jailedPlayer, false)
@@ -1275,8 +1275,8 @@ function timerPDUnjailPlayer(jailedPlayer)
 			setElementPosition(jailedPlayer, 241.3583984375, 115.232421875, 1003.2257080078)
 			setPedRotation(jailedPlayer, 270)
 				
-			setElementData(jailedPlayer, "pd.jailserved", 0, false)
-			setElementData(jailedPlayer, "pd.jailtime", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
 			removeElementData(jailedPlayer, "pd.jailtimer")
 			removeElementData(jailedPlayer, "pd.jailstation")
 			fadeCamera(jailedPlayer, true)

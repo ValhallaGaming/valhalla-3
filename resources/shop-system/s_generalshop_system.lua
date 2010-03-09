@@ -53,13 +53,13 @@ function createShopKeeper(x,y,z,interior,dimension,id,shoptype,rotation, skin)
 	setElementDimension(ped, dimension)
 	setElementInterior(ped, interior)
 	exports.pool:allocateElement(ped)
-	setElementData(ped, "shopkeeper", true)
+	exports['anticheat-system']:changeProtectedElementDataEx(ped, "shopkeeper", true)
 	setPedFrozen(ped, true)
 	
-	setElementData(ped, "dbid", id, false)
-	setElementData(ped, "type", "shop", false)
-	setElementData(ped, "shoptype", shoptype, false)
-	setElementData(ped, "rotation", rotation, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(ped, "dbid", id, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(ped, "type", "shop", false)
+	exports['anticheat-system']:changeProtectedElementDataEx(ped, "shoptype", shoptype, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(ped, "rotation", rotation, false)
 end
 
 function isGun(weaponID)
@@ -295,7 +295,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 					exports.global:giveItem(source, 16, skin)
 					setElementModel(source, skin)
 					mysql:query_free("UPDATE characters SET skin = " .. skin .. " WHERE id = " .. getElementData( source, "dbid" ) )
-					if setElementData(source, "casualskin", skin, false) then
+					if exports['anticheat-system']:changeProtectedElementDataEx(source, "casualskin", skin, false) then
 						mysql:query_free("UPDATE characters SET casualskin = " .. skin .. " WHERE id = " .. getElementData(source, "dbid") )
 					end
 					exports.global:givePlayerAchievement(source, 21)
@@ -399,7 +399,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 				
 				if (theOwner) then
 					local profits = getElementData(theOwner, "businessprofit")
-					setElementData(theOwner, "businessprofit", profits+theCost, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theOwner, "businessprofit", profits+theCost, false)
 				else
 					mysql:query_free( "UPDATE characters SET bankmoney=bankmoney + " .. tonumber(theCost) .. " WHERE id = " .. owner .. " LIMIT 1")
 				end

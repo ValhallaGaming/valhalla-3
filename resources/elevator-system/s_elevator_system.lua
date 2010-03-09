@@ -25,15 +25,15 @@ function createElevator(thePlayer, commandName, interior, dimension, ix, iy, iz)
 					local intpickup = createPickup(ix, iy, iz, 3, 1318)
 					exports.pool:allocateElement(intpickup)
 					
-					setElementData(pickup, "dbid", id, false)
-					setElementData(pickup, "other", intpickup)
-					setElementData(pickup, "car", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(pickup, "dbid", id, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(pickup, "other", intpickup)
+					exports['anticheat-system']:changeProtectedElementDataEx(pickup, "car", 0, false)
 					setElementInterior(pickup, interiorwithin)
 					setElementDimension(pickup, dimensionwithin)
 					
-					setElementData(intpickup, "dbid", id, false)
-					setElementData(intpickup, "other", pickup)
-					setElementData(intpickup, "car", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "dbid", id, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "other", pickup)
+					exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "car", 0, false)
 					setElementInterior(intpickup, interior)
 					setElementDimension(intpickup, dimension)
 					
@@ -78,15 +78,15 @@ function loadAllElevators(res)
 			local intpickup = createPickup(ix, iy, iz, 3, disabled == 1 and 1314 or 1318)
 			exports.pool:allocateElement(intpickup)
 			
-			setElementData(pickup, "dbid", id, false)
-			setElementData(pickup, "other", intpickup)
-			setElementData(pickup, "car", car, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(pickup, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(pickup, "other", intpickup)
+			exports['anticheat-system']:changeProtectedElementDataEx(pickup, "car", car, false)
 			setElementInterior(pickup, interiorwithin)
 			setElementDimension(pickup, dimensionwithin)
 				
-			setElementData(intpickup, "dbid", id, false)
-			setElementData(intpickup, "other", pickup)
-			setElementData(intpickup, "car", car, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "other", pickup)
+			exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "car", car, false)
 			setElementInterior(intpickup, interior)
 			setElementDimension(intpickup, dimension)
 			counter = counter + 1
@@ -153,7 +153,7 @@ function bindKeys(player, pickup)
 			bindKey(player, "f", "down", func, player, pickup)
 		end
 		
-		setElementData( player, "interiormarker", true, false )
+		exports['anticheat-system']:changeProtectedElementDataEx( player, "interiormarker", true, false )
 	end
 end
 
@@ -251,7 +251,7 @@ function enterElevator(player, pickup)
 							for k, v in pairs( getElementsByType( "player" ) ) do
 								if isElement( v ) then
 									if getElementData( v, "dbid" ) == ownerid then
-										setElementData( v, "businessprofit", getElementData( v, "businessprofit" ) + fee, false )
+										exports['anticheat-system']:changeProtectedElementDataEx( v, "businessprofit", getElementData( v, "businessprofit" ) + fee, false )
 										break
 									end
 								end
@@ -265,7 +265,7 @@ function enterElevator(player, pickup)
 		end
 		
 		if vehicle then
-			setElementData(vehicle, "health", getElementHealth(vehicle), false)
+			exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "health", getElementHealth(vehicle), false)
 			for i = 0, getVehicleMaxPassengers( vehicle ) do
 				local p = getVehicleOccupant( vehicle )
 				if p then
@@ -426,8 +426,8 @@ addEventHandler( "toggleCarTeleportMode", getRootElement(),
 				outputChatBox( "You changed the mode to 'no entrance'.", player, 0, 255, 0 )
 			end
 			
-			setElementData( source, "car", mode, false )
-			setElementData( getElementData( source, "other" ), "car", mode )
+			exports['anticheat-system']:changeProtectedElementDataEx( source, "car", mode, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( getElementData( source, "other" ), "car", mode )
 		else
 			outputChatBox( "Error 9019 - Report on Forums.", player, 255, 0, 0 )
 		end

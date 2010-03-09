@@ -9,7 +9,7 @@ function giveTruckingMoney(vehicle)
 	exports.global:giveMoney(source, truckwage[vehicle])
 
 	-- respawn the vehicle
-	setElementData(source, "realinvehicle", 0, false)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "realinvehicle", 0, false)
 	removePedFromVehicle(source, vehicle)
 	respawnVehicle(vehicle)
 	setVehicleLocked(vehicle, false)

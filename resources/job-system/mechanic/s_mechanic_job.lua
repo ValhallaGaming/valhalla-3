@@ -34,7 +34,7 @@ function serviceVehicle(veh)
 		else
 			fixVehicle(veh)
 			if not getElementData(veh, "Impounded") or getElementData(veh, "Impounded") == 0 then
-				setElementData(veh, "enginebroke", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
 				if armoredCars[ getElementModel( veh ) ] then
 					setVehicleDamageProof(veh, true)
 				else

@@ -76,16 +76,16 @@ function fuelDepleting()
 									distance = 5  -- fuel leaking away when not moving
 								end
 								newFuel = fuel - (distance/200)
-								setElementData(veh, "fuel", newFuel, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", newFuel, false)
 								triggerClientEvent(v, "syncFuel", veh, newFuel)
 								oldFuel[veh] = newFuel
-								setElementData(veh, "oldx", x, false)
-								setElementData(veh, "oldy", y, false)
-								setElementData(veh, "oldz", z, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", x, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", y, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", z, false)
 								
 								if newFuel < 1 then
 									setVehicleEngineState(veh, false)
-									setElementData(veh, "engine", 0, false)
+									exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
 									toggleControl(v, 'brake_reverse', false)
 								end
 							end
@@ -110,10 +110,10 @@ function FuelDepetingEmptyVehicles()
 				local fuel = getElementData(theVehicle, "fuel")
 				if fuel >= 1 then
 					local newFuel = fuel - (30/200)
-					setElementData(theVehicle, "fuel", newFuel, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "fuel", newFuel, false)
 					if (newFuel<1) then
 						setVehicleEngineState(theVehicle, false)
-						setElementData(theVehicle, "engine", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "engine", 0, false)
 					end
 				end
 			end
@@ -135,8 +135,8 @@ function createFuelPoint(thePlayer, commandName)
 			exports.pool:allocateElement(theSphere)
 			setElementDimension(theSphere, dimension)
 			setElementInterior(theSphere, interior)
-			setElementData(theSphere, "type", "fuel", false)
-			setElementData(theSphere, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theSphere, "type", "fuel", false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theSphere, "dbid", id, false)
 			
 			outputChatBox("Fuel point added with ID #" .. id .. ".", thePlayer)
 			exports.irc:sendMessage("[ADMIN] " .. getPlayerName( thePlayer ) .. " spawned fuel point " .. id)
@@ -202,8 +202,8 @@ function loadFuelPoints(res)
 			exports.pool:allocateElement(theSphere)
 			setElementDimension(theSphere, dimension)
 			setElementInterior(theSphere, interior)
-			setElementData(theSphere, "type", "fuel", false)
-			setElementData(theSphere, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theSphere, "type", "fuel", false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theSphere, "dbid", id, false)
 			counter = counter + 1
 		end
 		mysql:free_result(result)
@@ -403,7 +403,7 @@ function fuelTheVehicle(thePlayer, theVehicle, theShape, theLitres, free)
 			
 				local loldFuel = getElementData(theVehicle, "fuel")
 				local newFuel = loldFuel+theLitres
-				setElementData(theVehicle, "fuel", newFuel, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "fuel", newFuel, false)
 				triggerClientEvent(thePlayer, "syncFuel", theVehicle, newFuel)
 				oldFuel[theVehicle] = newFuel
 				--triggerClientEvent(thePlayer, "setClientFuel", thePlayer, newFuel)

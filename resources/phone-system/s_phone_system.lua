@@ -22,7 +22,7 @@ addEventHandler( "onResourceStart", getResourceRootElement( ),
 				local shape = createColSphere(x, y, z, 1)
 				exports.pool:allocateElement(shape)
 				setElementDimension(shape, dimension)
-				setElementData(shape, "dbid", id, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(shape, "dbid", id, false)
 			end
 			mysql:free_result(result)
 		end
@@ -51,7 +51,7 @@ function addPhone(thePlayer, commandName)
 			local shape = createColSphere(x, y, z, 1)
 			exports.pool:allocateElement(shape)
 			setElementDimension(shape, dimension)
-			setElementData(shape, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(shape, "dbid", id, false)
 			
 			outputChatBox("Public Phone spawned with ID #" .. id .. ".", thePlayer, 0, 255, 0)
 		else
@@ -151,9 +151,9 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 					if phoneNumber == "911" then
 						exports.global:sendLocalMeAction(thePlayer, msg)
 						outputChatBox("911 Operator says: 911 emergency. Please state your location.", thePlayer)
-						setElementData(thePlayer, "callprogress", 1, false)
-						setElementData(thePlayer, "phonestate", 1)
-						setElementData(thePlayer, "calling", 911)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", 911)
 						
 						exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
 						setTimer(toggleAllControls, 150, 1, thePlayer, true, true, true)
@@ -161,9 +161,9 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 					elseif phoneNumber == "311" then
 						exports.global:sendLocalMeAction(thePlayer, msg)
 						outputChatBox("LSPD Operator says: LSPD Hotline. Please state your location.", thePlayer)
-						setElementData(thePlayer, "callprogress", 1, false)
-						setElementData(thePlayer, "phonestate", 1)
-						setElementData(thePlayer, "calling", 311)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", 311)
 						
 						exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
 						setTimer(toggleAllControls, 150, 1, thePlayer, true, true, true)
@@ -171,9 +171,9 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 					elseif phoneNumber == "999" then
 						exports.global:sendLocalMeAction(thePlayer, msg)
 						outputChatBox("BT&R Operator says: Best's Towing and Recovery. Please state your location.", thePlayer)
-						setElementData(thePlayer, "callprogress", 1, false)
-						setElementData(thePlayer, "phonestate", 1)
-						setElementData(thePlayer, "calling", 999)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", 999)
 						
 						exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
 						setTimer(toggleAllControls, 150, 1, thePlayer, true, true, true)
@@ -184,7 +184,7 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 						else
 							exports.global:sendLocalMeAction(thePlayer, msg)
 							outputChatBox("Computer voice: You are now calling with a secret number.", thePlayer)
-							setElementData(thePlayer,"cellphone.secret",1, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(thePlayer,"cellphone.secret",1, false)
 							exports.global:sendLocalMeAction(thePlayer, "hangs up their phone.")
 						end
 					elseif phoneNumber == "1502" then
@@ -193,15 +193,15 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 						else
 							exports.global:sendLocalMeAction(thePlayer, msg)
 							outputChatBox("Computer voice: You are now calling with a normal number.", thePlayer)
-							setElementData(thePlayer,"cellphone.secret",0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(thePlayer,"cellphone.secret",0, false)
 							exports.global:sendLocalMeAction(thePlayer, "hangs up their phone.")
 						end
 					elseif phoneNumber == "8294" then
 						exports.global:sendLocalMeAction(thePlayer, msg)
 						outputChatBox("Taxi Operator says: Los Santos Cabs here. Please state your location.", thePlayer)
-						setElementData(thePlayer, "callprogress", 1, false)
-						setElementData(thePlayer, "phonestate", 1)
-						setElementData(thePlayer, "calling", 8294)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", 8294)
 						
 						exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
 						setTimer(toggleAllControls, 150, 1, thePlayer, true, true, true)
@@ -248,10 +248,10 @@ function callSomeone(thePlayer, commandName, phoneNumber, ...)
 							if (targetCalling) then
 								outputChatBox("You get a busy tone.", thePlayer)
 							else
-								setElementData(thePlayer, "call.col", publicphone, false)
-								setElementData(thePlayer, "calling", foundElement, false)
-								setElementData(thePlayer, "called", true, false)
-								setElementData(foundElement, "calling", thePlayer, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.col", publicphone, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", foundElement, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "called", true, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(foundElement, "calling", thePlayer, false)
 								
 								-- local player
 								exports.global:applyAnimation(thePlayer, "ped", "phone_in", 3000, false)
@@ -305,7 +305,7 @@ end
 function stopPhoneAnim(thePlayer)
 --	exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1300, false)
 --	setTimer(toggleAllControls, 150, 1, thePlayer, true, true, true)
-	setElementData(thePlayer, "forcedanimation", false)
+	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", false)
 	toggleAllControls(thePlayer, true, true, false)
 --	setTimer(setPedAnimation, 50, 2, thePlayer)
 	setTimer(triggerEvent, 100, 1, "onPlayerStopAnimation", thePlayer, true )
@@ -316,9 +316,9 @@ function cancelCall(thePlayer)
 	local phoneState = getElementData(thePlayer, "phonestate")
 	
 	if (phoneState==0) then
-		setElementData(thePlayer, "calling", nil, false)
-		setElementData(thePlayer, "called", nil, false)
-		setElementData(thePlayer, "call.col", nil, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling", nil, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "called", nil, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.col", nil, false)
 	end
 end
 
@@ -336,8 +336,8 @@ function answerPhone(thePlayer, commandName)
 					outputChatBox("You picked up the phone. (( /p to talk ))", thePlayer)
 					outputChatBox("They picked up the phone.", target)
 					exports.global:sendLocalMeAction(thePlayer, "takes out a cell phone.")
-					setElementData(thePlayer, "phonestate", 1, false) -- Your in an actual call
-					setElementData(calling, "phonestate", 1, false) -- Your in an actual call
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1, false) -- Your in an actual call
+					exports['anticheat-system']:changeProtectedElementDataEx(calling, "phonestate", 1, false) -- Your in an actual call
 					exports.global:sendLocalMeAction(thePlayer, "answers their cellphone.")
 					
 					for _,nearbyPlayer in ipairs(exports.global:getNearbyElements(target, "player", 10)) do
@@ -388,7 +388,7 @@ function hangupPhone(thePlayer, commandName)
 					end
 					removeElementData(calling, "caller")
 					removeElementData(calling, "call.col")
-					setElementData(calling, "phonestate", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(calling, "phonestate", 0, false)
 					exports.global:applyAnimation(calling, "ped", "phone_out", 1300, false)
 					setTimer(toggleAllControls, 150, 1, calling, true, true, true)
 				end
@@ -399,7 +399,7 @@ function hangupPhone(thePlayer, commandName)
 				removeElementData(thePlayer, "call.situation")
 				removeElementData(thePlayer, "call.location")
 				removeElementData(thePlayer, "call.col")
-				setElementData(thePlayer, "phonestate", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 				exports.global:sendLocalMeAction(thePlayer, "hangs up their phone.")
 				
 				exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1300, false)
@@ -439,11 +439,11 @@ function loudSpeaker(thePlayer, commandName)
 			if (phoneState==1) then
 				exports.global:sendLocalMeAction(thePlayer, "turns on loudspeaker on the phone.")
 				outputChatBox("You flick your phone onto loudspeaker.", thePlayer)
-				setElementData(thePlayer, "phonestate", 2, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 2, false)
 			elseif (phoneState==2) then
 				exports.global:sendLocalMeAction(thePlayer, "turns off loudspeaker on the phone.")
 				outputChatBox("You flick your phone off of loudspeaker.", thePlayer)
-				setElementData(thePlayer, "phonestate", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 1, false)
 			else
 				outputChatBox("You are not in a call.", thePlayer, 255, 0 ,0)
 			end
@@ -485,8 +485,8 @@ function talkPhone(thePlayer, commandName, ...)
 						
 						if (tonumber(target)==911) then -- EMERGENCY SERVICES
 							if (callprogress==1) then -- Requesting the location
-								setElementData(thePlayer, "call.location", message)
-								setElementData(thePlayer, "callprogress", 2)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location", message)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 2)
 								outputChatBox("911 Operator says: Can you describe your emergency please?", thePlayer)
 								return
 							elseif (callprogress==2) then -- Requesting the situation
@@ -514,7 +514,7 @@ function talkPhone(thePlayer, commandName, ...)
 								removeElementData(thePlayer, "caller")
 								removeElementData(thePlayer, "callprogress")
 								removeElementData(thePlayer, "call.location")
-								setElementData(thePlayer, "phonestate", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
 								exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1000, false, true, true)
@@ -523,8 +523,8 @@ function talkPhone(thePlayer, commandName, ...)
 							end
 						elseif (tonumber(target)==311) then -- EMERGENCY SERVICES
 							if (callprogress==1) then -- Requesting the location
-								setElementData(thePlayer, "call.location", message)
-								setElementData(thePlayer, "callprogress", 2)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location", message)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 2)
 								outputChatBox("LSPD Operator says: Can you describe your emergency please?", thePlayer)
 								return
 							elseif (callprogress==2) then -- Requesting the situation
@@ -544,7 +544,7 @@ function talkPhone(thePlayer, commandName, ...)
 								removeElementData(thePlayer, "caller")
 								removeElementData(thePlayer, "callprogress")
 								removeElementData(thePlayer, "call.location")
-								setElementData(thePlayer, "phonestate", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
 								exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1000, false, true, true)
@@ -553,8 +553,8 @@ function talkPhone(thePlayer, commandName, ...)
 							end
 						elseif (tonumber(target)==999) then -- TOWING
 							if (callprogress==1) then -- Requesting the location
-								setElementData(thePlayer, "call.location", message)
-								setElementData(thePlayer, "callprogress", 2)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location", message)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress", 2)
 								outputChatBox("BT&R Operator says: Can you describe the situation please?", thePlayer)
 								return
 							elseif (callprogress==2) then -- Requesting the situation
@@ -574,7 +574,7 @@ function talkPhone(thePlayer, commandName, ...)
 								removeElementData(thePlayer, "caller")
 								removeElementData(thePlayer, "callprogress")
 								removeElementData(thePlayer, "call.location")
-								setElementData(thePlayer, "phonestate", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
 								exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1000, false, true, true)
@@ -606,7 +606,7 @@ function talkPhone(thePlayer, commandName, ...)
 								removeElementData(thePlayer, "caller")
 								removeElementData(thePlayer, "callprogress")
 								removeElementData(thePlayer, "call.location")
-								setElementData(thePlayer, "phonestate", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
 								exports.global:applyAnimation(thePlayer, "ped", "phone_out", 1000, false, true, true)
@@ -700,7 +700,7 @@ function togglePhone(thePlayer, commandName)
 			else
 				outputChatBox("You switched your phone off.", thePlayer, 255, 0, 0)
 			end
-			setElementData(thePlayer, "phoneoff", 1 - phoneoff, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phoneoff", 1 - phoneoff, false)
 			mysql:query_free( "UPDATE characters SET phoneoff=" .. ( 1 - phoneoff ) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 		end
 	end

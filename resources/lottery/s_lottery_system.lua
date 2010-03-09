@@ -64,7 +64,7 @@ function drawLottery()
 		local player = getPlayerFromName(charname)
 		if player then
 			local bankmoney = getElementData(player, "bankmoney")
-			setElementData(player, "bankmoney", bankmoney+jackpot)
+			exports['anticheat-system']:changeProtectedElementDataEx(player, "bankmoney", bankmoney+jackpot)
 		else
 			mysql:query_free("UPDATE characters SET bankmoney=bankmoney+" .. jackpot .. " WHERE id=" .. charid)
 		end

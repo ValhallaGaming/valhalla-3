@@ -13,7 +13,7 @@ function applyAnimation(thePlayer, block, name, animtime, loop, updatePosition, 
 		toggleAllControls(thePlayer, false, true, false)
 		
 		if (forced) then
-			setElementData(thePlayer, "forcedanimation", 1)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", 1)
 		else
 			removeElementData(thePlayer, "forcedanimation")
 		end
@@ -23,7 +23,7 @@ function applyAnimation(thePlayer, block, name, animtime, loop, updatePosition, 
 			setTimer(setPedAnimation, 50, 2, thePlayer, block, name, animtime, loop, updatePosition, false)
 		end
 		if animtime > 50 then
-			setElementData(thePlayer, "animationt", setTimer(removeAnimation, animtime, 1, thePlayer), false)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "animationt", setTimer(removeAnimation, animtime, 1, thePlayer), false)
 		end
 		return setanim
 	else

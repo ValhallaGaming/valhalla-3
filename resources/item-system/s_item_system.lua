@@ -93,12 +93,12 @@ function useItem(itemSlot, additional)
 					exports.global:sendLocalMeAction(source, "puts the key in the door to lock it.")
 				end
 				
-				setElementData(found, "locked", locked, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(found, "locked", locked, false)
 				for key, value in ipairs(getElementsByType("pickup")) do
 					if (value~=found) then
 						local dbid = getElementData(value, "dbid")
 						if dbid == itemValue then
-							setElementData(value, "locked", locked, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(value, "locked", locked, false)
 							break
 						end
 					end
@@ -180,7 +180,7 @@ function useItem(itemSlot, additional)
 				end
 				setElementModel(source, skin)
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET skin = " .. skin .. " WHERE id = " .. getElementData( source, "dbid" ) ) )
-				if setElementData(source, "casualskin", skin, false) then
+				if exports['anticheat-system']:changeProtectedElementDataEx(source, "casualskin", skin, false) then
 					mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. skin .. " WHERE id = " .. getElementData(source, "dbid") ) )
 				end
 				exports.global:sendLocalMeAction(source, "changes their clothes.")
@@ -227,7 +227,7 @@ function useItem(itemSlot, additional)
 				local fixedName =  "Unknown Person (Gas Mask)"
 				setPlayerNametagText(source, tostring(fixedName))
 
-				setElementData(source, "gasmask", 1, true)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask", 1, true)
 			elseif (gasmask==1) then
 				exports.global:sendLocalMeAction(source, "slips a black gas mask off their face.")
 				
@@ -278,7 +278,7 @@ function useItem(itemSlot, additional)
 					local locked = getElementData(found, "locked")
 					
 					if (locked==1) then
-						setElementData(found, "locked", 0, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(found, "locked", 0, false)
 						local query = mysql_query(handler, "UPDATE interiors SET locked='0' WHERE id='" .. id .. "' LIMIT 1")
 						mysql_free_result(query)
 						exports.global:sendLocalMeAction(source, "swings the ram into the door, opening it.")
@@ -286,7 +286,7 @@ function useItem(itemSlot, additional)
 						for key, value in ipairs(exports.pool:getPoolElementsByType("pickup")) do
 							local dbid = getElementData(value, "dbid")
 							if (dbid==id) and (value~=found) then
-								setElementData(value, "locked", 0, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(value, "locked", 0, false)
 							end
 						end
 					else
@@ -340,7 +340,7 @@ function useItem(itemSlot, additional)
 				local fixedName = "Unknown Person (Mask)"
 				setPlayerNametagText(source, tostring(fixedName))
 
-				setElementData(source, "mask", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "mask", 1, false)
 			elseif (mask==1) then
 				exports.global:sendLocalMeAction(source, "slips a mask off their face.")
 				
@@ -349,7 +349,7 @@ function useItem(itemSlot, additional)
 				local name = string.gsub(getPlayerName(source), "_", " ")
 				setPlayerNametagText(source, tostring(name))
 
-				setElementData(source, "mask", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "mask", 0, false)
 			end
 		elseif (itemID==57) then -- FUEL CAN
 			local nearbyVehicles = exports.global:getNearbyElements(source, "vehicle")
@@ -418,7 +418,7 @@ function useItem(itemSlot, additional)
 					removeElementData(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
-				setElementData(source,"PDbadge", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge", 1, false)
 				exports.global:sendLocalMeAction(source, "puts on a Police Badge.")
 			end
 			exports.global:updateNametagColor(source)
@@ -439,7 +439,7 @@ function useItem(itemSlot, additional)
 					removeElementData(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
-				setElementData(source,"ESbadge", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge", 1, false)
 				exports.global:sendLocalMeAction(source, "puts on an Emergency Services ID.")
 			end
 			exports.global:updateNametagColor(source)
@@ -539,7 +539,7 @@ function useItem(itemSlot, additional)
 					removeElementData(source,"GOVbadge")
 					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 				end
-				setElementData(source,"SANbadge", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge", 1, false)
 				exports.global:sendLocalMeAction(source, "puts on a SAN ID.")
 			end
 			exports.global:updateNametagColor(source)
@@ -560,7 +560,7 @@ function useItem(itemSlot, additional)
 					removeElementData(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
-				setElementData(source,"GOVbadge", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge", 1, false)
 				exports.global:sendLocalMeAction(source, "puts on a Government Badge.")
 			end
 			exports.global:updateNametagColor(source)
@@ -582,7 +582,7 @@ function useItem(itemSlot, additional)
 				local fixedName = "Unknown Person (Helmet)"
 				setPlayerNametagText(source, tostring(fixedName))
 
-				setElementData(source, "helmet", 1, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "helmet", 1, false)
 			elseif (mask==1) then
 				exports.global:sendLocalMeAction(source, "puts a helmet off their head.")
 				
@@ -591,7 +591,7 @@ function useItem(itemSlot, additional)
 				local name = string.gsub(getPlayerName(source), "_", " ")
 				setPlayerNametagText(source, tostring(name))
 
-				setElementData(source, "helmet", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "helmet", 0, false)
 			end
 		elseif (itemID==91) then
 			takeItemFromSlot(source, itemSlot)
@@ -840,10 +840,10 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 					moveObject(obj, 200, x, y, z + zoffset)
 				end
 				
-				setElementData(obj, "id", id, false)
-				setElementData(obj, "itemID", itemID)
-				setElementData(obj, "itemValue", itemValue)
-				setElementData(obj, "creator", getElementData(source, "dbid"), false)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "id", id, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemID", itemID)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemValue", itemValue)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "creator", getElementData(source, "dbid"), false)
 				
 				takeItemFromSlot( source, itemSlot )
 				
@@ -966,9 +966,9 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 				
 				moveObject(obj, 200, x, y, z+0.1)
 				
-				setElementData(obj, "id", id, false)
-				setElementData(obj, "itemID", -itemID)
-				setElementData(obj, "itemValue", ammo)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "id", id, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemID", -itemID)
+				exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemValue", ammo)
 				
 				exports.global:sendLocalMeAction(source, "dropped a " .. getItemName( -itemID ) .. ".")
 			else
@@ -1039,10 +1039,10 @@ function loadWorldItems(res)
 			exports.pool:allocateElement(obj)
 			setElementDimension(obj, dimension)
 			setElementInterior(obj, interior)
-			setElementData(obj, "id", id, false)
-			setElementData(obj, "itemID", -itemID)
-			setElementData(obj, "itemValue", itemValue)
-			setElementData(obj, "creator", creator, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "id", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemID", -itemID)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemValue", itemValue)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "creator", creator, false)
 		else
 			local modelid = getItemModel(itemID)
 			
@@ -1052,10 +1052,10 @@ function loadWorldItems(res)
 			exports.pool:allocateElement(obj)
 			setElementDimension(obj, dimension)
 			setElementInterior(obj, interior)
-			setElementData(obj, "id", id)
-			setElementData(obj, "itemID", itemID)
-			setElementData(obj, "itemValue", itemValue)
-			setElementData(obj, "creator", creator, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "id", id)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemID", itemID)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemValue", itemValue)
+			exports['anticheat-system']:changeProtectedElementDataEx(obj, "creator", creator, false)
 		end
 	end
 	exports.irc:sendMessage("[SCRIPT] Loaded " .. tonumber(mysql_num_rows(result)) .. " world items.")
@@ -1113,7 +1113,7 @@ function pickupItem(object, leftammo)
 		else
 			if leftammo and itemValue > leftammo then
 				itemValue = itemValue - leftammo
-				setElementData(object, "itemValue", itemValue)
+				exports['anticheat-system']:changeProtectedElementDataEx(object, "itemValue", itemValue)
 				
 				mysql_free_result( mysql_query(handler, "UPDATE worlditems SET itemvalue=" .. itemValue .. " WHERE id=" .. id) )
 				

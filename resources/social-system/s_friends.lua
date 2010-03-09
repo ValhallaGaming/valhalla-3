@@ -1,10 +1,22 @@
 mysql = exports.mysql
 
+function showFriends()
+	exports['anticheat-system']:changeProtectedElementDataEx(target, "friends.visible", 1, true)
+end
+addEvent("showFriends", true)
+addEventHandler("showFriends", getRootElement(), showFriends)
+
+function hideFriends()
+	exports['anticheat-system']:changeProtectedElementDataEx(target, "friends.visible", 0, true)
+end
+addEvent("hideFriends", true)
+addEventHandler("hideFriends", getRootElement(), hideFriends)
+
 ----------------------[KEY BINDS]--------------------
 function bindKeys()
 	local players = exports.pool:getPoolElementsByType("player")
 	for k, arrayPlayer in ipairs(players) do
-		setElementData(arrayPlayer, "friends.visible", 0, true)
+		exports['anticheat-system']:changeProtectedElementDataEx(arrayPlayer, "friends.visible", 0, true)
 		if not(isKeyBound(arrayPlayer, "o", "down", "friends")) then
 			bindKey(arrayPlayer, "o", "down", "friends")
 		end
@@ -14,7 +26,7 @@ end
 function bindKeysOnJoin()
 	bindKey(source, "o", "down", "friends")
 	
-	setElementData(source, "friends.visible", 0, true)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "friends.visible", 0, true)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), bindKeys)
 addEventHandler("onPlayerJoin", getRootElement(), bindKeysOnJoin)
@@ -118,7 +130,7 @@ function removeFriend(id, username)
 		local friends = getElementData(source, "friends")
 		if friends then
 			friends[ tonumber(id) ] = nil
-			setElementData(source, "friends", friends, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "friends", friends, false)
 		end
 	end
 end
@@ -141,7 +153,7 @@ function addFriendToDB(player, source)
 				local result = mysql:query_free("INSERT INTO friends VALUES (" .. accid .. ", " .. targetID .. ")")
 				if result then
 					friends[ targetID ] = true
-					setElementData(source, "friends", friends, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(source, "friends", friends, false)
 				
 					outputChatBox("'" .. getPlayerName(player) .. "' was added to your friends list.", source, 255, 194, 14)
 				else

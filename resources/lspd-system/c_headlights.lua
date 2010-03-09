@@ -1,4 +1,4 @@
-governmentVehicle = { [416]=true, [427]=true, [490]=true, [528]=true, [407]=true, [544]=true, [523]=true, [596]=true, [597]=true, [598]=true, [599]=true, [601]=true, [428]=true }
+--[[governmentVehicle = { [416]=true, [427]=true, [490]=true, [528]=true, [407]=true, [544]=true, [523]=true, [596]=true, [597]=true, [598]=true, [599]=true, [601]=true, [428]=true }
 orangeVehicle = { [525]=true, [403]=true, [514]=true, [515]=true, [524]=true, [486]=true, [552]=true }
 
 policevehicles = { }
@@ -116,4 +116,4 @@ addEventHandler("onClientResourceStop", getRootElement(),
 		end
 		policevehicles = {}
 	end
-)
+)]]--

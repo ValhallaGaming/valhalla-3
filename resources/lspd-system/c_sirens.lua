@@ -1,4 +1,4 @@
-local sounds = { }
+--[[local sounds = { }
 
 -- Bind Keys required
 function bindKeys(res)
@@ -73,4 +73,4 @@ function updateSirens( name )
 		end
 	end
 end
-addEventHandler("onClientElementDataChange", getRootElement(), updateSirens)
+addEventHandler("onClientElementDataChange", getRootElement(), updateSirens)]]--

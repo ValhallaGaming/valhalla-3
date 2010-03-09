@@ -8,10 +8,10 @@ setPedRotation(tyrese, 220)
 setPedFrozen(tyrese, true)
 setElementInterior( tyrese, 2 )
 setElementDimension( tyrese, 364 )
-setElementData (tyrese, "activeConvo",  0) -- Set the convo state to 0 so people can start talking to him.
-setElementData(tyrese, "name", "Ty")
-setElementData(tyrese, "talk", true)
-setElementData(tyrese, "rotation", getPedRotation(tyrese), false)
+exports['anticheat-system']:changeProtectedElementDataEx (tyrese, "activeConvo",  0) -- Set the convo state to 0 so people can start talking to him.
+exports['anticheat-system']:changeProtectedElementDataEx(tyrese, "name", "Ty")
+exports['anticheat-system']:changeProtectedElementDataEx(tyrese, "talk", true)
+exports['anticheat-system']:changeProtectedElementDataEx(tyrese, "rotation", getPedRotation(tyrese), false)
 
 function startTy(thePlayer, matchingDimension )
 	if matchingDimension then
@@ -50,7 +50,7 @@ function tyIntro () -- When player enters the colSphere create GUI with intro ou
 			-- Output chat.
 			exports.global:sendLocalText(source, "Ty shouts: Yo', who is it?!", 255, 255, 255, 10)
 			
-			setElementData (tyrese, "activeConvo",  1)
+			exports['anticheat-system']:changeProtectedElementDataEx (tyrese, "activeConvo",  1)
 			talkingToTy = source
 			addEventHandler("onPlayerQuit", talkingToTy, resetTyConvoStateDelayed)
 			addEventHandler("onPlayerWasted", talkingToTy, resetTyConvoStateDelayed)
@@ -71,7 +71,7 @@ function tyStatement4_S()
 	exports.global:sendLocalText(source, name .. " shouts: Yo', c'mon open the fuckin' door, homie.", 255, 255, 255, 5)
 	exports.global:sendLocalText(source, "Ty shouts: I don't know you. Get the fuck up outta here!", 255, 255, 255, 5)
 	
-	setElementData (tyrese, "activeConvo",  0)
+	exports['anticheat-system']:changeProtectedElementDataEx (tyrese, "activeConvo",  0)
 	
 end
 addEvent( "tyStatement4ServerEvent", true )
@@ -264,7 +264,7 @@ addEventHandler("tyFriendClose", getRootElement(), tyClose_S)
 
 ------------------------ Reset -----------------------------
 function resetTyConvoState()
-	setElementData(tyrese,"activeConvo", 0)
+	exports['anticheat-system']:changeProtectedElementDataEx(tyrese,"activeConvo", 0)
 end
 
 function resetTyConvoStateDelayed()

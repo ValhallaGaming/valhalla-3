@@ -41,7 +41,7 @@ function withdrawMoneyPersonal(amount)
 	if money >= 0 then
 		exports.global:giveMoney(source, amount)
 		
-		setElementData(source, "bankmoney", money)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", money)
 		saveBank(source)
 		
 		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (0, " .. getElementData(source, "dbid") .. ", " .. -amount .. ", '', 0)" )
@@ -57,7 +57,7 @@ addEventHandler("withdrawMoneyPersonal", getRootElement(), withdrawMoneyPersonal
 function depositMoneyPersonal(amount)
 	if exports.global:takeMoney(source, amount) then
 		local money = getElementData(source, "bankmoney")
-		setElementData(source, "bankmoney", money+amount)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", money+amount)
 		saveBank(source)
 		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(source, "dbid") .. ", 0, " .. amount .. ", '', 1)" )
 		outputChatBox("You deposited " .. amount .. "$ into your personal account.", source, 255, 194, 14)
@@ -124,7 +124,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 				return
 			end
 			if getElementData(source, "bankmoney") - amount >= 0 then
-				setElementData(source, "bankmoney", getElementData(source, "bankmoney") - amount)
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", getElementData(source, "bankmoney") - amount)
 				mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(source, "dbid") .. ", " .. dbid .. ", " .. amount .. ", '" .. reason .. "', 2)" ) 
 			else
 				outputChatBox( "No.", source, 255, 0, 0 )
@@ -133,7 +133,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 		end
 		
 		if reciever then
-			setElementData(reciever, "bankmoney", getElementData(reciever, "bankmoney") + amount)
+			exports['anticheat-system']:changeProtectedElementDataEx(reciever, "bankmoney", getElementData(reciever, "bankmoney") + amount)
 			saveBank(reciever)
 		else
 			mysql:query_free("UPDATE characters SET bankmoney=bankmoney+" .. amount .. " WHERE id=" .. dbid)

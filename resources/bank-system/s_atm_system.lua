@@ -14,14 +14,14 @@ function createATM(thePlayer, commandName)
 			exports.pool:allocateElement(object)
 			setElementDimension(object, dimension)
 			setElementInterior(object, interior)
-			setElementData(object, "depositable", 0, false)
-			setElementData(object, "limit", 5000, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "depositable", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "limit", 5000, false)
 			
 			local px = x + math.sin(math.rad(-rotation)) * 0.8
 			local py = y + math.cos(math.rad(-rotation)) * 0.8
 			local pz = z
 			
-			setElementData(object, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "dbid", id, false)
 
 			x = x + ((math.cos(math.rad(rotation)))*5)
 			y = y + ((math.sin(math.rad(rotation)))*5)
@@ -60,14 +60,14 @@ function loadAllATMs()
 			exports.pool:allocateElement(object)
 			setElementDimension(object, dimension)
 			setElementInterior(object, interior)
-			setElementData(object, "depositable", deposit, false)
-			setElementData(object, "limit", limit, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "depositable", deposit, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "limit", limit, false)
 			
 			local px = x + math.sin(math.rad(-rotation)) * 0.8
 			local py = y + math.cos(math.rad(-rotation)) * 0.8
 			local pz = z
 			
-			setElementData(object, "dbid", id, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(object, "dbid", id, false)
 			
 			counter = counter + 1
 		end

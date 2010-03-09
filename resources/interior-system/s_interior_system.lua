@@ -295,8 +295,8 @@ function sellTo(thePlayer, commandName, targetPlayerName)
 									
 									
 									
-									setElementData(entrance, "owner", getElementData(targetPlayer, "dbid"))
-									setElementData(exit, "owner", getElementData(targetPlayer, "dbid"))
+									exports['anticheat-system']:changeProtectedElementDataEx(entrance, "owner", getElementData(targetPlayer, "dbid"))
+									exports['anticheat-system']:changeProtectedElementDataEx(exit, "owner", getElementData(targetPlayer, "dbid"))
 									
 									local keytype = 4
 									if interiorType == 1 then
@@ -446,8 +446,8 @@ function reloadOneInterior(id, hasCoroutine, displayircmessage)
 			local intpickup = createPickup( row.interiorx, row.interiory, row.interiorz, 3, 1318 )
 			exports.pool:allocateElement(pickup)
 			exports.pool:allocateElement(intpickup)
-			setElementData( pickup, "other", intpickup, false )
-			setElementData( intpickup, "other", pickup, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( pickup, "other", intpickup, false )
+			exports['anticheat-system']:changeProtectedElementDataEx( intpickup, "other", pickup, false )
 			
 			if (hasCoroutine) then
 				coroutine.yield()
@@ -516,18 +516,18 @@ addEventHandler("onResourceStart", getResourceRootElement(getThisResource()), lo
 
 function setPickupElementData(pickup, id, optAngle, locked, owner, inttype, cost, name, max_items, tennant, rent, interiorwithin, dimension, money, fee)
 	if(pickup) then
-		setElementData(pickup, "dbid", id)
-		setElementData(pickup, "angle", optAngle, false)
-		setElementData(pickup, "locked", locked, false)
-		setElementData(pickup, "owner", owner, false)
-		setElementData(pickup, "inttype", inttype, false)
-		setElementData(pickup, "cost", cost, false)
-		setElementData(pickup, "name", name)
-		setElementData(pickup, "max_items", max_items, false)
-		setElementData(pickup, "tennant", tennant, false)
-		setElementData(pickup, "rent", rent, false)
-		setElementData(pickup, "money", money, false)
-		setElementData(pickup, "fee", fee, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "dbid", id)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "angle", optAngle, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "locked", locked, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "owner", owner, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "inttype", inttype, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "cost", cost, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "name", name)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "max_items", max_items, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "tennant", tennant, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "rent", rent, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "money", money, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(pickup, "fee", fee, false)
 		setElementDimension(pickup, dimension)
 		setElementInterior(pickup, interiorwithin)
 	end
@@ -536,14 +536,14 @@ end
 function setIntPickupElementData(intpickup, id, rot, locked, owner, inttype, interior)
 	if(intpickup) then
 		-- For Interior Pickup
-		setElementData(intpickup, "dbid", id)
-		setElementData(intpickup, "angle", rot, false)
-		setElementData(intpickup, "locked", locked, false)
-		setElementData(intpickup, "owner", owner, false)
-		setElementData(intpickup, "inttype", inttype, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "dbid", id)
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "angle", rot, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "locked", locked, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "owner", owner, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "inttype", inttype, false)
 		setElementInterior(intpickup, interior)
 		setElementDimension(intpickup, id)
-		setElementData(intpickup, "type", "interiorexit") -- To identify it later
+		exports['anticheat-system']:changeProtectedElementDataEx(intpickup, "type", "interiorexit") -- To identify it later
 	end
 end
 
@@ -560,7 +560,7 @@ function bindKeys(player, pickup)
 			bindKey(player, "f", "down", func, player, pickup)
 		end
 		
-		setElementData( player, "interiormarker", true, false )
+		exports['anticheat-system']:changeProtectedElementDataEx( player, "interiormarker", true, false )
 	end
 end
 
@@ -763,7 +763,7 @@ function setPlayerInsideInterior(thePickup, thePlayer)
 					for k, v in pairs( getElementsByType( "player" ) ) do
 						if isElement( v ) then
 							if getElementData( v, "dbid" ) == ownerid then
-								setElementData( v, "businessprofit", getElementData( v, "businessprofit" ) + fee, false )
+								exports['anticheat-system']:changeProtectedElementDataEx( v, "businessprofit", getElementData( v, "businessprofit" ) + fee, false )
 								break
 							end
 						end
@@ -829,7 +829,7 @@ function changeInteriorName( thePlayer, commandName, ...)
 				local dbid = getElementData( thePickup, "dbid" )
 				if dbid and dbid == id then
 					if getElementData( thePickup, "name" ) then
-						setElementData( thePickup, "name", name )
+						exports['anticheat-system']:changeProtectedElementDataEx( thePickup, "name", name )
 						break
 					end
 				end
@@ -944,7 +944,7 @@ addEventHandler( "lockUnlockHouse", getRootElement(),
 			for key, value in ipairs(exports.pool:getPoolElementsByType("pickup")) do
 				local dbid = getElementData(value, "dbid")
 				if dbid == itemValue then
-					setElementData(value, "locked", locked, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(value, "locked", locked, false)
 				end
 			end
 		else
@@ -975,7 +975,7 @@ addEventHandler( "lockUnlockHouseID", getRootElement(),
 			for key, value in ipairs(exports.pool:getPoolElementsByType("pickup")) do
 				local dbid = getElementData(value, "dbid")
 				if dbid == id then
-					setElementData(value, "locked", locked, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(value, "locked", locked, false)
 				end
 			end
 		else
@@ -1019,7 +1019,7 @@ function setFee( thePlayer, commandName, theFee )
 							local query = mysql_query( handler, "UPDATE interiors SET fee = " .. theFee .. " WHERE id = " .. dbid )
 							if query then
 								mysql_free_result( query )
-								setElementData( entrance, "fee", theFee )
+								exports['anticheat-system']:changeProtectedElementDataEx( entrance, "fee", theFee )
 								
 								outputChatBox( "The entrance fee for '" .. getElementData( entrance, "name" ) .. "' is now $" .. theFee .. ".", thePlayer, 0, 255, 0 )
 							else
@@ -1138,7 +1138,7 @@ function setInteriorPrice( thePlayer, commandName, cost )
 				if query then
 					mysql_free_result( query )
 					
-					setElementData(entrance, "cost", cost, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(entrance, "cost", cost, false)
 					
 					outputChatBox( "Interior Updated.", thePlayer, 0, 255, 0 )
 					exports.logs:logMessage("[/SETINTERIORPRICE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." set the interiorprice of ".. dbid .." to ".. cost , 4)

@@ -16,7 +16,7 @@ addEventHandler("onEmploymentServer", getRootElement(), onEmploymentServer)
 function givePlayerJob(jobID)
 	local charname = getPlayerName(source)
 	
-	setElementData(source, "job", jobID)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "job", jobID)
 	mysql:query_free("UPDATE characters SET job=" .. jobID .. ", jobcontract = 3 WHERE id = " .. getElementData(source, "dbid") )
 	
 	exports.global:givePlayerAchievement(source, 30)
@@ -24,7 +24,7 @@ function givePlayerJob(jobID)
 	if (jobID==4) then -- CITY MAINTENANCE
 		exports.global:giveWeapon(source, 41, 1500, true)
 		outputChatBox("Use this paint to paint over tags you find.", source, 255, 194, 14)
-		setElementData(source, "tag", 9)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "tag", 9)
 		mysql:query_free("UPDATE characters SET tag=9 WHERE id = " .. getElementData(source, "dbid") )
 	end
 end
@@ -44,10 +44,10 @@ function quitJob(source)
 				if contracttime > 0 then
 					outputChatBox( "You need to wait " .. contracttime .. " payday(s) before you can leave your job.", source, 255, 0, 0)
 				else
-					setElementData(source, "job", 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(source, "job", 0)
 					mysql:query_free("UPDATE characters SET job=0 WHERE id = " .. getElementData(source, "dbid") )
 					if job == 4 then
-						setElementData(source, "tag", 1)
+						exports['anticheat-system']:changeProtectedElementDataEx(source, "tag", 1)
 						mysql:query_free("UPDATE characters SET tag=1 WHERE id = " .. getElementData(source, "dbid") )
 					end
 					

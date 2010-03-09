@@ -14,3 +14,15 @@ function resourceStart(res)
 	end
 end
 addEventHandler("onResourceStart", getResourceRootElement(), resourceStart)
+
+function weaponJammed()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "jammed", 1, true)
+end
+addEvent("jammed", true)
+addEventHandler("jammed", getRootElement(), weaponJammed)
+
+function weaponUnjammed()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "jammed", 0, true)
+end
+addEvent("notjammed", true)
+addEventHandler("notjammed", getRootElement(), weaponUnjammed)

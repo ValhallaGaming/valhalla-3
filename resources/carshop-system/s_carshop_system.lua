@@ -1,13 +1,13 @@
 local mysql = exports.mysql
 
 carshopPickup = createPickup(544.4990234375, -1292.7890625, 17.2421875, 3, 1239)
-setElementData(carshopPickup, "shopid", 1, false)
+exports['anticheat-system']:changeProtectedElementDataEx(carshopPickup, "shopid", 1, false)
 
 boatshopPickup = createPickup(715.35546875, -1705.5791015625, 2.4296875, 3, 1239)
-setElementData(boatshopPickup, "shopid", 2, false)
+exports['anticheat-system']:changeProtectedElementDataEx(boatshopPickup, "shopid", 2, false)
 
 cheapcarshopPickup = createPickup( 2131.8115234375, -1151.3212890625, 24.060283660889, 3, 1239)
-setElementData(cheapcarshopPickup, "shopid", 3, false)
+exports['anticheat-system']:changeProtectedElementDataEx(cheapcarshopPickup, "shopid", 3, false)
 
 function pickupUse(thePlayer)
 	if getElementData(source, "shopid") then
@@ -72,11 +72,11 @@ function makeCar(thePlayer, id, cost, col1, col2, x, y, z, rz, px, py, pz, prz)
 	if (insertid) then
 		local veh = call( getResourceFromName( "vehicle-system" ), "createShopVehicle", insertid, id, x, y, z, 0, 0, rz, plate )
 		
-		setElementData(veh, "fuel", 100, false)
-		setElementData(veh, "Impounded", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", 0)
 		
 		setVehicleRespawnPosition(veh, x, y, z, 0, 0, rz)
-		setElementData(veh, "respawnposition", {x, y, z, 0, 0, rz}, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, 0, 0, rz}, false)
 		setVehicleLocked(veh, false)
 		
 		setVehicleColor(veh, col1, col2, col1, col2)
@@ -89,14 +89,14 @@ function makeCar(thePlayer, id, cost, col1, col2, x, y, z, rz, px, py, pz, prz)
 		call( getResourceFromName( "item-system" ), "deleteAll", 3, insertid )
 		exports.global:giveItem( thePlayer, 3, insertid )
 		
-		setElementData(veh, "fuel", 100, false)
-		setElementData(veh, "engine", 0, false)
-		setElementData(veh, "oldx", x, false)
-		setElementData(veh, "oldy", y, false)
-		setElementData(veh, "oldz", z, false)
-		setElementData(veh, "faction", -1)
-		setElementData(veh, "owner", dbid, false)
-		setElementData(veh, "job", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", 100, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", x, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", y, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", z, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", -1)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", dbid, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
 		
 		if getVehicleType(veh) == "Boat" then
 			exports.global:givePlayerAchievement(thePlayer, 27)

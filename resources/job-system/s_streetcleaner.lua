@@ -118,19 +118,19 @@ function startCleaningMission(thePlayer)
 		local vehicle = createVehicle(574,  1503.5179443359, 2369.0305175781, 10.8203125, 0, 0, 0.645355224609, "CLEANER")
 		exports.pool:allocateElement(vehicle)
 			
-		setElementData(vehicle, "fuel", 100)
-		setElementData(vehicle, "owner", -2, false)
-		setElementData(vehicle, "faction", -1, false)
-		setElementData(vehicle, "dbid", 999999, false)
-		setElementData(vehicle, "oldx", 1503.5179443359, false)
-		setElementData(vehicle, "oldy", 369.0305175781, false)
-		setElementData(vehicle, "oldz", 10.8203125, false)
-		setElementData(vehicle, "engine", 1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "fuel", 100)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "owner", -2, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "faction", -1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "dbid", 999999, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "oldx", 1503.5179443359, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "oldy", 369.0305175781, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "oldz", 10.8203125, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "engine", 1, false)
         removePedFromVehicle(thePlayer)
 		warpPedIntoVehicle(thePlayer, vehicle)
 		
-		setElementData(thePlayer, "cleaner.marker", "1")
-        setElementData(thePlayer, "cleaner.vehicle", vehicle)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.marker", "1")
+        exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.vehicle", vehicle)
 		
 		local int = math.random ( 1, 1 ) -- Number of checkpoint paths. (1 minimum , 3 max )
 		local x1,y1,z1 = nil
@@ -138,20 +138,20 @@ function startCleaningMission(thePlayer)
 			x1 = CheckpointStyle_1[1].x_point
 			y1 = CheckpointStyle_1[1].y_point
 			z1 = CheckpointStyle_1[1].z_point
-			setElementData(thePlayer, "cleaner.checkmarkers", "25")
-			setElementData(thePlayer, "cleaner.t", "1")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.checkmarkers", "25")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.t", "1")
 		elseif tonumber(int) == 2 then
 			x1 = CheckpointStyle_2[1].x_point
 			y1 = CheckpointStyle_2[1].y_point
 			z1 = CheckpointStyle_2[1].z_point
-			setElementData(thePlayer, "cleaner.checkmarkers", "17")
-			setElementData(thePlayer, "cleaner.t", "2")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.checkmarkers", "17")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.t", "2")
 		elseif tonumber(int) == 3 then
 			x1 = CheckpointStyle_3[1].x_point
 			y1 = CheckpointStyle_3[1].y_point
 			z1 = CheckpointStyle_3[1].z_point
-			setElementData(thePlayer, "cleaner.checkmarkers", "17")
-			setElementData(thePlayer, "cleaner.t", "3")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.checkmarkers", "17")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.t", "3")
 		end																				--- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		local blip2 = createBlip(x1 ,y1 ,z1, 0, 2, 255, 0, 255, 255)
 		local marker2 = createMarker(x1 ,y1 ,z1 , "checkpoint", 4, 255, 0, 255, 150)
@@ -166,7 +166,7 @@ function startCleaningMission(thePlayer)
 		local colsphere = createColSphere ( x1 ,y1 ,z1 , 4 )
 		exports.pool:allocateElement(colsphere)
 		attachElements ( marker2, blip2 )
-		setElementData(colsphere, "attatched", marker2)
+		exports['anticheat-system']:changeProtectedElementDataEx(colsphere, "attatched", marker2)
 		
 		addEventHandler("onColShapeHit", colsphere, UpdateCheckpoints)	
 		
@@ -207,12 +207,12 @@ function UpdateCheckpoints(thePlayer)
 				local colsphere = createColSphere (1503.5179443359, 2369.0305175781, 10.8203125 , 4 )
 				exports.pool:allocateElement(colsphere)
 				attachElements ( marker3, blip3 )
-				setElementData(colsphere, "attatched", marker3)
+				exports['anticheat-system']:changeProtectedElementDataEx(colsphere, "attatched", marker3)
 				
 				addEventHandler("onColShapeHit", colsphere, FinalCheckpoints)
 			else
 				local newnumber = m_number+1
-				setElementData(thePlayer, "cleaner.marker", newnumber)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.marker", newnumber)
 				
 				local x2, y2, z2 = nil
 				
@@ -244,7 +244,7 @@ function UpdateCheckpoints(thePlayer)
 				local colsphere = createColSphere ( x2 ,y2 ,z2 , 4 )
 				exports.pool:allocateElement(colsphere)
 				attachElements ( marker3, blip3 )
-				setElementData(colsphere, "attatched", marker3)
+				exports['anticheat-system']:changeProtectedElementDataEx(colsphere, "attatched", marker3)
 				
 				
 				addEventHandler("onColShapeHit", colsphere, UpdateCheckpoints)
@@ -286,7 +286,7 @@ function FinalCheckpoints( thePlayer )
 			local colsphere = createColSphere (1442.3360595703, 2371.0288085938, 10.8203125, 4 )
 			exports.pool:allocateElement(colsphere)
 			attachElements ( marker4, blip4 )
-			setElementData(colsphere, "attatched", marker4)
+			exports['anticheat-system']:changeProtectedElementDataEx(colsphere, "attatched", marker4)
 				
 			addEventHandler("onColShapeHit", colsphere, FinishCheckpoints)
 		else

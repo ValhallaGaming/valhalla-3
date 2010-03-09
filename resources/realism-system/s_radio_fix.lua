@@ -5,7 +5,7 @@ function syncRadio(station)
 	local seat = getPedOccupiedVehicleSeat(source)
 
 	if (vehicle) then
-		setElementData(vehicle, "radiostation", station, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "radiostation", station, false)
 		for i = 0, getVehicleMaxPassengers(vehicle) do
 			if (i~=seat) then
 				local occupant = getVehicleOccupant(vehicle, i)
@@ -24,7 +24,7 @@ function setRadioOnEnter(player)
 		local station = getElementData(source, "radiostation")
 		if not station then
 			station = math.random(1, 12)
-			setElementData(source, "radiostation", station, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "radiostation", station, false)
 		end
 		triggerClientEvent(player, "syncRadio", player, station)
 	else

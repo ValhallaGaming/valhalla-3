@@ -582,7 +582,7 @@ function hideFactionMenu()
 	end
 	
 	gFactionWindow, gMemberGrid = nil
-	setElementData(getLocalPlayer(), "factionMenu", 0, true)
+	triggerServerEvent("factionmenu:hide", getLocalPlayer())
 	
 	if (wInvite) then
 		destroyElement(wInvite)

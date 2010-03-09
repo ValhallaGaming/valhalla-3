@@ -68,13 +68,13 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 								exports.global:takeMoney(targetPlayer, targetPlayerhasmoney)
 								local fineleft = amount - targetPlayerhasmoney
 								local bankmoney = getElementData(targetPlayer, "bankmoney")
-								setElementData(targetPlayer, "bankmoney", bankmoney-fineleft)
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "bankmoney", bankmoney-fineleft)
 							end
 						
 							local theTimer = setTimer(timerPDUnjailPlayer, 60000, jailtime, targetPlayer)
-							setElementData(targetPlayer, "pd.jailserved", 0, false)
-							setElementData(targetPlayer, "pd.jailtime", jailtime, false)
-							setElementData(targetPlayer, "pd.jailtimer", theTimer, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailserved", 0, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtime", jailtime, false)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtimer", theTimer, false)
 							
 							toggleControl(targetPlayer,'next_weapon',false)
 							toggleControl(targetPlayer,'previous_weapon',false)
@@ -88,7 +88,7 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 								toggleControl(targetPlayer, "jump", true)
 								toggleControl(targetPlayer, "accelerate", true)
 								toggleControl(targetPlayer, "brake_reverse", true)
-								setElementData(targetPlayer, "restrain", 0)
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "restrain", 0)
 								removeElementData(targetPlayer, "restrainedBy")
 								removeElementData(targetPlayer, "restrainedObj")
 								if restrainedObj == 45 then -- If handcuffs.. take the key
@@ -100,7 +100,7 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 							end
 							setPedWeaponSlot(targetPlayer,0)
 							
-							setElementData(targetPlayer, "pd.jailstation", targetCol)
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailstation", targetCol)
 							
 							mysql:query_free("UPDATE characters SET pdjail='1', pdjail_time='" .. jailtime .. "', pdjail_station='" .. targetCol .. "', cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
 							outputChatBox("You jailed " .. targetPlayerNick .. " for " .. jailtime .. " Minutes.", thePlayer, 255, 0, 0)
@@ -153,9 +153,9 @@ function timerPDUnjailPlayer(jailedPlayer)
 		local timeLeft = getElementData(jailedPlayer, "pd.jailtime")
 		local theMagicTimer = getElementData(jailedPlayer, "pd.jailtimer") -- 0001290: PD /release bug
 		local username = getPlayerName(jailedPlayer)
-		setElementData(jailedPlayer, "pd.jailserved", tonumber(timeServed)+1, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", tonumber(timeServed)+1, false)
 		local timeLeft = timeLeft - 1
-		setElementData(jailedPlayer, "pd.jailtime", timeLeft, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
 		if (timeLeft<=0) and (theMagicTimer) then
 			killTimer(theMagicTimer) -- 0001290: PD /release bug
@@ -168,8 +168,8 @@ function timerPDUnjailPlayer(jailedPlayer)
 			setElementPosition(jailedPlayer, 241.3583984375, 115.232421875, 1003.2257080078)
 			setPedRotation(jailedPlayer, 270)
 				
-			setElementData(jailedPlayer, "pd.jailserved", 0, false)
-			setElementData(jailedPlayer, "pd.jailtime", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
 			removeElementData(jailedPlayer, "pd.jailtimer")
 			removeElementData(jailedPlayer, "pd.jailstation")
 			
@@ -222,7 +222,7 @@ function jailRelease(thePlayer, commandName, targetPlayerNick)
 					local username  = getPlayerName(thePlayer)
 						
 					if (jailTimer) then
-						setElementData(targetPlayer, "pd.jailtime", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtime", 1, false)
 						timerPDUnjailPlayer(targetPlayer)
 					else
 						outputChatBox("This player is not serving a jail sentance.", thePlayer, 255, 0, 0)
