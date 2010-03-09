@@ -6,11 +6,13 @@ exports.pool:allocateElement(marker2)
 -- Nice little guard ped
 guard1 = createPed(280, 1544.1591796875, -1632, 13.3828125)
 exports.pool:allocateElement(guard1)
+setPedFrozen(guard1, true)
 setPedRotation(guard1, 90)
 setTimer(giveWeapon, 50, 1, guard1, 29, 15000, true)
 -- Guard ped @ CPU
 guard2 = createPed(280, 616.2255859375, -1510.9697265625, 14.950366020203)
 exports.pool:allocateElement(guard2)
+setPedFrozen(guard2, true)
 setPedRotation(guard2, -90)
 setTimer(giveWeapon, 50, 1, guard2, 29, 15000, true)
 

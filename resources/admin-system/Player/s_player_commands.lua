@@ -2546,6 +2546,7 @@ function vehicleLimit(admin, command, player, limit)
 			if (tplayer) then			
 				local query = mysql:query_fetch_assoc("SELECT maxvehicles FROM characters WHERE id = " .. getElementData(tplayer, "dbid"))
 				if (query) then
+					local oldvl = query["maxvehicles"]
 					local newl = tonumber(limit)
 					if (newl) then
 						if (newl>0) then
@@ -2555,6 +2556,8 @@ function vehicleLimit(admin, command, player, limit)
 							
 							outputChatBox("You have set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit to " .. newl .. ".", admin, 255, 194, 14)
 							outputChatBox("Admin " .. getPlayerName(admin):gsub("_"," ") .. " has set your vehicle limit to " .. newl .. ".", tplayer, 255, 194, 14)
+							
+							exports.logs:logMessage("[SET VEHICLE LIMIT] " .. getPlayerName(admin):gsub("_"," ") .. " has set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit from " .. oldvl .. " to " .. newl .. ".", 26)							
 						else
 							outputChatBox("You can not set a level below 0", admin, 255, 194, 14)
 						end

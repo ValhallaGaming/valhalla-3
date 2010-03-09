@@ -126,8 +126,11 @@ function setbikeimpound(player, matchingDimension)
 										setVehicleLocked(veh, false)
 										setElementData(veh, "enginebroke", 1, false)
 										setVehicleEngineState(veh, false)
+										outputChatBox("(( The bike has been successfully impounded. ))", player, 50, 205, 50)
 										outputChatBox("((Please remember to /park and /handbrake your vehicle in our car park.))", player, 255, 194, 14)
 										isin = false
+										
+										exports.logs:logMessage("[IMPOUNDED BIKE] " .. getPlayerName(player) .. " impounded vehicle #" .. dbid .. ", owned by " .. tostring(exports['vehicle-system']:getCharacterName(owner)) .. ", in " .. table.concat({exports.global:getElementZoneName(veh)}, ", ") .. " (pos = " .. table.concat({getElementPosition(veh)}, ", ") .. ", rot = ".. table.concat({getVehicleRotation(veh)}, ", ") .. ", health = " .. getElementHealth(veh) .. ")", 14)
 									end
 								end
 							else

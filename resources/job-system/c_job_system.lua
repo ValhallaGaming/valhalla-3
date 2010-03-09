@@ -8,6 +8,7 @@ setElementInterior( jessie , 3 )
 setElementData( jessie, "talk", 1 )
 setElementData( jessie, "name", "Jessie Smith" )
 setPedAnimation ( jessie, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false )
+setPedFrozen(jessie, true)
 
 function showEmploymentWindow()
 	
