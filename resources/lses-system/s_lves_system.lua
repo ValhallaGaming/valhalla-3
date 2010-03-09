@@ -95,7 +95,7 @@ function giveGunsBack(thePlayer, weapons, removedWeapons, removedWeapons2)
 	if removedWeapons2 ~= nil then
 		outputChatBox("LESES Employee: We have taken away your " .. removedWeapons2 .. " for safety purposes.", thePlayer, 255, 194, 14)
 	end
-
+	-- 28
 	for key, value in ipairs(weapons) do
 		local weapon = tonumber(weapons[key][1])
 		local ammo = tonumber(weapons[key][2])
@@ -105,6 +105,7 @@ function giveGunsBack(thePlayer, weapons, removedWeapons, removedWeapons2)
 			exports.global:giveWeapon(thePlayer, weapon, math.floor( ammo / 2 ), false)
 		else
 			exports.global:takeWeapon(thePlayer, weapon)
+			exports.logs:logMessage("[LSES Death] " .. getElementData(thePlayer, "gameaccountusername") .. "/" .. getPlayerName(thePlayer) .. " lost a weapon (" .. getWeaponNameFromID (weapon) .. "/".. tostring(ammo) .." ammo)", 28)
 		end
 	end
 end

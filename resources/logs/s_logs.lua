@@ -25,7 +25,8 @@ enumTypes = {
 	"sqlqueries",
 	"stevie",
 	"connect",
-	"connectdangerous"
+	"connectdangerous",
+	"takeguns"
 }
 
 
