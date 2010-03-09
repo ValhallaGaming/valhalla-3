@@ -420,7 +420,7 @@ globalSupplies = 0
 
 function updateGlobalSupplies(value)
 	globalSupplies = globalSupplies + value
-	mysql:query_free("UPDATE settings SET value='" .. globalSupplies .. "' WHERE name='globalsupplies'")
+	mysql:query_free("UPDATE settings SET value='" .. tostring(globalSupplies) .. "' WHERE name='globalsupplies'")
 end
 addEvent("updateGlobalSupplies", true)
 addEventHandler("updateGlobalSupplies", getRootElement(), updateGlobalSupplies)
@@ -482,6 +482,6 @@ addCommandHandler("ordersupplies", orderSupplies, false, false)
 
 function resStart()
 	local result = mysql:query_fetch_assoc("SELECT value FROM settings WHERE name='globalsupplies' LIMIT 1")
-	globalSupplies = result["value"]
+	globalSupplies = tonumber(result["value"])
 end
 addEventHandler("onResourceStart", getResourceRootElement(), resStart)
