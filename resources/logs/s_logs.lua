@@ -24,7 +24,8 @@ enumTypes = {
 	"moneyspawn",
 	"sqlqueries",
 	"stevie",
-	"vehiclelimit"
+	"connect",
+	"connectdangerous"
 }
 
 
@@ -32,10 +33,10 @@ function logMessage(message, type)
 	local filename = nil
 	local r = getRealTime()
 	local partialname = enumTypes[type]
-	
+
 	if (partialname == nil) then return end
-	
-	if partialname == "vehiclelimit" or partialname == "admincmds" or partialname == "moneyspawn" or partialname == "weaponspawn" or partialname == "sqlqueries" or partialname == "stevie" then
+
+	if partialname == "admincmds" or partialname == "moneyspawn" or partialname == "weaponspawn" or partialname == "sqlqueries" or partialname == "stevie" or partialname == "connect" or partialname == "connectdangerous" then
 		filename = "/hiddenlogs/" .. partialname .. ".log"
 	else
 		filename = "/logs/" .. partialname .. ".log"
@@ -51,6 +52,15 @@ function logMessage(message, type)
 	
 	return true
 end
+
+function playerConnect(name, ip, username, serial, version)
+	logMessage("IP: " .. tostring(ip) .. " - NAME: " .. tostring(name) .. " USERNAME: " .. tostring(username) .. " SERIAL: " .. tostring(serial) .. " VERSION: " .. tostring(version) .. " GETPLAYERCOUNT: " .. tostring(getPlayerCount()) .. " #PLAYERELEMENTS: " .. tostring(#getElementsByType("player")), 26)
+
+	if ( getPlayerCount() ~= #getElementsByType("player") ) then
+		logMessage("[POSSIBLY DANGEROUS] IP: " .. tostring(ip) .. " - NAME: " .. tostring(name) .. " USERNAME: " .. tostring(username) .. " SERIAL: " .. tostring(serial) .. " VERSION: " .. tostring(version) .. " GETPLAYERCOUNT: " .. tostring(getPlayerCount()) .. " #PLAYERELEMENTS: " .. tostring(#getElementsByType("player")), 27)
+	end
+end
+addEventHandler("onPlayerConnect", getRootElement(), playerConnect)
 
 function createFileIfNotExists(filename)
 	local file = fileOpen(filename)
