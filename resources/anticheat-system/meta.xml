@@ -3,9 +3,15 @@
 	
 	<script src="c_anticheat.lua" type="client"/>
 	<script src="s_anticheat.lua" type="server"/>
+	<script src="s_element.lua" type="server"/>
 
 	<export function="giveSafeWeapon" type="server"/>
 	<export function="setSafeWeaponAmmo" type="server"/>
 	<export function="takeAllWeaponsSafe" type="server"/>
 	<export function="takeWeaponSafe" type="server"/>
+	
+	<export function="changeProtectedElementDataEx" type="server"/>
+	<export function="changeProtectedElementData" type="server"/>
+	<export function="protectElementData" type="server"/>
+	<export function="allowElementData" type="server"/>
 </meta>
