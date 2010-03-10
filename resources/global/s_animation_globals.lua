@@ -15,7 +15,7 @@ function applyAnimation(thePlayer, block, name, animtime, loop, updatePosition, 
 		if (forced) then
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", 1)
 		else
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", nil)
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", 0)
 		end
 		
 		local setanim = setPedAnimation(thePlayer, block, name, animtime, loop, updatePosition, false)
@@ -34,7 +34,7 @@ end
 function onSpawn()
 	setPedAnimation(source)
 	toggleAllControls(source, true, true, false)
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "forcedanimation", nil)
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "forcedanimation", 0)
 end
 addEventHandler("onPlayerSpawn", getRootElement(), onSpawn)
 
@@ -45,8 +45,8 @@ function removeAnimation(thePlayer)
 			killTimer( getElementData( thePlayer, "animationt" ) )
 		end
 		local setanim = setPedAnimation(thePlayer)
-		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", nil)
-		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "animationt", nil)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "forcedanimation", 0)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "animationt", 0)
 		toggleAllControls(thePlayer, true, true, false)
 		setPedAnimation(thePlayer)
 		setTimer(setPedAnimation, 50, 2, thePlayer)
