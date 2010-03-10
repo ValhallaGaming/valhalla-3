@@ -8,7 +8,8 @@ armoredCars = { [427]=true, [528]=true, [432]=true, [601]=true, [428]=true, [597
 -- cached owner name queries
 local charCache = {} -- messes with name changes
 local null = mysql_null()
-
+local toLoad = { }
+local threads = { }
 local function secondArg( a, b )
 	return b
 end
@@ -333,14 +334,23 @@ function loadAllVehicles(res)
 	end
 	
 
-	local result = mysql:query("SELECT * FROM `vehicles` ORDER BY `id` ASC")
+	local result = mysql:query("SELECT id FROM `vehicles` ORDER BY `id` ASC")
 	if result then
+		--while row = mysql:fetch_assoc(result) do
 		while true do
-			if (loadBatchVehicles(result)) then
-				break
-			end
+			local row = mysql:fetch_assoc(result)
+			if not row then break end
+			toLoad[tonumber(row["id"])] = true
+			--loadOneVehicle(row)
 		end
 		mysql:free_result(result)
+		
+		for id in pairs( toLoad ) do
+			local co = coroutine.create(loadOneVehicle)
+			coroutine.resume(co, id, true)
+			table.insert(threads, co)
+		end
+		setTimer(resume, 1000, 4)
 	else
 		outputDebugString( "loadAllVehicles failed" )
 	end
@@ -348,10 +358,11 @@ function loadAllVehicles(res)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), loadAllVehicles)
 
+--[[
 function loadBatchVehicles(result)
 	local ccount = 1
 	local done = false
-	while ccount < 900 do
+	while ccount < 600 do
 		local row = mysql:fetch_assoc(result)
 		if not (row) then 
 			done = true
@@ -362,8 +373,28 @@ function loadBatchVehicles(result)
 	end
 	return done
 end
+]]
 
-function loadOneVehicle(row)
+
+function resume()
+	for key, value in ipairs(threads) do
+		coroutine.resume(value)
+	end
+end
+
+
+function loadOneVehicle(id, hasCoroutine)
+	if (hasCoroutine==nil) then
+		hasCoroutine = false
+	end
+	
+	local row = mysql:query_fetch_assoc("SELECT * FROM vehicles WHERE id = " .. id )
+	if row then
+		
+		if (hasCoroutine) then
+			coroutine.yield()
+		end
+		
 			for k, v in pairs( row ) do
 				if v == null then
 					row[k] = nil
@@ -415,6 +446,10 @@ function loadOneVehicle(row)
 				
 				-- set the sirens on if it has some
 				setVehicleSirensOn(veh, row.sirens == 1)
+				
+		if (hasCoroutine) then
+			coroutine.yield()
+		end
 				
 				-- job
 				if row.job > 0 then
@@ -475,6 +510,7 @@ function loadOneVehicle(row)
 		
 		--
 		exports['vehicle-interiors']:add( veh )
+		end
 	end
 end
 

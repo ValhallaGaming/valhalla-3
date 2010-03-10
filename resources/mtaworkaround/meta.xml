@@ -1,0 +1,5 @@
+<meta>
+	<info author="vG MTA Scripting Team" type="script" description="Workaround for MTA bugs/fixes"/>
+	
+	<script src="markers.lua" type="client" />
+</meta>
