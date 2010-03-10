@@ -99,30 +99,3 @@ bindKey('fire', 'up',
 		end
 	end
 ) 
-
-function setTag(commandName, newTag)
-	if not (newTag) then
-		outputChatBox("SYNTAX: " .. commandName .. " [Tag # 1->8].", 255, 194, 14)
-	elseif getElementData(getLocalPlayer(), "tag") == 9 then
-		outputChatBox("You can't set your tag while on City Maintenance.", 255, 0, 0)
-	else
-		local newTag = tonumber(newTag)
-		if (newTag>0) and (newTag<9) then
-			local theTeam = getPlayerTeam(getLocalPlayer())
-			local teamName = getTeamName(theTeam)
-			
-			if (teamName~="Los Malvados") and (newTag==8) then -- Los Malvados
-				outputChatBox("You are not a member of Los Malvados.", 255, 0, 0)
-			elseif (teamName~="Southside Crips") and (newTag==3) then -- Crips
-				outputChatBox("You are not a member of Southside Crips.", 255, 0, 0)
-			else
-				setElementData(getLocalPlayer(), "tag", newTag, true)
-				outputChatBox("Tag changed to #" .. newTag .. ".", 0, 255, 0)
-				triggerServerEvent("updateTag", getLocalPlayer(), newTag)
-			end
-		else
-			outputChatBox("Invalid value, please enter a value between 1 and 8.", 255, 0, 0)
-		end
-	end
-end
-addCommandHandler("settag", setTag)

@@ -127,9 +127,30 @@ function loadAllTags(res)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), loadAllTags)
 
-addEvent("updateTag", true)
-addEventHandler("updateTag", getRootElement(),
-	function(tag)
-		mysql:query_free("UPDATE characters SET tag=" .. mysql:escape_string(tag) .. " WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")))
+function setTag(thePlayer, commandName, newTag)
+	if not (newTag) then
+		outputChatBox("SYNTAX: " .. commandName .. " [Tag # 1->8].", thePlayer, 255, 194, 14)
+	elseif getElementData(thePlayer, "tag") == 9 then
+		outputChatBox("You can't set your tag while on City Maintenance.", thePlayer, 255, 0, 0)
+	else
+		local newTag = tonumber(newTag)
+		if (newTag>0) and (newTag<9) then
+			local theTeam = getPlayerTeam(thePlayer)
+			local teamName = getTeamName(theTeam)
+			
+			if (teamName~="Los Malvados") and (newTag==8) then -- Los Malvados
+				outputChatBox("You are not a member of Los Malvados.", thePlayer, 255, 0, 0)
+			elseif (teamName~="Southside Crips") and (newTag==3) then -- Crips
+				outputChatBox("You are not a member of Southside Crips.", thePlayer, 255, 0, 0)
+			else
+				--setElementData(getLocalPlayer(), "tag", newTag, true)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tag", newTag)
+				outputChatBox("Tag changed to #" .. newTag .. ".", thePlayer, 0, 255, 0)
+				mysql:query_free("UPDATE characters SET tag=" .. mysql:escape_string(newTag) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "dbid")))
+			end
+		else
+			outputChatBox("Invalid value, please enter a value between 1 and 8.", 255, 0, 0)
+		end
 	end
-)
+end
+addCommandHandler("settag", setTag)
