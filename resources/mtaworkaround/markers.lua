@@ -1,5 +1,6 @@
 local element = "pickup"
 local enabled = true
+local streamdistance = 25
 
 local unstreamed = { }
 local root = getRootElement()
@@ -24,7 +25,7 @@ function checkStreamIn()
 			end
 			
 			-- Stream in if distance is smaller as 25
-			if (distx < 25) and (disty < 25) then
+			if (distx < streamdistance) and (disty < streamdistance) then
 				local dimension = unstreamed[key]
 				unstreamed[key] = nil
 				setElementDimension(key, dimension)
