@@ -20,6 +20,17 @@ end
 addEvent("bindAnimationStopKey", false)
 addEventHandler("bindAnimationStopKey", getRootElement(), bindAnimationStopKey)
 
+function forcedAnim()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "forcedanimation", 1)
+end
+addEvent("forcedanim", true)
+addEventHandler("forcedanim", getRootElement(), forcedAnim)
+
+function unforcedAnim()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "forcedanimation", 0)
+end
+addEvent("unforcedanim", true)
+addEventHandler("unforcedanim", getRootElement(), unforcedAnim)
 
 function unbindAnimationStopKey()
 	unbindKey(source, "space", "down", stopAnimation)

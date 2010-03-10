@@ -12,9 +12,9 @@ function applyAnimation(thePlayer, block, name, animtime, loop, updatePosition, 
 		toggleAllControls(true, true, false)
 		
 		if (forced) then
-			setElementData(thePlayer, "forcedanimation", 1)
+			triggerServerEvent("forcedanim", getLocalPlayer())
 		else
-			setElementData(thePlayer, "forcedanimation", nil)
+			triggerServerEvent("unforcedanim", getLocalPlayer())
 		end
 		
 		local setanim = setPedAnimation(thePlayer, block, name, animtime, loop, updatePosition, false)
