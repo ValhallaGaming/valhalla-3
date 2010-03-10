@@ -67,7 +67,7 @@ function changeProtectedElementDataEx(thePlayer, index, newvalue, sync)
 		end
 	
 		allowElementData(thePlayer, index)
-		if (sync) then
+		if (sync ~= nil) then
 			setElementData(thePlayer, index, newvalue, sync)
 		else
 			setElementData(thePlayer, index, newvalue)
