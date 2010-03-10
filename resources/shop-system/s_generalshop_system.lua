@@ -90,7 +90,7 @@ function createGeneralshop(thePlayer, commandName, shoptype, skin)
 				local interior = getElementInterior(thePlayer)
 				local rotation = math.ceil(getPedRotation(thePlayer) / 30)*30
 				
-				local id = mysql:query_insert_free("INSERT INTO shops SET x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', dimension='" .. dimension .. "', interior='" .. interior .. "', shoptype='" .. shoptype .. "', rotation='" .. rotation .. "',skin="..skin)
+				local id = mysql:query_insert_free("INSERT INTO shops SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', dimension='" .. mysql:escape_string(dimension) .. "', interior='" .. mysql:escape_string(interior) .. "', shoptype='" .. mysql:escape_string(shoptype) .. "', rotation='" .. mysql:escape_string(rotation) .. "',skin=".. mysql:escape_string(skin))
 				
 				if (id) then
 					createShopKeeper(x,y,z,interior,dimension,id,tonumber(shoptype),rotation,skin ~= -1 and skin)
@@ -170,7 +170,7 @@ function deleteGeneralShop(thePlayer, commandName, id)
 						local dbid = getElementData(thePed, "dbid")
 						if (tonumber(id)==dbid) then
 							destroyElement(thePed)
-							mysql:query_free("DELETE FROM shops WHERE id='" .. dbid .. "' LIMIT 1")
+							mysql:query_free("DELETE FROM shops WHERE id='" .. mysql:escape_string(dbid) .. "' LIMIT 1")
 							exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) ..  " deleted shop with ID #" .. id .. ".")
 							outputChatBox("Deleted shop with ID #" .. id .. ".", thePlayer, 0, 255, 0)
 							counter = counter + 1
@@ -266,7 +266,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 	end
 	
 	if inttype == 1 then
-		local result = mysql:query_fetch_assoc("SELECT supplies FROM interiors WHERE id='" .. interior .. "' LIMIT 1")
+		local result = mysql:query_fetch_assoc("SELECT supplies FROM interiors WHERE id='" .. mysql:escape_string(interior) .. "' LIMIT 1")
 		supplies = tonumber(result["supplies"])
 	end
 	
@@ -294,9 +294,9 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 					local skin = tonumber(itemValue) or 264
 					exports.global:giveItem(source, 16, skin)
 					setElementModel(source, skin)
-					mysql:query_free("UPDATE characters SET skin = " .. skin .. " WHERE id = " .. getElementData( source, "dbid" ) )
+					mysql:query_free("UPDATE characters SET skin = " .. mysql:escape_string(skin) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "dbid" )) )
 					if exports['anticheat-system']:changeProtectedElementDataEx(source, "casualskin", skin, false) then
-						mysql:query_free("UPDATE characters SET casualskin = " .. skin .. " WHERE id = " .. getElementData(source, "dbid") )
+						mysql:query_free("UPDATE characters SET casualskin = " .. mysql:escape_string(skin) .. " WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 					end
 					exports.global:givePlayerAchievement(source, 21)
 				end
@@ -350,7 +350,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 						return
 					end
 					setPedFightingStyle(source, itemID)
-					mysql:query_free("UPDATE characters SET fightstyle = " .. itemID .. " WHERE id = " .. getElementData( source, "dbid" ) )
+					mysql:query_free("UPDATE characters SET fightstyle = " .. mysql:escape_string(itemID) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "dbid" )) )
 					
 					exports.global:givePlayerAchievement(source, 20)
 				end
@@ -386,7 +386,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 			end
 			
 			if inttype == 1 then
-				local query = mysql:query_free("UPDATE interiors SET supplies = supplies - " .. ( tonumber(supplyCost) or 1 ) .. " WHERE id='" .. interior .. "'")
+				local query = mysql:query_free("UPDATE interiors SET supplies = supplies - " .. mysql:escape_string(( tonumber(supplyCost) or 1 )) .. " WHERE id='" .. mysql:escape_string(interior) .. "'")
 				-- give the money to the shop owner
 				local owner = getElementData(thePickup, "owner")
 				local theOwner = nil
@@ -401,7 +401,7 @@ function givePlayerBoughtItem(itemID, itemValue, theCost, isWeapon, name, supply
 					local profits = getElementData(theOwner, "businessprofit")
 					exports['anticheat-system']:changeProtectedElementDataEx(theOwner, "businessprofit", profits+theCost, false)
 				else
-					mysql:query_free( "UPDATE characters SET bankmoney=bankmoney + " .. tonumber(theCost) .. " WHERE id = " .. owner .. " LIMIT 1")
+					mysql:query_free( "UPDATE characters SET bankmoney=bankmoney + " .. mysql:escape_string(tonumber(theCost)) .. " WHERE id = " .. mysql:escape_string(owner) .. " LIMIT 1")
 				end
 				
 				if (supplies-1<10) then
@@ -420,7 +420,7 @@ globalSupplies = 0
 
 function updateGlobalSupplies(value)
 	globalSupplies = globalSupplies + value
-	mysql:query_free("UPDATE settings SET value='" .. tostring(globalSupplies) .. "' WHERE name='globalsupplies'")
+	mysql:query_free("UPDATE settings SET value='" .. mysql:escape_string(tostring(globalSupplies)) .. "' WHERE name='globalsupplies'")
 end
 addEvent("updateGlobalSupplies", true)
 addEventHandler("updateGlobalSupplies", getRootElement(), updateGlobalSupplies)
@@ -434,7 +434,7 @@ function checkSupplies(thePlayer)
 		owner = getElementData(entrance, "owner")
 		
 		if (tonumber(owner)==getElementData(thePlayer, "dbid") or exports.global:hasItem(thePlayer, 4, dbid) or exports.global:hasItem(thePlayer, 5, dbid)) and (inttype==1) then
-			local query = mysql:query_fetch_assoc("SELECT supplies FROM interiors WHERE id='" .. dbid .. "' LIMIT 1")
+			local query = mysql:query_fetch_assoc("SELECT supplies FROM interiors WHERE id='" .. mysql:escape_string(dbid) .. "' LIMIT 1")
 			local supplies = query["supplies"]	
 			outputChatBox("This business has " .. supplies .. " supplies.", thePlayer, 255, 194, 14)
 		else
@@ -467,8 +467,8 @@ function orderSupplies(thePlayer, commandName, amount)
 						outputChatBox("You cannot afford that many supplies. (Cost is 2$ per supply).", thePlayer, 255, 0, 0)
 					else
 						globalSupplies = globalSupplies - amount
-						mysql:query_free("UPDATE settings SET value='" .. globalSupplies .. "' where name='globalsupplies'")
-						mysql:query_free("UPDATE interiors SET supplies= supplies + " .. amount .. " where id='" .. dbid .. "'")
+						mysql:query_free("UPDATE settings SET value='" .. mysql:escape_string(globalSupplies) .. "' where name='globalsupplies'")
+						mysql:query_free("UPDATE interiors SET supplies= supplies + " .. mysql:escape_string(amount) .. " where id='" .. mysql:escape_string(dbid) .. "'")
 						outputChatBox("You bought " .. amount .. " supplies for your business.", thePlayer, 255, 194, 14)
 					end
 				end

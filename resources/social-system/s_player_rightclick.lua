@@ -2,7 +2,7 @@ function retrievePlayerInfo(targetPlayer)
 	local accid = tonumber(getElementData(source, "gameaccountid"))
 	local targetID = tonumber(getElementData(targetPlayer, "gameaccountid"))
 	if targetID then
-		local result = mysql:query("SELECT friend FROM friends WHERE id = " .. accid .. " AND friend = " .. targetID .. " LIMIT 1")
+		local result = mysql:query("SELECT friend FROM friends WHERE id = " .. mysql:escape_string(accid) .. " AND friend = " .. mysql:escape_string(targetID) .. " LIMIT 1")
 
 		if result then
 			local friend = false
@@ -27,7 +27,7 @@ addEventHandler("sendPlayerInfo", getRootElement(), retrievePlayerInfo)
 function addFriend(player)
 	local accid = tonumber(getElementData(source, "gameaccountid"))
 	local targetID = tonumber(getElementData(player, "gameaccountid"))
-	local countresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM friends WHERE id='" .. accid .. "' LIMIT 1")
+	local countresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM friends WHERE id='" .. mysql:escape_string(accid) .. "' LIMIT 1")
 	local count = tonumber(countresult["tempnr"])
 	
 	if (count >=23) then
@@ -89,7 +89,7 @@ function restrainPlayer(player, restrainedObj)
 	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrain", 1)
 	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedObj", restrainedObj)
 	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedBy", getElementData(source, "dbid"), false)
-	mysql:query_free("UPDATE characters SET cuffed = 1, restrainedby = " .. getElementData(source, "dbid") .. ", restrainedobj = " .. restrainedObj .. " WHERE id = " .. dbid )
+	mysql:query_free("UPDATE characters SET cuffed = 1, restrainedby = " .. mysql:escape_string(getElementData(source, "dbid")) .. ", restrainedobj = " .. mysql:escape_string(restrainedObj) .. " WHERE id = " .. mysql:escape_string(dbid) )
 	
 	exports.global:takeItem(source, restrainedObj)
 
@@ -120,7 +120,7 @@ function unrestrainPlayer(player, restrainedObj)
 		exports['item-system']:deleteAll(47, dbid)
 	end
 	exports.global:giveItem(source, restrainedObj, 1)
-	mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. dbid )
+	mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. mysql:escape_string(dbid) )
 	
 	exports.global:removeAnimation(player)
 end
@@ -137,7 +137,7 @@ function blindfoldPlayer(player)
 	
 	exports.global:takeItem(source, 66) -- take their blindfold
 	exports['anticheat-system']:changeProtectedElementDataEx(player, "blindfold", 1)
-	mysql:query_free("UPDATE characters SET blindfold = 1 WHERE id = " .. getElementData( player, "dbid" ) )
+	mysql:query_free("UPDATE characters SET blindfold = 1 WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" )) )
 	fadeCamera(player, false)
 end
 addEvent("blindfoldPlayer", true)
@@ -152,7 +152,7 @@ function removeblindfoldPlayer(player)
 	
 	exports.global:giveItem(source, 66, 1) -- give the remove the blindfold
 	removeElementData(player, "blindfold")
-	mysql:query_free("UPDATE characters SET blindfold = 0 WHERE id = " .. getElementData( player, "dbid" ) )
+	mysql:query_free("UPDATE characters SET blindfold = 0 WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" )) )
 	fadeCamera(player, true)
 end
 addEvent("removeBlindfold", true)

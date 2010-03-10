@@ -11,7 +11,7 @@ function createNewObject(thePlayer, commandName, modelid)
 			local dimension = getElementDimension(thePlayer)
 			local rotation = getPedRotation(thePlayer)
 			
-			local query = mysql:query_insert_free("INSERT INTO objects SET x='"  .. x .. "', y='" .. y .. "', z='" .. z .. "', interior='" .. interior .. "', dimension='" .. dimension .. "', modelid='" .. modelid .. "', rotation='" .. rotation .. "'")
+			local query = mysql:query_insert_free("INSERT INTO objects SET x='"  .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', interior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', modelid='" .. mysql:escape_string(modelid) .. "', rotation='" .. mysql:escape_string(rotation) .. "'")
 			
 			if (query) then
 				local id = query
@@ -121,7 +121,7 @@ function delObject(thePlayer, commandName, targetID)
 			
 			if (object) then
 				local id = getElementData(object, "dbid")
-				local result = mysql:query_free("DELETE FROM objects WHERE id='" .. id .. "'")
+				local result = mysql:query_free("DELETE FROM objects WHERE id='" .. mysql:escape_string(id) .. "'")
 						
 				outputChatBox("Object #" .. id .. " deleted.", thePlayer)
 				exports.irc:sendMessage(getPlayerName(thePlayer) .. " deleted Object #" .. id .. ".")

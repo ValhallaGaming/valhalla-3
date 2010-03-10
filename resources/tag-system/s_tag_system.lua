@@ -10,7 +10,7 @@ function makeTagObject(cx, cy, cz, rot, interior, dimension)
 		setElementDimension(obj, dimension)
 		setElementInterior(obj, interior)
 		
-		local id = mysql:query_insert_free("INSERT INTO tags SET x='" .. cx .. "', y='" .. cy .. "', z='" .. cz .. "', interior='" .. interior .. "', dimension='" .. dimension .. "', rx='0', ry='0', rz='" .. rot+90 .. "', modelid='" .. tags[tag] .. "', creationdate=NOW()")
+		local id = mysql:query_insert_free("INSERT INTO tags SET x='" .. mysql:escape_string(cx) .. "', y='" .. mysql:escape_string(cy) .. "', z='" .. mysql:escape_string(cz) .. "', interior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', rx='0', ry='0', rz='" .. mysql:escape_string(rot+90) .. "', modelid='" .. mysql:escape_string(tags[tag]) .. "', creationdate=NOW()")
 		exports.global:sendLocalMeAction(source, "tags the wall.")
 		exports['anticheat-system']:changeProtectedElementDataEx(obj, "dbid", id, false)
 		exports['anticheat-system']:changeProtectedElementDataEx(obj, "type", "tag")
@@ -39,7 +39,7 @@ function makeTagObject(cx, cy, cz, rot, interior, dimension)
 			outputChatBox("You removed the tag. You earnt 30$ for doing so.", source, 255, 194, 14)
 			exports.global:giveMoney(source, 30)
 			destroyElement(object)
-			local query = mysql:query_free("DELETE FROM tags WHERE id='" .. id .. "'")
+			local query = mysql:query_free("DELETE FROM tags WHERE id='" .. mysql:escape_string(id) .. "'")
 		end
 		destroyElement(colshape)
 	end
@@ -67,7 +67,7 @@ function clearNearbyTag(thePlayer)
 		if (object) then
 			local id = getElementData(object, "dbid")
 			destroyElement(object)
-			local query = mysql:query_free("DELETE FROM tags WHERE id='" .. id .. "'")
+			local query = mysql:query_free("DELETE FROM tags WHERE id='" .. mysql:escape_string(id) .. "'")
 			outputChatBox("Deleted tag with id #" .. id .. ".", thePlayer, 0, 255, 0)
 		else
 			outputChatBox("You are not near any tag.", thePlayer, 255, 0, 0)
@@ -119,7 +119,7 @@ function loadAllTags(res)
 			end
 		end
 
-		mysql:query_free("ALTER TABLE `tags` AUTO_INCREMENT = " .. (highest + 1))
+		mysql:query_free("ALTER TABLE `tags` AUTO_INCREMENT = " .. mysql:escape_string((highest + 1)))
 		
 	end
 	mysql:free_result(result)
@@ -130,6 +130,6 @@ addEventHandler("onResourceStart", getResourceRootElement(), loadAllTags)
 addEvent("updateTag", true)
 addEventHandler("updateTag", getRootElement(),
 	function(tag)
-		mysql:query_free("UPDATE characters SET tag=" .. tag .. " WHERE id = " .. getElementData(source, "dbid"))
+		mysql:query_free("UPDATE characters SET tag=" .. mysql:escape_string(tag) .. " WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")))
 	end
 )

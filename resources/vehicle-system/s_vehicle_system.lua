@@ -28,7 +28,7 @@ end
 function getCharacterName( id )
 	if not charCache[ id ] then
 		if not (id < 1) then
-			local query = mysql:query_fetch_assoc("SELECT charactername, gender, marriedto FROM characters WHERE id = " .. id .. " LIMIT 1")
+			local query = mysql:query_fetch_assoc("SELECT charactername, gender, marriedto FROM characters WHERE id = " .. mysql:escape_string(id) .. " LIMIT 1")
 			if query then
 				local name = query["charactername"]
 				local gender = tonumber(query["gender"])
@@ -36,7 +36,7 @@ function getCharacterName( id )
 				
 				if name then
 					if marriedto > 0 then
-						local query = mysql:query_fetch_assoc("SELECT charactername FROM characters WHERE id = " .. marriedto .. " LIMIT 1")
+						local query = mysql:query_fetch_assoc("SELECT charactername FROM characters WHERE id = " .. mysql:escape_string(marriedto) .. " LIMIT 1")
 						if query then
 							local name2 = query["charactername"]
 							if name2 ~= mysql_null( ) then
@@ -166,7 +166,7 @@ function createPermVehicle(thePlayer, commandName, ...)
 						
 					local dimension = getElementDimension(thePlayer)
 					local interior = getElementInterior(thePlayer)
-					local insertid = mysql:query_insert_free("INSERT INTO vehicles SET model='" .. id .. "', x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', color1='" .. col1 .. "', color2='" .. col2 .. "', faction='" .. factionVehicle .. "', owner='" .. ( factionVehicle == -1 and dbid or -1 ) .. "', plate='" .. plate .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='0', currry='0', currrz='" .. r .. "', locked=1, interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "'")
+					local insertid = mysql:query_insert_free("INSERT INTO vehicles SET model='" .. mysql:escape_string(id) .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', color1='" .. mysql:escape_string(col1) .. "', color2='" .. mysql:escape_string(col2) .. "', faction='" .. mysql:escape_string(factionVehicle) .. "', owner='" .. mysql:escape_string(( factionVehicle == -1 and dbid or -1 )) .. "', plate='" .. mysql:escape_string(plate) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='0', currry='0', currrz='" .. mysql:escape_string(r) .. "', locked=1, interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "'")
 
 					if (insertid) then
 						exports.pool:allocateElement(veh, insertid)
@@ -296,7 +296,7 @@ function createCivilianPermVehicle(thePlayer, commandName, ...)
 					setVehicleDamageProof(veh, true)
 				end
 					
-				local insertid = mysql:query_insert_free("INSERT INTO vehicles SET job='" .. job .. "', model='" .. id .. "', x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', color1='" .. col1 .. "', color2='" .. col2 .. "', faction='-1', owner='-2', plate='" .. plate .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='0', currry='0', currrz='" .. r .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "'")
+				local insertid = mysql:query_insert_free("INSERT INTO vehicles SET job='" .. mysql:escape_string(job) .. "', model='" .. mysql:escape_string(id) .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', color1='" .. mysql:escape_string(col1) .. "', color2='" .. mysql:escape_string(col2) .. "', faction='-1', owner='-2', plate='" .. mysql:escape_string(plate) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='0', currry='0', currrz='" .. mysql:escape_string(r) .. "', interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "'")
 				
 				if (insertid) then
 					exports.pool:allocateElement(veh, insertid)
@@ -940,7 +940,7 @@ function sellVehicle(thePlayer, commandName, targetPlayerName)
 							if getElementData(targetPlayer, "dbid") ~= getElementData(theVehicle, "owner") then
 								if exports.global:hasSpaceForItem(targetPlayer, 3) then
 									if exports.global:canPlayerBuyVehicle(targetPlayer) then
-										local query = mysql:query_free("UPDATE vehicles SET owner = '" .. getElementData(targetPlayer, "dbid") .. "' WHERE id='" .. vehicleID .. "'")
+										local query = mysql:query_free("UPDATE vehicles SET owner = '" .. mysql:escape_string(getElementData(targetPlayer, "dbid")) .. "' WHERE id='" .. mysql:escape_string(vehicleID) .. "'")
 										if query then
 											exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "owner", getElementData(targetPlayer, "dbid"))
 											
@@ -1046,7 +1046,7 @@ function storeVehicleLockState(vehicle, dbid)
 		if (locked) then state = 1
 		elseif (not locked) then state = 0 end
 		
-		local query = mysql:query_free("UPDATE vehicles SET locked='" .. state .. "' WHERE id='" .. dbid .. "' LIMIT 1")
+		local query = mysql:query_free("UPDATE vehicles SET locked='" .. mysql:escape_string(state) .. "' WHERE id='" .. mysql:escape_string(dbid) .. "' LIMIT 1")
 		
 		storeTimers[vehicle] = nil
 	end
@@ -1130,7 +1130,7 @@ function checkVehpos(veh, dbid)
 				exports.logs:logMessage("[VEHPOS DELETE] car #" .. id .. " was deleted", 9)
 				exports.irc:sendAdminMessage("Removing vehicle #" .. id .. " (Did not get Vehpossed).")
 				destroyElement(veh)
-				local query = mysql:query_free("DELETE FROM vehicles WHERE id='" .. id .. "' LIMIT 1")
+				local query = mysql:query_free("DELETE FROM vehicles WHERE id='" .. mysql:escape_string(id) .. "' LIMIT 1")
 				
 				call( getResourceFromName( "item-system" ), "clearItems", veh )
 				call( getResourceFromName( "item-system" ), "deleteAll", 3, id )
@@ -1174,7 +1174,7 @@ function setVehiclePosition(thePlayer, commandName)
 					local interior = getElementInterior(thePlayer)
 					local dimension = getElementDimension(thePlayer)
 					
-					local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. dbid .. "'")
+					local query = mysql:query_free("UPDATE vehicles SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .."', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='" .. mysql:escape_string(rx) .. "', currry='" .. mysql:escape_string(ry) .. "', currrz='" .. mysql:escape_string(rz) .. "', interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "' WHERE id='" .. mysql:escape_string(dbid) .. "'")
 					setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
 					exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 					exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
@@ -1221,7 +1221,7 @@ function setVehiclePosition2(thePlayer, commandName, vehicleID)
 				local interior = getElementInterior(thePlayer)
 				local dimension = getElementDimension(thePlayer)
 				
-				local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. vehicleID .. "'")
+				local query = mysql:query_free("UPDATE vehicles SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .."', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='" .. mysql:escape_string(rx) .. "', currry='" .. mysql:escape_string(ry) .. "', currrz='" .. mysql:escape_string(rz) .. "', interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "' WHERE id='" .. mysql:escape_string(vehicleID) .. "'")
 				setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
@@ -1283,7 +1283,7 @@ function setVehiclePosition3(veh)
 				local interior = getElementInterior(source)
 				local dimension = getElementDimension(source)
 				
-				local query = mysql:query_free("UPDATE vehicles SET x='" .. x .. "', y='" .. y .."', z='" .. z .. "', rotx='" .. rx .. "', roty='" .. ry .. "', rotz='" .. rz .. "', currx='" .. x .. "', curry='" .. y .. "', currz='" .. z .. "', currrx='" .. rx .. "', currry='" .. ry .. "', currrz='" .. rz .. "', interior='" .. interior .. "', currinterior='" .. interior .. "', dimension='" .. dimension .. "', currdimension='" .. dimension .. "' WHERE id='" .. dbid .. "'")
+				local query = mysql:query_free("UPDATE vehicles SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .."', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='" .. mysql:escape_string(rx) .. "', currry='" .. mysql:escape_string(ry) .. "', currrz='" .. mysql:escape_string(rz) .. "', interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "' WHERE id='" .. mysql:escape_string(dbid) .. "'")
 				setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)

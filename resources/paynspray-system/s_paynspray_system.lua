@@ -9,7 +9,7 @@ function createSpray(thePlayer, commandName)
 		local interior = getElementInterior(thePlayer)
 		local dimension = getElementDimension(thePlayer)
 		
-		local id = mysql:query_insert_free("INSERT INTO paynspray SET x='"  .. x .. "', y='" .. y .. "', z='" .. z .. "', interior='" .. interior .. "', dimension='" .. dimension .. "'")
+		local id = mysql:query_insert_free("INSERT INTO paynspray SET x='"  .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', interior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "'")
 		
 		if (id) then		
 			local shape = createColSphere(x, y, z, 5)
@@ -101,7 +101,7 @@ function delSpray(thePlayer, commandName)
 		
 		if (colShape) then
 			local id = getElementData(colShape, "dbid")
-			mysql:query_free("DELETE FROM paynspray WHERE id='" .. id .. "'")
+			mysql:query_free("DELETE FROM paynspray WHERE id='" .. mysql:escape_string(id) .. "'")
 			
 			outputChatBox("Pay n Spray #" .. id .. " deleted.", thePlayer)
 			exports.irc:sendMessage(getPlayerName(thePlayer) .. " deleted Pay n Spray #" .. id .. ".")

@@ -40,11 +40,11 @@ function toggleFriends(source)
 		if visible == 0 then -- not already showing
 			local accid = tonumber(getElementData(source, "gameaccountid"))
 			
-			local achresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM achievements WHERE account='" .. accid .. "' LIMIT 1")
+			local achresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM achievements WHERE account='" .. mysql:escape_string(accid) .. "' LIMIT 1")
 			local myachievements = achresult["tempnr"]
 			
 			-- load friends list
-			local result = mysql:query("SELECT f.friend, a.username, a.friendsmessage, DATEDIFF(NOW(), a.lastlogin) as daytimediff, a.country, ( SELECT COUNT(*) FROM achievements b WHERE b.account = a.id ) as archievements, HOUR(TIMEDIFF(NOW(), a.lastlogin)) as hourtimediff, MINUTE(TIMEDIFF(NOW(), a.lastlogin)) as minutetimediff FROM friends f LEFT JOIN accounts a ON f.friend = a.id WHERE f.id = ".. accid .. " ORDER BY a.lastlogin DESC" )
+			local result = mysql:query("SELECT f.friend, a.username, a.friendsmessage, DATEDIFF(NOW(), a.lastlogin) as daytimediff, a.country, ( SELECT COUNT(*) FROM achievements b WHERE b.account = a.id ) as archievements, HOUR(TIMEDIFF(NOW(), a.lastlogin)) as hourtimediff, MINUTE(TIMEDIFF(NOW(), a.lastlogin)) as minutetimediff FROM friends f LEFT JOIN accounts a ON f.friend = a.id WHERE f.id = ".. mysql:escape_string(accid) .. " ORDER BY a.lastlogin DESC" )
 			if result then
 				local friends = { }
 				local run = true
@@ -57,7 +57,7 @@ function toggleFriends(source)
 					local account = row["username"]
 					
 					if account == mysql_null( ) then -- account doesn't exist any longer, drop friends
-						mysql:query_free("DELETE FROM friends WHERE id = " .. id .. " OR friend = " .. id )
+						mysql:query_free("DELETE FROM friends WHERE id = " .. mysql:escape_string(id) .. " OR friend = " .. mysql:escape_string(id) )
 					else
 						-- Last online
 						local time = getRealTime()
@@ -88,7 +88,7 @@ function toggleFriends(source)
 				mysql:free_result( result )
 				
 				local friendsmessage = ""
-				local result = mysql:query_fetch_assoc("SELECT friendsmessage FROM accounts WHERE id = " .. accid )
+				local result = mysql:query_fetch_assoc("SELECT friendsmessage FROM accounts WHERE id = " .. mysql:escape_string(accid) )
 				if result then
 					friendsmessage = result["friendsmessage"]
 					if friendsmessage == mysql_null( ) then
@@ -115,7 +115,7 @@ function updateFriendsMessage(message)
 	local safemessage = mysql:escape_string(tostring(message))
 	local accid = getElementData(source, "gameaccountid")
 	
-	local query = mysql:query_free("UPDATE accounts SET friendsmessage='" .. safemessage .. "' WHERE id='" .. accid .. "'")
+	local query = mysql:query_free("UPDATE accounts SET friendsmessage='" .. mysql:escape_string(safemessage) .. "' WHERE id='" .. mysql:escape_string(accid) .. "'")
 	if not (query) then
 		outputChatBox("Error updating friends message - ensure you used no special characters!", source, 255, 0, 0)
 	end
@@ -125,7 +125,7 @@ addEventHandler("updateFriendsMessage", getRootElement(), updateFriendsMessage)
 
 function removeFriend(id, username)
 	local accid = tonumber(getElementData(source, "gameaccountid"))
-	local result = mysql:query_free("DELETE FROM friends WHERE id = " .. accid .. " AND friend = " .. id )
+	local result = mysql:query_free("DELETE FROM friends WHERE id = " .. mysql:escape_string(accid) .. " AND friend = " .. mysql:escape_string(id) )
 	if result then
 		local friends = getElementData(source, "friends")
 		if friends then
@@ -140,7 +140,7 @@ addEventHandler("removeFriend", getRootElement(), removeFriend)
 function addFriendToDB(player, source)
 	local accid = tonumber(getElementData(source, "gameaccountid"))
 	local targetID = tonumber(getElementData(player, "gameaccountid"))
-	local countresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM friends WHERE id='" .. accid .. "' LIMIT 1")
+	local countresult = mysql:query_fetch_assoc("SELECT COUNT(*) as tempnr FROM friends WHERE id='" .. mysql:escape_string(accid) .. "' LIMIT 1")
 	local count = tonumber(countresult["tempnr"])
 	if (count >=23) then
 		outputChatBox("Your friends list is currently full.", source, 255, 0, 0)
@@ -150,7 +150,7 @@ function addFriendToDB(player, source)
 			if (friends[ targetID ] == true) then
 				outputChatBox("'" .. getPlayerName(player) .. "' is already on your friends list.", source, 255, 194, 14)
 			else 
-				local result = mysql:query_free("INSERT INTO friends VALUES (" .. accid .. ", " .. targetID .. ")")
+				local result = mysql:query_free("INSERT INTO friends VALUES (" .. mysql:escape_string(accid) .. ", " .. mysql:escape_string(targetID) .. ")")
 				if result then
 					friends[ targetID ] = true
 					exports['anticheat-system']:changeProtectedElementDataEx(source, "friends", friends, false)

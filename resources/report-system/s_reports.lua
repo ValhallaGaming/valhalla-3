@@ -454,7 +454,7 @@ function acceptReport(thePlayer, commandName, id)
 					
 					local adminreports = getElementData(thePlayer, "adminreports")
 					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "adminreports", adminreports+1, false)
-					mysql:query_free("UPDATE accounts SET adminreports=adminreports+1 WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
+					mysql:query_free("UPDATE accounts SET adminreports=adminreports+1 WHERE id = " .. mysql:escape_string(getElementData( thePlayer, "gameaccountid" )) )
 					exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "reportadmin", thePlayer, false)
 					
 					local timestring = hours .. ":" .. minutes

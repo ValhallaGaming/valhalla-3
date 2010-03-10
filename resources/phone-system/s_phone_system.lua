@@ -44,7 +44,7 @@ function addPhone(thePlayer, commandName)
 		local dimension = getElementDimension(thePlayer)
 		
 		local id = SmallestID()
-		local query = mysql:query_free("INSERT INTO publicphones SET id=" .. id .. ", x="  .. x .. ", y=" .. y .. ", z=" .. z .. ", dimension=" .. dimension)
+		local query = mysql:query_free("INSERT INTO publicphones SET id=" .. mysql:escape_string(id) .. ", x="  .. mysql:escape_string(x) .. ", y=" .. mysql:escape_string(y) .. ", z=" .. mysql:escape_string(z) .. ", dimension=" .. mysql:escape_string(dimension))
 		
 		if (query) then
 			
@@ -100,7 +100,7 @@ function delPhone(thePlayer, commandName, id)
 			
 			if (colShape) then
 				local id = getElementData(colShape, "dbid")
-				local result = mysql:query_free("DELETE FROM publicphones WHERE id=" .. id)
+				local result = mysql:query_free("DELETE FROM publicphones WHERE id=" .. mysql:escape_string(id))
 				
 				outputChatBox("Phone #" .. id .. " deleted.", thePlayer)
 				destroyElement(colShape)
@@ -701,7 +701,7 @@ function togglePhone(thePlayer, commandName)
 				outputChatBox("You switched your phone off.", thePlayer, 255, 0, 0)
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phoneoff", 1 - phoneoff, false)
-			mysql:query_free( "UPDATE characters SET phoneoff=" .. ( 1 - phoneoff ) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
+			mysql:query_free( "UPDATE characters SET phoneoff=" .. mysql:escape_string(( 1 - phoneoff )) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "dbid")) )
 		end
 	end
 end
@@ -742,7 +742,7 @@ function sendSMS(thePlayer, commandName, number, ...)
 							if isElement( thePlayer ) then
 								local id = getElementData( thePlayer, "dbid" )
 								if id then
-									local impounded = mysql:query_fetch_assoc("SELECT COUNT(*) as no FROM vehicles WHERE owner = " .. id .. " and Impounded > 0")
+									local impounded = mysql:query_fetch_assoc("SELECT COUNT(*) as no FROM vehicles WHERE owner = " .. mysql:escape_string(id) .. " and Impounded > 0")
 									if impounded then
 										local amount = tonumber(impounded["no"])
 										exports.global:sendLocalMeAction(thePlayer, "receives a text message.")

@@ -20,7 +20,7 @@ function saveWeapons(thePlayer)
 		cleanWeapons(thePlayer)
 		
 		if (weapons~=false) and (ammo~=false) then
-			mysql:query_free("UPDATE characters SET weapons='" .. weapons .. "', ammo='" .. ammo .. "' WHERE id='" .. getElementData(thePlayer, "dbid") .. "'")
+			mysql:query_free("UPDATE characters SET weapons='" .. mysql:escape_string(weapons) .. "', ammo='" .. mysql:escape_string(ammo) .. "' WHERE id='" .. mysql:escape_string(getElementData(thePlayer, "dbid")) .. "'")
 		end
 	end
 end
@@ -111,12 +111,12 @@ function savePlayer(reason, player)
 			zone = "Unknown"
 		end
 		
-		local update = mysql:query_free("UPDATE characters SET x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', rotation='" .. rot .. "', health='" .. health .. "', armor='" .. armor .. "', dimension_id='" .. dimension .. "', interior_id='" .. interior .. "', " .. money .. businessprofit .. "lastlogin=NOW(), lastarea='" .. mysql:escape_string(zone) .. "', timeinserver='" .. timeinserver .. "' WHERE id=" .. getElementData(source, "dbid"))
+		local update = mysql:query_free("UPDATE characters SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotation='" .. mysql:escape_string(rot) .. "', health='" .. mysql:escape_string(health) .. "', armor='" .. mysql:escape_string(armor) .. "', dimension_id='" .. mysql:escape_string(dimension) .. "', interior_id='" .. mysql:escape_string(interior) .. "', " .. mysql:escape_string(money) .. mysql:escape_string(businessprofit) .. "lastlogin=NOW(), lastarea='" .. mysql:escape_string(zone) .. "', timeinserver='" .. mysql:escape_string(timeinserver) .. "' WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
 		if not (update) then
 			outputDebugString( "Saveplayer Update:" )
 		end
 		
-		local update2 = mysql:query_free("UPDATE accounts SET lastlogin=NOW() WHERE id = " .. getElementData(source,"gameaccountid"))
+		local update2 = mysql:query_free("UPDATE accounts SET lastlogin=NOW() WHERE id = " .. mysql:escape_string(getElementData(source,"gameaccountid")))
 		if not (update2) then
 			outputDebugString( "Saveplayer Update2: " )
 		end
