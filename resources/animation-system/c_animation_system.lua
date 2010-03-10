@@ -4,6 +4,7 @@ local walkanims = { WALK_armed = true, WALK_civi = true, WALK_csaw = true, Walk_
 local attachedRotation = false
 
 bindKey(source, "space", "down", stopAnimation)
+function stopAnimat
 
 function onRender()
 	local forcedanimation = getElementData(localPlayer, "forcedanimation")
