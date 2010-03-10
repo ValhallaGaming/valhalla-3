@@ -30,7 +30,7 @@ end
 function removeAnimation(thePlayer)
 	if isElement(thePlayer) and getElementType(thePlayer)=="player" and getElementData(thePlayer, "freeze") ~= 1 and not getElementData(thePlayer, "injuriedanimation") then
 		local setanim = setPedAnimation(thePlayer)
-		setElementData(thePlayer, "forcedanimation", false)
+		triggerServerEvent("unforcedanimation", thePlayer)
 		toggleAllControls(true, true, false)
 		setTimer(setPedAnimation, 50, 2, thePlayer)
 		setTimer(triggerServerEvent, 100, 1, "onPlayerStopAnimation", thePlayer, true )

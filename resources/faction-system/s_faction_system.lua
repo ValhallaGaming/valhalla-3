@@ -12,6 +12,8 @@ handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
 function hideFactionMenu()
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 0, true)
 end
+addEvent("factionmenu:hide", true)
+addEventHandler("factionmenu:hide", getRootElement(), hideFactionMenu)
 
 function checkMySQL()
 	if not (mysql_ping(handler)) then

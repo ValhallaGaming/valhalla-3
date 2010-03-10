@@ -5,10 +5,10 @@ function applyAnimation(thePlayer, block, name, animtime, loop, updatePosition, 
 	if forced==nil then forced=true end
 
 	if isElement(thePlayer) and getElementType(thePlayer)=="player" and not getPedOccupiedVehicle(thePlayer) and getElementData(thePlayer, "freeze") ~= 1 then
-		if getElementData(thePlayer, "injuriedanimation") or ( not forced and getElementData(thePlayer, "forcedanimation") ) then
+		if getElementData(thePlayer, "injuriedanimation") or ( not forced and not getElementData(thePlayer, "forcedanimation")==1 ) then
 			return false
 		end
-		
+	
 		triggerEvent("bindAnimationStopKey", thePlayer)
 		toggleAllControls(thePlayer, false, true, false)
 		

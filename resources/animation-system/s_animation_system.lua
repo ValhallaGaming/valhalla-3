@@ -68,8 +68,8 @@ end
 
 -- /cover animtion -------------------------------------------------
 function coverAnimation(thePlayer)
-	local logged = getElementData(thePlayer, "loggedin")
-	
+	local logged = etElementData(thePlayer, "loggedin")
+
 	if (logged==1) then
 		exports.global:applyAnimation(thePlayer, "ped", "duck_cower", -1, false, false, false)
 	end
