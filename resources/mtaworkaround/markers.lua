@@ -16,7 +16,6 @@ function checkStreamIn()
 			local distx = x - vx
 			local disty = y - vy
 			
-			-- make sure the values are positive
 			if (distx < 0) then
 				distx = distx - distx - distx
 			end
@@ -24,7 +23,6 @@ function checkStreamIn()
 				disty = disty - disty - disty
 			end
 			
-			-- Stream in if distance is smaller as 25
 			if (distx < streamdistance) and (disty < streamdistance) then
 				local dimension = unstreamed[key]
 				unstreamed[key] = nil
@@ -77,18 +75,3 @@ function streamerStop(resource)
 	end
 end
 addEventHandler("onClientResourceStop", getRootElement(), streamerStop)
-
-
-addCommandHandler("togglepatch", 
-	function ()
-		enabled = not enabled
-		
-		if (enabled) then
-			streamerStart(getThisResource())
-			outputChatBox("The markerfix is now enabled.", 0, 255, 0)
-		else
-			streamerStop(getThisResource())
-			outputChatBox("The markerfix is now disabled.", 255, 0, 0)
-		end
-	end
-);

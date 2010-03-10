@@ -2,6 +2,8 @@ addEvent("onPlayerInteriorChange", true)
 local intTable = {}
 local safeTable = {}
 
+mysql = exports.mysql
+
 -- START OF INTERIOR SYSTEM SCRIPT
 
 -- ////////////////////////////////////
