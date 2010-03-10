@@ -13,7 +13,7 @@ function doesPlayerHaveAchievement(thePlayer, id)
 		local gameaccountID = getElementData(thePlayer, "gameaccountid")
 
 		if (gameaccountID) then
-			local result = mysql:query("SELECT id FROM achievements WHERE achievementid='" .. id .. "' AND account='" .. gameaccountID .. "'")
+			local result = mysql:query("SELECT id FROM achievements WHERE achievementid='" .. mysql:escape_string(id) .. "' AND account='" .. mysql:escape_string(gameaccountID) .. "'")
 			if (mysql:num_rows(result)>0) then
 				mysql:free_result(result)
 				savedAchievements[thePlayer][id] = true
@@ -38,7 +38,7 @@ function givePlayerAchievement(thePlayer, id)
 					
 			local date = days .. "/" .. months .. "/" .. years
 		
-			local result = mysql:query_free("INSERT INTO achievements SET account='" .. gameaccountID .. "', achievementid='" .. id .. "', date='" .. date .. "'")
+			local result = mysql:query_free("INSERT INTO achievements SET account='" .. mysql:escape_string(gameaccountID) .. "', achievementid='" .. mysql:escape_string(id) .. "', date='" .. mysql:escape_string(date) .. "'")
 		
 			if result then	
 				triggerClientEvent(thePlayer, "onPlayerGetAchievement", thePlayer, id)

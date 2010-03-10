@@ -96,13 +96,13 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 									exports['item-system']:deleteAll(47, dbid)
 								end
 								exports.global:giveItem(thePlayer, restrainedObj, 1)
-								mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+								mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 							end
 							setPedWeaponSlot(targetPlayer,0)
 							
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailstation", targetCol)
 							
-							mysql:query_free("UPDATE characters SET pdjail='1', pdjail_time='" .. jailtime .. "', pdjail_station='" .. targetCol .. "', cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+							mysql:query_free("UPDATE characters SET pdjail='1', pdjail_time='" .. mysql:escape_string(jailtime) .. "', pdjail_station='" .. mysql:escape_string(targetCol) .. "', cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 							outputChatBox("You jailed " .. targetPlayerNick .. " for " .. jailtime .. " Minutes.", thePlayer, 255, 0, 0)
 							
 							local x, y, z = getElementPosition(cells[targetCol])
@@ -160,7 +160,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 		if (timeLeft<=0) and (theMagicTimer) then
 			killTimer(theMagicTimer) -- 0001290: PD /release bug
 			fadeCamera(jailedPlayer, false)
-			mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. getElementData(jailedPlayer, "dbid"))
+			mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 			setElementDimension(jailedPlayer, getElementData(jailedPlayer, "pd.jailstation") <= 4 and 1 or 10583)
 			setElementInterior(jailedPlayer, 10)
 			setCameraInterior(jailedPlayer, 10)
@@ -182,7 +182,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 			outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
 
 		elseif (timeLeft>0) then
-			mysql:query_free("UPDATE characters SET pdjail_time='" .. timeLeft .. "' WHERE id=" .. getElementData(jailedPlayer, "dbid"))
+			mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 		end
 	end
 end

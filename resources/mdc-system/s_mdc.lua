@@ -4,7 +4,7 @@ mysql = exports.mysql
 function addNewSuspectToDatabase(details)
 
 	-- check to see if the suspect is already in the database
-	local result = mysql:query("SELECT suspect_name FROM suspectDetails WHERE suspect_name='" .. details[1] .. "'")
+	local result = mysql:query("SELECT suspect_name FROM suspectDetails WHERE suspect_name='" .. mysql:escape_string(details[1]) .. "'")
 	local name
 	if (mysql:num_rows(result)>0) then
 		name = "exists"
@@ -42,7 +42,7 @@ function addNewSuspectToDatabase(details)
 	-- if player is not already in the database, insert them
 	
 	if (name==nil) then
-		mysql:query_free("INSERT INTO suspectDetails SET suspect_name='" .. details[1] .. "', birth='" .. details[2] .. "', gender='" .. details[3] .. "', ethnicy='" .. details[4] .. "', cell='" .. (tonumber(details[5]) or 0) .. "', occupation='" .. details[6] .. "', address='" .. details[7] .. "', other='" .. details[8] .. "', is_wanted='0', wanted_reason='None', wanted_punishment='None', wanted_by='None', photo='" .. details[9] .. "', done_by='" .. details[10] .. "'")
+		mysql:query_free("INSERT INTO suspectDetails SET suspect_name='" .. mysql:escape_string(details[1]) .. "', birth='" .. mysql:escape_string(details[2]) .. "', gender='" .. mysql:escape_string(details[3]) .. "', ethnicy='" .. mysql:escape_string(details[4]) .. "', cell='" .. mysql:escape_string((tonumber(details[5]) or 0)) .. "', occupation='" .. mysql:escape_string(details[6]) .. "', address='" .. mysql:escape_string(details[7]) .. "', other='" .. mysql:escape_string(details[8]) .. "', is_wanted='0', wanted_reason='None', wanted_punishment='None', wanted_by='None', photo='" .. mysql:escape_string(details[9]) .. "', done_by='" .. mysql:escape_string(details[10]) .. "'")
 	end
 end
 addEvent("onAddNewSuspect", true)
@@ -254,7 +254,7 @@ addEventHandler("onGetSuspectCrimes", getRootElement(), getSuspectCrime)
 
 -- function deletes a crime from the database
 function deleteCrime(crimeID)
-	mysql:query_free("DELETE FROM suspectCrime WHERE id='" .. tonumber(crimeID) .. "'")
+	mysql:query_free("DELETE FROM suspectCrime WHERE id='" .. mysql:escape_string(tonumber(crimeID)) .. "'")
 end
 addEvent("onDeleteCrime", true)
 addEventHandler("onDeleteCrime", getRootElement(), deleteCrime)

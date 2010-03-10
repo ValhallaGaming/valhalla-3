@@ -9,7 +9,7 @@ function increaseLanguageSkill(player, language)
 			if chance == 1 then
 				triggerClientEvent(player, "increaseInSkill", player, language)
 				exports['anticheat-system']:changeProtectedElementDataEx(player, "languages.lang" .. slot .. "skill", currSkill+1, false)
-				mysql:query_free("UPDATE characters SET lang" .. slot .. "skill = " .. currSkill + 1 .. " WHERE id = " .. getElementData( player, "dbid" )) 
+				mysql:query_free("UPDATE characters SET lang" .. mysql:escape_string(slot) .. "skill = " .. mysql:escape_string(currSkill + 1) .. " WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" ))) 
 			end
 		end
 	end
@@ -38,7 +38,7 @@ function removeLanguage(player, language)
 		-- unbindKey(player, tostring(slot), "down", "chatbox")
 		exports['anticheat-system']:changeProtectedElementDataEx(player, "languages.lang" .. slot, 0)
 		exports['anticheat-system']:changeProtectedElementDataEx(player, "languages.lang" .. slot .. "skill", 0)
-		mysql:query_free("UPDATE characters SET lang" .. slot .. " = 0, lang" .. slot .. "skill = 0 WHERE id = " .. getElementData( player, "dbid" ) )
+		mysql:query_free("UPDATE characters SET lang" .. mysql:escape_string(slot) .. " = 0, lang" .. mysql:escape_string(slot) .. "skill = 0 WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" )) )
 		return true
 	else
 		return false
@@ -197,7 +197,7 @@ function learnLanguage(player, lang, showmessages, skill)
 			
 			exports['anticheat-system']:changeProtectedElementDataEx(player, "languages.lang" .. freeslot, lang, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(player, "languages.lang" .. freeslot .. "skill", skill or 0, false)
-			mysql:query_free("UPDATE characters SET lang" .. freeslot .. " = " .. lang .. ", lang" .. freeslot .. "skill = " .. ( skill or 0 ) .. " WHERE id = " .. getElementData( player, "dbid" ) )
+			mysql:query_free("UPDATE characters SET lang" .. mysql:escape_string(freeslot) .. " = " .. mysql:escape_string(lang) .. ", lang" .. mysql:escape_string(freeslot) .. "skill = " .. mysql:escape_string(( skill or 0 )) .. " WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" )) )
 			
 			-- bindKey(player, tostring( freeslot ), "down", "chatbox", getLanguageName( lang ))
 
@@ -229,7 +229,7 @@ function useLanguage(lang)
 	if (hasLanguage) then
 		outputChatBox("You are now using " .. languages[lang] .. " as your language.", source, 255, 194, 14)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.current", slot, false)
-		mysql:query_free("UPDATE characters SET currLang = " .. slot .. " WHERE id = " .. getElementData( source, "dbid" ) )
+		mysql:query_free("UPDATE characters SET currLang = " .. mysql:escape_string(slot) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "dbid" )) )
 			
 		showLanguages(source)
 	end
@@ -246,7 +246,7 @@ function unlearnLanguage(lang)
 		
 		local nextSlot = getNextLanguageSlot(source)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "languages.current", nextSlot, false)
-		mysql:query_free( "UPDATE characters SET currLang = " .. nextSlot .. " WHERE id = " .. getElementData( source, "dbid" ) )
+		mysql:query_free( "UPDATE characters SET currLang = " .. mysql:escape_string(nextSlot) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "dbid" )) )
 		showLanguages(source)
 	end
 end

@@ -42,7 +42,7 @@ function adminUncuff(thePlayer, commandName, targetPlayer)
 						removeElementData(targetPlayer, "restrainedBy")
 						removeElementData(targetPlayer, "restrainedObj")
 						exports.global:removeAnimation(targetPlayer)
-						mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+						mysql:query_free("UPDATE characters SET cuffed = 0, restrainedby = 0, restrainedobj = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 						exports['item-system']:deleteAll(47, getElementData( targetPlayer, "dbid" ))
 					end
 				end
@@ -123,7 +123,7 @@ function adminUnblindfold(thePlayer, commandName, targetPlayer)
 						removeElementData(targetPlayer, "blindfold")
 						fadeCamera(targetPlayer, true)
 						outputChatBox("You have unblindfolded " .. targetPlayerName .. ".", thePlayer)
-						mysql:query_free("UPDATE characters SET blindfold = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+						mysql:query_free("UPDATE characters SET blindfold = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 					end
 				end
 			end
@@ -157,7 +157,7 @@ function mutePlayer(thePlayer, commandName, targetPlayer)
 						outputChatBox(targetPlayerName .. " is now unmuted from OOC.", thePlayer, 0, 255, 0)
 						outputChatBox("You were unmuted by '" .. getPlayerName(thePlayer) .. "'.", targetPlayer, 0, 255, 0)
 					end
-					mysql:query_free("UPDATE accounts SET muted=" .. getElementData(targetPlayer, "muted") .. " WHERE id = " .. getElementData(targetPlayer, "gameaccountid") )
+					mysql:query_free("UPDATE accounts SET muted=" .. mysql:escape_string(getElementData(targetPlayer, "muted")) .. " WHERE id = " .. mysql:escape_string(getElementData(targetPlayer, "gameaccountid")) )
 				end
 			end
 		end
@@ -249,7 +249,7 @@ function forceApplication(thePlayer, commandName, targetPlayer, ...)
 					local reason = table.concat({...}, " ")
 					local id = getElementData(targetPlayer, "gameaccountid")
 					local username = getElementData(thePlayer, "gameaccountusername")
-					mysql:query_free("UPDATE accounts SET appstate = 2, apphandler='" .. username .. "', appreason='" .. mysql:escape_string(reason) .. "', appdatetime = NOW() + INTERVAL 1 DAY WHERE id='" .. id .. "'")
+					mysql:query_free("UPDATE accounts SET appstate = 2, apphandler='" .. mysql:escape_string(username) .. "', appreason='" .. mysql:escape_string(reason) .. "', appdatetime = NOW() + INTERVAL 1 DAY WHERE id='" .. mysql:escape_string(id) .. "'")
 					outputChatBox(targetPlayerName .. " was forced to re-write their application.", thePlayer, 255, 194, 14)
 					
 					local port = getServerPort()
@@ -258,7 +258,7 @@ function forceApplication(thePlayer, commandName, targetPlayer, ...)
 					local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 					exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " sent " .. targetPlayerName .. " back to the application stage.")
 					
-					local res = mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',0,3,0,"' .. mysql:escape_string(reason) .. '")' )
+					local res = mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',0,3,0,"' .. mysql:escape_string(reason) .. '")' )
 					
 					redirectPlayer(targetPlayer, "87.238.173.138", port, password)
 				end
@@ -282,7 +282,7 @@ function ckPlayer(thePlayer, commandName, targetPlayer)
 				if (logged==0) then
 					outputChatBox("Player is not logged in.", thePlayer, 255, 0, 0)
 				elseif (logged==1) then
-					local query = mysql:query_free("UPDATE characters SET cked='1' WHERE id = " .. getElementData(targetPlayer, "dbid"))
+					local query = mysql:query_free("UPDATE characters SET cked='1' WHERE id = " .. mysql:escape_string(getElementData(targetPlayer, "dbid")))
 					
 					local x, y, z = getElementPosition(targetPlayer)
 					local skin = getPedSkin(targetPlayer)
@@ -633,7 +633,7 @@ function setPlayerSkinCmd(thePlayer, commandName, targetPlayer, skinID)
 						outputChatBox("Invalid skin ID.", thePlayer, 255, 0, 0)
 					else
 						outputChatBox("Player " .. targetPlayerName .. " now has skin " .. skinID .. ".", thePlayer, 0, 255, 0)
-						mysql:query_free("UPDATE characters SET skin = " .. skinID .. " WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+						mysql:query_free("UPDATE characters SET skin = " .. mysql:escape_string(skinID) .. " WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 						exports.logs:logMessage("[/SETSKIN] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." set ".. targetPlayerName .. " his skin to "..skinID , 4)
 					end
 				else
@@ -659,7 +659,7 @@ function asetPlayerName(thePlayer, commandName, targetPlayer, ...)
 					outputChatBox( "The player's name is already that.", thePlayer, 255, 0, 0)
 				else
 					local dbid = getElementData(targetPlayer, "dbid")
-					local result = mysql:query("SELECT charactername FROM characters WHERE charactername='" .. mysql:escape_string(newName) .. "' AND id != " .. dbid)
+					local result = mysql:query("SELECT charactername FROM characters WHERE charactername='" .. mysql:escape_string(newName) .. "' AND id != " .. mysql:escape_string(dbid))
 					
 					if (mysql:num_rows(result)>0) then
 						outputChatBox("This name is already in use.", thePlayer, 255, 0, 0)
@@ -672,7 +672,7 @@ function asetPlayerName(thePlayer, commandName, targetPlayer, ...)
 								setPlayerNametagText(targetPlayer, tostring(newName):gsub("_", " "))
 							end
 							exports['vehicle-system']:clearCharacterName( dbid )
-							mysql:query_free("UPDATE characters SET charactername='" .. mysql:escape_string(newName) .. "' WHERE id = " .. dbid)
+							mysql:query_free("UPDATE characters SET charactername='" .. mysql:escape_string(newName) .. "' WHERE id = " .. mysql:escape_string(dbid))
 							local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
 							
 							if (hiddenAdmin==0) then
@@ -709,7 +709,7 @@ function hideAdmin(thePlayer, commandName)
 			outputChatBox("You are no longer a hidden admin.", thePlayer, 255, 194, 14)
 		end
 		exports.global:updateNametagColor(thePlayer)
-		mysql:query_free("UPDATE accounts SET hiddenadmin=" .. getElementData(thePlayer, "hiddenadmin") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
+		mysql:query_free("UPDATE accounts SET hiddenadmin=" .. mysql:escape_string(getElementData(thePlayer, "hiddenadmin")) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")) )
 	end
 end
 addCommandHandler("hideadmin", hideAdmin, false, false)
@@ -991,7 +991,7 @@ function kickAPlayer(thePlayer, commandName, targetPlayer, ...)
 					local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
 					local playerName = getPlayerName(thePlayer)
 					
-					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',1,0,"' .. mysql:escape_string(reason) .. '")' )
+					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',' .. mysql:escape_string(hiddenAdmin) .. ',1,0,"' .. mysql:escape_string(reason) .. '")' )
 					
 					if (hiddenAdmin==0) then
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
@@ -1050,7 +1050,7 @@ function banAPlayer(thePlayer, commandName, targetPlayer, hours, ...)
 					
 					reason = reason .. " (" .. hours .. ")"
 					
-					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',2,' .. rhours .. ',"' .. mysql:escape_string(reason) .. '")' )
+					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',' .. mysql:escape_string(hiddenAdmin) .. ',2,' .. mysql:escape_string(rhours) .. ',"' .. mysql:escape_string(reason) .. '")' )
 					if (hiddenAdmin==0) then
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						outputChatBox("AdmBan: " .. adminTitle .. " " .. playerName .. " banned " .. targetPlayerName .. ". (" .. hours .. ")", getRootElement(), 255, 0, 51)
@@ -1058,7 +1058,7 @@ function banAPlayer(thePlayer, commandName, targetPlayer, hours, ...)
 						
 						local ban = banPlayer(targetPlayer, true, false, false, thePlayer, reason, seconds)
 						
-						mysql:query_free("UPDATE accounts SET banned='1', banned_reason='" .. reason .. "', banned_by='" .. mysql:escape_string(playerName) .. "' WHERE id='" .. accountID .. "'")
+						mysql:query_free("UPDATE accounts SET banned='1', banned_reason='" .. mysql:escape_string(reason) .. "', banned_by='" .. mysql:escape_string(playerName) .. "' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 					elseif (hiddenAdmin==1) then
 						outputChatBox("AdmBan: Hidden Admin banned " .. targetPlayerName .. ". (" .. hours .. ")", getRootElement(), 255, 0, 51)
 						outputChatBox("AdmBan: Reason: " .. reason, getRootElement(), 255, 0, 51)
@@ -1066,7 +1066,7 @@ function banAPlayer(thePlayer, commandName, targetPlayer, hours, ...)
 						
 						local ban = banPlayer(targetPlayer, true, false, false, getRootElement(), reason, seconds)
 						
-						mysql:query_free("UPDATE accounts SET banned='1', banned_reason='" .. reason .. "', banned_by='" .. mysql:escape_string(playerName) .. "' WHERE id='" .. accountID .. "'")
+						mysql:query_free("UPDATE accounts SET banned='1', banned_reason='" .. mysql:escape_string(reason) .. "', banned_by='" .. mysql:escape_string(playerName) .. "' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 					end
 				else
 					outputChatBox(" This player is a higher level admin than you.", thePlayer, 255, 0, 0)
@@ -1088,7 +1088,7 @@ function remoteUnban(thePlayer, targetNick)
 	local bans = getBans()
 	local found = false
 	
-	local result1 = mysql:query("SELECT id, ip, banned FROM accounts WHERE username='" .. tostring(targetNick) .. "' LIMIT 1")
+	local result1 = mysql:query("SELECT id, ip, banned FROM accounts WHERE username='" .. mysql:escape_string(tostring(targetNick)) .. "' LIMIT 1")
 	
 	if (result1) then
 		if (mysql:num_rows(result1)>0) then
@@ -1104,14 +1104,14 @@ function remoteUnban(thePlayer, targetNick)
 				if (ip==getBanIP(value)) then
 					exports.global:sendMessageToAdmins(tostring(targetNick) .. " was remote unbanned from UCP by " .. thePlayer .. ".")
 					removeBan(value)
-					mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. ip .. "'")
+					mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. mysql:escape_string(ip) .. "'")
 					found = true
 					break
 				end
 			end
 			
 			if not found and banned == 1 then
-				mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE id='" .. id .. "'")
+				mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE id='" .. mysql:escape_string(id) .. "'")
 				return true
 			end
 		end
@@ -1136,7 +1136,7 @@ function unbanPlayer(thePlayer, commandName, nickName)
 					local accountid = tonumber(row["account"])
 					mysql:free_result(result1)
 					
-					local result = mysql:query("SELECT ip, banned FROM accounts WHERE id='" .. accountid .. "'")
+					local result = mysql:query("SELECT ip, banned FROM accounts WHERE id='" .. mysql:escape_string(accountid) .. "'")
 						
 					if (result) then
 						if (mysql:num_rows(result)>0) then
@@ -1148,14 +1148,14 @@ function unbanPlayer(thePlayer, commandName, nickName)
 								if (ip==getBanIP(value)) then
 									exports.global:sendMessageToAdmins(tostring(nickName) .. " was unbanned by " .. getPlayerName(thePlayer) .. ".")
 									removeBan(value, thePlayer)
-									mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. ip .. "'")
+									mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. mysql:escape_string(ip) .. "'")
 									found = true
 									break
 								end
 							end
 							
 							if not found and banned == 1 then
-								mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE id='" .. accountid .. "'")
+								mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE id='" .. mysql:escape_string(accountid) .. "'")
 								found = true
 							end
 							
@@ -1195,15 +1195,15 @@ function unbanPlayerIP(thePlayer, commandName, ip)
 				if (ip==getBanIP(value)) then
 					exports.global:sendMessageToAdmins(tostring(ip) .. " was unbanned by " .. getPlayerName(thePlayer) .. ".")
 					removeBan(value, thePlayer)
-					mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. ip .. "'")
+					mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. mysql:escape_string(ip) .. "'")
 					found = true
 					break
 				end
 			end
 			
-			local query = mysql:query_fetch_assoc("SELECT COUNT(*) as number FROM accounts WHERE ip = '" .. ip .. "' AND banned = 1")
+			local query = mysql:query_fetch_assoc("SELECT COUNT(*) as number FROM accounts WHERE ip = '" .. mysql:escape_string(ip) .. "' AND banned = 1")
 			if tonumber(query["number"]) > 0 then
-				mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. ip .. "'")
+				mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. mysql:escape_string(ip) .. "'")
 			end
 			
 			if not (found) then
@@ -1312,7 +1312,7 @@ function makePlayerAdmin(thePlayer, commandName, who, rank)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "hiddenadmin", 0)
 				end
 				
-				local query = mysql:query_free("UPDATE accounts SET admin='" .. tonumber(rank) .. "', hiddenadmin='0' WHERE id='" .. accountID .. "'")
+				local query = mysql:query_free("UPDATE accounts SET admin='" .. mysql:escape_string(tonumber(rank)) .. "', hiddenadmin='0' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 				outputChatBox("You set " .. targetPlayerName .. "'s Admin rank to " .. rank .. ".", thePlayer, 0, 255, 0)
 				
 				local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
@@ -1324,7 +1324,7 @@ function makePlayerAdmin(thePlayer, commandName, who, rank)
 				else
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "adminduty", 0)
 				end
-				mysql:query_free("UPDATE accounts SET adminduty=" .. getElementData(targetPlayer, "adminduty") .. " WHERE id = " .. getElementData(targetPlayer, "gameaccountid") )
+				mysql:query_free("UPDATE accounts SET adminduty=" .. mysql:escape_string(getElementData(targetPlayer, "adminduty")) .. " WHERE id = " .. mysql:escape_string(getElementData(targetPlayer, "gameaccountid")) )
 				exports.global:updateNametagColor(targetPlayer)
 				
 				if (hiddenAdmin==0) then
@@ -1366,11 +1366,11 @@ function jailPlayer(thePlayer, commandName, who, minutes, ...)
 				end
 				
 				if (minutes>=999) then
-					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. minutes .. "', adminjail_permanent='1', adminjail_by='" .. playerName .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. accountID .. "'")
+					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. mysql:escape_string(minutes) .. "', adminjail_permanent='1', adminjail_by='" .. mysql:escape_string(playerName) .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 					minutes = "Unlimited"
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailtimer", true, false)
 				else
-					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. minutes .. "', adminjail_permanent='0', adminjail_by='" .. playerName .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. tonumber(accountID) .. "'")
+					mysql:query_free("UPDATE accounts SET adminjail='1', adminjail_time='" .. mysql:escape_string(minutes) .. "', adminjail_permanent='0', adminjail_by='" .. mysql:escape_string(playerName) .. "', adminjail_reason='" .. mysql:escape_string(reason) .. "' WHERE id='" .. mysql:escape_string(tonumber(accountID)) .. "'")
 					local theTimer = setTimer(timerUnjailPlayer, 60000, minutes, targetPlayer)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailserved", 0, false)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "jailtimer", theTimer, false)
@@ -1383,7 +1383,7 @@ function jailPlayer(thePlayer, commandName, who, minutes, ...)
 				outputChatBox("You jailed " .. targetPlayerName .. " for " .. minutes .. " Minutes.", thePlayer, 255, 0, 0)
 				
 				local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
-				local res = mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',0,' .. ( minutes == 999 and 0 or minutes ) .. ',"' .. mysql:escape_string(reason) .. '")' )
+				local res = mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',' .. mysql:escape_string(hiddenAdmin) .. ',0,' .. mysql:escape_string(( minutes == 999 and 0 or minutes )) .. ',"' .. mysql:escape_string(reason) .. '")' )
 				
 				if (hiddenAdmin==0) then
 					local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
@@ -1421,7 +1421,7 @@ function timerUnjailPlayer(jailedPlayer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime", timeLeft, false)
 		
 			if (timeLeft<=0) then
-				local query = mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. accountID .. "'")
+				local query = mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 				removeElementData(jailedPlayer, "jailtimer")
 				removeElementData(jailedPlayer, "adminjailed")
 				removeElementData(jailedPlayer, "jailreason")
@@ -1447,7 +1447,7 @@ function timerUnjailPlayer(jailedPlayer)
 				exports.global:sendMessageToAdmins("AdmJail: " .. getPlayerName(jailedPlayer) .. " has served " .. genderm .. " jail time.")
 				exports.irc:sendMessage("[ADMIN] " .. getPlayerName(jailedPlayer) .. " was unjailed by script (Time Served)")
 			else
-				local query = mysql:query_free("UPDATE accounts SET adminjail_time='" .. timeLeft .. "' WHERE id='" .. accountID .. "'")
+				local query = mysql:query_free("UPDATE accounts SET adminjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 			end
 		end
 	end
@@ -1468,7 +1468,7 @@ function unjailPlayer(thePlayer, commandName, who)
 				if not (jailed) then
 					outputChatBox(targetPlayerName .. " is not jailed.", thePlayer, 255, 0, 0)
 				else
-					local query = mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. accountID .. "'")
+					local query = mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 
 					if isTimer(jailed) then
 						killTimer(jailed)
@@ -1890,35 +1890,35 @@ function makePlayerDonator(thePlayer, commandName, target, level)
 					
 					if (level==0) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 0)
-						mysql:query_free("UPDATE accounts SET donator='0' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='0' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Non-Donator"
 					elseif (level==1) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 1)
-						mysql:query_free("UPDATE accounts SET donator='1' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='1' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Bronze Donator"
 					elseif (level==2) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 2)
-						mysql:query_free("UPDATE accounts SET donator='2' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='2' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Silver Donator"
 					elseif (level==3) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 3)
-						mysql:query_free("UPDATE accounts SET donator='3' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='3' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Gold Donator"
 					elseif (level==4) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 4)
-						mysql:query_free("UPDATE accounts SET donator='4' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='4' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Platinum Donator"
 					elseif (level==5) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 5)
-						mysql:query_free("UPDATE accounts SET donator='5' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='5' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Pearl Donator"
 					elseif (level==6) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 6)
-						mysql:query_free("UPDATE accounts SET donator='6' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='6' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Diamond Donator"
 					elseif (level==7) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "donatorlevel", 7)
-						mysql:query_free("UPDATE accounts SET donator='7' WHERE id='" .. gameaccountID .. "'")
+						mysql:query_free("UPDATE accounts SET donator='7' WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 						levelString = "Godly Donator"
 					end
 					
@@ -1952,7 +1952,7 @@ function adminDuty(thePlayer, commandName)
 			outputChatBox("You went off admin duty.", thePlayer, 255, 0, 0)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " went off duty.")
 		end
-		mysql:query_free("UPDATE accounts SET adminduty=" .. getElementData(thePlayer, "adminduty") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
+		mysql:query_free("UPDATE accounts SET adminduty=" .. mysql:escape_string(getElementData(thePlayer, "adminduty")) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")) )
 		exports.global:updateNametagColor(thePlayer)
 	end
 end
@@ -1965,7 +1965,7 @@ function setMOTD(thePlayer, commandName, ...)
 			outputChatBox("SYNTAX: " .. commandName .. " [message]", thePlayer, 255, 194, 14)
 		else
 			local message = table.concat({...}, " ")
-			local query = mysql:query_free("UPDATE settings SET value='" .. message .. "' WHERE name='motd'")
+			local query = mysql:query_free("UPDATE settings SET value='" .. mysql:escape_string(message) .. "' WHERE name='motd'")
 			
 			if (query) then
 				outputChatBox("MOTD set to '" .. message .. "'.", thePlayer, 0, 255, 0)
@@ -2051,7 +2051,7 @@ function warnPlayer(thePlayer, commandName, targetPlayer, ...)
 				reason = table.concat({...}, " ")
 				warns = warns + 1
 				local accountID = getElementData(targetPlayer, "gameaccountid")
-				mysql:query_free("UPDATE accounts SET warns=" .. warns .. " WHERE id = " .. accountID )
+				mysql:query_free("UPDATE accounts SET warns=" .. mysql:escape_string(warns) .. " WHERE id = " .. mysql:escape_string(accountID) )
 				outputChatBox("You have given " .. targetPlayerName .. " a warning. (" .. warns .. "/3).", thePlayer, 255, 0, 0)
 				outputChatBox("You have been given a warning by " .. getPlayerName(thePlayer) .. ".", targetPlayer, 255, 0, 0)
 				outputChatBox("Reason: " .. reason, targetPlayer, 255, 0, 0)
@@ -2059,7 +2059,7 @@ function warnPlayer(thePlayer, commandName, targetPlayer, ...)
 				exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "warns", warns, false)
 				
 				local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
-				mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',4,0,"' .. mysql:escape_string(reason) .. '")' )
+				mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',' .. mysql:escape_string(hiddenAdmin) .. ',4,0,"' .. mysql:escape_string(reason) .. '")' )
 
 				if (hiddenAdmin==0) then
 					local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
@@ -2067,11 +2067,11 @@ function warnPlayer(thePlayer, commandName, targetPlayer, ...)
 				end
 				
 				if (warns>=3) then
-					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. tostring(getElementData(targetPlayer, "gameaccountid") or 0) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. tostring(getElementData(thePlayer, "gameaccountid") or 0) .. ',' .. hiddenAdmin .. ',5,0,"' .. warns .. ' Admin Warnings")' )
+					mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',' .. mysql:escape_string(hiddenAdmin) .. ',5,0,"' .. mysql:escape_string(warns) .. ' Admin Warnings")' )
 					banPlayer(targetPlayer, true, false, false, thePlayer, "Received " .. warns .. " admin warnings.", 0)
 					outputChatBox("AdmWarn: " .. targetPlayerName .. " was banned for several admin warnings.", getRootElement(), 255, 0, 51)
 					
-					mysql:query_free("UPDATE accounts SET banned='1', banned_reason='3 Admin Warnings', banned_by='Warn System' WHERE id='" .. accountID .. "'")
+					mysql:query_free("UPDATE accounts SET banned='1', banned_reason='3 Admin Warnings', banned_by='Warn System' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 				end
 			end
 		end
@@ -2217,12 +2217,12 @@ function resetCharacter(thePlayer, commandName, ...)
 						end
 					end
 				end
-				mysql:query_free("DELETE FROM vehicles WHERE owner = " .. charid )
+				mysql:query_free("DELETE FROM vehicles WHERE owner = " .. mysql:escape_string(charid) )
 				
 				-- un-rent all interiors
 				local old = getElementData( thePlayer, "dbid" )
 				exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "dbid", charid )
-				local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. charid .. " AND type != 2" )
+				local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. mysql:escape_string(charid) .. " AND type != 2" )
 				if result then
 					local continue = true
 					while continue do
@@ -2236,24 +2236,24 @@ function resetCharacter(thePlayer, commandName, ...)
 				exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "dbid", old )
 				
 				-- get rid of all items, give him default items back
-				mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. charid )
+				mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. mysql:escape_string(charid) )
 				
 				-- get the skin
 				local skin = 264
-				local skinr = mysql:query_fetch_assoc("SELECT skin FROM characters WHERE id = " .. charid )
+				local skinr = mysql:query_fetch_assoc("SELECT skin FROM characters WHERE id = " .. mysql:escape_string(charid) )
 				if skinr then
 					skin = tonumber(skinr["skin"]) or 264
 				end
 				
-				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. charid .. ", 16, " .. skin .. ")" )
-				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. charid .. ", 17, 1)" )
-				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. charid .. ", 18, 1)" )
+				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. mysql:escape_string(charid) .. ", 16, " .. mysql:escape_string(skin) .. ")" )
+				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. mysql:escape_string(charid) .. ", 17, 1)" )
+				mysql:query_free("INSERT INTO items (type, owner, itemID, itemValue) VALUES (1, " .. mysql:escape_string(charid) .. ", 18, 1)" )
 				
 				-- delete wiretransfers
-				mysql:query_free("DELETE FROM wiretransfers WHERE `from` = " .. charid .. " OR `to` = " .. charid )
+				mysql:query_free("DELETE FROM wiretransfers WHERE `from` = " .. mysql:escape_string(charid) .. " OR `to` = " .. mysql:escape_string(charid) )
 				
 				-- set spawn at unity, strip off money etc
-				mysql:query_free("UPDATE characters SET x=1742.1884765625, y=-1861.3564453125, z=13.577615737915, rotation=0, faction_id=-1, faction_rank=0, faction_leader=0, weapons='', ammo='', car_license=0, gun_license=0, hoursplayed=0, timeinserver=0, transport=1, lastarea='El Corona', lang1=1, lang1skill=100, lang2=0, lang2skill=0, lang3=0, lang3skill=0, currLang=1, money=250, bankmoney=500, interior_id=0, dimension_id=0, health=100, armor=0, radiochannel=100, fightstyle=0, pdjail=0, pdjail_time=0, restrainedobj=0, restrainedby=0, hunter=0, stevie=0, tyrese=0, rook=0, fish=0, truckingruns=0, truckingwage=0, blindfold=0, phoneoff=0 WHERE id = " .. charid )
+				mysql:query_free("UPDATE characters SET x=1742.1884765625, y=-1861.3564453125, z=13.577615737915, rotation=0, faction_id=-1, faction_rank=0, faction_leader=0, weapons='', ammo='', car_license=0, gun_license=0, hoursplayed=0, timeinserver=0, transport=1, lastarea='El Corona', lang1=1, lang1skill=100, lang2=0, lang2skill=0, lang3=0, lang3skill=0, currLang=1, money=250, bankmoney=500, interior_id=0, dimension_id=0, health=100, armor=0, radiochannel=100, fightstyle=0, pdjail=0, pdjail_time=0, restrainedobj=0, restrainedby=0, hunter=0, stevie=0, tyrese=0, rook=0, fish=0, truckingruns=0, truckingwage=0, blindfold=0, phoneoff=0 WHERE id = " .. mysql:escape_string(charid) )
 				
 				outputChatBox("You stripped " .. character .. " off their possession.", thePlayer, 0, 255, 0)
 				if (getElementData(thePlayer, "hiddenadmin")==0) then
@@ -2273,9 +2273,9 @@ addCommandHandler("resetcharacter", resetCharacter)
 
 -- FIND ALT CHARS
 local function showAlts(thePlayer, id)
-	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = " .. id )
+	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = " .. mysql:escape_string(id) )
 	if result then
-		local name = mysql:query_fetch_assoc("SELECT username FROM accounts WHERE id = " .. id )
+		local name = mysql:query_fetch_assoc("SELECT username FROM accounts WHERE id = " .. mysql:escape_string(id) )
 		if name then
 			local uname = name["username"]
 			if uname and uname ~= mysql_null() then
@@ -2389,7 +2389,7 @@ function givePlayerLicense(thePlayer, commandName, targetPlayerName, licenseType
 						outputChatBox(getPlayerName(thePlayer).." has already a "..licenseTypeOutput.." license.", thePlayer, 255, 255, 0)
 					else
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license."..licenseType, 1)
-						mysql:query_free("UPDATE characters SET "..licenseType.."_license='1' WHERE id = "..getElementData(targetPlayer, "dbid").." LIMIT 1")
+						mysql:query_free("UPDATE characters SET "..mysql:escape_string(licenseType).."_license='1' WHERE id = "..mysql:escape_string(getElementData(targetPlayer, "dbid")).." LIMIT 1")
 						outputChatBox("Player "..targetPlayerName.." now has a "..licenseTypeOutput.." license.", thePlayer, 0, 255, 0)
 						outputChatBox("Admin "..getPlayerName(thePlayer):gsub("_"," ").." gives you a "..licenseTypeOutput.." license.", targetPlayer, 0, 255, 0)
 						exports.logs:logMessage("[/GIVELICENSE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." gave ".. targetPlayerName .." the following license:"..licenseTypeOutput, 4)
@@ -2478,14 +2478,14 @@ function marry(thePlayer, commandName, player1, player2)
 				local player2, player2name = exports.global:findPlayerByPartialNick( thePlayer, player2 )
 				if player2 then
 					-- check if one of the players is already married
-					local p1r = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM characters WHERE marriedto = " .. getElementData( player1, "dbid" ) )
+					local p1r = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM characters WHERE marriedto = " .. mysql:escape_string(getElementData( player1, "dbid" )) )
 					if p1r then
 						if tonumber( p1r["numbr"] ) == 0 then
-							local p2r = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM characters WHERE marriedto = " .. getElementData( player2, "dbid" ) )
+							local p2r = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM characters WHERE marriedto = " .. mysql:escape_string(getElementData( player2, "dbid" )) )
 							if p2r then
 								if tonumber( p2r["numbr"] ) == 0 then
-									mysql:query_free("UPDATE characters SET marriedto = " .. getElementData( player1, "dbid" ) .. " WHERE id = " .. getElementData( player2, "dbid" ) )
-									mysql:query_free("UPDATE characters SET marriedto = " .. getElementData( player2, "dbid" ) .. " WHERE id = " .. getElementData( player1, "dbid" ) ) 
+									mysql:query_free("UPDATE characters SET marriedto = " .. mysql:escape_string(getElementData( player1, "dbid" )) .. " WHERE id = " .. mysql:escape_string(getElementData( player2, "dbid" )) )
+									mysql:query_free("UPDATE characters SET marriedto = " .. mysql:escape_string(getElementData( player2, "dbid" )) .. " WHERE id = " .. mysql:escape_string(getElementData( player1, "dbid" )) ) 
 									
 									outputChatBox( "You are now married to " .. player2name .. ".", player1, 0, 255, 0 )
 									outputChatBox( "You are now married to " .. player1name .. ".", player2, 0, 255, 0 )
@@ -2516,12 +2516,12 @@ function divorce(thePlayer, commandName, targetPlayer)
 		else
 			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick( thePlayer, targetPlayer )
 			if targetPlayer then
-				local marriedto = mysql:query_fetch_assoc("SELECT marriedto FROM characters WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
+				local marriedto = mysql:query_fetch_assoc("SELECT marriedto FROM characters WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 				if marriedto then
 					local to = tonumber( marriedto["marriedto"] )
 					if to > 0 then
-						mysql:query_free("UPDATE characters SET marriedto = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) )
-						mysql:query_free("UPDATE characters SET marriedto = 0 WHERE marriedto = " .. getElementData( targetPlayer, "dbid" ) )
+						mysql:query_free("UPDATE characters SET marriedto = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
+						mysql:query_free("UPDATE characters SET marriedto = 0 WHERE marriedto = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) )
 						
 						exports['vehicle-system']:clearCharacterName( getElementData( targetPlayer, "dbid" ) )
 						exports['vehicle-system']:clearCharacterName( to )
@@ -2544,13 +2544,13 @@ function vehicleLimit(admin, command, player, limit)
 		else
 			local tplayer, targetPlayerName = exports.global:findPlayerByPartialNick(admin, player)
 			if (tplayer) then			
-				local query = mysql:query_fetch_assoc("SELECT maxvehicles FROM characters WHERE id = " .. getElementData(tplayer, "dbid"))
+				local query = mysql:query_fetch_assoc("SELECT maxvehicles FROM characters WHERE id = " .. mysql:escape_string(getElementData(tplayer, "dbid")))
 				if (query) then
 					local oldvl = query["maxvehicles"]
 					local newl = tonumber(limit)
 					if (newl) then
 						if (newl>0) then
-							mysql:query_free("UPDATE characters SET maxvehicles = " .. newl .. " WHERE id = " .. getElementData(tplayer, "dbid"))
+							mysql:query_free("UPDATE characters SET maxvehicles = " .. mysql:escape_string(newl) .. " WHERE id = " .. mysql:escape_string(getElementData(tplayer, "dbid")))
 
 							exports['anticheat-system']:changeProtectedElementDataEx(tplayer, "maxvehicles", newl)
 							

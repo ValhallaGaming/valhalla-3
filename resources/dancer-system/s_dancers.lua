@@ -69,13 +69,13 @@ addCommandHandler( "adddancer",
 				local interior = getElementInterior( thePlayer )
 				local dimension = getElementDimension( thePlayer )
 				
-				local query = mysql:query_fetch_assoc("SELECT COUNT(*) as number FROM dancers WHERE dimension = " .. dimension )
+				local query = mysql:query_fetch_assoc("SELECT COUNT(*) as number FROM dancers WHERE dimension = " .. mysql:escape_string(dimension) )
 				if query then
 					local num = tonumber( query["number"] ) or 5
 					if dimension == 0 or num < 3 or exports.global:isPlayerScripter( thePlayer ) then
 						local ped = createPed( skin, x, y, z )
 						if ped then
-							local id = mysql:query_insert_free("INSERT INTO dancers (x,y,z,rotation,skin,type,interior,dimension,offset) VALUES (" .. x .. "," .. y .. "," .. z .. "," .. rotation .. "," .. skin .. "," .. type .. "," .. interior .. "," .. dimension .. "," .. offset .. ")" )
+							local id = mysql:query_insert_free("INSERT INTO dancers (x,y,z,rotation,skin,type,interior,dimension,offset) VALUES (" .. mysql:escape_string(x) .. "," .. mysql:escape_string(y) .. "," .. mysql:escape_string(z) .. "," .. mysql:escape_string(rotation) .. "," .. mysql:escape_string(skin) .. "," .. mysql:escape_string(type) .. "," .. mysql:escape_string(interior) .. "," .. mysql:escape_string(dimension) .. "," .. mysql:escape_string(offset) .. ")" )
 							if id then
 								exports['anticheat-system']:changeProtectedElementDataEx( ped, "dbid", id, false )
 								exports['anticheat-system']:changeProtectedElementDataEx( ped, "position", { x, y, z, rotation }, false )
@@ -135,7 +135,7 @@ addCommandHandler( "deldancer",
 			else
 				for ped in pairs( peds ) do
 					if getElementData( ped, "dbid" ) == tonumber( id ) then
-						mysql:query_free("DELETE FROM dancers WHERE id = " .. id )
+						mysql:query_free("DELETE FROM dancers WHERE id = " .. mysql:escape_string(id) )
 						
 						destroyElement( ped )
 						

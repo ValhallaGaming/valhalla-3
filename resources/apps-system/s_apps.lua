@@ -23,7 +23,7 @@ addEventHandler( "apps:show", getRootElement( ),
 	function( id )
 		if exports.global:isPlayerAdmin( source ) then
 			if id and tonumber( id ) then
-				local result = mysql:query_fetch_assoc( "SELECT id, username, appgamingexperience, appcountry, applanguage, apphow, appwhy, appexpectations, appdefinitions, appfirstcharacter, appclarifications, appreason, appstate, adminnote, ( SELECT COUNT(*) FROM adminhistory WHERE id = " .. id .. ") AS history FROM accounts WHERE id = " .. id )
+				local result = mysql:query_fetch_assoc( "SELECT id, username, appgamingexperience, appcountry, applanguage, apphow, appwhy, appexpectations, appdefinitions, appfirstcharacter, appclarifications, appreason, appstate, adminnote, ( SELECT COUNT(*) FROM adminhistory WHERE id = " .. mysql:escape_string(id) .. ") AS history FROM accounts WHERE id = " .. id )
 				if result then
 					if tonumber( result.appstate ) == 1 then -- application is open
 						for key, value in pairs( result ) do
@@ -70,7 +70,7 @@ addEvent( "apps:update", true )
 addEventHandler( "apps:update", getRootElement( ),
 	function( account, state, reason )
 		if exports.global:isPlayerAdmin( source ) and ( state == 2 or state == 3 ) and tonumber( account.id ) then
-			mysql:query_free( "UPDATE accounts SET appstate = " .. state .. ", appreason = '" .. mysql:escape_string( reason ) .. "', apphandler = '" .. mysql:escape_string( getElementData( source, "gameaccountusername" ) ) .. "', appdatetime=NOW() + INTERVAL 1 DAY WHERE id = " .. account.id .. " LIMIT 1" )
+			mysql:query_free( "UPDATE accounts SET appstate = " .. mysql:escape_string(state) .. ", appreason = '" .. mysql:escape_string( reason ) .. "', apphandler = '" .. mysql:escape_string( getElementData( source, "gameaccountusername" ) ) .. "', appdatetime=NOW() + INTERVAL 1 DAY WHERE id = " .. mysql:escape_string(account.id) .. " LIMIT 1" )
 			outputChatBox( "You have now " .. ( state == 3 and "accepted " or "denied " ) .. account.name .. "'s application.", source, 0, 255, 0 )
 			if updateAppCount( ) > 0 then
 				triggerEvent( "apps:show", source )
@@ -84,7 +84,7 @@ addEventHandler( "apps:showhistory", getRootElement( ),
 	function( account )
 		if exports.global:isPlayerAdmin( source ) and tonumber(account.id) then
 			local targetID = account.id
-			local result = mysql:query("SELECT date, action, reason, duration, a.username, user_char FROM adminhistory h LEFT JOIN accounts a ON a.id = h.admin WHERE user = " .. targetID .. " ORDER BY h.id DESC" )
+			local result = mysql:query("SELECT date, action, reason, duration, a.username, user_char FROM adminhistory h LEFT JOIN accounts a ON a.id = h.admin WHERE user = " .. mysql:escape_string(targetID) .. " ORDER BY h.id DESC" )
 			if result then
 				local info = {}
 				local continue = true

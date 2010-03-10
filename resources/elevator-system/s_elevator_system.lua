@@ -18,7 +18,7 @@ function createElevator(thePlayer, commandName, interior, dimension, ix, iy, iz)
 			iz = tonumber(iz)
 			id = SmallestElevatorID()
 			if id then
-				local query = mysql:query_free("INSERT INTO elevators SET id='" .. id .. "', x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', tpx='" .. ix .. "', tpy='" .. iy .. "', tpz='" .. iz .. "', dimensionwithin='" .. dimensionwithin .. "', interiorwithin='" .. interiorwithin .. "', dimension='" .. dimension .. "', interior='" .. interior .. "'")
+				local query = mysql:query_free("INSERT INTO elevators SET id='" .. mysql:escape_string(id) .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', tpx='" .. mysql:escape_string(ix) .. "', tpy='" .. mysql:escape_string(iy) .. "', tpz='" .. mysql:escape_string(iz) .. "', dimensionwithin='" .. mysql:escape_string(dimensionwithin) .. "', interiorwithin='" .. mysql:escape_string(interiorwithin) .. "', dimension='" .. mysql:escape_string(dimension) .. "', interior='" .. mysql:escape_string(interior) .. "'")
 				if (query) then
 					local pickup = createPickup(x, y, z, 3, 1318)
 					exports.pool:allocateElement(pickup)
@@ -174,7 +174,7 @@ end
 
 
 function isInteriorLocked(dimension)
-	local result = mysql:query_fetch_assoc("SELECT type, locked FROM `interiors` WHERE id = " .. dimension)
+	local result = mysql:query_fetch_assoc("SELECT type, locked FROM `interiors` WHERE id = " .. mysql:escape_string(dimension))
 	local locked = false
 	if result then
 		if tonumber(result["rype"]) ~= 2 and tonumber(result["locked"]) == 1 then 
@@ -246,7 +246,7 @@ function enterElevator(player, pickup)
 						return
 					else
 						local ownerid = getElementData( thePickup, "owner" )
-						local query = mysql:query_free("UPDATE characters SET bankmoney = bankmoney + " .. fee .. " WHERE id = " .. ownerid )
+						local query = mysql:query_free("UPDATE characters SET bankmoney = bankmoney + " .. mysql:escape_string(fee) .. " WHERE id = " .. mysql:escape_string(ownerid) )
 						if query then							
 							for k, v in pairs( getElementsByType( "player" ) ) do
 								if isElement( v ) then
@@ -354,7 +354,7 @@ function deleteElevator(thePlayer, commandName, id)
 			end
 			
 			if (counter>0) then -- ID Exists
-				mysql:query_free("DELETE FROM elevators WHERE id='" .. id .. "'")
+				mysql:query_free("DELETE FROM elevators WHERE id='" .. mysql:escape_string(id) .. "'")
 
 				outputChatBox("Elevator #" .. id .. " Deleted!", thePlayer, 0, 255, 0)
 				exports.irc:sendMessage(getPlayerName(thePlayer) .. " deleted elevator #" .. id .. ".")
@@ -371,7 +371,7 @@ function TempDelete(thePlayer, commandName)
 		for k, thePickup in ipairs(getElementsByType("pickup", getResourceRootElement())) do
 			if isInPickup(thePlayer, thePickup) then
 				local dbid = getElementData(thePickup, "dbid")
-				local query = mysql:query_free( "DELETE FROM elevators WHERE id='" .. dbid .. "'")
+				local query = mysql:query_free( "DELETE FROM elevators WHERE id='" .. mysql:escape_string(dbid) .. "'")
 				if (query) then
 					outputChatBox(" Elevator deleted", thePlayer)
 				end
@@ -414,7 +414,7 @@ addEvent( "toggleCarTeleportMode", false )
 addEventHandler( "toggleCarTeleportMode", getRootElement(),
 	function( player )
 		local mode = ( getElementData( source, "car" ) + 1 ) % 4
-		local query = mysql:query_free("UPDATE elevators SET car = " .. mode .. " WHERE id = " .. getElementData( source, "dbid" ) )
+		local query = mysql:query_free("UPDATE elevators SET car = " .. mysql:escape_string(mode) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "dbid" )) )
 		if query then
 			if mode == 0 then
 				outputChatBox( "You changed the mode to 'players only'.", player, 0, 255, 0 )
@@ -451,14 +451,14 @@ function toggleElevator( thePlayer, commandName, id )
 			
 			if pickup then
 				if getElementModel( pickup ) == 1314 then
-					mysql:query_free("UPDATE elevators SET disabled = 0 WHERE id = " .. id )
+					mysql:query_free("UPDATE elevators SET disabled = 0 WHERE id = " .. mysql:escape_string(id) )
 					
 					setPickupType( pickup, 3, 1318 )
 					setPickupType( getElementData( pickup, "other" ), 3, 1318 )
 					
 					outputChatBox( "Elevator #" .. id .. " enabled.", thePlayer, 0, 255, 0 )
 				else
-					mysql:query_free("UPDATE elevators SET disabled = 1 WHERE id = " .. id )
+					mysql:query_free("UPDATE elevators SET disabled = 1 WHERE id = " .. mysql:escape_string(id) )
 					
 					setPickupType( pickup, 3, 1314 )
 					setPickupType( getElementData( pickup, "other" ), 3, 1314 )

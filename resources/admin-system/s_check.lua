@@ -18,7 +18,7 @@ function doCheck(sourcePlayer, command, ...)
 						-- get admin note
 						local note = ""
 						local warns = "?"
-						local result = mysql:query_fetch_assoc("SELECT adminnote, warns FROM accounts WHERE id = " .. tostring(getElementData(noob, "gameaccountid")) )
+						local result = mysql:query_fetch_assoc("SELECT adminnote, warns FROM accounts WHERE id = " .. mysql:escape_string(tostring(getElementData(noob, "gameaccountid"))) )
 						if result then
 							local text = result["adminnote"]
 							if text ~= mysql_null() then
@@ -30,7 +30,7 @@ function doCheck(sourcePlayer, command, ...)
 						
 						-- get admin history count
 						local history = '?'
-						local result = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM adminhistory WHERE user = " .. tostring(getElementData(noob, "gameaccountid")) )
+						local result = mysql:query_fetch_assoc("SELECT COUNT(*) as numbr FROM adminhistory WHERE user = " .. mysql:escape_string(tostring(getElementData(noob, "gameaccountid"))) )
 						if result then
 							history = tonumber( result["numbr"] ) or '?'
 						end
@@ -48,7 +48,7 @@ function savePlayerNote( target, text )
 	if exports.global:isPlayerAdmin(source) then
 		local account = getElementData(target, "gameaccountid")
 		if account then
-			local result = mysql:query_free("UPDATE accounts SET adminnote = '" .. mysql:escape_string( text ) .. "' WHERE id = " .. account )
+			local result = mysql:query_free("UPDATE accounts SET adminnote = '" .. mysql:escape_string( text ) .. "' WHERE id = " .. mysql:escape_string(account) )
 			if result then
 				outputChatBox( "Note for the " .. getPlayerName( target ):gsub("_", " ") .. " (" .. getElementData( target, "gameaccountusername" ) .. ") has been updated.", source, 0, 255, 0 )
 			else
@@ -66,7 +66,7 @@ function showAdminHistory( target )
 	if exports.global:isPlayerAdmin( source ) then
 		local targetID = getElementData( target, "gameaccountid" )
 		if targetID then
-			local result = mysql:query("SELECT date, action, reason, duration, a.username as username, user_char FROM adminhistory h LEFT JOIN accounts a ON a.id = h.admin WHERE user = " .. targetID .. " ORDER BY h.id DESC" )
+			local result = mysql:query("SELECT date, action, reason, duration, a.username as username, user_char FROM adminhistory h LEFT JOIN accounts a ON a.id = h.admin WHERE user = " .. mysql:escape_string(targetID) .. " ORDER BY h.id DESC" )
 			if result then
 				local info = {}
 				local continue = true

@@ -21,7 +21,7 @@ function register_email(accountName, password)
 		mysql:free_result(result)
 		triggerClientEvent("closeEmailLogin",source)
 		local dbid = getElementData(source, "dbid")
-		mysql:query_free("INSERT INTO emailaccounts SET username='" .. mysql:escape_string(accountName) .. "', password=MD5('" .. mysql:escape_string(password) .. "'), creator='"..dbid.."'") -- Create the account.
+		mysql:query_free("INSERT INTO emailaccounts SET username='" .. mysql:escape_string(accountName) .. "', password=MD5('" .. mysql:escape_string(password) .. "'), creator='"..mysql:escape_string(dbid).."'") -- Create the account.
 		mysql:query_free("INSERT INTO emails SET date= NOW(), sender='Customer Services', receiver='" .. mysql:escape_string(accountName) .. "', subject='Welcome', inbox='1',outbox='0', message='Welcome,\
 \
 Your email account has been registered.\

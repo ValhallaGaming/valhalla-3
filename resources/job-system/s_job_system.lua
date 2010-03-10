@@ -17,7 +17,7 @@ function givePlayerJob(jobID)
 	local charname = getPlayerName(source)
 	
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "job", jobID)
-	mysql:query_free("UPDATE characters SET job=" .. jobID .. ", jobcontract = 3 WHERE id = " .. getElementData(source, "dbid") )
+	mysql:query_free("UPDATE characters SET job=" .. mysql:escape_string(jobID) .. ", jobcontract = 3 WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 	
 	exports.global:givePlayerAchievement(source, 30)
 
@@ -25,7 +25,7 @@ function givePlayerJob(jobID)
 		exports.global:giveWeapon(source, 41, 1500, true)
 		outputChatBox("Use this paint to paint over tags you find.", source, 255, 194, 14)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "tag", 9)
-		mysql:query_free("UPDATE characters SET tag=9 WHERE id = " .. getElementData(source, "dbid") )
+		mysql:query_free("UPDATE characters SET tag=9 WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 	end
 end
 addEvent("acceptJob", true)
@@ -38,17 +38,17 @@ function quitJob(source)
 		if job == 0 then
 			outputChatBox("You are currently unemployed.", source, 255, 0, 0)
 		else
-			local result = mysql:query_fetch_assoc("SELECT jobcontract FROM characters WHERE id = " .. getElementData(source, "dbid") )
+			local result = mysql:query_fetch_assoc("SELECT jobcontract FROM characters WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 			if result then
 				local contracttime = tonumber( result["jobcontract"] ) or 0
 				if contracttime > 0 then
 					outputChatBox( "You need to wait " .. contracttime .. " payday(s) before you can leave your job.", source, 255, 0, 0)
 				else
 					exports['anticheat-system']:changeProtectedElementDataEx(source, "job", 0)
-					mysql:query_free("UPDATE characters SET job=0 WHERE id = " .. getElementData(source, "dbid") )
+					mysql:query_free("UPDATE characters SET job=0 WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 					if job == 4 then
 						exports['anticheat-system']:changeProtectedElementDataEx(source, "tag", 1)
-						mysql:query_free("UPDATE characters SET tag=1 WHERE id = " .. getElementData(source, "dbid") )
+						mysql:query_free("UPDATE characters SET tag=1 WHERE id = " .. mysql:escape_string(getElementData(source, "dbid")) )
 					end
 					
 					triggerClientEvent(source, "quitJob", source, job)
@@ -69,7 +69,7 @@ function resetContract( thePlayer, commandName, targetPlayerName )
 			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick( thePlayer, targetPlayerName )
 			if targetPlayer then
 				if getElementData( targetPlayer, "loggedin" ) == 1 then
-					local result = mysql:query_free("UPDATE characters SET jobcontract = 0 WHERE id = " .. getElementData( targetPlayer, "dbid" ) .. " AND jobcontract > 0" )
+					local result = mysql:query_free("UPDATE characters SET jobcontract = 0 WHERE id = " .. mysql:escape_string(getElementData( targetPlayer, "dbid" )) .. " AND jobcontract > 0" )
 					if result then
 						outputChatBox( "Reset Job Contract for " .. targetPlayerName, thePlayer, 0, 255, 0 )
 					else

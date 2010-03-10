@@ -139,7 +139,7 @@ end
 
 local function cleanupProperty( id )
 	if id > 0 then
-		if exports.mysql:query_free( "DELETE FROM dancers WHERE dimension = " .. id ) then
+		if exports.mysql:query_free( "DELETE FROM dancers WHERE dimension = " .. mysql:escape_string(id) ) then
 			local res = getResourceRootElement( getResourceFromName( "dancer-system" ) )
 			if res then
 				for key, value in pairs( getElementsByType( "ped", res ) ) do
@@ -150,7 +150,7 @@ local function cleanupProperty( id )
 			end
 		end
 		
-		if exports.mysql:query_free( "DELETE FROM shops WHERE dimension = " .. id ) then
+		if exports.mysql:query_free( "DELETE FROM shops WHERE dimension = " .. mysql:escape_string(id) ) then
 			local res = getResourceRootElement( getResourceFromName( "shop-system" ) )
 			if res then
 				for key, value in pairs( getElementsByType( "ped", res ) ) do
@@ -161,7 +161,7 @@ local function cleanupProperty( id )
 			end
 		end
 		
-		if exports.mysql:query_free( "DELETE FROM atms WHERE dimension = " .. id ) then
+		if exports.mysql:query_free( "DELETE FROM atms WHERE dimension = " .. mysql:escape_string(id) ) then
 			local res = getResourceRootElement( getResourceFromName( "bank-system" ) )
 			if res then
 				for key, value in pairs( getElementsByType( "object", res ) ) do
@@ -172,7 +172,7 @@ local function cleanupProperty( id )
 			end
 		end
 		
-		if exports.mysql:query_free( "DELETE FROM objects WHERE dimension = " .. id ) then
+		if exports.mysql:query_free( "DELETE FROM objects WHERE dimension = " .. mysql:escape_string(id) ) then
 			local res = getResourceRootElement( getResourceFromName( "object-system" ) )
 			if res then
 				for key, value in pairs( getElementsByType( "object", res ) ) do

@@ -113,7 +113,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 						
 						if (tonumber(licenseType)==1) then
 							if(tonumber(getElementData(targetPlayer, "license.car")) == 1) then
-								mysql:query_free("UPDATE characters SET car_license='" .. -hours .. "' WHERE id=" .. getElementData(targetPlayer, "dbid") .. " LIMIT 1")
+								mysql:query_free("UPDATE characters SET car_license='" .. mysql:escape_string(-hours) .. "' WHERE id=" .. mysql:escape_string(getElementData(targetPlayer, "dbid")) .. " LIMIT 1")
 								outputChatBox(name.." has revoked your driving license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s driving license.", thePlayer, 255, 194, 14)
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.car", -hours)
@@ -122,7 +122,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 							end
 						elseif (tonumber(licenseType)==2) then
 							if(tonumber(getElementData(targetPlayer, "license.gun")) == 1) then
-								mysql:query_free("UPDATE characters SET gun_license='" .. -hours .. "' WHERE id=" .. getElementData(targetPlayer, "dbid") .. " LIMIT 1")
+								mysql:query_free("UPDATE characters SET gun_license='" .. mysql:escape_string(-hours) .. "' WHERE id=" .. mysql:escape_string(getElementData(targetPlayer, "dbid")) .. " LIMIT 1")
 								outputChatBox(name.." has revoked your weapon license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s weapon license.", thePlayer, 255, 194, 14)
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.gun", -hours)

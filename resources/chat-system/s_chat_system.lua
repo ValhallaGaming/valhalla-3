@@ -456,7 +456,7 @@ function playerToggleOOC(thePlayer, commandName)
 			outputChatBox("You have now enabled Global OOC Chat.", thePlayer, 255, 194, 14)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "globalooc", 1, false)
 		end
-		mysql:query_free("UPDATE accounts SET globalooc=" .. getElementData(thePlayer, "globalooc") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid"))
+		mysql:query_free("UPDATE accounts SET globalooc=" .. mysql:escape_string(getElementData(thePlayer, "globalooc")) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")))
 	end
 end
 addCommandHandler("toggleooc", playerToggleOOC, false, false)
@@ -1058,7 +1058,7 @@ function playerChangeChatbubbleMode(thePlayer, commandName, mode)
 				outputChatBox("All chatbubbles are now visible.", thePlayer, 255, 194, 14)
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "chatbubbles", mode, false)
-			mysql:query_free("UPDATE accounts SET chatbubbles=" .. mode .. " WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
+			mysql:query_free("UPDATE accounts SET chatbubbles=" .. mysql:escape_string(mode) .. " WHERE id = " .. mysql:escape_string(getElementData( thePlayer, "gameaccountid" )) )
 		end
 	end
 end
@@ -1112,7 +1112,7 @@ function togglePM(thePlayer, commandName)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "pmblocked", 1, false)
 			outputChatBox("PM's are now disabled.", thePlayer, 255, 0, 0)
 		end
-		mysql:query_free("UPDATE accounts SET pmblocked=" .. getElementData(thePlayer, "pmblocked") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid"))
+		mysql:query_free("UPDATE accounts SET pmblocked=" .. mysql:escape_string(getElementData(thePlayer, "pmblocked")) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")))
 	end
 end
 addCommandHandler("togpm", togglePM)
@@ -1126,11 +1126,11 @@ function toggleAds(thePlayer, commandName)
 		if (adblocked) then -- enable the ads again
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "disableAds", false, false)
 			outputChatBox("Ads are now enabled.", thePlayer, 0, 255, 0)
-			mysql:query_free("UPDATE accounts SET adblocked=0 WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
+			mysql:query_free("UPDATE accounts SET adblocked=0 WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")) )
 		else -- disable them D:
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "disableAds", true, false)
 			outputChatBox("Ads are now disabled.", thePlayer, 255, 0, 0)
-			mysql:query_free("UPDATE accounts SET adblocked=1 WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
+			mysql:query_free("UPDATE accounts SET adblocked=1 WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")) )
 		end
 	end
 end
@@ -1380,7 +1380,7 @@ function togNews(thePlayer, commandName)
 			outputChatBox("/news enabled.", thePlayer, 255, 194, 14)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tognews", 0, false)
 		end
-		mysql:query_free("UPDATE accounts SET newsblocked=" .. getElementData(thePlayer, "tognews") .. " WHERE id = " .. getElementData(thePlayer, "gameaccountid") )
+		mysql:query_free("UPDATE accounts SET newsblocked=" .. mysql:escape_string(getElementData(thePlayer, "tognews")) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "gameaccountid")) )
 	end
 end
 addCommandHandler("tognews", togNews, false, false)

@@ -110,7 +110,7 @@ local function crushCar(thePlayer, matching)
 				if price and price > 0 then
 					local dbid = getElementData(theVehicle, "dbid")
 					
-					local result = mysql:query_free( "DELETE FROM vehicles WHERE id = " .. dbid )
+					local result = mysql:query_free( "DELETE FROM vehicles WHERE id = " .. mysql:escape_string(dbid) )
 					if result then
 						exports.global:giveMoney(thePlayer, price)
 						call( getResourceFromName( "item-system" ), "deleteAll", 3, dbid )

@@ -876,7 +876,7 @@ function deleteVehicle(thePlayer, commandName, id)
 					destroyElement(theVehicle)
 				else
 					if (exports.global:isPlayerLeadAdmin(thePlayer)) then
-						mysql:query_free("DELETE FROM vehicles WHERE id='" .. dbid .. "'")
+						mysql:query_free("DELETE FROM vehicles WHERE id='" .. mysql:escape_string(dbid) .. "'")
 						call( getResourceFromName( "item-system" ), "deleteAll", 3, dbid )
 						call( getResourceFromName( "item-system" ), "clearItems", theVehicle )
 						destroyElement(theVehicle)
@@ -907,7 +907,7 @@ function deleteThisVehicle(thePlayer, commandName)
 				outputChatBox("You are not in a vehicle.", thePlayer, 255, 0, 0)
 			else
 				if dbid > 0 then
-					mysql:query_free("DELETE FROM vehicles WHERE id='" .. dbid .. "'")
+					mysql:query_free("DELETE FROM vehicles WHERE id='" .. mysql:escape_string(dbid) .. "'")
 					call( getResourceFromName( "item-system" ), "deleteAll", 3, dbid )
 					call( getResourceFromName( "item-system" ), "clearItems", veh )
 					exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " deleted vehicle #" .. dbid .. ".")

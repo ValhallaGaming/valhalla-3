@@ -44,7 +44,7 @@ function withdrawMoneyPersonal(amount)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", money)
 		saveBank(source)
 		
-		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (0, " .. getElementData(source, "dbid") .. ", " .. -amount .. ", '', 0)" )
+		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (0, " .. mysql:escape_string(getElementData(source, "dbid")) .. ", " .. mysql:escape_string(-amount) .. ", '', 0)" )
 
 		outputChatBox("You withdraw " .. amount .. "$ from your personal account.", source, 255, 194, 14)
 	else
@@ -59,7 +59,7 @@ function depositMoneyPersonal(amount)
 		local money = getElementData(source, "bankmoney")
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", money+amount)
 		saveBank(source)
-		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(source, "dbid") .. ", 0, " .. amount .. ", '', 1)" )
+		mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. mysql:escape_string(getElementData(source, "dbid")) .. ", 0, " .. mysql:escape_string(amount) .. ", '', 1)" )
 		outputChatBox("You deposited " .. amount .. "$ into your personal account.", source, 255, 194, 14)
 	end
 end
@@ -70,7 +70,7 @@ function withdrawMoneyBusiness(amount)
 	local theTeam = getPlayerTeam(source)
 	if exports.global:takeMoney(theTeam, amount) then
 		if exports.global:giveMoney(source, amount) then
-			mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. -getElementData(theTeam, "id") .. ", " .. getElementData(source, "dbid") .. ", " .. amount .. ", '', 4)" ) 
+			mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. mysql:escape_string(-getElementData(theTeam, "id")) .. ", " .. mysql:escape_string(getElementData(source, "dbid")) .. ", " .. mysql:escape_string(amount) .. ", '', 4)" ) 
 			outputChatBox("You withdraw " .. amount .. "$ from your business account.", source, 255, 194, 14)
 		end
 	end
@@ -82,7 +82,7 @@ function depositMoneyBusiness(amount)
 	if exports.global:takeMoney(source, amount) then
 		local theTeam = getPlayerTeam(source)
 		if exports.global:giveMoney(theTeam, amount) then
-			mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(source, "dbid") .. ", " .. -getElementData(theTeam, "id") .. ", " .. amount .. ", '', 5)" )
+			mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. mysql:escape_string(getElementData(source, "dbid")) .. ", " .. mysql:escape_string(-getElementData(theTeam, "id")) .. ", " .. mysql:escape_string(amount) .. ", '', 5)" )
 			outputChatBox("You deposited " .. amount .. "$ into your business account.", source, 255, 194, 14)
 		end
 	end
@@ -116,7 +116,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 		if business then
 			local theTeam = getPlayerTeam(source)
 			if exports.global:takeMoney(theTeam, amount) then
-				mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. ( -getElementData( theTeam, "id" ) ) .. ", " .. dbid .. ", " .. amount .. ", '" .. reason .. "', 3)" )
+				mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. mysql:escape_string(( -getElementData( theTeam, "id" ) )) .. ", " .. mysql:escape_string(dbid) .. ", " .. mysql:escape_string(amount) .. ", '" .. mysql:escape_string(reason) .. "', 3)" )
 			end
 		else
 			if reciever == source then
@@ -125,7 +125,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 			end
 			if getElementData(source, "bankmoney") - amount >= 0 then
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "bankmoney", getElementData(source, "bankmoney") - amount)
-				mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(source, "dbid") .. ", " .. dbid .. ", " .. amount .. ", '" .. reason .. "', 2)" ) 
+				mysql:query_free("INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. mysql:escape_string(getElementData(source, "dbid")) .. ", " .. mysql:escape_string(dbid) .. ", " .. mysql:escape_string(amount) .. ", '" .. mysql:escape_string(reason) .. "', 2)" ) 
 			else
 				outputChatBox( "No.", source, 255, 0, 0 )
 				return
@@ -136,7 +136,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 			exports['anticheat-system']:changeProtectedElementDataEx(reciever, "bankmoney", getElementData(reciever, "bankmoney") + amount)
 			saveBank(reciever)
 		else
-			mysql:query_free("UPDATE characters SET bankmoney=bankmoney+" .. amount .. " WHERE id=" .. dbid)
+			mysql:query_free("UPDATE characters SET bankmoney=bankmoney+" .. mysql:escape_string(amount) .. " WHERE id=" .. mysql:escape_string(dbid))
 		end
 		triggerClientEvent(source, "hideBankUI", source)
 		outputChatBox("You transfered " .. amount .. "$ from your "..(business and "business" or "personal").." account to "..name..(string.sub(name,-1) == "s" and "'" or "'s").." account.", source, 255, 194, 14)
@@ -185,7 +185,7 @@ function tellTransfers(source, dbid, event)
 	-- `w.time` - INTERVAL 1 hour as 'newtime'
 	-- hour correction
 	
-	local query = mysql:query("SELECT w.*, a.charactername as characterfrom, b.charactername as characterto,w.`time` - INTERVAL 1 hour as 'newtime' FROM wiretransfers w LEFT JOIN characters a ON a.id = `from` LEFT JOIN characters b ON b.id = `to` WHERE " .. where .. " ORDER BY id DESC LIMIT 40")
+	local query = mysql:query("SELECT w.*, a.charactername as characterfrom, b.charactername as characterto,w.`time` - INTERVAL 1 hour as 'newtime' FROM wiretransfers w LEFT JOIN characters a ON a.id = `from` LEFT JOIN characters b ON b.id = `to` WHERE " .. mysql:escape_string(where) .. " ORDER BY id DESC LIMIT 40")
 	if query then
 		local continue = true
 		while continue do
@@ -247,6 +247,6 @@ addEventHandler("tellTransfersBusiness", getRootElement(), tellTransfersBusiness
 
 function saveBank( thePlayer )
 	if getElementData( thePlayer, "loggedin" ) == 1 then
-		mysql:query_free("UPDATE characters SET bankmoney=" .. (tonumber(getElementData( thePlayer, "bankmoney" )) or 0) .. " WHERE id=" .. getElementData( thePlayer, "dbid" ))
+		mysql:query_free("UPDATE characters SET bankmoney=" .. mysql:escape_string((tonumber(getElementData( thePlayer, "bankmoney" )) or 0)) .. " WHERE id=" .. mysql:escape_string(getElementData( thePlayer, "dbid" )))
 	end
 end

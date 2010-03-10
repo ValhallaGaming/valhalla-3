@@ -129,7 +129,7 @@ function createFuelPoint(thePlayer, commandName)
 		local dimension = getElementDimension(thePlayer)
 		local interior = getElementInterior(thePlayer)
 		
-		local id = mysql:query_insert_free("INSERT INTO fuelstations SET x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', interior='" .. interior .. "', dimension='" .. dimension .. "'")
+		local id = mysql:query_insert_free("INSERT INTO fuelstations SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', interior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "'")
 		if (id) then
 			local theSphere = createColSphere(x, y, z, 20)
 			exports.pool:allocateElement(theSphere)
@@ -442,7 +442,7 @@ function delFuelPoint(thePlayer, commandName)
 			if (shapeType) then
 				if (shapeType=="fuel") then
 					local id = getElementData(colShape, "dbid")
-					local result = mysql:query_free("DELETE FROM fuelstations WHERE id='" .. id .. "'")				
+					local result = mysql:query_free("DELETE FROM fuelstations WHERE id='" .. mysql:escape_string(id) .. "'")				
 					outputChatBox("Fuel station #" .. id .. " deleted.", thePlayer)
 					exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " deleted fuel station #" .. id .. ".")
 					destroyElement(colShape)

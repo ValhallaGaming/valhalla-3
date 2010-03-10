@@ -7,7 +7,7 @@ function createATM(thePlayer, commandName)
 		
 		z = z - 0.3
 		
-		local id = mysql:query_insert_free("INSERT INTO atms SET x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', dimension='" .. dimension .. "', interior='" .. interior .. "', rotation='" .. rotation .. "',`limit`=5000")
+		local id = mysql:query_insert_free("INSERT INTO atms SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', dimension='" .. mysql:escape_string(dimension) .. "', interior='" .. mysql:escape_string(interior) .. "', rotation='" .. mysql:escape_string(rotation) .. "',`limit`=5000")
 				
 		if (id) then
 			local object = createObject(2942, x, y, z, 0, 0, rotation-180)
@@ -94,7 +94,7 @@ function deleteATM(thePlayer, commandName, id)
 			end
 			
 			if (counter>0) then -- ID Exists
-				local query = mysql:query_free("DELETE FROM atms WHERE id='" .. id .. "'")
+				local query = mysql:query_free("DELETE FROM atms WHERE id='" .. mysql:escape_string(id) .. "'")
 				
 				outputChatBox("ATM #" .. id .. " Deleted!", thePlayer, 0, 255, 0)
 				exports.irc:sendMessage(getPlayerName(thePlayer) .. " deleted ATM #" .. id .. ".")

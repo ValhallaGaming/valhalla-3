@@ -3,7 +3,7 @@ function startFishing(thePlayer)
 	if (isElement(thePlayer)) then
 		local logged = getElementData(thePlayer, "loggedin")
 		if (logged==1) then
-			local result = mysql:query_fetch_assoc("SELECT fish FROM characters WHERE id=" .. getElementData(thePlayer, "dbid"))
+			local result = mysql:query_fetch_assoc("SELECT fish FROM characters WHERE id=" .. mysql:escape_string(getElementData(thePlayer, "dbid")))
 			local oldcatch = tonumber(result["fish"])
 
 			if not (thePlayer) then
@@ -47,7 +47,7 @@ function catchFish(fishSize, totalCatch)
 	if (fishSize >= 100) then
 		exports.global:givePlayerAchievement(source, 35)
 	end
-	mysql:query_free("UPDATE characters SET fish=" .. tonumber(totalCatch) .. " WHERE id=" .. getElementData(source, "dbid"))
+	mysql:query_free("UPDATE characters SET fish=" .. mysql:escape_string(tonumber(totalCatch)) .. " WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
 end
 addEvent("catchFish", true)
 addEventHandler("catchFish", getRootElement(), catchFish)
@@ -56,14 +56,14 @@ addEventHandler("catchFish", getRootElement(), catchFish)
 function unloadCatch( totalCatch, profit)
 	exports.global:sendLocalMeAction(source,"sells " .. totalCatch .."lbs of fish.")
 	exports.global:giveMoney(source, profit)
-	mysql:query_free("UPDATE characters SET fish=0 WHERE id=" .. getElementData(source, "dbid"))
+	mysql:query_free("UPDATE characters SET fish=0 WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
 end
 addEvent("sellcatch", true)
 addEventHandler("sellcatch", getRootElement(), unloadCatch)
 
 ------- give a hint when logging on
 function fishingNotice()
-	local result = mysql:query_fetch_assoc("SELECT fish FROM characters WHERE id=" .. getElementData(source, "dbid"))
+	local result = mysql:query_fetch_assoc("SELECT fish FROM characters WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
 	local catch = tonumber(result["fish"])
 	
 	if catch > 0 then
