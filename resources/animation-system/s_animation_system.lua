@@ -41,7 +41,7 @@ addEventHandler("unbindAnimationStopKey", getRootElement(), unbindAnimationStopK
 function stopAnimation(thePlayer)
 	local forcedanimation = getElementData(thePlayer, "forcedanimation")
 	
-	if not (forcedanimation) then
+	if not (forcedanimation==1) then
 		exports.global:removeAnimation(thePlayer)
 		triggerEvent("unbindAnimationStopKey", thePlayer)
 	end
