@@ -27,25 +27,6 @@ function encryptSerial(str)
 	return rhash
 end
 
-function UserAccountLoggedOut()
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountloggedin", 0, true)
-end
-addEvent("account:loggedout", true)
-addEventHandler("account:loggedout", getRootElement(), UserAccountLoggedOut)
-
-function UserLoggedOut()
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 0, true)
-end
-addEvent("player:loggedout", true)
-addEventHandler("player:loggedout", getRootElement(), UserLoggedOut)
-
-function UserLoggedOutAll()
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 0, true)
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountloggedin", 0, true)
-end
-addEvent("accountplayer:loggedout", true)
-addEventHandler("accountplayer:loggedout", getRootElement(), UserLoggedOutAll)
-
 function resourceStart()
 	setGameType("Roleplay")
 	setMapName("Valhalla Gaming: Los Santos")
