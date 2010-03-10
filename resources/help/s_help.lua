@@ -25,7 +25,7 @@ function toggleHelp( thePlayer, commandName )
 			setCameraInterior( thePlayer, interior + 1 )
 			setCameraInterior( thePlayer, interior )
 			
-			removeElementData( thePlayer, "help" )
+			exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "help" )
 			
 			-- show the radar, zone name and chat again
 			showPlayerHudComponent( thePlayer, "radar", true )

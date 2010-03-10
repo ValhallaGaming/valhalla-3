@@ -41,7 +41,7 @@ function restoreWeapons( thePlayer )
 		for k, v in pairs( weapons ) do
 			exports.global:giveWeapon(thePlayer,k,v)
 		end
-		removeElementData(thePlayer, "dutyguns")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "dutyguns")
 	end
 end
 

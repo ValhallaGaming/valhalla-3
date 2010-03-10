@@ -219,7 +219,7 @@ function publicSellProperty(thePlayer, dbid, showmessages, givemoney)
 			
 			setElementDimension(thePlayer, getElementDimension(entrance))
 			setElementPosition(thePlayer, getElementPosition(entrance))
-			removeElementData(thePlayer, "interiormarker")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "interiormarker")
 		end
 
 		if safeTable[dbid] then
@@ -357,7 +357,7 @@ function deleteInterior(thePlayer, commandName)
 						setCameraInterior( value, getElementInterior( entrance ) )
 						setElementDimension( value, getElementDimension( entrance ) )
 						setElementPosition( value, getElementPosition( entrance ) )
-						removeElementData( value, "interiormarker" )
+						exports['anticheat-system']:changeProtectedElementDataEx( value, "interiormarker" )
 						
 						triggerEvent("onPlayerInteriorChange", value, exit, entrance)
 					end
@@ -490,7 +490,7 @@ end
 function loadAllInteriors()
 	local players = exports.pool:getPoolElementsByType("player")
 	for k, thePlayer in ipairs(players) do
-		removeElementData(thePlayer, "interiormarker")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "interiormarker")
 	end
 		
 	local result = mysql_unbuffered_query(handler, "SELECT id FROM interiors")
@@ -574,7 +574,7 @@ function unbindKeys(player, pickup)
 			unbindKey(player, "f", "down", func, player, pickup)
 		end
 		
-		removeElementData( player, "interiormarker" )
+		exports['anticheat-system']:changeProtectedElementDataEx( player, "interiormarker" )
 		triggerClientEvent( player, "displayInteriorName", player )
 	end
 end

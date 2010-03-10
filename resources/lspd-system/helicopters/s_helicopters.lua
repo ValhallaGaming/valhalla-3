@@ -29,7 +29,7 @@ function unsitInHelicopter(vehicle)
 				end
 			end
 			
-			removeElementData(source, "seat")
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "seat")
 			detachElements(source, vehicle)
 			exports.global:removeAnimation(source)
 		elseif (seat) and (seat>0) then
@@ -41,7 +41,7 @@ function unsitInHelicopter(vehicle)
 				end
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "players", players, false)
-			removeElementData(source, "seat")
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "seat")
 			detachElements(source, vehicle)
 			exports.global:removeAnimation(source)
 		end

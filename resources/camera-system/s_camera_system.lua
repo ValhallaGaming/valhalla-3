@@ -39,7 +39,7 @@ function stopMonitorSpeed(element, matchingDimension)
 			if isTimer( timer ) then
 				killTimer( timer )
 			end
-			removeElementData( thePlayer, "cameratimer" )
+			exports['anticheat-system']:changeProtectedElementDataEx( thePlayer, "cameratimer" )
 		end
 	end
 end
@@ -53,7 +53,7 @@ function checkSpeed(vehicle, player, colshape)
 			local timer = getElementData(player, "cameratimer")
 			if timer then
 				killTimer(timer)
-				removeElementData(player, "cameratimer")
+				exports['anticheat-system']:changeProtectedElementDataEx(player, "cameratimer")
 			end
 			setTimer(sendWarningToCops, 1000, 1, vehicle, player, colshape, x, y, z, speed)
 		end

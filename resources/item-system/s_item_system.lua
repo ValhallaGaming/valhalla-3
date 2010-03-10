@@ -236,7 +236,7 @@ function useItem(itemSlot, additional)
 				local name = string.gsub(getPlayerName(source), "_", " ")
 				setPlayerNametagText(source, tostring(name))
 
-				removeElementData(source, "gasmask")
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask")
 			end
 		elseif (itemID==27) then -- FLASHBANG
 			takeItemFromSlot(source, itemSlot)
@@ -403,19 +403,19 @@ function useItem(itemSlot, additional)
 			setElementHealth(source,getElementHealth(source)-10)
 		elseif (itemID==64) then -- PD Badge
 			if(getElementData(source,"PDbadge")==1)then
-				removeElementData(source,"PDbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 				exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 			else
 				if(getElementData(source,"ESbadge")==1)then
-					removeElementData(source,"ESbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
 				end
 				if(getElementData(source,"GOVbadge")==1)then
-					removeElementData(source,"GOVbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 				end
 				if(getElementData(source,"SANbadge")==1)then
-					removeElementData(source,"SANbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
 				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge", 1, false)
@@ -424,19 +424,19 @@ function useItem(itemSlot, additional)
 			exports.global:updateNametagColor(source)
 		elseif (itemID==65) then -- ES ID Card
 			if(getElementData(source,"ESbadge")==1)then
-				removeElementData(source,"ESbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 				exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")			
 			else
 				if(getElementData(source,"PDbadge")==1)then
-					removeElementData(source,"PDbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 				end
 				if(getElementData(source,"GOVbadge")==1)then
-					removeElementData(source,"GOVbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 				end
 				if(getElementData(source,"SANbadge")==1)then
-					removeElementData(source,"SANbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
 				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge", 1, false)
@@ -524,19 +524,19 @@ function useItem(itemSlot, additional)
 			takeItemFromSlot(source, itemSlot)
 		elseif (itemID==86) then -- SAN ID
 			if(getElementData(source,"SANbadge")==1)then
-				removeElementData(source,"SANbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 				exports.global:sendLocalMeAction(source, "removes a SAN ID.")			
 			else
 				if(getElementData(source,"PDbadge")==1)then
-					removeElementData(source,"PDbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 				end
 				if(getElementData(source,"ESbadge")==1)then
-					removeElementData(source,"ESbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
 				end
 				if(getElementData(source,"GOVbadge")==1)then
-					removeElementData(source,"GOVbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 				end
 				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge", 1, false)
@@ -545,19 +545,19 @@ function useItem(itemSlot, additional)
 			exports.global:updateNametagColor(source)
 		elseif (itemID==87) then -- Gov badge
 			if(getElementData(source,"GOVbadge")==1)then
-				removeElementData(source,"GOVbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 				exports.global:sendLocalMeAction(source, "removes a Government Badge.")			
 			else
 				if(getElementData(source,"PDbadge")==1)then
-					removeElementData(source,"PDbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 				end
 				if(getElementData(source,"ESbadge")==1)then
-					removeElementData(source,"ESbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
 				end
 				if(getElementData(source,"SANbadge")==1)then
-					removeElementData(source,"SANbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				end
 				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge", 1, false)
@@ -758,19 +758,19 @@ function destroyItem(itemID)
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET skin = " .. getElementModel( source ) .. " WHERE id = " .. getElementData( source, "dbid" ) ) )
 				mysql_free_result(result)
 			elseif tonumber(itemID) == 64 and not exports.global:hasItem(source, 64) then
-				removeElementData(source,"PDbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 				exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 				exports.global:updateNametagColor(source)
 			elseif  tonumber(itemID) == 65 and not exports.global:hasItem(source, 65)then
-				removeElementData(source,"ESbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 				exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
 				exports.global:updateNametagColor(source)
 			elseif  tonumber(itemID) == 86 and not hasItem(source, 86)then
-				removeElementData(source,"SANbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 				exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 				exports.global:updateNametagColor(source)
 			elseif tonumber(itemID) == 87 and not hasItem(source, 87) then
-				removeElementData(source,"GOVbadge")
+				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 				exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 				exports.global:updateNametagColor(source)
 			elseif tonumber(itemID) == 76 and not exports.global:hasItem(source, 76) then
@@ -893,19 +893,19 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 					end
 					mysql_free_result(result)
 				elseif tonumber(itemID) == 64 and not hasItem(source, 64) then
-					removeElementData(source,"PDbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
 					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
 					exports.global:updateNametagColor(source)
 				elseif  tonumber(itemID) == 65 and not hasItem(source, 65)then
-					removeElementData(source,"ESbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
 					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
 					exports.global:updateNametagColor(source)
 				elseif  tonumber(itemID) == 86 and not hasItem(source, 86)then
-					removeElementData(source,"SANbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
 					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
 					exports.global:updateNametagColor(source)
 				elseif tonumber(itemID) == 87 and not hasItem(source, 87) then
-					removeElementData(source,"GOVbadge")
+					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
 					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
 					exports.global:updateNametagColor(source)
 				elseif tonumber(itemID)== 76 and not exports.global:hasItem(source, 76) then

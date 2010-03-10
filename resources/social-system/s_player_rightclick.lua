@@ -112,8 +112,8 @@ function unrestrainPlayer(player, restrainedObj)
 	setTimer(toggleCuffs, 200, 1, false, player)
 	
 	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrain", 0)
-	removeElementData(player, "restrainedBy")
-	removeElementData(player, "restrainedObj")
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedBy")
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "restrainedObj")
 	
 	local dbid = getElementData(player, "dbid")
 	if (restrainedObj==45) then -- If handcuffs.. take the key
@@ -151,7 +151,7 @@ function removeblindfoldPlayer(player)
 	outputChatBox("You removed " .. targetPlayerName .. "'s blindfold.", source)
 	
 	exports.global:giveItem(source, 66, 1) -- give the remove the blindfold
-	removeElementData(player, "blindfold")
+	exports['anticheat-system']:changeProtectedElementDataEx(player, "blindfold")
 	mysql:query_free("UPDATE characters SET blindfold = 0 WHERE id = " .. mysql:escape_string(getElementData( player, "dbid" )) )
 	fadeCamera(player, true)
 end

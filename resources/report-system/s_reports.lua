@@ -4,8 +4,8 @@ reports = { }
 
 function resourceStart(res)
 	for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
-		removeElementData(value, "report")
-		removeElementData(value, "reportadmin")
+		exports['anticheat-system']:changeProtectedElementDataEx(value, "report")
+		exports['anticheat-system']:changeProtectedElementDataEx(value, "reportadmin")
 	end
 end
 addEventHandler("onResourceStart", getResourceRootElement(), resourceStart)
@@ -170,8 +170,8 @@ function playerQuit()
 				local reporter = reports[i][1]
 				if reporter ~= source then
 					outputChatBox("Your report #" .. i .. " has been closed (" .. getPlayerName(source) .. " left the game)", reporter, 255, 194, 14)
-					removeElementData(reporter, "report")
-					removeElementData(reporter, "reportadmin")
+					exports['anticheat-system']:changeProtectedElementDataEx(reporter, "report")
+					exports['anticheat-system']:changeProtectedElementDataEx(reporter, "reportadmin")
 				end
 				
 				local alertTimer = reports[i][6]
@@ -243,7 +243,7 @@ function handleReport(reportedPlayer, reportedReason)
 	local reportedID = getElementData(reportedPlayer, "playerid")
 	
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "report", slot)
-	removeElementData(source, "reportadmin")
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "reportadmin")
 	
 	local admins = exports.global:getAdmins()
 	local count = 0
@@ -316,8 +316,8 @@ function pendingReportTimeout(id)
 		
 		reports[id] = nil -- Destroy any reports made by the player
 		
-		removeElementData(reportingPlayer, "report")
-		removeElementData(reportingPlayer, "reportadmin")
+		exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "report")
+		exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "reportadmin")
 		
 		local hours, minutes = getTime()
 		
@@ -390,8 +390,8 @@ function falseReport(thePlayer, commandName, id)
 					
 					local timestring = hours .. ":" .. minutes
 					
-					removeElementData(reportingPlayer, "report")
-					removeElementData(reportingPlayer, "reportadmin")
+					exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "report")
+					exports['anticheat-system']:changeProtectedElementDataEx(reportingPlayer, "reportadmin")
 					outputChatBox("[" .. timestring .. "] Your report (#" .. id .. ") was marked as false by " .. getPlayerName(thePlayer) .. ".", reportingPlayer, 255, 194, 14)
 					
 					local admins = exports.global:getAdmins()
@@ -504,8 +504,8 @@ function closeReport(thePlayer, commandName, id)
 				reports[id] = nil
 
 				if (isElement(reporter)) then
-					removeElementData(reporter, "report")
-					removeElementData(reporter, "reportadmin")
+					exports['anticheat-system']:changeProtectedElementDataEx(reporter, "report")
+					exports['anticheat-system']:changeProtectedElementDataEx(reporter, "reportadmin")
 					outputChatBox(getPlayerName(thePlayer) .. " has closed your report. Please re-submit your report if you weren't happy that it was resolved.", reporter, 0, 255, 255)
 				end
 				
@@ -557,8 +557,8 @@ function endReport(thePlayer, commandName)
 		end
 
 		reports[report] = nil
-		removeElementData(thePlayer, "report")
-		removeElementData(thePlayer, "reportadmin")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "report")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reportadmin")
 		
 		outputChatBox("[" .. timestring .. "] You have closed your report (#" .. report .. ").", thePlayer, 255, 194, 14)
 		

@@ -167,7 +167,7 @@ function unbindKeys(player, pickup)
 			unbindKey(player, "f", "down", func, player, pickup)
 		end
 		
-		removeElementData( player, "interiormarker" )
+		exports['anticheat-system']:changeProtectedElementDataEx( player, "interiormarker" )
 		triggerClientEvent( player, "displayInteriorName", player )
 	end
 end
@@ -295,7 +295,7 @@ function enterElevator(player, pickup)
 					setTimer(setVehicleTurnVelocity, 50, 2, vehicle, 0, 0, 0)
 					
 					setElementHealth(vehicle, getElementData(vehicle, "health"))
-					removeElementData(vehicle, "health")
+					exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "health")
 					
 					setVehicleFrozen(vehicle, true)
 					setTimer(setVehicleFrozen, 333, 1, vehicle, false)

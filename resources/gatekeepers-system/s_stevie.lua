@@ -484,7 +484,7 @@ function giveGoods(thePlayer)
 		outputChatBox("((Wait while the vehicle is loaded with the items.))", thePlayer)
 		local x,y,z = getElementPosition(veh)
 		collectionCol = createColSphere(x, y, z, 5)
-		removeElementData(thePlayer, "stevie.money")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "stevie.money")
 		exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." starts loading stuff from deal no " .. deal , 25)
 	end
 end
@@ -552,7 +552,7 @@ function endCall(thePlayer) -- to cancel the phone animation and reset the phone
 	end
 	exports.global:removeAnimation(thePlayer)
 	toggleAllControls(thePlayer, true, true, true)
-	removeElementData(thePlayer, "calling")
+	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
 	if not exports.global:isPlayerSilverDonator(thePlayer) then
 		exports.global:takeMoney(thePlayer, 10, true)
 	end

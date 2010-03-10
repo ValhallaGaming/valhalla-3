@@ -21,7 +21,7 @@ addEventHandler( "onColShapeHit", cOutsideCol, showInformation)
 local function resetPrice(theVehicle, matching)
 	if isElement(theVehicle) and matching and getElementType(theVehicle) == "vehicle" then
 		if getElementData(theVehicle, "crushing") then
-			removeElementData(theVehicle, "crushing")
+			exports['anticheat-system']:changeProtectedElementDataEx(theVehicle, "crushing")
 			
 			local thePlayer = getVehicleOccupant(theVehicle)
 			if thePlayer then

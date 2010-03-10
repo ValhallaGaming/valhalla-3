@@ -606,7 +606,7 @@ function destroyTyre(veh)
 		tyre3 = 0
 	end
 	
-	removeElementData(veh, "tyretimer")
+	exports['anticheat-system']:changeProtectedElementDataEx(veh, "tyretimer")
 	setVehicleWheelStates(veh, tyre1, tyre2, tyre3, tyre4)
 end
 
@@ -1168,7 +1168,7 @@ function setVehiclePosition(thePlayer, commandName)
 						exports.global:giveMoney(getTeamFromName("Best's Towing and Recovery"), 75)
 						exports.global:takeMoney(getTeamFromName("Los Santos Police Department"), 75)
 					end
-					removeElementData(veh, "requires.vehpos")
+					exports['anticheat-system']:changeProtectedElementDataEx(veh, "requires.vehpos")
 					local rx, ry, rz = getVehicleRotation(veh)
 					
 					local interior = getElementInterior(thePlayer)
@@ -1214,7 +1214,7 @@ function setVehiclePosition2(thePlayer, commandName, vehicleID)
 		else
 			local veh = exports.pool:getElement("vehicle", vehicleID)
 			if veh then
-				removeElementData(veh, "requires.vehpos")
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "requires.vehpos")
 				local x, y, z = getElementPosition(veh)
 				local rx, ry, rz = getVehicleRotation(veh)
 				
@@ -1277,7 +1277,7 @@ function setVehiclePosition3(veh)
 					exports.global:giveMoney(getTeamFromName("Best's Towing and Recovery"), 75)
 					exports.global:takeMoney(getTeamFromName("Los Santos Police Department"), 75)
 				end
-				removeElementData(veh, "requires.vehpos")
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "requires.vehpos")
 				local rx, ry, rz = getVehicleRotation(veh)
 				
 				local interior = getElementInterior(source)

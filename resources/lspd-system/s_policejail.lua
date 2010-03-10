@@ -89,8 +89,8 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 								toggleControl(targetPlayer, "accelerate", true)
 								toggleControl(targetPlayer, "brake_reverse", true)
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "restrain", 0)
-								removeElementData(targetPlayer, "restrainedBy")
-								removeElementData(targetPlayer, "restrainedObj")
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "restrainedBy")
+								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "restrainedObj")
 								if restrainedObj == 45 then -- If handcuffs.. take the key
 									local dbid = getElementData(targetPlayer, "dbid")
 									exports['item-system']:deleteAll(47, dbid)
@@ -170,8 +170,8 @@ function timerPDUnjailPlayer(jailedPlayer)
 				
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
-			removeElementData(jailedPlayer, "pd.jailtimer")
-			removeElementData(jailedPlayer, "pd.jailstation")
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
 			
 			toggleControl(jailedPlayer,'next_weapon',true)
 			toggleControl(jailedPlayer,'previous_weapon',true)

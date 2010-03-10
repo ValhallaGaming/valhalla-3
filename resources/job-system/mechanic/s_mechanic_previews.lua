@@ -21,7 +21,7 @@ function endColorPreview( veh )
 		local colors = getElementData( veh, "oldcolors" )
 		if colors then
 			setVehicleColor( veh, unpack( colors ) )
-			removeElementData( veh, "oldcolors" )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldcolors" )
 		end
 	end
 end
@@ -53,12 +53,12 @@ function endPaintjobPreview( veh )
 		local paintjob = getElementData( veh, "oldpaintjob" )
 		if paintjob then
 			setVehiclePaintjob( veh, paintjob )
-			removeElementData( veh, "oldpaintjob" )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldpaintjob" )
 		end
 		local colors = getElementData( veh, "oldcolors" )
 		if colors then
 			setVehicleColor( veh, unpack( colors ) )
-			removeElementData( veh, "oldcolors" )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldcolors" )
 		end
 	end
 end
@@ -87,7 +87,7 @@ function endUpgradePreview( veh, slot )
 			else
 				addVehicleUpgrade( veh, upgrade )
 			end
-			removeElementData( veh, "oldupgrade" .. slot )
+			exports['anticheat-system']:changeProtectedElementDataEx( veh, "oldupgrade" .. slot )
 		end
 	end
 end

@@ -220,10 +220,10 @@ function spawnCharacter(charname, version)
 		local donator = getElementData(source, "donator")
 		
 		-- remove all custom badges
-		removeElementData(source, "PDbadge")
-		removeElementData(source, "ESbadge")
-		removeElementData(source, "GOVbadge")
-		removeElementData(source, "SANbadge")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "PDbadge")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "ESbadge")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "GOVbadge")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "SANbadge")
 		
 		exports.global:updateNametagColor(source)
 		setPlayerNametagShowing(source, false)
@@ -266,10 +266,10 @@ function spawnCharacter(charname, version)
 			killTimer(timer)
 		end
 		
-		removeElementData(source, "pd.jailserved")
-		removeElementData(source, "pd.jailtime")
-		removeElementData(source, "pd.jailtimer")
-		removeElementData(source, "pd.jailstation")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailserved")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtime")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtimer")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailstation")
 		
 		-- ADMIN JAIL
 		local jailed = getElementData(source, "adminjailed")
@@ -584,11 +584,11 @@ function timerUnjailPlayer(jailedPlayer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime", timeLeft)
 			if (timeLeft<=0) then
 				mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. mysql:escape_string(accountID) .. "'")
-				removeElementData(jailedPlayer, "jailtimer")
-				removeElementData(jailedPlayer, "adminjailed")
-				removeElementData(jailedPlayer, "jailreason")
-				removeElementData(jailedPlayer, "jailtime")
-				removeElementData(jailedPlayer, "jailadmin")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtimer")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "adminjailed")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailreason")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailadmin")
 				setElementPosition(jailedPlayer, 1519.7177734375, -1697.8154296875, 13.546875)
 				setPedRotation(jailedPlayer, 269.92446899414)
 				setElementDimension(jailedPlayer, 0)
@@ -1123,7 +1123,7 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 			exports.global:giveItem( source, 16, skin )
 			exports.global:giveItem( source, 17, 1 )
 			exports.global:giveItem( source, 18, 1 )
-			removeElementData(source, "dbid")
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid")
 			
 			-- CELL PHONE			
 			local cellnumber = id+15000
@@ -1223,7 +1223,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 			if isTimer(theTimer) then
 				killTimer(theTimer)	
 			end
-			removeElementData(jailedPlayer, "pd.jailtimer")
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
 			return
 		end
 		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", timeServed+1, false)
@@ -1244,8 +1244,8 @@ function timerPDUnjailPlayer(jailedPlayer)
 				
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
-			removeElementData(jailedPlayer, "pd.jailtimer")
-			removeElementData(jailedPlayer, "pd.jailstation")
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
 			fadeCamera(jailedPlayer, true)
 			outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
 		elseif (timeLeft>0) then

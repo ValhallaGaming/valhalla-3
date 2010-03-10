@@ -31,7 +31,7 @@ function checkFalling(thePlayer)
 	local reloading = getElementData(thePlayer, "reloading")
 	if not (isPedOnGround(thePlayer)) and (reloading) then
 		-- reset state
-		removeElementData(thePlayer, "reloading.timer")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reloading.timer")
 		exports.global:removeAnimation(thePlayer)
 		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reloading", false, false)
 		toggleControl(thePlayer, "fire", true)
@@ -42,7 +42,7 @@ end
 
 function giveReload(thePlayer, weapon, ammo)
 	local clipsize = 0
-	removeElementData(thePlayer, "reloading.timer")
+	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reloading.timer")
 	exports.global:removeAnimation(thePlayer)
 	if (ammo < clipSize[weapon]) then
 		clipsize = ammo

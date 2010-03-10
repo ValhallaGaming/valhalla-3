@@ -23,7 +23,7 @@ addEventHandler( "onResourceStop", getResourceRootElement( ),
 	function( )
 		for key, value in ipairs( getElementsByType( "vehicle" ) ) do
 			if getElementData( value, "entrance" ) then
-				removeElementData( value, "entrance" )
+				exports['anticheat-system']:changeProtectedElementDataEx( value, "entrance" )
 			end
 		end
 	end

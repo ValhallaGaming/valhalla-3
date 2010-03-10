@@ -2,7 +2,7 @@ function toggleLaser(thePlayer)
 	local laser = getElementData(thePlayer, "laser")
 	
 	if (laser) then
-		removeElementData(thePlayer, "laser")
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "laser")
 		outputChatBox("Your weapon laser is now ON.",thePlayer, 0, 255, 0)
 	else
 		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "laser", 0, true)

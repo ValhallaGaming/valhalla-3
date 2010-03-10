@@ -139,7 +139,7 @@ addCommandHandler( "fakeinjury",
 function stabilize()
 	if playerInjuries[source] and not isPedHeadless(source) then
 		if playerInjuries[source]['knockout'] then
-			removeElementData(source, "injuriedanimation")
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "injuriedanimation")
 			if isTimer(playerInjuries[source]['knockout']) then
 				killTimer(playerInjuries[source]['knockout'])
 				playerInjuries[source]['knockout'] = nil
@@ -205,7 +205,7 @@ addEventHandler( "onPlayerExamine", getRootElement(), examine )
 function healInjuries(healed)
 	if playerInjuries[source] and not isPedHeadless(source) then
 		if playerInjuries[source]['knockout'] then
-			removeElementData(source, "injuriedanimation")
+			exports['anticheat-system']:changeProtectedElementDataEx(source, "injuriedanimation")
 			if isTimer(playerInjuries[source]['knockout']) then
 				killTimer(playerInjuries[source]['knockout'])
 				playerInjuries[source]['knockout'] = nil

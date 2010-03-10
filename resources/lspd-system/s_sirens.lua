@@ -1,4 +1,4 @@
 function vehicleBlown()
-	removeElementData(source, "siren")
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "siren")
 end
 addEventHandler("onVehicleRespawn", getRootElement(), vehicleBlown)

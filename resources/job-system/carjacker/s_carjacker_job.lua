@@ -102,7 +102,7 @@ function dropOffCar()
 				else
 					destroyElement(vehicle)
 				end
-				removeElementData(thePlayer, "missionModel")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "missionModel")
 				triggerClientEvent(thePlayer, "jackerCleanup", thePlayer)
 			end
 		end

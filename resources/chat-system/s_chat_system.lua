@@ -84,7 +84,7 @@ function advertMessage(thePlayer, commandName, showNumber, ...)
 								if c > 1 then
 									exports['anticheat-system']:changeProtectedElementDataEx(p, "ads", c-1, false)
 								else
-									removeElementData(p, "ads")
+									exports['anticheat-system']:changeProtectedElementDataEx(p, "ads")
 								end
 							end
 						end, 300000, 1, thePlayer
@@ -1438,7 +1438,7 @@ function endInterview(thePlayer, commandName, targetPartialPlayer)
 						if not(getElementData(targetPlayer,"interview"))then
 							outputChatBox("This player is not being interviewed.", thePlayer, 255, 0, 0)
 						else
-							removeElementData(targetPlayer, "interview")
+							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "interview")
 							local playerName = getPlayerName(thePlayer)
 							outputChatBox(playerName .." has ended your interview.", targetPlayer, 255, 0, 0)
 						
@@ -1605,7 +1605,7 @@ function bigEars(thePlayer, commandName, targetPlayerNick)
 		if not current and not targetPlayerNick then
 			outputChatBox("SYNTAX: /" .. commandName .. " [player]", thePlayer, 255, 194, 14)
 		elseif current and not targetPlayerNick then
-			removeElementData(thePlayer, "bigears")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "bigears")
 			outputChatBox("Big Ears turned off.", thePlayer, 255, 0, 0)
 		else
 			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, targetPlayerNick)
@@ -1623,7 +1623,7 @@ addCommandHandler("bigears", bigEars)
 function removeBigEars()
 	for key, value in pairs( getElementsByType( "player" ) ) do
 		if isElement( value ) and getElementData( value, "bigears" ) == source then
-			removeElementData( value, "bigears" )
+			exports['anticheat-system']:changeProtectedElementDataEx( value, "bigears" )
 			outputChatBox("Big Ears turned off (Player Left).", value, 255, 0, 0)
 		end
 	end
@@ -1637,7 +1637,7 @@ function bigEarsFaction(thePlayer, commandName, factionID)
 		if not current and not factionID then
 			outputChatBox("SYNTAX: /" .. commandName .. " [faction id]", thePlayer, 255, 194, 14)
 		elseif current and not factionID then
-			removeElementData(thePlayer, "bigearsfaction")
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "bigearsfaction")
 			outputChatBox("Big Ears turned off.", thePlayer, 255, 0, 0)
 		else
 			local team = exports.pool:getElement("team", factionID)

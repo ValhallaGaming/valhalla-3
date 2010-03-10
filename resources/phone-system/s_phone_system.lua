@@ -382,23 +382,23 @@ function hangupPhone(thePlayer, commandName)
 							end
 						end
 					end
-					removeElementData(calling, "calling")
+					exports['anticheat-system']:changeProtectedElementDataEx(calling, "calling")
 					if (isElement(calling)) then
 						outputChatBox("They hung up.", calling)
 					end
-					removeElementData(calling, "caller")
-					removeElementData(calling, "call.col")
+					exports['anticheat-system']:changeProtectedElementDataEx(calling, "caller")
+					exports['anticheat-system']:changeProtectedElementDataEx(calling, "call.col")
 					exports['anticheat-system']:changeProtectedElementDataEx(calling, "phonestate", 0, false)
 					exports.global:applyAnimation(calling, "ped", "phone_out", 1300, false)
 					setTimer(toggleAllControls, 150, 1, calling, true, true, true)
 				end
 				
-				removeElementData(thePlayer, "calling")
-				removeElementData(thePlayer, "caller")
-				removeElementData(thePlayer, "callprogress")
-				removeElementData(thePlayer, "call.situation")
-				removeElementData(thePlayer, "call.location")
-				removeElementData(thePlayer, "call.col")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "caller")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.situation")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location")
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.col")
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 				exports.global:sendLocalMeAction(thePlayer, "hangs up their phone.")
 				
@@ -510,10 +510,10 @@ function talkPhone(thePlayer, commandName, ...)
 									outputChatBox("[RADIO] Location: '" .. tostring(location) .. "', Over. ((" .. getPlayerName(thePlayer):gsub("_"," ") .. "))", value, 0, 183, 239)
 								end
 								
-								removeElementData(thePlayer, "calling")
-								removeElementData(thePlayer, "caller")
-								removeElementData(thePlayer, "callprogress")
-								removeElementData(thePlayer, "call.location")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "caller")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location")
 								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
@@ -540,10 +540,10 @@ function talkPhone(thePlayer, commandName, ...)
 									outputChatBox("[RADIO] Location: '" .. tostring(location) .. "', Over. ((" .. getPlayerName(thePlayer):gsub("_"," ") .. "))", value, 245, 40, 135)
 								end
 								
-								removeElementData(thePlayer, "calling")
-								removeElementData(thePlayer, "caller")
-								removeElementData(thePlayer, "callprogress")
-								removeElementData(thePlayer, "call.location")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "caller")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location")
 								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
@@ -570,10 +570,10 @@ function talkPhone(thePlayer, commandName, ...)
 									outputChatBox("[RADIO] Location: '" .. tostring(location) .. "', Over. ((" .. getPlayerName(thePlayer):gsub("_"," ") .. "))", value, 0, 183, 239)
 								end
 								
-								removeElementData(thePlayer, "calling")
-								removeElementData(thePlayer, "caller")
-								removeElementData(thePlayer, "callprogress")
-								removeElementData(thePlayer, "call.location")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "caller")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location")
 								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								
@@ -602,10 +602,10 @@ function talkPhone(thePlayer, commandName, ...)
 								else
 									outputChatBox("Taxi Operator says: There is no taxi available in that area, please try again later.", thePlayer)
 								end
-								removeElementData(thePlayer, "calling")
-								removeElementData(thePlayer, "caller")
-								removeElementData(thePlayer, "callprogress")
-								removeElementData(thePlayer, "call.location")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "calling")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "caller")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "callprogress")
+								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "call.location")
 								exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "phonestate", 0, false)
 								exports.global:sendLocalMeAction(thePlayer, "hangs up their cellphone.")
 								

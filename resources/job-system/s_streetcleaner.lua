@@ -314,13 +314,13 @@ function FinishCheckpoints(thePlayer)
 
 				removePedFromVehicle ( thePlayer )
 				
-				removeElementData(vehicle, "fuel")
-				removeElementData(vehicle, "dbid")
+				exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "fuel")
+				exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "dbid")
 				
 				if (isElement(vehicle)) then
 					destroyElement(vehicle)
 					vehicle = nil
-					removeElementData(thePlayer, "cleaner.vehicle")
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.vehicle")
 					
 					outputChatBox("You have completed your task, well done.", thePlayer, 255, 194, 14)
 					outputChatBox("You received: 300$", thePlayer, 255, 194, 14)
@@ -344,7 +344,7 @@ function quit()
     if vehicle then
         destroyElement(vehicle)
     end
-    removeElementData(source, "cleaner.vehicle")
+    exports['anticheat-system']:changeProtectedElementDataEx(source, "cleaner.vehicle")
 end
 
 addEventHandler("onPlayerQuit", getRootElement(), quit)

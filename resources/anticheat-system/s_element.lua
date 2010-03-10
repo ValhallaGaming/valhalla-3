@@ -61,7 +61,7 @@ function changeProtectedElementData(thePlayer, index, newvalue)
 end
 
 function changeProtectedElementDataEx(thePlayer, index, newvalue, sync)
-	if (thePlayer) and (index) and (newvalue) then
+	if (thePlayer) and (index) then
 		allowElementData(thePlayer, index)
 		if (sync) then
 			setElementData(thePlayer, index, newvalue, sync)

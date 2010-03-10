@@ -298,7 +298,7 @@ addEvent("cguiRespawnVehicles", true )
 addEventHandler("cguiRespawnVehicles", getRootElement(), callbackRespawnVehicles)
 
 function resetFactionCooldown(theTeam)
-	removeElementData(theTeam, "cooldown")
+	exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "cooldown")
 end
 
 function callbackUpdateMOTD(motd)
