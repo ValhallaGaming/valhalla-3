@@ -128,7 +128,7 @@ function drawText ( )
 		--else
 		--	color = tocolor ( 139, 137, 137, 255 )
 		--end
-		dxDrawText( textString, 5, sy-16, sx, sy, color, 0.85, "default" )
+		dxDrawText( textString, 5, sy-13, sx, sy, color, 0.85, "default" )
 	end
 end
 addEventHandler("onClientRender",getRootElement(), drawText)
