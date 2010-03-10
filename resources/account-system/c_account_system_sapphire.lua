@@ -4737,7 +4737,7 @@ function selectItemFromVerticalMenu()
 				local title = tAccount[k]["title"]
 				
 				if ( title == "Revert to Pre-Beta" ) then -- leave the beta
-					local xml = xmlLoadFile("beta.xml")
+					local xml = xmlLoadFile("sapphirebeta.xml")
 					local betaNode = xmlFindChild(xml, "beta", 0)
 					xmlDestroyNode(betaNode)
 					xmlSaveFile(xml)
