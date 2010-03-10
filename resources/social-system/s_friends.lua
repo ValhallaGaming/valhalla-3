@@ -1,13 +1,13 @@
 mysql = exports.mysql
 
 function showFriends()
-	exports['anticheat-system']:changeProtectedElementDataEx(target, "friends.visible", 1, true)
+	exports['anticheat-system']:changeProtectedElementDataEx(client, "friends.visible", 1, true)
 end
 addEvent("showFriends", true)
 addEventHandler("showFriends", getRootElement(), showFriends)
 
 function hideFriends()
-	exports['anticheat-system']:changeProtectedElementDataEx(target, "friends.visible", 0, true)
+	exports['anticheat-system']:changeProtectedElementDataEx(client, "friends.visible", 0, true)
 end
 addEvent("hideFriends", true)
 addEventHandler("hideFriends", getRootElement(), hideFriends)

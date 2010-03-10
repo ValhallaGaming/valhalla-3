@@ -29,7 +29,7 @@ end
 
 function updateDeagleMode(mode)
 	if ( tonumber(mode) and (tonumber(mode) >= 0 and tonumber(mode) <= 2) ) then
-		exports['anticheat-system']:changeProtectedElementDataEx(target, "deaglemode", mode, true)
+		exports['anticheat-system']:changeProtectedElementDataEx(client, "deaglemode", mode, true)
 	end
 end
 addEvent("deaglemode", true)

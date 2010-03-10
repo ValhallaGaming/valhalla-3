@@ -23,7 +23,7 @@ end
 
 function updateShotgunMode(mode)
 	if ( tonumber(mode) and (tonumber(mode) >= 0 and tonumber(mode) <= 1) ) then
-		exports['anticheat-system']:changeProtectedElementDataEx(target, "shotgunmode", mode, true)
+		exports['anticheat-system']:changeProtectedElementDataEx(client, "shotgunmode", mode, true)
 	end
 end
 addEvent("shotgunmode", true)

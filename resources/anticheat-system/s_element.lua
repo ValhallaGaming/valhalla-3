@@ -12,19 +12,22 @@ addEventHandler("onElementDataChange", getRootElement(),
 			if (isProtected) then
 				-- get real source here
 				-- it aint source!
-				local sourceClient = source
+				local sourceClient = client
 				if (sourceClient) then
 					local newData = getElementData(source, index)
+					local playername = getPlayerName(source) or "Somethings"
 					-- Get rid of the player
-					local msg = "[AdmWarn] " .. getPlayerIP(sourceClient) .. "/" .. getPlayerName(sourceClient) .. " sent illegal data (index: "..index .." newvalue:".. tostring(newData) .. " oldvalue:".. tostring(oldValue)  ..")"
+					local msg = "[AdmWarn] " .. getPlayerName(sourceClient) .. " sent illegal data. Player has been banned."
+					local msg2 = " (victim: "..playername.." index: "..index .." newvalue:".. tostring(newData) .. " oldvalue:".. tostring(oldValue)  ..")"
 					exports.global:sendMessageToAdmins(msg)
-					exports.logs:logMessage(msg, 29)
+					exports.global:sendMessageToAdmins(msg2)
+					exports.logs:logMessage(msg..msg2, 29)
 					
 					-- uncomment this when it works
-					--local ban = banPlayer(sourceClient, true, false, false, getRootElement(), "Hacked Client.", 0)
+					local ban = banPlayer(sourceClient, true, false, false, getRootElement(), "Hacked Client.", 0)
 					
 					-- revert data
-					--changeProtectedElementDataEx(source, index, oldValue, true)
+					changeProtectedElementDataEx(source, index, oldValue, true)
 					cancelEvent()
 				end
 			end
