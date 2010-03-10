@@ -1,6 +1,6 @@
 addEventHandler("onResourceStart", getResourceRootElement(), 
 	function ()
-		exports.global:sendMessageToAdmins("[STATUS] Project Codename 'no-fucktards' loaded.")
+		exports.global:sendMessageToAdmins("[STATUS] Running Hacked Client Shield.")
 	end
 );
 
@@ -14,6 +14,7 @@ addEventHandler("onElementDataChange", getRootElement(),
 				-- it aint source!
 				local sourceClient = client
 				if (sourceClient) then
+					cancelEvent()
 					local newData = getElementData(source, index)
 					local playername = getPlayerName(source) or "Somethings"
 					-- Get rid of the player
@@ -27,8 +28,7 @@ addEventHandler("onElementDataChange", getRootElement(),
 					local ban = banPlayer(sourceClient, true, false, false, getRootElement(), "Hacked Client.", 0)
 					
 					-- revert data
-					changeProtectedElementDataEx(source, index, oldValue, true)
-					cancelEvent()
+					--changeProtectedElementDataEx(source, index, oldValue, true)
 				end
 			end
 		end
