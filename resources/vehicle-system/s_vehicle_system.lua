@@ -388,7 +388,7 @@ function loadOneVehicle(id, hasCoroutine)
 		hasCoroutine = false
 	end
 	
-	local row = mysql:query_fetch_assoc("SELECT * FROM vehicles WHERE id = " .. id )
+	local row = mysql:query_fetch_assoc("SELECT * FROM vehicles WHERE id = " .. mysql:escape_string(id) )
 	if row then
 		
 		if (hasCoroutine) then
