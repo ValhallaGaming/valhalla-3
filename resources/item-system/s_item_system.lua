@@ -218,17 +218,18 @@ function useItem(itemSlot, additional)
 			outputChatBox("You read a book on how to do Elbow Fighting.", source, 255, 194, 14)
 			mysql_free_result( mysql_query( handler, "UPDATE characters SET fightstyle = 16 WHERE id = " .. getElementData( source, "dbid" ) ) )
 		elseif (itemID==26) then -- GASMASK
-			local gasmask = getElementData(source, "gasmask")
+			local gas = getElementData(source, "gasmask")
 			
-			if not (gasmask) or (gasmask==0) then
+			if not (gas) or (gas==0) then
 				exports.global:sendLocalMeAction(source, "slips a black gas mask over their face.")
 				
 				-- can't see their name
-				local fixedName =  "Unknown Person (Gas Mask)"
+				local pid = getElementData(source, "playerid")
+				local fixedName = "Unknown Person(Gas M)"
 				setPlayerNametagText(source, tostring(fixedName))
 
-				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask", 1, true)
-			elseif (gasmask==1) then
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask", 1, false)
+			elseif (gas==1) then
 				exports.global:sendLocalMeAction(source, "slips a black gas mask off their face.")
 				
 				-- can't see their name
@@ -236,7 +237,7 @@ function useItem(itemSlot, additional)
 				local name = string.gsub(getPlayerName(source), "_", " ")
 				setPlayerNametagText(source, tostring(name))
 
-				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask")
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "gasmask", 0, false)
 			end
 		elseif (itemID==27) then -- FLASHBANG
 			takeItemFromSlot(source, itemSlot)
@@ -337,7 +338,7 @@ function useItem(itemSlot, additional)
 				
 				-- can't see their name
 				local pid = getElementData(source, "playerid")
-				local fixedName = "Unknown Person (Mask)"
+				local fixedName = "Unknown Person(Mask)"
 				setPlayerNametagText(source, tostring(fixedName))
 
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "mask", 1, false)
@@ -572,19 +573,19 @@ function useItem(itemSlot, additional)
 			exports.global:sendLocalMeAction(source, "eats a " .. itemName .. ".")
 			takeItemFromSlot(source, itemSlot)
 		elseif (itemID==90) then -- Helmet
-			local mask = getElementData(source, "helmet")
+			local helmet = getElementData(source, "helmet")
 			
-			if not (mask) or (mask==0) then
+			if not (helmet) or (helmet==0) then
 				exports.global:sendLocalMeAction(source, "puts a helmet over their head.")
 				
 				-- can't see their name
 				local pid = getElementData(source, "playerid")
-				local fixedName = "Unknown Person (Helmet)"
+				local fixedName = "Unknown Person(Helmet)"
 				setPlayerNametagText(source, tostring(fixedName))
 
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "helmet", 1, false)
-			elseif (mask==1) then
-				exports.global:sendLocalMeAction(source, "puts a helmet off their head.")
+			elseif (helmet==1) then
+				exports.global:sendLocalMeAction(source, "takes a helmet off their head.")
 				
 				-- can't see their name
 				local pid = getElementData(source, "playerid")
