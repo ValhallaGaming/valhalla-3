@@ -1191,8 +1191,11 @@ function setVehiclePosition(thePlayer, commandName)
 			outputChatBox("Only Los Santos Police Department is allowed to park their vehicles on Pershing Square.", thePlayer, 255, 0, 0)
 		else
 			local playerid = getElementData(thePlayer, "dbid")
+			local playerfl = getElementData(thePlayer, "factionleader")
+			local playerfid = getElementData(thePlayer, "faction")
 			local owner = getElementData(veh, "owner")
 			local dbid = getElementData(veh, "dbid")
+			local carfid = getElementData(veh, "faction")
 			local x, y, z = getElementPosition(veh)
 			local TowingReturn = call(getResourceFromName("tow-system"), "CanTowTruckDriverVehPos", thePlayer) -- 2 == in towing and in col shape, 1 == colshape only, 0 == not in col shape
 			if (owner==playerid and TowingReturn == 0) or (exports.global:hasItem(thePlayer, 3, dbid)) or (TowingReturn == 2) or (exports.global:isPlayerAdmin(thePlayer) and exports.logs:logMessage("[AVEHPOS] " .. getPlayerName( thePlayer ) .. " parked car #" .. dbid .. " at " .. x .. ", " .. y .. ", " .. z, 9)) then
@@ -1351,6 +1354,56 @@ function setVehiclePosition3(veh)
 end
 addEvent( "parkVehicle", true )
 addEventHandler( "parkVehicle", getRootElement( ), setVehiclePosition3 )
+
+function setVehiclePosition4(thePlayer, commandName)
+	local veh = getPedOccupiedVehicle(thePlayer)
+	if not veh or getElementData(thePlayer, "realinvehicle") == 0 then
+		outputChatBox("You are not in a vehicle.", thePlayer, 255, 0, 0)
+	else
+		local playerid = getElementData(thePlayer, "dbid")
+		local playerfl = getElementData(thePlayer, "factionleader")
+		local playerfid = getElementData(thePlayer, "faction")
+		local owner = getElementData(veh, "owner")
+		local dbid = getElementData(veh, "dbid")
+		local carfid = getElementData(veh, "faction")
+		if (playerfl == 1) and (playerfid==carfid) then
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "requires.vehpos")
+
+			local x, y, z = getElementPosition(veh)
+			local rx, ry, rz = getVehicleRotation(veh)
+			
+			local interior = getElementInterior(thePlayer)
+			local dimension = getElementDimension(thePlayer)
+			
+			local query = mysql:query_free("UPDATE vehicles SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .."', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='" .. mysql:escape_string(rx) .. "', currry='" .. mysql:escape_string(ry) .. "', currrz='" .. mysql:escape_string(rz) .. "', interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "' WHERE id='" .. mysql:escape_string(dbid) .. "'")
+			setVehicleRespawnPosition(veh, x, y, z, rx, ry, rz)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {x, y, z, rx, ry, rz}, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension)
+			outputChatBox("Vehicle spawn position for #" .. dbid .. " set.", thePlayer)
+			
+			for key, value in ipairs(destroyTimers) do
+				if (tonumber(destroyTimers[key][2]) == dbid) then
+					local timer = destroyTimers[key][1]
+					
+					if (isTimer(timer)) then
+						killTimer(timer)
+						table.remove(destroyTimers, key)
+					end
+				end
+			end
+			
+			if ( getElementData(veh, "Impounded") or 0 ) > 0 then
+				local owner = getPlayerFromName( getCharacterName( getElementData( veh, "owner" ) ) )
+				if isElement( owner ) and exports.global:hasItem( owner, 2 ) then
+					outputChatBox("((Best's Towing & Recovery)) #999 [SMS]: Your " .. getVehicleName(veh) .. " has been impounded. Head over to the Impound to release it.", owner, 120, 255, 80)
+				end
+			end
+		end
+	end
+end
+addCommandHandler("fvehpos", setVehiclePosition4, false, false)
+addCommandHandler("fpark", setVehiclePosition4, false, false)
 
 function quitPlayer ( quitReason )
 	if (quitReason == "Timed out") then -- if timed out

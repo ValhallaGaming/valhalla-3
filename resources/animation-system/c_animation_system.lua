@@ -28,10 +28,10 @@ function onRender()
 	local element = getElementAttachedTo(localPlayer)
 	if element and getElementType( element ) == "vehicle" then
 		if attachedRotation then
-			local rx, ry, rz = getVehicleRotation( element )
+			local rx, ry, rz = getElementRotation( element )
 			setPedRotation( localPlayer, rz + attachedRotation )
 		else
-			local rx, ry, rz = getVehicleRotation( element )
+			local rx, ry, rz = getElementRotation( element )
 			attachedRotation = getPedRotation( localPlayer ) - rz
 		end
 	elseif attachedRotation then

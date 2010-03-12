@@ -4542,7 +4542,7 @@ function moveDown()
 					characterMenu[i]["ty"] = characterMenu[i]["ty"] - 2*yoffset
 					
 					if ( not isLoggedIn() ) then
-						setPedSkin(getLocalPlayer(), tonumber(characterMenu[i + 1]["skin"]))
+						setElementModel(getLocalPlayer(), tonumber(characterMenu[i + 1]["skin"]))
 					end
 				elseif ( round(characterMenu[i]["ty"], -1) < round(initY + xoffset, -1) ) then -- its in the no mans land
 					characterMenu[i]["ty"] = characterMenu[i]["ty"] - yoffset
@@ -4622,7 +4622,7 @@ function moveUp()
 					characterMenu[i]["ty"] = characterMenu[i]["ty"] + 2*yoffset
 					
 					if ( not isLoggedIn() ) then
-						setPedSkin(getLocalPlayer(), tonumber(characterMenu[i]["skin"]))
+						setElementModel(getLocalPlayer(), tonumber(characterMenu[i]["skin"]))
 					end
 				else
 					characterMenu[i]["ty"] = characterMenu[i]["ty"] + yoffset

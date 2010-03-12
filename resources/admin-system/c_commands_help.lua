@@ -43,6 +43,7 @@ function commandsHelp()
 					{ "'F3'", "Press 'F3'", "Shows the faction menu.", "'F3'" },
 					{ "/duty", "/duty", "Gives you items/weapons required for your job in an official faction.", "/duty" },
 					{ "/issuebadge", "/issuebadge [player] [number/name]", "Issues a badge or ID to the player.", "/issuebadge Nathan_Daniels N.Daniels.64" },
+					{ "Leaders", "/fpark", "Sets the faction vehicle's parking position where it respawns at.", "/fpark"},
 					{ "PD", "/armor", "Gives you full armor back.", "/armor" },
 					{ "PD", "/swat", "Goes on SWAT duty. Requires a SWAT Authorization.", "/swat" },
 					{ "PD", "/authswat", "Gives SWAT authorization for a few minutes, allows PD members to use /swat", "/authswat" },
