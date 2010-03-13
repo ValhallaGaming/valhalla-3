@@ -2,7 +2,7 @@
 local hostname = get( "hostname" ) or "localhost"
 local username = get( "username" ) or "root"
 local password = get( "password" ) or "rewt"
-local database = get( "mta" ) or "mta"
+local database = get( "database" ) or "mta"
 local port = tonumber( get( "port" ) ) or 3306
 
 -- global things.

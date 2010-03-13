@@ -1,6 +1,6 @@
 username = get( "username" ) or "mta"
 password = get( "password" ) or ""
-db = get( "mta" ) or "mta"
+db = get( "database" ) or "mta"
 host = get( "hostname" ) or "localhost"
 port = tonumber( get( "port" ) ) or 3306
 
