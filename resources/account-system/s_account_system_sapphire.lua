@@ -61,6 +61,7 @@ addEventHandler("acceptBeta", getRootElement(), acceptBeta)
 -- end gay beta code
 
 function sendSalt(isClientsideScripter)
+	--[[
 	if ( isClientsideScripter and not exports.global:isPlayerScripter(client) ) then -- They are hacking...
 		local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a hacked client. Player has been banned."
 		exports.global:sendMessageToAdmins(msg)
@@ -77,9 +78,9 @@ function sendSalt(isClientsideScripter)
 		if ( hasBeta[source] ) then
 			triggerClientEvent(source, "scanFail", source)
 		end
-	else
+	else]]--
 		triggerClientEvent(source, "sendSalt", source, salt, getPlayerIP(source))
-	end
+	--end
 end
 addEvent("getSalt", true)
 addEventHandler("getSalt", getRootElement(), sendSalt)
