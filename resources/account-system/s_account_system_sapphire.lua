@@ -30,12 +30,6 @@ end
 addEvent("hasBeta", true)
 addEventHandler("hasBeta", getRootElement(), informServerHasBeta)
 
-local versionsTemp = { }
-function onConnect(nick, ip, username, serial, version)
-	versionsTemp[nick] = version
-end
-addEventHandler("onPlayerConnect", getRootElement(), onConnect)
-
 function beta(thePlayer)
 	if ( exports.global:isPlayerAdmin(thePlayer)) then
 		local count = 0
@@ -49,7 +43,6 @@ addCommandHandler("beta", beta)
 
 function playerQuit()
 	hasBeta[source] = nil
-	exports.versions:setPlayerVersion(source, nil)
 end
 addEventHandler("onPlayerQuit", getRootElement(), playerQuit)
 
@@ -60,27 +53,8 @@ addEvent("acceptBeta", true)
 addEventHandler("acceptBeta", getRootElement(), acceptBeta)
 -- end gay beta code
 
-function sendSalt(isClientsideScripter)
-	--[[
-	if ( isClientsideScripter and not exports.global:isPlayerScripter(client) ) then -- They are hacking...
-		local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a hacked client. Player has been banned."
-		exports.global:sendMessageToAdmins(msg)
-		local ban = banPlayer(client, true, false, false, getRootElement(), "Hacked Client.", 0)
-		return
-	end
-
-	local version = exports.versions:getPlayerVersion(source)
-	if ( version == nil or version < 258 ) then -- 258 = 1.0.2
-		outputChatBox("You require MTA:SA Version 1.0.2 or Above to play on this server.", source, 255, 0, 0)
-		outputChatBox("Visit www.multitheftauto.com to obtain the latest version.", source, 255, 0, 0)
-		setTimer(kickPlayer, 15000, 1, source, "Invalid Version")
-		
-		if ( hasBeta[source] ) then
-			triggerClientEvent(source, "scanFail", source)
-		end
-	else]]--
-		triggerClientEvent(source, "sendSalt", source, salt, getPlayerIP(source))
-	--end
+function sendSalt()
+	triggerClientEvent(source, "sendSalt", source, salt, getPlayerIP(source))
 end
 addEvent("getSalt", true)
 addEventHandler("getSalt", getRootElement(), sendSalt)
@@ -119,15 +93,7 @@ function resourceStart(resource)
 end
 addEventHandler("onResourceStart", getResourceRootElement(getThisResource()), resourceStart)
 	
-function onJoin(isRestart)
-	if (not isRestart) then
-		-- pass our version
-		local nick = getPlayerName(source)
-		local version = versionsTemp[nick]
-		versionsTemp[nick] = nil
-		exports.versions:setPlayerVersion(source, version)
-	end
-
+function onJoin()
 	-- Set the user as not logged in, so they can't see chat or use commands
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 0)
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "gameaccountloggedin", 0, false)

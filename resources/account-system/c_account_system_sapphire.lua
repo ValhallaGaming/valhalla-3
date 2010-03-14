@@ -918,16 +918,6 @@ function resetScenario1()
 end
 
 triggerServerEvent("getSalt", getLocalPlayer(), scripter)
---[[
-function retrieveSalt(res)
-	if ( res == getThisResource() ) then
-		local scripter = exports.global:isPlayerScripter(getLocalPlayer())
-		outputDebugString(tostring(scripter))
-		showChat(true)
-		
-	end
-end
-addEventHandler("onClientResourceStart", getRootElement(), retrieveSalt)]]--
 
 function generateTimestamp(daysAhead)
 	return tostring( 50000000 + getRealTime().year * 366 + getRealTime().yearday + daysAhead )
@@ -1038,27 +1028,18 @@ function validateDetails()
 	end
 end
 
-local VSstate = 0
-local VSalpha = 0
-
 function storeSalt(theSalt, theIP)
 	ip = theIP
 	salt = theSalt
 	
 	if (not hasBeta()) then
-		VSstate = 1
 		createMainUI(getThisResource())
 	else
-		setTimer(setVSState, 1500, 1, 1)
-		setTimer(createXMB, 3000, 1)
+		createXMB()
 	end
 end
 addEvent("sendSalt", true)
 addEventHandler("sendSalt", getRootElement(), storeSalt)
-
-function setVSState(state)
-	VSstate = state
-end
 
 function createMainUI(res, isChangeAccount)
 
@@ -4076,56 +4057,6 @@ mainMenuItems[helpID]["alpha"] = lowerAlpha
 local upperBound = 8
 mainMenuItems[upperBound] = { }
 mainMenuItems[upperBound]["text"] = "Logout"
-
-
-fadeCamera(true)
-function removeValhallaShield()
-	removeEventHandler("onClientRender", getRootElement(), drawValhallaShield)
-end
-
-function drawValhallaShield()
-	if ( VSalpha < 150 and VSstate  ~= 1 ) then
-		VSalpha = VSalpha + 10
-	elseif ( VSalpha > 0 and VSstate  == 1 ) then
-		VSalpha = VSalpha - 5
-	end
-	
-	local imageName = "gui/shield/shield_question.png"
-	local text = "Performing Client Verification..."
-	if ( VSstate == 1 ) then 
-		imageName = "gui/shield/shield_ok.png"
-		text = "Client Verification OK"
-		setTimer(removeValhallaShield, 1500, 1)
-	elseif ( VSstate == 2 ) then 
-		imageName = "gui/shield/shield_failed.png"
-		text = "Client Verification Failed"
-	end	
-	
-	dxDrawRectangle(width - xoffset*4.5, height - yoffset * 1.2, xoffset*3, 120, tocolor(0, 0, 0, VSalpha), false)
-
-	local x = width - xoffset*4.05 - 64
-	local y = (height - yoffset * 1.24) + dxGetFontHeight(2, "sans")
-	dxDrawImage(x, y, 64, 64, imageName, 0, 0, 0, tocolor(255, 255, 255, VSalpha), false)
-	
-	local x = width - xoffset*3.9
-	local y = (height - yoffset * 1.4) + dxGetFontHeight(2, "sans")
-	local textAlpha = VSalpha + 50
-	
-	if ( VSstate == 1 ) then
-		textAlpha = VSalpha
-	end
-	
-	dxDrawText(text, x, y+10, x + xoffset*1.9, y + 120, tocolor(0,0,0, textAlpha), 2, "sans", "center", "center", false, false, false)
-	dxDrawText(text, x, y, x + xoffset*1.9, y + 120, tocolor(255, 255, 255, textAlpha), 2, "sans", "center", "center", false, false, false)
-end
-addEventHandler("onClientRender", getRootElement(), drawValhallaShield)
-
-function scanFailed()
-	VSstate = 2
-	showChat(true)
-end
-addEvent("scanFail", true)
-addEventHandler("scanFail", getRootElement(), scanFailed)
 
 -- SUBMENUS
 local characterMenu = { }
