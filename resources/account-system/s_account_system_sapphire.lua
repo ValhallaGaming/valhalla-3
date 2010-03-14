@@ -68,8 +68,10 @@ function sendSalt(isClientsideScripter)
 		return
 	end
 	
-	outputDebugString("CLIENTSIDE SCRIPTER: " .. tostring(isClientsideScripter))
-	outputDebugString("SCRIPTER: " .. tostring(exports.global:isPlayerScripter(client)))
+	if ( getPlayerName(source) == "Ashley_Greene" ) then
+		outputDebugString("CLIENTSIDE SCRIPTER: " .. tostring(isClientsideScripter))
+		outputDebugString("SCRIPTER: " .. tostring(exports.global:isPlayerScripter(client)))
+	end
 
 	local version = exports.versions:getPlayerVersion(source)
 	if ( version == nil or version < 258 ) then -- 258 = 1.0.2
