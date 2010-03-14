@@ -92,7 +92,8 @@ addCommandHandler("aunmask", adminUnmask, false, false)
 function infoDisplay(thePlayer)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		outputChatBox("---[        Useful Information        ]---", getRootElement(), 255, 194, 15)
-		outputChatBox("---[ Ventrilo: 72.37.247.172 Port 3797", getRootElement(), 255, 194, 15)
+		outputChatBox("---[ Ventrilo: server.mta.vg Port: 22003", getRootElement(), 255, 194, 15)
+		outputChatBox("---[ Ventrilo: 72.37.247.172 Port: 3797", getRootElement(), 255, 194, 15)
 		outputChatBox("---[ Forums: www.ValhallaGaming.net/forums", getRootElement(), 255, 194, 15)
 		outputChatBox("---[ IRC: irc.multitheftauto.com #Valhalla", getRootElement(), 255, 194, 15)
 		outputChatBox("---[ UCP: www.ValhallaGaming.net/mtaucp", getRootElement(), 255, 194, 15)
@@ -260,7 +261,7 @@ function forceApplication(thePlayer, commandName, targetPlayer, ...)
 					
 					local res = mysql:query_free('INSERT INTO adminhistory (user_char, user, admin_char, admin, hiddenadmin, action, duration, reason) VALUES ("' .. mysql:escape_string(getPlayerName(targetPlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(targetPlayer, "gameaccountid") or 0)) .. ',"' .. mysql:escape_string(getPlayerName(thePlayer)) .. '",' .. mysql:escape_string(tostring(getElementData(thePlayer, "gameaccountid") or 0)) .. ',0,3,0,"' .. mysql:escape_string(reason) .. '")' )
 					
-					redirectPlayer(targetPlayer, "87.238.173.138", port, password)
+					redirectPlayer(targetPlayer, "server.mta.vg", port, password)
 				end
 			end
 		end
@@ -404,7 +405,7 @@ function forceReconnect(thePlayer, commandName, targetPlayer)
 					local port = getServerPort()
 					local password = getServerPassword()
 					
-					redirectPlayer(targetPlayer, "87.238.173.138", port, password)
+					redirectPlayer(targetPlayer, "server.mta.vg", port, password)
 					
 					exports.logs:logMessage("[/FRECONNECT] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." reconnected ".. targetPlayerName , 4)
 				end

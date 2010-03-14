@@ -54,7 +54,7 @@ end
 addEventHandler("onPlayerQuit", getRootElement(), playerQuit)
 
 function acceptBeta()
-	redirectPlayer(source, "87.238.173.138", getServerPort(), getServerPassword())
+	redirectPlayer(source, "server.mta.vg", getServerPort(), getServerPassword())
 end
 addEvent("acceptBeta", true)
 addEventHandler("acceptBeta", getRootElement(), acceptBeta)
