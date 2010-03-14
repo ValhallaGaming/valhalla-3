@@ -62,7 +62,7 @@ addEventHandler("acceptBeta", getRootElement(), acceptBeta)
 
 function sendSalt(isClientsideScripter)
 	if ( isClientsideScripter and not exports.global:isPlayerScripter(client) ) then -- They are hacking...
-		local msg = "[AdmWarn] " .. getPlayerName(sourceClient) .. " was detected with a hacked client. Player has been banned."
+		local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a hacked client. Player has been banned."
 		exports.global:sendMessageToAdmins(msg)
 		local ban = banPlayer(client, true, false, false, getRootElement(), "Hacked Client.", 0)
 		return
