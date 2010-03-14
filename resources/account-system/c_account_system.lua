@@ -917,15 +917,17 @@ function resetScenario1()
 	scen1Timer2 = setTimer(resetScenario1, 15000, 1)
 end
 
+triggerServerEvent("getSalt", getLocalPlayer(), scripter)
+--[[
 function retrieveSalt(res)
 	if ( res == getThisResource() ) then
 		local scripter = exports.global:isPlayerScripter(getLocalPlayer())
 		outputDebugString(tostring(scripter))
 		showChat(true)
-		triggerServerEvent("getSalt", getLocalPlayer(), scripter)
+		
 	end
 end
-addEventHandler("onClientResourceStart", getRootElement(), retrieveSalt)
+addEventHandler("onClientResourceStart", getRootElement(), retrieveSalt)]]--
 
 function generateTimestamp(daysAhead)
 	return tostring( 50000000 + getRealTime().year * 366 + getRealTime().yearday + daysAhead )
