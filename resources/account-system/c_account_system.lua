@@ -14,6 +14,7 @@ end
 
 if not hasBeta() then
 
+fadeCamera(true)
 function stopNameChange(oldNick, newNick)
 	if (source==getLocalPlayer()) then
 		local legitNameChange = getElementData(getLocalPlayer(), "legitnamechange")

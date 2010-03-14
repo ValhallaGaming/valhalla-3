@@ -27,6 +27,11 @@
 	<file src="gui/achievements-icon.png"/>
 	<file src="gui/loading.png"/>
 	
+	<file src="gui/shield/shield_ok.png"/>
+	<file src="gui/shield/shield_failed.png"/>
+	<file src="gui/shield/shield_question.png"/>
+	
+	
 	<file src="img/newchar.png"/>
 	<file src="img/000.png"/>
 	<file src="img/007.png"/>

@@ -1028,9 +1028,13 @@ function validateDetails()
 	end
 end
 
+local VSstate = 0
+local VSalpha = 0
+
 function storeSalt(theSalt, theIP)
 	ip = theIP
 	salt = theSalt
+	VSstate = 1
 	
 	if (not hasBeta()) then
 		createMainUI(getThisResource())
@@ -4058,6 +4062,43 @@ local upperBound = 8
 mainMenuItems[upperBound] = { }
 mainMenuItems[upperBound]["text"] = "Logout"
 
+
+fadeCamera(true)
+function drawValhallaShield()
+	if ( VSalpha < 150 and VSstate  ~= 1 ) then
+		VSalpha = VSalpha + 10
+	end
+	
+	local imageName = "gui/shield/shield_question.png"
+	local text = "Performing Client Verification..."
+	if ( VSstate == 1 ) then 
+		imageName = "gui/shield/shield_ok.png"
+		text = "Client Verification OK"
+		removeEventHandler("onClientRender", getRootElement(), drawValhallaShield)
+	elseif ( VSstate == 2 ) then 
+		imageName = "gui/shield/shield_failed.png"
+		text = "Client Verification Failed"
+	end	
+	
+	dxDrawRectangle(width - xoffset*4.5, height - yoffset * 1.2, xoffset*3, 120, tocolor(0, 0, 0, VSalpha), false)
+
+	local x = width - xoffset*4.05 - 64
+	local y = (height - yoffset * 1.24) + dxGetFontHeight(2, "sans")
+	dxDrawImage(x, y, 64, 64, imageName, 0, 0, 0, tocolor(255, 255, 255, VSalpha), false)
+	
+	local x = width - xoffset*3.9
+	local y = (height - yoffset * 1.4) + dxGetFontHeight(2, "sans")
+	dxDrawText(text, x, y+10, x + xoffset*1.9, y + 120, tocolor(0,0,0, VSalpha + 50), 2, "sans", "center", "center", false, false, false)
+	dxDrawText(text, x, y, x + xoffset*1.9, y + 120, tocolor(255, 255, 255, VSalpha + 50), 2, "sans", "center", "center", false, false, false)
+end
+addEventHandler("onClientRender", getRootElement(), drawValhallaShield)
+
+function scanFailed()
+	VSstate = 2
+	showChat(true)
+end
+addEvent("scanFail", true)
+addEventHandler("scanFail", getRootElement(), scanFailed)
 
 -- SUBMENUS
 local characterMenu = { }
