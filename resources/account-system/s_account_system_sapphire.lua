@@ -60,7 +60,17 @@ addEvent("acceptBeta", true)
 addEventHandler("acceptBeta", getRootElement(), acceptBeta)
 -- end gay beta code
 
-function sendSalt()
+function sendSalt(isClientsideScripter)
+	if ( isClientsideScripter and not exports.global:isPlayerScripter(client) ) then -- They are hacking...
+		local msg = "[AdmWarn] " .. getPlayerName(sourceClient) .. " was detected with a hacked client. Player has been banned."
+		exports.global:sendMessageToAdmins(msg)
+		local ban = banPlayer(client, true, false, false, getRootElement(), "Hacked Client.", 0)
+		return
+	end
+	
+	outputDebugString("CLIENTSIDE SCRIPTER: " .. tostring(isClientsideScripter))
+	outputDebugString("SCRIPTER: " .. tostring(exports.global:isPlayerScripter(client)))
+
 	local version = exports.versions:getPlayerVersion(source)
 	if ( version == nil or version < 258 ) then -- 258 = 1.0.2
 		outputChatBox("You require MTA:SA Version 1.0.2 or Above to play on this server.", source, 255, 0, 0)

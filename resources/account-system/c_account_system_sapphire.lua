@@ -917,7 +917,15 @@ function resetScenario1()
 	scen1Timer2 = setTimer(resetScenario1, 15000, 1)
 end
 
-triggerServerEvent("getSalt", getLocalPlayer())
+function retrieveSalt(res)
+	if ( res == getThisResource() ) then
+		local scripter = exports.global:isPlayerScripter(getLocalPlayer())
+		outputDebugString(tostring(scripter))
+		showChat(true)
+		triggerServerEvent("getSalt", getLocalPlayer(), scripter)
+	end
+end
+addEventHandler("onClientResourceStart", getRootElement(), retrieveSalt)
 
 function generateTimestamp(daysAhead)
 	return tostring( 50000000 + getRealTime().year * 366 + getRealTime().yearday + daysAhead )
@@ -1034,16 +1042,21 @@ local VSalpha = 0
 function storeSalt(theSalt, theIP)
 	ip = theIP
 	salt = theSalt
-	VSstate = 1
 	
 	if (not hasBeta()) then
+		VSstate = 1
 		createMainUI(getThisResource())
 	else
-		createXMB()
+		setTimer(setVSState, 1500, 1, 1)
+		setTimer(createXMB, 3000, 1)
 	end
 end
 addEvent("sendSalt", true)
 addEventHandler("sendSalt", getRootElement(), storeSalt)
+
+function setVSState(state)
+	VSstate = state
+end
 
 function createMainUI(res, isChangeAccount)
 
@@ -4064,9 +4077,15 @@ mainMenuItems[upperBound]["text"] = "Logout"
 
 
 fadeCamera(true)
+function removeValhallaShield()
+	removeEventHandler("onClientRender", getRootElement(), drawValhallaShield)
+end
+
 function drawValhallaShield()
 	if ( VSalpha < 150 and VSstate  ~= 1 ) then
 		VSalpha = VSalpha + 10
+	elseif ( VSalpha > 0 and VSstate  == 1 ) then
+		VSalpha = VSalpha - 5
 	end
 	
 	local imageName = "gui/shield/shield_question.png"
@@ -4074,7 +4093,7 @@ function drawValhallaShield()
 	if ( VSstate == 1 ) then 
 		imageName = "gui/shield/shield_ok.png"
 		text = "Client Verification OK"
-		removeEventHandler("onClientRender", getRootElement(), drawValhallaShield)
+		setTimer(removeValhallaShield, 1500, 1)
 	elseif ( VSstate == 2 ) then 
 		imageName = "gui/shield/shield_failed.png"
 		text = "Client Verification Failed"
@@ -4088,8 +4107,14 @@ function drawValhallaShield()
 	
 	local x = width - xoffset*3.9
 	local y = (height - yoffset * 1.4) + dxGetFontHeight(2, "sans")
-	dxDrawText(text, x, y+10, x + xoffset*1.9, y + 120, tocolor(0,0,0, VSalpha + 50), 2, "sans", "center", "center", false, false, false)
-	dxDrawText(text, x, y, x + xoffset*1.9, y + 120, tocolor(255, 255, 255, VSalpha + 50), 2, "sans", "center", "center", false, false, false)
+	local textAlpha = VSalpha + 50
+	
+	if ( VSstate == 1 ) then
+		textAlpha = VSalpha
+	end
+	
+	dxDrawText(text, x, y+10, x + xoffset*1.9, y + 120, tocolor(0,0,0, textAlpha), 2, "sans", "center", "center", false, false, false)
+	dxDrawText(text, x, y, x + xoffset*1.9, y + 120, tocolor(255, 255, 255, textAlpha), 2, "sans", "center", "center", false, false, false)
 end
 addEventHandler("onClientRender", getRootElement(), drawValhallaShield)
 

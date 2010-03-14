@@ -40,6 +40,15 @@ function resourceStart()
 end
 addEventHandler("onResourceStart", getResourceRootElement(getThisResource()), resourceStart)
 	
+function onConnect(nick, ip, username, serial, version)
+	if ( version == nil or version < 258 ) then
+		outputChatBox("You require MTA:SA Version 1.0.2 or Above to play on this server.", 255, 0, 0, source)
+		outputChatBox("Visit www.multitheftauto.com to obtain the latest version.", 255, 0, 0, source)
+	end
+	setTimer(kickPlayer, 15000, 1, source, "Invalid Version")
+end
+addEventHandler("onPlayerConnect", getRootElement(), onConnect)
+	
 function onJoin()
 	-- Set the user as not logged in, so they can't see chat or use commands
 	exports['anticheat-system']:changeProtectedElementDataEx(source, "loggedin", 0)
