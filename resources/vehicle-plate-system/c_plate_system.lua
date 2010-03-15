@@ -159,6 +159,8 @@ function checkPlate()
 				current = ''
 			elseif ( char >= 'a' and char <= 'z' ) or ( char >= 'A' and char <= 'Z' ) then -- can have letters anywhere in the name
 				current = current .. char
+			elseif ( char >= '0' and char <= '9') then
+				current = current .. char
 			else -- unrecognized char (numbers, special chars)
 				valid = false
 				break
