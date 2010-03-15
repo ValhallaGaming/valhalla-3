@@ -1,6 +1,9 @@
 <meta>
-    <info author="herbjr" type="script" description="Vehicle License Plate System"/>
+    <info author="vG Scripting Team" type="script" description="Vehicle License Plate System"/>
 	
 	<script src="s_plate_system.lua" type="server"/>
 	<script src="c_plate_system.lua" type="client"/>
+	
+	<script src="g_plate_system.lua" type="client"/>
+	<script src="g_plate_system.lua" type="server"/>
 </meta>
