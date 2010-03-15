@@ -18,3 +18,5 @@ function fiddycal(target)
 end
 addEvent("50cal", true)
 addEventHandler("50cal", getRootElement(), fiddycal)
+
+outputDebugString("50cal loaded.")
