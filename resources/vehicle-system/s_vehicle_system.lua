@@ -358,30 +358,22 @@ function loadAllVehicles(res)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), loadAllVehicles)
 
---[[
-function loadBatchVehicles(result)
-	local ccount = 1
-	local done = false
-	while ccount < 600 do
-		local row = mysql:fetch_assoc(result)
-		if not (row) then 
-			done = true
-			break 
-		end
-		loadOneVehicle(row)
-		ccount = ccount + 1
-	end
-	return done
-end
-]]
-
-
 function resume()
 	for key, value in ipairs(threads) do
 		coroutine.resume(value)
 	end
 end
 
+function reloadVehicle(id)
+	local theVehicle = exports.pool:getElement("vehicle", tonumber(id))
+	if (theVehicle) then
+		exports['savevehicle-system']:saveVehicle(theVehicle)
+		destroyElement(theVehicle)
+		loadOneVehicle(id, false)
+		return true
+	end
+	return false
+end
 
 function loadOneVehicle(id, hasCoroutine)
 	if (hasCoroutine==nil) then
@@ -395,121 +387,120 @@ function loadOneVehicle(id, hasCoroutine)
 			coroutine.yield()
 		end
 		
-			for k, v in pairs( row ) do
-				if v == null then
-					row[k] = nil
-				else
-					row[k] = tonumber(row[k]) or row[k]
+		for k, v in pairs( row ) do
+			if v == null then
+				row[k] = nil
+			else
+				row[k] = tonumber(row[k]) or row[k]
+			end
+		end
+		
+		-- Spawn the vehicle
+		local veh = createVehicle(row.model, row.currx, row.curry, row.currz, row.currrx, row.currry, row.currrz, row.plate)
+		if veh then
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", row.id)
+			exports.pool:allocateElement(veh, row.id)
+			
+			-- color
+			setVehicleColor(veh, row.color1, row.color2, row.color1, row.color2)
+				
+			-- Set the vehicle armored if it is armored
+			if (armoredCars[row.model]) then
+				setVehicleDamageProof(veh, true)
+			end
+			
+			-- add the vehicle upgrades
+			for i = 0, 16 do
+				local upgrade = row['upgrade' .. i]
+				if upgrade and upgrade > 0 then
+					addVehicleUpgrade(veh, upgrade)
 				end
 			end
 			
-			-- Spawn the vehicle
-			local veh = createVehicle(row.model, row.currx, row.curry, row.currz, row.currrx, row.currry, row.currrz, row.plate)
-			if veh then
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dbid", row.id)
-				exports.pool:allocateElement(veh, row.id)
+			-- paintjob
+			setVehiclePaintjob(veh, row.paintjob)
+			
+			-- wheel states
+			setVehicleWheelStates(veh, row.wheel1, row.wheel2, row.wheel3, row.wheel4)
+			
+			-- panel states (windshield broken etc)
+			for i = 0, 6 do
+				setVehiclePanelState(veh, i, row['panel' .. i])
+			end
+			
+			-- door states
+			for i = 0, 5 do
+				setVehicleDoorState(veh, i, row['door' .. (i+1)])
+			end
+			
+			-- lock the vehicle if it's locked
+			setVehicleLocked(veh, row.owner ~= -2 and row.locked == 1)
+			
+			-- set the sirens on if it has some
+			setVehicleSirensOn(veh, row.sirens == 1)
+			
+			if (hasCoroutine) then
+				coroutine.yield()
+			end
 				
-				-- color
-				setVehicleColor(veh, row.color1, row.color2, row.color1, row.color2)
-				
-				-- Set the vehicle armored if it is armored
-				if (armoredCars[row.model]) then
-					setVehicleDamageProof(veh, true)
-				end
-				
-				-- add the vehicle upgrades
-				for i = 0, 16 do
-					local upgrade = row['upgrade' .. i]
-					if upgrade and upgrade > 0 then
-						addVehicleUpgrade(veh, upgrade)
-					end
-				end
-				
-				-- paintjob
-				setVehiclePaintjob(veh, row.paintjob)
-				
-				-- wheel states
-				setVehicleWheelStates(veh, row.wheel1, row.wheel2, row.wheel3, row.wheel4)
-				
-				-- panel states (windshield broken etc)
-				for i = 0, 6 do
-					setVehiclePanelState(veh, i, row['panel' .. i])
-				end
-				
-				-- door states
-				for i = 0, 5 do
-					setVehicleDoorState(veh, i, row['door' .. (i+1)])
-				end
-				
-				-- lock the vehicle if it's locked
-				setVehicleLocked(veh, row.owner ~= -2 and row.locked == 1)
-				
-				-- set the sirens on if it has some
-				setVehicleSirensOn(veh, row.sirens == 1)
-				
-		if (hasCoroutine) then
-			coroutine.yield()
-		end
-				
-				-- job
-				if row.job > 0 then
-					toggleVehicleRespawn(veh, true)
-					setVehicleRespawnDelay(veh, 60000)
-					setVehicleIdleRespawnDelay(veh, 180000)
-					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", row.job)
-				else
-					exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
-				end
-				
-				setVehicleRespawnPosition(veh, row.x, row.y, row.z, row.rotx, row.roty, row.rotz)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {row.x, row.y, row.z, row.rotx, row.roty, row.rotz}, false)
-				
-				-- element data
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", row.fuel, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", row.currx, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", row.curry, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", row.currz, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", row.faction)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", row.owner)
-				
-				-- impound shizzle
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", tonumber(row.Impounded))
-				if tonumber(row.Impounded) > 0 then
-					setVehicleDamageProof(veh, true)
-				end
-				
-				-- interior/dimension
-				setElementDimension(veh, row.currdimension)
-				setElementInterior(veh, row.currinterior)
-				
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", row.dimension, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", row.interior, false)
-				
-				-- lights
-				setVehicleOverrideLights(veh, row.lights == 0 and 1 or row.lights )
-				
-				-- engine
-				if row.hp <= 350 then
-					setElementHealth(veh, 300)
-					setVehicleDamageProof(veh, true)
-					setVehicleEngineState(veh, false)
-					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
-					exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 1, false)
-				else
-					setElementHealth(veh, row.hp)
-					setVehicleEngineState(veh, row.engine == 1)
-					exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", row.engine, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
-		end
-		setVehicleFuelTankExplodable(veh, false)
+			-- job
+			if row.job > 0 then
+				toggleVehicleRespawn(veh, true)
+				setVehicleRespawnDelay(veh, 60000)
+				setVehicleIdleRespawnDelay(veh, 180000)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", row.job)
+			else
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "job", 0, false)
+			end
+			
+			setVehicleRespawnPosition(veh, row.x, row.y, row.z, row.rotx, row.roty, row.rotz)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "respawnposition", {row.x, row.y, row.z, row.rotx, row.roty, row.rotz}, false)
+			
+			-- element data
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "fuel", row.fuel, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldx", row.currx, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldy", row.curry, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "oldz", row.currz, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "faction", row.faction)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "owner", row.owner)
+			
+			-- impound shizzle
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "Impounded", tonumber(row.Impounded))
+			if tonumber(row.Impounded) > 0 then
+				setVehicleDamageProof(veh, true)
+			end
+			
+			-- interior/dimension
+			setElementDimension(veh, row.currdimension)
+			setElementInterior(veh, row.currinterior)
+			
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", row.dimension, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", row.interior, false)
+			
+			-- lights
+			setVehicleOverrideLights(veh, row.lights == 0 and 1 or row.lights )
+			
+			-- engine
+			if row.hp <= 350 then
+				setElementHealth(veh, 300)
+				setVehicleDamageProof(veh, true)
+				setVehicleEngineState(veh, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 1, false)
+			else
+				setElementHealth(veh, row.hp)
+				setVehicleEngineState(veh, row.engine == 1)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", row.engine, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
+			end		
+			setVehicleFuelTankExplodable(veh, false)
 		
-		-- handbrake
-		if row.handbrake > 0 then
-			setVehicleFrozen(veh, true)
-		end
-		
-		--
-		exports['vehicle-interiors']:add( veh )
+			-- handbrake
+			if row.handbrake > 0 then
+				setVehicleFrozen(veh, true)
+			end
+			
+			exports['vehicle-interiors']:add( veh )
 		end
 	end
 end

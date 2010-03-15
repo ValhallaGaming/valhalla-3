@@ -9,4 +9,6 @@
 	<export function="createShopVehicle" type="server"/>
 	<export function="clearCharacterName" type="server"/>
 	<export function="getCharacterName" type="server"/>
+	<export function="getCharacterName" type="server"/>
+	<export function="reloadVehicle" type="server" />
 </meta>
