@@ -201,10 +201,9 @@ local metalSphere2 = createColTube(1437.6494140625, -1782.6025390625, 1250.94763
 setElementInterior(metalSphere2, 3)
 setElementDimension(metalSphere2, 125)
 
-
 function metalDetectorHit(element, dimension)
-	local pdimension = getElementDimension(getLocalPlayer())
-	if (pdimension == 125) then
+	local x, y, z = getElementPosition(getLocalPlayer())
+	if (getDistanceBetweenPoints3D(1492.3427734375, -1782.794921875, 1250.9418945313, x, y, z) < 25) then
 		if ( dimension )  then
 			if ( getElementType(element) == "player") then
 
@@ -226,5 +225,30 @@ function metalDetectorHit(element, dimension)
 	end
 end
 addEventHandler("onClientColShapeHit", metalSphere, metalDetectorHit)
-addEventHandler("onClientColShapeHit", metalSphere2, metalDetectorHit)
+
+function metalDetectorHit2(element, dimension)
+	local x, y, z = getElementPosition(getLocalPlayer())
+	if (getDistanceBetweenPoints3D(1437.6494140625, -1782.6025390625, 1250.9476318359, x, y, z) < 25) then
+		if ( dimension )  then
+			if ( getElementType(element) == "player") then
+
+				local meleeammo = getPedTotalAmmo(element, 1)
+				local handgunammo = getPedTotalAmmo(element, 2)
+				local shotgunammo = getPedTotalAmmo(element, 3)
+				local smgammo = getPedTotalAmmo(element, 4)
+				local rifleammo = getPedTotalAmmo(element, 5)
+				local sniperammo = getPedTotalAmmo(element, 6)
+				local heavyammo = getPedTotalAmmo(element, 7)
+				local thrownammo = getPedTotalAmmo(element, 8)
+				local detonatorammo = getPedTotalAmmo(element, 9)
+				
+				if (meleeammo>0 or handgunammo>0 or shotgunammo>0 or smgammo>0 or rifleammo>0 or sniperammo>0 or heavyammo>0 or thrownammo>0 or detonatorammo>0) then
+					setTimer(playSoundFrontEnd, 100, 10, 5)
+				end
+			end
+		end
+	end
+end
+addEventHandler("onClientColShapeHit", metalSphere2, metalDetectorHit2)
 -- end of metal detector
+
