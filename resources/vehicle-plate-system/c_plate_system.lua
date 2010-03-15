@@ -7,7 +7,7 @@ setElementData(gabby, "name", "Gabrielle McCoy")
 setPedFrozen(gabby, true)
 setPedAnimation(gabby, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false)
 
-local platecheck, newplates = nil
+local plateCheck, newplates = nil
 
 function cBeginGUI()
 	local lplayer = getLocalPlayer()
@@ -166,9 +166,9 @@ function checkPlate()
 		end
 		
 		if valid  and #theText < 9 and #current >= 4 then
-			guiLabelSetColor(platecheck, 0, 255, 0)
+			guiLabelSetColor(plateCheck, 0, 255, 0)
 		else
-			guiLabelSetColor(platecheck, 255, 0, 0)
+			guiLabelSetColor(plateCheck, 255, 0, 0)
 		end
 	end
 end
