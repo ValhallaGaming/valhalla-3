@@ -147,7 +147,6 @@ function checkPlate()
 			if char == ' ' then -- it's a space
 				if i == #theText then -- space at the end of name is not allowed
 					valid = false
-					outputChatBox("SPACE")
 					break
 				end
 				current = ''
@@ -156,14 +155,13 @@ function checkPlate()
 			elseif ( char >= '0' and char <= '9') then
 				current = current .. char
 			else -- unrecognized char (special chars)
-				outputChatBox("SPECIAL")
 				valid = false
 				break
 			end
 		end
 		
 		destroyElement(plateCheck)
-		if valid  and #theText < 9 and #current >= 4 then
+		if valid  and #theText < 9 then
 			plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Valid plate", true, efinalWindow)
 			guiLabelSetColor(plateCheck, 0, 255, 0)
 		else
