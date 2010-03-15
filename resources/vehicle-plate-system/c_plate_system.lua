@@ -140,6 +140,7 @@ function checkPlateBox()
 	if (source==newplates) then
 		local theText = guiGetText(source)
 		
+		destroyElement(plateCheck)
 		if checkPlate(theText) then
 			plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Valid plate", true, efinalWindow)
 			guiLabelSetColor(plateCheck, 0, 255, 0)
