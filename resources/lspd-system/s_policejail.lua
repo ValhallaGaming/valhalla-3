@@ -40,8 +40,8 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 		
 		local playerCol = isInArrestColshape(thePlayer)
 		if (factionType==2) and playerCol then
-			if not (targetPlayerNick) or not (fine) or not (jailtime) or not (...) or (jailtime<1) or (jailtime>180) then
-				outputChatBox("SYNTAX: /arrest [Player Partial Nick / ID] [Fine] [Jail Time (Minutes 1->180)] [Crimes Committed]", thePlayer, 255, 194, 14)
+			if not (targetPlayerNick) or not (fine) or not (jailtime) or not (...) or (jailtime<1) or (jailtime>999999) then
+				outputChatBox("SYNTAX: /arrest [Player Partial Nick / ID] [Fine] [Jail Time (Minutes 1->999999)] [Crimes Committed]", thePlayer, 255, 194, 14)
 			else
 				local targetPlayer, targetPlayerNick = exports.global:findPlayerByPartialNick(thePlayer, targetPlayerNick)
 				
