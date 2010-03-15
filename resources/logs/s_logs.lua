@@ -27,7 +27,8 @@ enumTypes = {
 	"connect",
 	"connectdangerous",
 	"takeguns",
-	"elementdata"
+	"elementdata",
+	"factionactions" 
 }
 
 

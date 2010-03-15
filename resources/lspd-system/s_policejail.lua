@@ -138,6 +138,7 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 									outputChatBox("Crimes Committed: " .. reason .. ".", value, 0, 102, 255)
 								end
 							end
+							exports.logs:logMessage("[PD/ARREST] ".. factionRankTitle .. " " .. name .. " jailed " .. targetPlayerNick .. " for " .. jailtime .. " minute(s). Reason: "..reason , 30)
 						end
 					end
 				end
@@ -224,6 +225,7 @@ function jailRelease(thePlayer, commandName, targetPlayerNick)
 					if (jailTimer) then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtime", 1, false)
 						timerPDUnjailPlayer(targetPlayer)
+						exports.logs:logMessage("[PD/RELEASE]" .. username .. " released "..targetPlayerNick , 30)
 					else
 						outputChatBox("This player is not serving a jail sentance.", thePlayer, 255, 0, 0)
 					end

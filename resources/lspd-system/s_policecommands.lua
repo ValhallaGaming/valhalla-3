@@ -79,6 +79,7 @@ function ticketPlayer(thePlayer, commandName, targetPlayerNick, amount, ...)
 							outputChatBox("Since you don't have enough money with you, $" .. takeFromBank .. " have been taken from your bank account.", targetPlayer)
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "bankmoney", bankmoney - takeFromBank)
 						end
+						exports.logs:logMessage("[PD/TICKET] " .. getPlayerName(thePlayer) .. " gave " .. targetPlayerName .. " a ticket. Amount: $".. amount.. " Reason: "..reason , 30)
 					else
 						outputChatBox("You are too far away from " .. targetPlayerName .. ".", thePlayer, 255, 0, 0)
 					end
@@ -117,6 +118,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 								outputChatBox(name.." has revoked your driving license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s driving license.", thePlayer, 255, 194, 14)
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.car", -hours)
+								exports.logs:logMessage("[PD/TAKELICENSE] " .. name .. " revoked " .. targetPlayerName .. " their driving license for  "..hours.." hours" , 30)
 							else
 								outputChatBox(targetPlayerName .. " does not have a driving license.", thePlayer, 255, 0, 0)
 							end
@@ -126,6 +128,7 @@ function takeLicense(thePlayer, commandName, targetPartialNick, licenseType, hou
 								outputChatBox(name.." has revoked your weapon license.", targetPlayer, 255, 194, 14)
 								outputChatBox("You have revoked " .. targetPlayerName .. "'s weapon license.", thePlayer, 255, 194, 14)
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "license.gun", -hours)
+								exports.logs:logMessage("[PD/TAKELICENSE] " .. name .. " revoked " .. targetPlayerName .. " their gun license for  "..hours.." hours" , 30)
 							else
 								outputChatBox(targetPlayerName .. " does not have a weapon license.", thePlayer, 255, 0, 0)
 							end

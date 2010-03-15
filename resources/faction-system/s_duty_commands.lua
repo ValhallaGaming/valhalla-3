@@ -108,7 +108,7 @@ function lvesHeal(thePlayer, commandName, targetPartialNick, price)
 									triggerEvent("onPlayerHeal", targetPlayer, true)
 									outputChatBox("You healed '" ..targetPlayerName.. "'.", thePlayer, 0, 255, 0)
 									outputChatBox("You have been healed by '" ..getPlayerName(thePlayer).. "' for $" .. price .. ".", targetPlayer, 0, 255, 0)
-									
+									exports.logs:logMessage("[ES/HEAL] " .. getPlayerName(thePlayer) .. " healed " .. targetPlayerName .. " for $"..price , 30)
 									
 									if itemValue > 1 then
 										exports['item-system']:updateItemValue(thePlayer, slot, itemValue - 1)
