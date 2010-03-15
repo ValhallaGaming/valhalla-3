@@ -11,15 +11,13 @@ function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 		
 		
 		setGameSpeed(0.3)
-		setTimer(setGameSpeed, 4000, 1, 1.0)
+		setTimer(setGameSpeed, 10000, 1, 1.0)
 		if ( element and getElementType(element) == "player" ) then -- make blood
-			for i = 1, 100 do
-				fxAddBlood(x, y, z, 0, 0, 1, 1000, 1)
-				fxAddBlood(x, y, z, 1, 0, 0, 1000, 1)
-				fxAddBlood(x, y, z, 0, 1, 1, 1000, 1)
-				fxAddBlood(x, y, z, 1, 1, 1, 1000, 1)
-				fxAddBlood(x, y, z, 0, 1, 0, 1000, 1)
-			end
+			fxAddBlood(x, y, z, 0, 0, 1, 1000, 1)
+			fxAddBlood(x, y, z, 1, 0, 0, 1000, 1)
+			fxAddBlood(x, y, z, 0, 1, 1, 1000, 1)
+			fxAddBlood(x, y, z, 1, 1, 1, 1000, 1)
+			fxAddBlood(x, y, z, 0, 1, 0, 1000, 1)
 		end
 	end
 end
