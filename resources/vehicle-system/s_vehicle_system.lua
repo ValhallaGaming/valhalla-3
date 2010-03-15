@@ -1023,7 +1023,7 @@ function lockUnlockInside(vehicle)
 	
 	if (owner ~= -2) then
 		if not locklessVehicle[model] or exports.global:hasItem( source, 3, dbid ) then
-			if (getElementData(source, "realinvehicle") == 1)
+			if (getElementData(source, "realinvehicle") == 1) then
 				local locked = isVehicleLocked(vehicle)
 				local seat = getPedOccupiedVehicleSeat(source)
 				if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
