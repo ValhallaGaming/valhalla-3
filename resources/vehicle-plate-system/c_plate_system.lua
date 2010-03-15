@@ -146,7 +146,7 @@ function checkPlate()
 		for i = 1, #theText do
 			local char = theText:sub( i, i )
 			if char == ' ' then -- it's a space
-				if i == #theText or i = 1 or spaceBefore then -- space at the end or beginning or two spaces are not allowed
+				if i == #theText or i == 1 or spaceBefore then -- space at the end or beginning or two spaces are not allowed
 					valid = false
 					break
 				end
