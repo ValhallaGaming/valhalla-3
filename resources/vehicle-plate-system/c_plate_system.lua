@@ -7,6 +7,8 @@ setElementData(gabby, "name", "Gabrielle McCoy")
 setPedFrozen(gabby, true)
 setPedAnimation(gabby, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false)
 
+local platecheck, newplates = nil
+
 function cBeginGUI()
 	local lplayer = getLocalPlayer()
 	triggerServerEvent("platePedTalk", lplayer, 1)
@@ -109,14 +111,17 @@ function editPlateWindow()
 		guiLabelSetHorizontalAlign(mainT, nil, true)
 	
 		guiCreateLabel(0.03, 0.22, 2.0, 0.1, "Please enter your new Plate Text:", true, efinalWindow)
-		newplates = guiCreateEdit(0.03, 0.30, 2.0, 0.1, "XXXXXXXX", true, efinalWindow)
+		newplates = guiCreateEdit(0.03, 0.30, 2.0, 0.1, "", true, efinalWindow)
 		guiEditSetMaxLength(newplates, 8)
-		guiCreateLabel(0.03, 0.41, 2.0, 0.1, "(( The max is 8 Characters!))", true, efinalWindow)
+		addEventHandler("onClientGUIChanged", newplates, checkPlate) 
+		--guiCreateLabel(0.03, 0.41, 2.0, 0.1, "(( The max is 8 Characters!))", true, efinalWindow)
+		
+		plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Invalid plate", true, efinalWindow)
 		
 		--Buttons
-		finalx = guiCreateButton(0.25, 0.70, 0.50, 0.10, "Exit Screen", true, efinalWindow)
+		finalx = guiCreateButton(0.25, 0.75, 0.50, 0.10, "Exit Screen", true, efinalWindow)
 		addEventHandler("onClientGUIClick", finalx, closeWindow)
-		submitNP = guiCreateButton(0.25, 0.55, 0.50, 0.10, "Submit Registration", true, efinalWindow)
+		submitNP = guiCreateButton(0.25, 0.60, 0.50, 0.10, "Submit Registration", true, efinalWindow)
 		addEventHandler("onClientGUIClick", submitNP, getPlateNText)
 		
 		--Quick Settings
@@ -126,6 +131,45 @@ function editPlateWindow()
 		guiWindowSetMovable(efinalWindow, true)
 		guiSetVisible(efinalWindow, true)
 		showCursor(true)
+	end
+end
+
+
+function checkPlate()
+	if (source==newplates) then
+		local theText = guiGetText(source)
+		
+		local foundSpace, valid = false, true
+		local lastChar, current = ' ', ''
+		for i = 1, #theText do
+			local char = theText:sub( i, i )
+			if char == ' ' then -- it's a space
+				if i == #theText then -- space at the end of name is not allowed
+					valid = false
+					break
+				else
+					foundSpace = true -- we have at least two name parts
+				end
+				
+				if #current < 2 then -- check if name's part is at least 2 chars
+					valid = false
+					break
+				end
+				current = ''
+			elseif ( char >= 'a' and char <= 'z' ) or ( char >= 'A' and char <= 'Z' ) then -- can have letters anywhere in the name
+				current = current .. char
+			else -- unrecognized char (numbers, special chars)
+				valid = false
+				break
+			end
+			lastChar = char
+		end
+		
+		if valid  and #theText < 9 and #current >= 4 then
+			guiLabelSetColor(platecheck, 0, 255, 0)
+		else
+			guiLabelSetColor(platecheck, 255, 0, 0)
+		end
 	end
 end
 
