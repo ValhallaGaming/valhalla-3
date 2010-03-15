@@ -2,7 +2,8 @@ function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 	if ( weapon == 34 ) then -- sniper
 		local px, py, pz = getElementPosition(source)
 		
-		playSound3D("sound.wav", px, py, pz)
+		local sound = playSound3D("sound.wav", px, py, pz)
+		setSoundMaxDistance(sound, 150)
 		
 		if ( source == getLocalPlayer() and ( getElementType(element) == "vehicle" or getElementType(element) == "player" ) ) then -- we are the shooter
 			triggerServerEvent("50cal", getLocalPlayer(), element)
