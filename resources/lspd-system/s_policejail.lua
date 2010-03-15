@@ -138,7 +138,7 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 									outputChatBox("Crimes Committed: " .. reason .. ".", value, 0, 102, 255)
 								end
 							end
-							exports.logs:logMessage("[PD/ARREST] ".. factionRankTitle .. " " .. name .. " jailed " .. targetPlayerNick .. " for " .. jailtime .. " minute(s). Reason: "..reason , 30)
+							exports.logs:logMessage("[PD/ARREST] ".. factionRankTitle .. " " .. username .. " jailed " .. targetPlayerNick .. " for " .. jailtime .. " minute(s). Reason: "..reason , 30)
 						end
 					end
 				end
