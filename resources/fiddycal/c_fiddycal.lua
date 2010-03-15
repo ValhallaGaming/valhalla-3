@@ -10,9 +10,11 @@ function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 		end
 		
 		if ( element and getElementType(element) == "player" ) then -- make blood
-			fxAddBlood(x, y, z, 0, 0, 1, 100, 1)
-			fxAddBlood(x, y, z, 1, 0, 0, 100, 1)
-			fxAddBlood(x, y, z, 0, 1, 1, 100, 1)
+			fxAddBlood(x, y, z, 0, 0, 1, 1000, 1)
+			fxAddBlood(x, y, z, 1, 0, 0, 1000, 1)
+			fxAddBlood(x, y, z, 0, 1, 1, 1000, 1)
+			fxAddBlood(x, y, z, 1, 1, 1, 1000, 1)
+			fxAddBlood(x, y, z, 0, 1, 0, 1000, 1)
 		end
 	end
 end
