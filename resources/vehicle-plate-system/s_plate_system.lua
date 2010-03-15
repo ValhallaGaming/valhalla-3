@@ -36,7 +36,7 @@ function setNewInfo(data, car)
 					local insertnplate = mysql:query_free("UPDATE vehicles SET plate='" .. mysql:escape_string(data) .. "' WHERE id = '" .. mysql:escape_string(car) .. "'")
 					if (insertnplate) then
 						if (exports.global:takeMoney(source, serverRegFee)) then
-							exports['vehicle-system']:reloadVehicle(car)
+							exports['vehicle-system']:reloadVehicle(tonumber(car))
 							triggerEvent("platePedTalk", source, 5)
 						else
 							triggerEvent("platePedTalk", source, 2)						
