@@ -7,7 +7,7 @@ setElementData(gabby, "name", "Gabrielle McCoy")
 setPedFrozen(gabby, true)
 setPedAnimation(gabby, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false)
 
-local plateCheck, newplates = nil
+local plateCheck, newplates, efinalWindow = nil
 
 function cBeginGUI()
 	local lplayer = getLocalPlayer()
@@ -110,13 +110,14 @@ function editPlateWindow()
 		local mainT = guiCreateLabel(0.03, 0.08, 2.0, 0.1, "Registering plates for vehicle #" .. svnum .. ".", true, efinalWindow)
 		guiLabelSetHorizontalAlign(mainT, nil, true)
 	
-		guiCreateLabel(0.03, 0.22, 2.0, 0.1, "Please enter your new Plate Text:", true, efinalWindow)
+		guiCreateLabel(0.03, 0.22, 2.0, 0.1, "Please enter your new plate:", true, efinalWindow)
 		newplates = guiCreateEdit(0.03, 0.30, 2.0, 0.1, "", true, efinalWindow)
 		guiEditSetMaxLength(newplates, 8)
+		
 		addEventHandler("onClientGUIChanged", newplates, checkPlate) 
-		--guiCreateLabel(0.03, 0.41, 2.0, 0.1, "(( The max is 8 Characters!))", true, efinalWindow)
 		
 		plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Invalid plate", true, efinalWindow)
+		guiLabelSetColor(plateCheck, 255, 0, 0)
 		
 		--Buttons
 		finalx = guiCreateButton(0.25, 0.75, 0.50, 0.10, "Exit Screen", true, efinalWindow)
@@ -165,9 +166,12 @@ function checkPlate()
 			lastChar = char
 		end
 		
+		destroyElement(plateCheck)
 		if valid  and #theText < 9 and #current >= 4 then
+			plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Valid plate", true, efinalWindow)
 			guiLabelSetColor(plateCheck, 0, 255, 0)
 		else
+			plateCheck = guiCreateLabel(0.03, 0.41, 2.0, 0.1, "Invalid plate", true, efinalWindow)
 			guiLabelSetColor(plateCheck, 255, 0, 0)
 		end
 	end
