@@ -1,0 +1,6 @@
+<meta>
+    <info author="herbjr" type="script" description="Vehicle License Plate System"/>
+	
+	<script src="s_plate_system.lua" type="server"/>
+	<script src="c_plate_system.lua" type="client"/>
+</meta>

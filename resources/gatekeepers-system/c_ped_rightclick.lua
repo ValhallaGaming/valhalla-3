@@ -59,6 +59,8 @@ function clickPed(button, state, absX, absY, wx, wy, wz, element)
 							triggerServerEvent("gateCityHall", getLocalPlayer())
 						elseif (ped=="Airman Connor") then
 							triggerServerEvent("gateAngBase", getLocalPlayer())
+						elseif (ped=="Gabrielle McCoy") then
+							triggerEvent("cBeginPlate", getLocalPlayer())
 						else
 							outputChatBox("Error: Unknown ped.", 255, 0, 0)
 						end

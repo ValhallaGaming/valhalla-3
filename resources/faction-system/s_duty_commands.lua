@@ -27,6 +27,11 @@ exports.pool:allocateElement(sacfColShape)
 setElementDimension(sacfColShape, 777)
 setElementInterior(sacfColShape, 3)
 
+courtColShape = createColSphere(350.302734375, 163.7236328125, 1019.9912109375, 5)
+exports.pool:allocateElement(courtColShape)
+setElementDimension(courtColShape, 100)
+setElementInterior(courtColShape, 3)
+
 local authSwat = nil
 
 function saveWeaponsOnDuty( thePlayer )
@@ -57,6 +62,7 @@ end
 
 -- 9 = SACF
 -- 10 = SACF CERT (Wtf is CERT?)
+-- 11 = Court
 
 -- ES
 function lvesHeal(thePlayer, commandName, targetPartialNick, price)
@@ -823,3 +829,51 @@ function sacfduty(thePlayer, commandName)
 	end
 end
 addCommandHandler("cert", sacfduty, false, false)
+
+-- Court US Marshalls /duty command
+function courtduty(thePlayer, commandName)	
+	local logged = getElementData(thePlayer, "loggedin")
+	
+	if (logged==1) then
+		if (isElementWithinColShape(thePlayer, courtColShape)) then
+		
+			local duty = tonumber(getElementData(thePlayer, "duty"))
+			local theTeam = getPlayerTeam(thePlayer)
+			
+			if getTeamName( theTeam ) == "First Court of San Andreas" then
+				if (duty==0) then
+					outputChatBox("You are now on Duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "takes their equipment from a box.")
+					
+					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+					end
+					
+					saveWeaponsOnDuty(thePlayer)
+					
+					setPedArmor(thePlayer, 100)
+					setElementHealth(thePlayer, 100)
+					
+					exports.global:giveWeapon(thePlayer, 22, 60) -- Colt
+					
+					setElementModel(thePlayer, 286)
+					
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 11, false)
+					
+					saveSkin(thePlayer)
+				elseif (duty==11) then
+					restoreWeapons(thePlayer)
+					outputChatBox("You are now off duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "puts their equipment back into their box.")
+					setPedArmor(thePlayer, 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)
+				end
+			end
+		end
+	end
+end
+addCommandHandler("duty", courtduty, false, false)

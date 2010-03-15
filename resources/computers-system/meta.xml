@@ -226,6 +226,9 @@
 	<script src="websites/natslife_c.lua" type="client"/>
 	<file src="websites/natslife.xml"/>
 	
+	<!-- R -->
+	<script src="websites/RandBsburialservice.lua" type="client"/>
+	
 	<!-- S -->
 	<script src="websites/sadesigns.lua" type="client"/>
 	<script src="websites/sanetwork.lua" type="client"/>
