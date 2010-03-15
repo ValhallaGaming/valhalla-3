@@ -1,17 +1,3 @@
-local has = false
-
-function toggle()
-	if ( has ) then
-		outputChatBox("50cal turned off.")
-		has = false
-		removeEventHandler("onClientPlayerWeaponFire", getRootElement(), firedFiddyCal)
-	else
-		outputChatBox("50cal turned on")
-		has = true
-		addEventHandler("onClientPlayerWeaponFire", getRootElement(), firedFiddyCal)
-	end
-end
-
 function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 	if ( weapon == 34 ) then -- sniper
 		local px, py, pz = getElementPosition(source)
@@ -23,3 +9,4 @@ function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 		end
 	end
 end
+addEventHandler("onClientPlayerWeaponFire", getRootElement(), firedFiddyCal)
