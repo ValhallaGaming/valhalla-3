@@ -1,6 +1,14 @@
 function fiddycal(target)
 	if ( getElementType(target) == "vehicle" ) then -- its a 50cal, it destroys cars!
 		blowVehicle(target, true)
+		local x, y, z = getElementPosition(target)
+		createExplosion(x, y, z, 4, true, 0.5, false)
+		createExplosion(x+1, y, z, 4, true, 0.5, false)
+		createExplosion(x, y+1, z, 4, true, 0.5, false)
+		createExplosion(x+1, y+1, z, 4, true, 0.5, false)
+		createExplosion(x-1, y, z, 4, true, 0.5, false)
+		createExplosion(x, y-1, z, 4, true, 0.5, false)
+		createExplosion(x-1, y-1, z, 4, true, 0.5, false)
 	elseif ( getElementType(target) == "player" ) then
 		setElementHealth(target, 0)
 		if ( isElement(target) ) then
