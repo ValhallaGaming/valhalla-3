@@ -32,16 +32,20 @@ function setNewInfo(data, car)
 			local tvehicle = exports.pool:getElement("vehicle", car)
 			local owner = getElementData(tvehicle, "owner")
 			if (townerid==owner) then
-				local insertnplate = mysql:query_free("UPDATE vehicles SET plate='" .. mysql:escape_string(data) .. "' WHERE id = '" .. mysql:escape_string(car) .. "'")
-				if (insertnplate) then
-					if (exports.global:takeMoney(source, serverRegFee)) then
-						exports['vehicle-system']:reloadVehicle(car)
-						triggerEvent("platePedTalk", source, 5)
+				if (checkPlate(data)) then
+					local insertnplate = mysql:query_free("UPDATE vehicles SET plate='" .. mysql:escape_string(data) .. "' WHERE id = '" .. mysql:escape_string(car) .. "'")
+					if (insertnplate) then
+						if (exports.global:takeMoney(source, serverRegFee)) then
+							exports['vehicle-system']:reloadVehicle(car)
+							triggerEvent("platePedTalk", source, 5)
+						else
+							triggerEvent("platePedTalk", source, 2)						
+						end
 					else
-						triggerEvent("platePedTalk", source, 2)						
+						outputChatBox("ERROR VPS0-001. Please report on the mantis.", source, 255,0,0)
 					end
 				else
-					outputChatBox("ERROR VPS0-001. Please report on the mantis.", source, 255,0,0)
+					outputChatBox("ERROR VPS0-003. Please report on the mantis.", source, 255,0,0)
 				end
 			end
 		end
@@ -51,3 +55,38 @@ function setNewInfo(data, car)
 end
 addEvent("sNewPlates", true)
 addEventHandler("sNewPlates", getRootElement(), setNewInfo)
+
+function checkPlate(theText)
+	local foundSpace, valid = false, true
+	local lastChar, current = ' ', ''
+	for i = 1, #theText do
+		local char = theText:sub( i, i )
+		if char == ' ' then -- it's a space
+			if i == #theText then -- space at the end of name is not allowed
+				valid = false
+				break
+			else
+				foundSpace = true -- we have at least two name parts
+			end
+			
+			if #current < 2 then -- check if name's part is at least 2 chars
+				valid = false
+				break
+			end
+			current = ''
+		elseif ( char >= 'a' and char <= 'z' ) or ( char >= 'A' and char <= 'Z' ) then -- can have letters anywhere in the name
+			current = current .. char
+		elseif ( char >= '0' and char <= '9') then
+			current = current .. char
+		else -- unrecognized char (numbers, special chars)
+			valid = false
+			break
+		end
+		lastChar = char
+	end
+	if valid  and #theText < 9 and #current >= 4 then
+		return true
+	else
+		return false
+	end
+end
