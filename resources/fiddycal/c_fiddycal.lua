@@ -9,6 +9,9 @@ function firedFiddyCal(weapon, ammo, clipammo, x, y, z, element)
 			triggerServerEvent("50cal", getLocalPlayer(), element)
 		end
 		
+		
+		setGameSpeed(0.3)
+		setTimer(setGameSpeed, 4000, 1, 1.0)
 		if ( element and getElementType(element) == "player" ) then -- make blood
 			for i = 1, 100 do
 				fxAddBlood(x, y, z, 0, 0, 1, 1000, 1)
