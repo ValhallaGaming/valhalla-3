@@ -1023,15 +1023,17 @@ function lockUnlockInside(vehicle)
 	
 	if (owner ~= -2) then
 		if not locklessVehicle[model] or exports.global:hasItem( source, 3, dbid ) then
-			local locked = isVehicleLocked(vehicle)
-			local seat = getPedOccupiedVehicleSeat(source)
-			if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
-				if (locked) then
-					setVehicleLocked(vehicle, false)
-					exports.global:sendLocalMeAction(source, "unlocks the vehicle doors.")
-				else
-					setVehicleLocked(vehicle, true)
-					exports.global:sendLocalMeAction(source, "locks the vehicle doors.")
+			if (getElementData(source, "realinvehicle") == 1)
+				local locked = isVehicleLocked(vehicle)
+				local seat = getPedOccupiedVehicleSeat(source)
+				if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
+					if (locked) then
+						setVehicleLocked(vehicle, false)
+						exports.global:sendLocalMeAction(source, "unlocks the vehicle doors.")
+					else
+						setVehicleLocked(vehicle, true)
+						exports.global:sendLocalMeAction(source, "locks the vehicle doors.")
+					end
 				end
 			end
 		end
