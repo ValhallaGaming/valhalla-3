@@ -141,12 +141,13 @@ function checkPlate()
 		local theText = guiGetText(source)
 		
 		local foundSpace, valid = false, true
-		local lastChar, current = ' ', ''
+		local current = ''
 		for i = 1, #theText do
 			local char = theText:sub( i, i )
 			if char == ' ' then -- it's a space
 				if i == #theText then -- space at the end of name is not allowed
 					valid = false
+					outputChatBox("SPACE")
 					break
 				end
 				current = ''
@@ -155,10 +156,10 @@ function checkPlate()
 			elseif ( char >= '0' and char <= '9') then
 				current = current .. char
 			else -- unrecognized char (special chars)
+				outputChatBox("SPECIAL")
 				valid = false
 				break
 			end
-			lastChar = char
 		end
 		
 		destroyElement(plateCheck)
