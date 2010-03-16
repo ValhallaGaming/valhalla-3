@@ -12,7 +12,6 @@ function showLicenseWindow()
 	triggerServerEvent("onLicenseServer", getLocalPlayer())
 	
 	local vehiclelicense = getElementData(getLocalPlayer(), "license.car")
-	local weaponlicense = getElementData(getLocalPlayer(), "license.gun")
 
 	local width, height = 300, 400
 	local scrWidth, scrHeight = guiGetScreenSize()
@@ -30,13 +29,7 @@ function showLicenseWindow()
 		guiGridListSetItemText(licenseList, row, column, "Car License", false, false)
 		guiGridListSetItemText(licenseList, row, column2, "450", true, false)
 	end
-			
-	if (weaponlicense~=1) then
-		local row2 = guiGridListAddRow(licenseList)
-		guiGridListSetItemText(licenseList, row2, column, "Weapon License", false, false)
-		guiGridListSetItemText(licenseList, row2, column2, "15000", true, false)
-	end
-	
+				
 	bAcceptLicense = guiCreateButton(0.05, 0.85, 0.45, 0.1, "Buy License", true, wLicense)
 	bCancel = guiCreateButton(0.5, 0.85, 0.45, 0.1, "Cancel", true, wLicense)
 	
@@ -61,8 +54,6 @@ function acceptLicense(button, state)
 			
 			if (licensetext=="Car License") then
 				license = 1
-			elseif (licensetext=="Weapon License") then
-				license = 2
 			end
 			
 			if (license>0) then
@@ -83,20 +74,6 @@ function acceptLicense(button, state)
 							showCursor(false)
 						elseif(getElementData(getLocalPlayer(),"license.car")==3) then
 							initiateDrivingTest()
-						end
-					else
-						if getElementData(getLocalPlayer(), "license.gun") < 0 then
-							outputChatBox( "You need to wait another " .. -getElementData(getLocalPlayer(), "license.gun") .. " hours before being able to obtain a " .. licensetext .. ".", 255, 0, 0 )
-						elseif getElementData(getLocalPlayer(), "hoursplayed") < 16 then
-							outputChatBox( "You need to play at least 16 hours on this character to get a weapon license.", 255, 0, 0 )
-						else
-							triggerServerEvent("acceptLicense", getLocalPlayer(), license, licensecost) -- give them the weapons license.
-							destroyElement(licenseList)
-							destroyElement(bAcceptLicense)
-							destroyElement(bCancel)
-							destroyElement(wLicense)
-							wLicense, licenseList, bAcceptLicense, bCancel = nil, nil, nil, nil
-							showCursor(false)
 						end
 					end
 				end

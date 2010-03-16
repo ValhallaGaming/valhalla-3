@@ -25,11 +25,6 @@ function giveLicense(license, cost)
 		outputChatBox("Congratulations, you've passed the second part of your driving examination.", source, 255, 194, 14)
 		outputChatBox("You are now fully licenses to drive on the public streets. You have paid the $350 processing fee.", source, 255, 194, 14)
 		exports.global:takeMoney(source, cost)
-	elseif (license==2) then
-		exports['anticheat-system']:changeProtectedElementDataEx(source, "license.gun", 1)
-		mysql:free_result("UPDATE characters SET gun_license='1' WHERE charactername='" .. mysql:escape_string(getPlayerName(source)) .. "' LIMIT 1")
-		outputChatBox("You obtained your weapons license.", source, 255, 194, 14)
-		exports.global:takeMoney(source, cost)
 	end
 end
 addEvent("acceptLicense", true)
