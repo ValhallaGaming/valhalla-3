@@ -2,21 +2,11 @@ local sound = false
 local made = false
 
 function checkForInterior()
-	if ( (getElementDimension(getLocalPlayer()) == 1292 or getPlayerName(getLocalPlayer()) == "Lily_Anwen") and not made ) then
-		if ( getPlayerName(getLocalPlayer()) == "Lily_Anwen") then
-			local sound = playSound("ghettoblaster/right_round_loop.wav", true)
-		else
-			setRadioChannel(7)
-			made = true
-		end
+	if ( (getElementDimension(getLocalPlayer()) == 1292) and not made ) then
+		setRadioChannel(7)
+		made = true
 	elseif ( getElementDimension(getLocalPlayer()) ~= 1292 and made ) then
-		--if ( getPlayerName(getLocalPlayer()) == "Lily_Anwen" ) then
-		--	stopSound(sound)
-		--	destroyElement(sound)
-		--	sound = nil
-		--else
-			setRadioChannel(0)
-		--end
+		setRadioChannel(0)
 		made = false
 	end
 end
