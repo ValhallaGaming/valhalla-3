@@ -702,7 +702,7 @@ function toggleEngine(source, key, keystate)
 						end
 						
 						blowVehicle(veh)
-					elseif fuel >= 1 or exports.global:isPlayerSilverDonator(source) then
+					elseif fuel >= 1 then
 						toggleControl(source, 'brake_reverse', true)
 						
 						setVehicleEngineState(veh, true)
