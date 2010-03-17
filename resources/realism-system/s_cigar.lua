@@ -3,7 +3,7 @@ function toggleSmoking(thePlayer)
 	triggerClientEvent("realism:smokingsync", thePlayer, not smoking)
 	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realism:smoking", not smoking, false )
 end
-addCommandHandler("testsmoke", testsmoke)
+addCommandHandler("testsmoke", toggleSmoking)
 
 -- Sync to new players
 addEvent("realism:smoking.request", true)
