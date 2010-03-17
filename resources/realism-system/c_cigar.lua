@@ -46,8 +46,6 @@ end
 addEvent( "realism:smokingsync", true )
 addEventHandler( "realism:smokingsync", getRootElement(), syncCigarette )
 
-
-
 addEventHandler( "onClientResourceStart", getResourceRootElement(),
     function ( startedRes )
 		triggerServerEvent("realism:smoking.request", getLocalPlayer())
@@ -76,13 +74,11 @@ end]]
 
 -- todo it more perfect clientside... in hands
 function createModel(player, modelid)
-	local bx, by, bz = getPedBonePosition(player, 35) -- or 25
-	local x, y, z = getElementPosition(player)
-	local r = getPedRotation(player)
+	--local bx, by, bz = getPedBonePosition(player, 35) -- or 25
+	--local x, y, z = getElementPosition(player)
+	--local r = getPedRotation(player)
 				
-	local ox, oy, oz = bx-x+0.13, -0.1, 0
-
-	objectID = modelid
+	--local ox, oy, oz = bx-x+0.13, -0.1, 0
 	
 	if (l_cigar[player] ~= nil) then
 		local currobject = l_cigar[player]
@@ -92,9 +88,22 @@ function createModel(player, modelid)
 		end
 	end
 	
-	local object = createObject(objectID, bx, by, bz)
-	attachElements(object, player, ox, oy, oz, 0, 60, 180)
+	--local object = createObject(modelid, bx, by, bz)
+	local object = createObject(modelid, 0,0,0)
+	--attachElements(object, player, ox, oy, oz, 0, 60, 180)
 	
 	setElementCollisionsEnabled(object, false)
 	return object
 end
+
+function updateCig()
+	for thePlayer, theObject in pairs(l_cigar) do
+		local bx, by, bz = getPedBonePosition(thePlayer, 35)
+		local x, y, z = getElementPosition(thePlayer)
+		--local r = getPedRotation(thePlayer)
+					
+		local ox, oy, oz = bx-x+0.13, -0.1, 0
+		moveObject ( theObject, 1, bx, by, bz )
+	end
+end
+addEventHandler("onClientRender", getRootElement(), updateCig)
