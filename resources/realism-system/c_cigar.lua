@@ -13,7 +13,7 @@ end
 
 function playerExitsVehicle(player)
 	if (getElementData(player, "smoking") == true) then
-		l_cigar[player] = createModel(player, 1485) -- or 3027 or 3044
+		l_cigar[player] = createModel(player, 3027) -- or 1485 or 3044
 	end
 end
 addEventHandler("onVehicleExit", getRootElement(), playerExitsVehicle)
@@ -98,12 +98,19 @@ end
 
 function updateCig()
 	for thePlayer, theObject in pairs(l_cigar) do
-		local bx, by, bz = getPedBonePosition(thePlayer, 35)
+		local bx, by, bz = getPedBonePosition(thePlayer, 36)
 		local x, y, z = getElementPosition(thePlayer)
-		--local r = getPedRotation(thePlayer)
-					
-		local ox, oy, oz = bx+0.13, by-0.1, bz
-		moveObject ( theObject, 1, ox, oy, oz )
+		local r = getPedRotation(thePlayer)
+		
+		local r = r + 170
+		if (r > 360) then
+			r = r - 360
+		end
+		
+		local ratio = r/360
+	
+		moveObject ( theObject, 1, bx, by, bz )
+		setElementRotation(theObject, 60, 30, r)
 	end
 end
 addEventHandler("onClientRender", getRootElement(), updateCig)

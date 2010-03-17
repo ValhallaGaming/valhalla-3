@@ -27,10 +27,10 @@ function showColBox()
 		show = true
 	end
 end
-addCommandHandler("showcol", showColBox)
+addCommandHandler("showobjcol", showColBox)
 
 function drawBox()
-	for key, value in ipairs(getElementsByType("player")) do
+	for key, value in ipairs(getElementsByType("object")) do
 		if isElementStreamedIn(value) and (isElementOnScreen(value)) then
 			if (value~=getLocalPlayer()) then
 				local px, py, pz = getElementPosition(value)
