@@ -102,8 +102,8 @@ function updateCig()
 		local x, y, z = getElementPosition(thePlayer)
 		--local r = getPedRotation(thePlayer)
 					
-		local ox, oy, oz = bx-x+0.13, -0.1, 0
-		moveObject ( theObject, 1, bx, by, bz )
+		local ox, oy, oz = bx+0.13, by-0.1, bz
+		moveObject ( theObject, 1, ox, oy, oz )
 	end
 end
 addEventHandler("onClientRender", getRootElement(), updateCig)
