@@ -28,6 +28,7 @@
 	<script src="PD Interior2.lua" type="client"/>
 	<script src="PDRoof.lua" type="client"/>
 	<script src="PD CPU Parking Lot.lua" type="client"/>
+	<script src="swatinterior.lua" type="client"/>
 	
 	<!-- 2: Los Santos Emergency Services -->
 	<script src="ES.lua" type="client"/>
