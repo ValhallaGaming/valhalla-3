@@ -7,8 +7,8 @@ function checkForInterior()
 			local sound = playSound("ghettoblaster/right_round_loop.wav", true)
 		else
 			setRadioChannel(7)
+			made = true
 		end
-		made = true
 	elseif ( getElementDimension(getLocalPlayer()) ~= 1292 and made ) then
 		--if ( getPlayerName(getLocalPlayer()) == "Lily_Anwen" ) then
 		--	stopSound(sound)
