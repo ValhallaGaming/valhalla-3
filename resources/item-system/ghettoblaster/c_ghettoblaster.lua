@@ -11,7 +11,7 @@ function checkForInterior()
 		end
 		made = true
 	elseif ( getElementDimension(getLocalPlayer()) ~= 1292 and made ) then
-		if ( getPlayerName(getLocalPlayer()) == "Alfonso_Moleneux" then
+		if ( getPlayerName(getLocalPlayer()) == "Alfonso_Moleneux" ) then
 			stopSound(sound)
 			destroyElement(sound)
 			sound = nil
