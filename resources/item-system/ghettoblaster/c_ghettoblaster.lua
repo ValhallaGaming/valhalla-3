@@ -2,8 +2,8 @@ local sound = false
 local made = false
 
 function checkForInterior()
-	if ( (getElementDimension(getLocalPlayer()) == 1292 or getPlayerName(getLocalPlayer()) == "Mac_Alitalia") and not made ) then
-		if ( getPlayerName(getLocalPlayer()) == "Mac_Alitalia") then
+	if ( (getElementDimension(getLocalPlayer()) == 1292 or getPlayerName(getLocalPlayer()) == "Lily_Anwen") and not made ) then
+		if ( getPlayerName(getLocalPlayer()) == "Lily_Anwen") then
 			local sound = playSound("ghettoblaster/right_round_loop.wav", true)
 		else
 			setRadioChannel(7)
