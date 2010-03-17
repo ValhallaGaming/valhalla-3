@@ -3,13 +3,21 @@ local made = false
 
 function checkForInterior()
 	if ( getElementDimension(getLocalPlayer()) == 1292 and not made ) then
-		local sound = playSound3D("ghettoblaster/right_round_loop.wav", 500.36328125, -74.9267578125, 998.7578125, true)
-		setSoundMaxDistance(sound, 50)
+		if ( getPlayerName(getLocalPlayer()) == "Matt_Desmore") then
+			local sound = playSound3D("ghettoblaster/right_round_loop.wav", 500.36328125, -74.9267578125, 998.7578125, true)
+			setSoundMaxDistance(sound, 50)
+		else
+			setRadioChannel(7)
+		end
 		made = true
 	elseif ( getElementDimension(getLocalPlayer()) ~= 1292 and made ) then
-		stopSound(sound)
-		destroyElement(sound)
-		sound = nil
+		if ( getPlayerName(getLocalPlayer()) == "Matt_Desmore") then
+			stopSound(sound)
+			destroyElement(sound)
+			sound = nil
+		else
+			setRadioChannel(0)
+		end
 		made = false
 	end
 end
