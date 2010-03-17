@@ -79,6 +79,9 @@
 	
 	<script src="c_radio_fix.lua" type="client"/>
 	<script src="s_radio_fix.lua" type="server"/>
+
+	<script src="s_cigar.lua" type="server"/>
+	<script src="c_cigar.lua" type="client"/>
 	
 	<script src="s_police_radar.lua" type="server"/>
 	<script src="c_police_radar.lua" type="client"/>
