@@ -149,7 +149,7 @@ function setTag(thePlayer, commandName, newTag)
 				mysql:query_free("UPDATE characters SET tag=" .. mysql:escape_string(newTag) .. " WHERE id = " .. mysql:escape_string(getElementData(thePlayer, "dbid")))
 			end
 		else
-			outputChatBox("Invalid value, please enter a value between 1 and 8.", 255, 0, 0)
+			outputChatBox("Invalid value, please enter a value between 1 and 8.", thePlayer, 255, 0, 0)
 		end
 	end
 end
