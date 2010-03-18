@@ -4,7 +4,7 @@
 	<script src="World/Bank Int.lua" type="client"/>
 	<script src="World/Church Int.lua" type="client"/>
 	<script src="World/Church2Int.lua" type="client"/>
-	<script src="LS Harbor.lua" type="client"/>
+	<script src="World/Docks.lua" type="client"/>
 	<script src="World/Main Street.lua" type="client"/>
 	<script src="Recording Studio.lua" type="client"/>
 	<script src="Fixes/Smokes House Wall Fix.lua" type="client"/>
