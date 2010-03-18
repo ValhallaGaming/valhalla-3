@@ -29,11 +29,11 @@
 	<script src="LSPD/swatinterior.lua" type="client"/>
 	
 	<!-- 2: Los Santos Emergency Services -->
-	<script src="ES/ES.lua" type="client"/>
-	<script src="ES/ES Academy.lua" type="client"/>
-	<script src="ES/FD Interior.lua" type="client"/>
-	<script src="ES/Hospital Int.lua" type="client"/>
-	<script src="ES/ES-Hospital-Rooftop.lua" type="client"/>
+	<script src="LSES/ES.lua" type="client"/>
+	<script src="LSES/ES Academy.lua" type="client"/>
+	<script src="LSES/FD Interior.lua" type="client"/>
+	<script src="LSES/Hospital Int.lua" type="client"/>
+	<script src="LSES/ES-Hospital-Rooftop.lua" type="client"/>
 	
 	<!-- 3: Government of Los Santos -->
 	<script src="GOV/Gov City Hall.lua" type="client"/>
