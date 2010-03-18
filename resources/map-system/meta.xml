@@ -80,4 +80,5 @@
 	<script src="SACF/Prison Int Cells.lua" type="client"/>
 	<script src="SACF/wardenoffice.lua" type="client"/>
 	<script src="SACF/medbay.lua" type="client"/>
+	<script src="SACF/isolation.lua" type="client"/>
 </meta>
