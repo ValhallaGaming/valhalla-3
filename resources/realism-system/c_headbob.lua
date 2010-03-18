@@ -27,7 +27,7 @@ function showColBox()
 		show = true
 	end
 end
-addCommandHandler("showobjcol", showColBox)
+--addCommandHandler("showobjcol", showColBox)
 
 function drawBox()
 	for key, value in ipairs(getElementsByType("object")) do
