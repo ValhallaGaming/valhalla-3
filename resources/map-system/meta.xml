@@ -78,4 +78,5 @@
 	<script src="SACF/Prison Ext.lua" type="client"/>
 	<script src="SACF/Prison Int Rec.lua" type="client"/>
 	<script src="SACF/Prison Int Cells.lua" type="client"/>
+	<script src="SACF/wardenoffice.lua" type="client"/>
 </meta>
