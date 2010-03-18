@@ -8,7 +8,7 @@ local objects =
 	createObject(2952, 691.86938476563, -3203.8193359375, 4527.7822265625, 0, 0, 90, 3)
 }
 
-local col = createColSphere(691.86938476563, -3203.8193359375, 4527.7822265625,100)
+local col = createColSphere(691.86938476563, -3203.8193359375, 4527.7822265625,15)
 addEventHandler( "onClientColShapeHit", col,
 	function( element )
 		if element == getLocalPlayer( ) then
