@@ -221,11 +221,6 @@
 	<script src="websites/lsiflight.lua" type="client"/>
 	<file src="websites/images/lsifsi.png"/>
 	
-	<!-- N -->
-	<script src="websites/natslife_s.lua" type="server"/>
-	<script src="websites/natslife_c.lua" type="client"/>
-	<file src="websites/natslife.xml"/>
-	
 	<!-- R -->
 	<script src="websites/RandBsburialservice.lua" type="client"/>
 	
