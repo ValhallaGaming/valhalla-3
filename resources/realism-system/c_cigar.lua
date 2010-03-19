@@ -13,7 +13,7 @@ end
 
 function playerExitsVehicle(player)
 	if (getElementData(player, "smoking") == true) then
-		l_cigar[player] = createModel(player, 3027) -- or 1485 or 3044
+		l_cigar[player] = createModel(player, 3027)
 	end
 end
 addEventHandler("onVehicleExit", getRootElement(), playerExitsVehicle)
@@ -52,11 +52,7 @@ addEventHandler( "onClientResourceStart", getResourceRootElement(),
     end
 );
 
--- in mouth
---[[
 function createModel(player, modelid)
-	local x, y, z = getElementPosition(player)
-	
 	if (l_cigar[player] ~= nil) then
 		local currobject = l_cigar[player]
 		if (isElement(currobject)) then
@@ -65,33 +61,8 @@ function createModel(player, modelid)
 		end
 	end
 	
-    local object = createObject ( modelid, 0, 0, 0 )
-    attachElements ( object, player, 0.05, 0, 0.7, 0, 45, 118 ) 
-	
-	setElementCollisionsEnabled(object, false)
-	return object
-end]]
-
--- todo it more perfect clientside... in hands
-function createModel(player, modelid)
-	--local bx, by, bz = getPedBonePosition(player, 35) -- or 25
-	--local x, y, z = getElementPosition(player)
-	--local r = getPedRotation(player)
-				
-	--local ox, oy, oz = bx-x+0.13, -0.1, 0
-	
-	if (l_cigar[player] ~= nil) then
-		local currobject = l_cigar[player]
-		if (isElement(currobject)) then
-			destroyElement(currobject)
-			l_cigar[player] = nil
-		end
-	end
-	
-	--local object = createObject(modelid, bx, by, bz)
 	local object = createObject(modelid, 0,0,0)
-	--attachElements(object, player, ox, oy, oz, 0, 60, 180)
-	
+
 	setElementCollisionsEnabled(object, false)
 	return object
 end
@@ -101,7 +72,7 @@ function updateCig()
 		local bx, by, bz = getPedBonePosition(thePlayer, 36)
 		local x, y, z = getElementPosition(thePlayer)
 		local r = getPedRotation(thePlayer)
-		
+		local dim = getElementDimension(thePlayer)
 		local r = r + 170
 		if (r > 360) then
 			r = r - 360
@@ -111,6 +82,7 @@ function updateCig()
 	
 		moveObject ( theObject, 1, bx, by, bz )
 		setElementRotation(theObject, 60, 30, r)
+		setElementDimension(theObject, dim)
 	end
 end
-addEventHandler("onClientRender", getRootElement(), updateCig)
+addEventHandler("onClientPreRender", getRootElement(), updateCig)
