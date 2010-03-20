@@ -4,7 +4,7 @@ function monitorSpeed(theVehicle, matchingDimension)
 		if (enabled) then
 			local thePlayer = getVehicleOccupant(theVehicle)
 			if thePlayer then
-				local maxSpeed = getElementData(colshape, "speedcam:maxspeed")
+				local maxSpeed = getElementData(source, "speedcam:maxspeed")
 				local timer = setTimer(checkSpeed, 300, 30, theVehicle, thePlayer, source, maxSpeed)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:timer", timer, false)
 			end
