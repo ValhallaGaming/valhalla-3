@@ -8,8 +8,8 @@
 --
 
 --[[ Configuration ]]--
-local SCOREBOARD_WIDTH				= 500				-- The scoreboard window width
-local SCOREBOARD_HEIGHT				= 420				-- The scoreboard window height
+local SCOREBOARD_WIDTH				= 400				-- The scoreboard window width
+local SCOREBOARD_HEIGHT				= 460				-- The scoreboard window height
 local SCOREBOARD_HEADER_HEIGHT		= 20				-- Height for the header in what you can see the server info
 local SCOREBOARD_TOGGLE_CONTROL		= "tab"				-- Control/Key to toggle the scoreboard visibility
 local SCOREBOARD_PGUP_CONTROL		= "mouse_wheel_up"	-- Control/Key to move one page up
@@ -30,8 +30,8 @@ local SCOREBOARD_HEADERS_COLOR		= { 200, 200, 200, 160 }	-- RGBA color for the h
 local SCOREBOARD_SEPARATOR_COLOR	= { 82, 82, 82, 140 }		-- RGBA color for the separator line between headers and body content
 local SCOREBOARD_SCROLL_BACKGROUND	= { 0, 10, 20, 100 }		-- RGBA color for the scroll background
 local SCOREBOARD_SCROLL_FOREGROUND	= { 15, 177, 253, 160 }		-- RGBA color for the scroll foreground
-local SCOREBOARD_SCROLL_HEIGHT		= 20						-- Size for the scroll marker
-local SCOREBOARD_COLUMNS_WIDTH		= { 0.08, 0.72, 0.16, 0.04 }	-- Relative width for each column: id, player name, ping and scroll position
+local SCOREBOARD_SCROLL_HEIGHT		= 40						-- Size for the scroll marker
+local SCOREBOARD_COLUMNS_WIDTH		= { 0.08, 0.74, 0.14, 0.04 }	-- Relative width for each column: id, player name, ping and scroll position
 local SCOREBOARD_ROW_GAP			= 0							-- Gap between rows
 
 --[[ Uncomment to test with dummies ]]--
