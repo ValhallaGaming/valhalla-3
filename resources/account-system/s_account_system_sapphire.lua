@@ -1269,18 +1269,20 @@ function timerPDUnjailPlayer(jailedPlayer)
 			setElementPosition(jailedPlayer, 241.3583984375, 115.232421875, 1003.2257080078)
 			setPedRotation(jailedPlayer, 270)
 				
+			local theTimer = getElementData(jailedPlayer, "pd.jailtimer")
+			if (theTimer) then
+				killTimer(theTimer)
+			end
+				
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
 			fadeCamera(jailedPlayer, true)
 			outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
-		elseif (timeLeft>0) then
+		else
 			mysql:query_free("UPDATE characters SET pdjail_time='" .. timeLeft .. "' WHERE charactername='" .. mysql:escape_string(username) .. "'")
 		end
-	else
-		local theTimer = getElementData(jailedPlayer, "pd.jailtimer")
-		killTimer(theTimer)
 	end
 end
 
