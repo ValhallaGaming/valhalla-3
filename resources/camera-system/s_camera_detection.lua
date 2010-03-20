@@ -42,13 +42,13 @@ function checkSpeed(theVehicle, thePlayer, colshape, maxSpeed)
 				triggerClientEvent(p, "speedcam:cameraEffect", p)
 			end
 		end
-		
-		setTimer(sendWarningToCops, 500, 1, theVehicle, thePlayer, speed)
+		local x, y, z = getElementPosition(thePlayer)
+		setTimer(sendWarningToCops, 500, 1, theVehicle, thePlayer, currentSpeed, x, y, z)
 	end
 end
 
-function sendWarningToCops(theVehicle, thePlayer, speed)
-	local x, y, z = getElementPosition(thePlayer)
+function sendWarningToCops(theVehicle, thePlayer, speed, x, y, z)
+
 	local direction = "in an unknown direction"
 	local areaName = getZoneName(x, y, z)
 	local nx, ny, nz = getElementPosition(thePlayer)
@@ -103,12 +103,12 @@ function loadOneTrafficCam(id)
 	local row = mysql:query_fetch_assoc("SELECT * FROM `speedcams` WHERE `id`='"..mysql:escape_string(id).."'")
 	if (row) then
 		local id = tonumber(row["id"])
-		local maxspeed = tonumber(row["speed"])		
+		local maxspeed = tonumber(row["maxspeed"])		
 		local interior = tonumber(row["interior"])
 		local dimension = tonumber(row["dimension"])
 		local x = tonumber(row["x"])
 		local y = tonumber(row["y"])
-		local z = tonumber(row["z"])
+		local z = tonumber(row["z"])-4
 		local radius = tonumber(row["radius"])	
 		
 		local enabled
@@ -121,7 +121,7 @@ function loadOneTrafficCam(id)
 		end
 
 		-- And spawn it
-		local colTube = createColTube(x, y, z, radius, 9)
+		local colTube = createColTube(x, y, z, radius, 15)
 		exports.pool:allocateElement(colTube)
 		exports['anticheat-system']:changeProtectedElementDataEx(colTube, "speedcam", true, false)
 		exports['anticheat-system']:changeProtectedElementDataEx(colTube, "speedcam:dbid", id, false)
