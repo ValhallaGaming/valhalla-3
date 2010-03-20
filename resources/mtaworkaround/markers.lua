@@ -25,8 +25,10 @@ function checkStreamIn()
 			
 			if (distx < streamdistance) and (disty < streamdistance) then
 				local dimension = unstreamed[key]
-				unstreamed[key] = nil
-				setElementDimension(key, dimension)
+				if (playerdimension == dimension) then
+					unstreamed[key] = nil
+					setElementDimension(key, dimension)
+				end
 			end
 		end
 	end
