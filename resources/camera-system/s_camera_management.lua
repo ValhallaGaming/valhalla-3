@@ -140,7 +140,7 @@ function delTrafficCam(thePlayer, commandName)
 		end
 	end
 end
-addCommandHandler("delspeedcam", delFuelPoint, false, false)
+addCommandHandler("delspeedcam", delTrafficCam, false, false)
 
 function getNearbyTrafficCams(thePlayer, commandName)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
