@@ -512,6 +512,9 @@ function spawnCharacter(charname, version)
 		setPedStat(source, 78, 999)
 		setPedStat(source, 79, 999)
 		
+		toggleAllControls(source, true, true, true)
+		setPedFrozen(source, false)
+		
 		-- blindfolds
 		if (blindfold==1) then
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "blindfold", 1)
@@ -891,6 +894,8 @@ function sendAccounts(thePlayer, id, isChangeChar)
 
 	if ( hasBeta[thePlayer] ) then
 		spawnPlayer(thePlayer, 1409.9384765625, -808.51953125, 91.859375, 172.96313476563, 0, 0, 65000+playerid)
+		toggleAllControls(source, false, true, true)
+		setPedFrozen(source, true)
 	else
 		local playerid = getElementData(thePlayer, "playerid")
 		spawnPlayer(thePlayer, 258.43417358398, -41.489139556885, 1002.0234375, 268.19247436523, 0, 14, 65000+playerid)
