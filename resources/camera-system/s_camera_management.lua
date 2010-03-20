@@ -70,7 +70,7 @@ function createTrafficCam(thePlayer, commandName, maxSpeed)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:new:z", z, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:new:dimension", dimension, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:new:interior", interior, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:new:maxspeed", maxspeed, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "speedcam:new:maxspeed", maxSpeed, false)
 				outputChatBox("Okay, stored. Now set the outside of the speedcam with /setradius.", thePlayer, 255, 0, 0)
 			else
 				outputChatBox("The trigger speed needs to be above 35 KPH.", thePlayer, 255, 0, 0)
