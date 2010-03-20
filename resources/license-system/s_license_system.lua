@@ -58,31 +58,38 @@ function showLicenses(thePlayer, commandName, targetPlayer)
 				if (logged==0) then
 					outputChatBox("Player is not logged in.", thePlayer, 255, 0, 0)
 				elseif (logged==1) then
-					outputChatBox("You have shown your licenses to " .. targetPlayerName .. ".", thePlayer, 255, 194, 14)
-					outputChatBox(getPlayerName(thePlayer) .. " has shown you their licenses.", targetPlayer, 255, 194, 14)
-					
-					local gunlicense = getElementData(thePlayer, "license.gun")
-					local carlicense = getElementData(thePlayer, "license.car")
-					
-					local guns, cars
-					
-					if (gunlicense<=0) then
-						guns = "No"
-					else
-						guns = "Yes"
+					local x, y, z = getElementPosition(thePlayer)
+					local tx, ty, tz = getElementPosition(targetPlayer)
+						
+					if (getDistanceBetweenPoints3D(x, y, z, tx, ty, tz)>5) then -- Are they standing next to each other?
+						outputChatBox("You are too far away to heal '".. targetPlayerName .."'.", thePlayer, 255, 0, 0)
+					else	
+						outputChatBox("You have shown your licenses to " .. targetPlayerName .. ".", thePlayer, 255, 194, 14)
+						outputChatBox(getPlayerName(thePlayer) .. " has shown you their licenses.", targetPlayer, 255, 194, 14)
+						
+						local gunlicense = getElementData(thePlayer, "license.gun")
+						local carlicense = getElementData(thePlayer, "license.car")
+						
+						local guns, cars
+						
+						if (gunlicense<=0) then
+							guns = "No"
+						else
+							guns = "Yes"
+						end
+						
+						if (carlicense<=0) then
+							cars = "No"
+						elseif (carlicense==3)then
+							cars = "Theory test passed"
+						else
+							cars = "Yes"
+						end
+						
+						outputChatBox("~-~-~-~- " .. getPlayerName(thePlayer) .. "'s Licenses -~-~-~-~", targetPlayer, 255, 194, 14)
+						outputChatBox("        Weapon License: " .. guns, targetPlayer, 255, 194, 14)
+						outputChatBox("        Car License: " .. cars, targetPlayer, 255, 194, 14)
 					end
-					
-					if (carlicense<=0) then
-						cars = "No"
-					elseif (carlicense==3)then
-						cars = "Theory test passed"
-					else
-						cars = "Yes"
-					end
-					
-					outputChatBox("~-~-~-~- " .. getPlayerName(thePlayer) .. "'s Licenses -~-~-~-~", targetPlayer, 255, 194, 14)
-					outputChatBox("        Weapon License: " .. guns, targetPlayer, 255, 194, 14)
-					outputChatBox("        Car License: " .. cars, targetPlayer, 255, 194, 14)
 				end
 			end
 		end
