@@ -1,11 +1,13 @@
-local gabby = createPed(150, 1472.7734375, -1768.6142578125, 1250.9575195313)
-setPedRotation(gabby, 266.27145385742)
+--local gabby = createPed(150, 1472.7734375, -1768.6142578125, 1250.9575195313) -- Old Position
+local gabby = createPed(150, 1462.822265625, -1778.328125, 1250.9418945313)
+--setPedRotation(gabby, 266.27145385742) -- Old Rotation
+setPedRotation(gabby, 179.5166015625)
 setElementDimension(gabby, 125)
 setElementInterior(gabby, 3)
 setElementData(gabby, "talk", 1)
 setElementData(gabby, "name", "Gabrielle McCoy")
 setPedFrozen(gabby, true)
-setPedAnimation(gabby, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false)
+--setPedAnimation(gabby, "INT_OFFICE", "OFF_Sit_Idle_Loop", -1, true, false, false)
 
 local plateCheck, newplates, efinalWindow = nil
 
@@ -180,5 +182,6 @@ function closeWindow()
 		destroyElement(efinalWindow)
 		showCursor(false)
 		toggleAllControls(true)
+		triggerServerEvent("platePedTalk", getLocalPlayer(), 4)
 	end
 end
