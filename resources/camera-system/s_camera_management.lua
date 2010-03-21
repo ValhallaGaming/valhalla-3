@@ -1,4 +1,3 @@
-
 mysql = exports.mysql
 
 function loadAllTrafficCams(res)
@@ -156,7 +155,12 @@ function getNearbyTrafficCams(thePlayer, commandName)
 				local distance = getDistanceBetweenPoints2D(posX, posY, x, y)
 				if (distance<=20) then
 					local dbid = getElementData(theColshape, "speedcam:dbid")
-					outputChatBox("   ID " .. dbid .. ".", thePlayer, 255, 126, 0)
+					local enabled = getElementData(theColshape, "speedcam:enabled")
+					if (enabled) then
+						outputChatBox("   ID " .. dbid .. " - Enabled.", thePlayer, 255, 126, 0)
+					else
+						outputChatBox("   ID " .. dbid .. " - Disabled.", thePlayer, 255, 126, 0)
+					end
 					found = true
 				end
 			end
@@ -168,3 +172,20 @@ function getNearbyTrafficCams(thePlayer, commandName)
 	end
 end
 addCommandHandler("nearbyspeedcams", getNearbyTrafficCams, false, false)
+
+function toggleTrafficCam(theColshape)
+	local isSpeedcam = getElementData(theColshape, "speedcam")
+	if (isSpeedcam) then
+		local currentStatus = getElementData(theColshape, "speedcam:enabled")
+		local dbid = getElementData(theColshape, "speedcam:dbid")
+		exports['anticheat-system']:changeProtectedElementDataEx(theColshape, "speedcam:enabled",  not currentStatus, false)
+		if (newStatus == false) then
+			mysql:query_free("UPDATE `speedcams` SET `enabled`=1 WHERE `id`='".. mysql:escape_string(dbid) .. "'")
+			return 2
+		else
+			mysql:query_free("UPDATE `speedcams` SET `enabled`=0 WHERE `id`='".. mysql:escape_string(dbid) .. "'")
+			return 1
+		end
+	end
+
+end
