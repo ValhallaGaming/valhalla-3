@@ -1,3 +1,5 @@
+local version = "0.1"
+
 function hasBeta()	
 	local xmlRoot = xmlLoadFile( "sapphirebeta.xml" )
 	if (xmlRoot) then
@@ -4093,6 +4095,7 @@ function drawBG()
 	
 	-- top right text and image
 	dxDrawText("Valhalla MTA Server", width - 350,80, width-200, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.7, "bankgothic", "center", "middle", false, false, false)
+	dxDrawText("Sapphire V" .. version, width - 350, 100, width-200, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.5, "bankgothic", "center", "middle", false, false, false)
 	dxDrawImage(width - 131, 30, 131, 120, "gui/valhalla1.png", 0, 0, 0, tocolor(255, 255, 255, 200 * xmbAlpha), false)
 	
 	-- fading
@@ -4125,6 +4128,9 @@ function drawBG()
 		dxDrawText("Attempting to Login...", x, y, x, y, tocolor(255, 255, 255, logoAlpha * xmbAlpha), 0.7, "bankgothic", "center", "middle", false, false, false)
 	elseif (state >= 2 ) then -- main XMB
 		dxDrawLine(mainMenuItems[1]["cx"], height / 5, mainMenuItems[#mainMenuItems - 1]["cx"] + 131, height / 5, tocolor(255, 255, 255, 155 * xmbAlpha), 2, false)
+		
+		-- serial
+	dxDrawText(tostring(md5(getElementData(getLocalPlayer(),"gameaccountusername"))), xoffset * 0.3, 10, 150, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.8, "verdana", "center", "middle", false, false, false)
 		
 		-- draw our vertical menus
 		-- put the if statements inside, so the logic is still updated!
