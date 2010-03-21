@@ -972,6 +972,8 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 				exports['anticheat-system']:changeProtectedElementDataEx(obj, "itemValue", ammo)
 				
 				exports.global:sendLocalMeAction(source, "dropped a " .. getItemName( -itemID ) .. ".")
+				
+				triggerClientEvent(source, "saveGuns", source)
 			else
 				outputDebugString( mysql_error( handler ) )
 			end
