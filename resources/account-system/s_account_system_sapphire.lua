@@ -122,7 +122,7 @@ function spawnCharacter(charname, version)
 	
 	local safecharname = mysql:escape_string(charname)
 	
-	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. id .. "'")
+	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. mysql:escape_string(id) .. "'")
 	
 	if (data) then
 		
@@ -347,7 +347,7 @@ function spawnCharacter(charname, version)
 		-- FACTIONS
 		local factionName = nil
 		if (factionID~=-1) then
-			local fresult = mysql:query("SELECT name FROM factions WHERE id='" .. factionID .. "'")
+			local fresult = mysql:query("SELECT name FROM factions WHERE id='" .. mysql:escape_string(factionID) .. "'")
 			if (mysql:num_rows(fresult)>0) then
 				local row = mysql:fetch_assoc(fresult)
 				factionName = row["name"]
@@ -355,7 +355,7 @@ function spawnCharacter(charname, version)
 				factionName = "Citizen"
 				factionID = -1
 				outputChatBox("Your faction has been deleted, and you have been set factionless.", source, 255, 0, 0)
-				mysql:query_free("UPDATE characters SET faction_id='-1', faction_rank='1' WHERE id='" .. id .. "' LIMIT 1")
+				mysql:query_free("UPDATE characters SET faction_id='-1', faction_rank='1' WHERE id='" .. mysql:escape_string(id) .. "' LIMIT 1")
 			end
 			
 			if (fresult) then
@@ -384,7 +384,7 @@ function spawnCharacter(charname, version)
 		local maxplayers = getMaxPlayers()
 		local percent = math.ceil((playercount/maxplayers)*100)
 		
-		local friends = mysql:query("SELECT friend FROM friends WHERE id = " .. getElementData( source, "gameaccountid" ) )
+		local friends = mysql:query("SELECT friend FROM friends WHERE id = " .. mysql:escape_string(getElementData( source, "gameaccountid" )) )
 		if friends then
 			local ids = {}
 			while true do
@@ -398,7 +398,7 @@ function spawnCharacter(charname, version)
 		mysql:free_result( friends )
 
 		-- LAST LOGIN
-		mysql:query_free("UPDATE characters SET lastlogin=NOW() WHERE id='" .. id .. "'")
+		mysql:query_free("UPDATE characters SET lastlogin=NOW() WHERE id='" .. mysql:escape_string(id) .. "'")
 			
 		-- Player is cuffed
 		if (cuffed==1) then
@@ -527,7 +527,7 @@ function spawnCharacter(charname, version)
 		
 		-- impounded cars
 		if exports.global:hasItem(source, 2) then -- phone
-			local impounded = mysql:query_fetch_assoc("SELECT COUNT(*) as 'numbr'  FROM `vehicles` WHERE `owner` = " .. id .. " and `Impounded` > 0")
+			local impounded = mysql:query_fetch_assoc("SELECT COUNT(*) as 'numbr'  FROM `vehicles` WHERE `owner` = " .. mysql:escape_string(id) .. " and `Impounded` > 0")
 			if impounded then
 				local amount = tonumber(impounded["numbr"]) or 0
 				if amount > 0 then
@@ -575,7 +575,7 @@ function timerUnjailPlayer(jailedPlayer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtime", timeLeft)
 			local result
 			if (timeLeft<=0) then
-				mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. accountID .. "'")
+				mysql:query_free("UPDATE accounts SET adminjail_time='0', adminjail='0' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailtimer")
 				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "adminjailed")
 				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "jailreason")
@@ -594,7 +594,7 @@ function timerUnjailPlayer(jailedPlayer)
 				exports.global:sendMessageToAdmins("AdmJail: " .. getPlayerName(jailedPlayer) .. " has served his jail time.")
 				exports.irc:sendMessage("[ADMIN] " .. getPlayerName(jailedPlayer) .. " was unjailed by script (Time Served)")
 			else
-				mysql:query_free("UPDATE accounts SET adminjail_time='" .. timeLeft .. "' WHERE id='" .. accountID .. "'")
+				mysql:query_free("UPDATE accounts SET adminjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id='" .. mysql:escape_string(accountID) .. "'")
 			end
 		else
 			if (isElement(jailedPlayer)) then
@@ -658,7 +658,7 @@ function loginPlayer(username, password, operatingsystem)
 			if ( admin <= 0 and hasBeta[source] ) then -- non admin with beta? ban
 				exports.global:sendMessageToAdmins("[AdmWarn] " .. getPlayerName(source) .. " was banned for running a hacked Sapphire Beta.")
 				local ban = banPlayer(source, true, false, false, getRootElement(), "Hacked Beta.", 0)
-				mysql:query_free("UPDATE accounts SET banned='1', banned_reason='Hacked Beta.', banned_by='Script' WHERE id='" .. id .. "'")
+				mysql:query_free("UPDATE accounts SET banned='1', banned_reason='Hacked Beta.', banned_by='Script' WHERE id='" .. mysql:escape_string(id) .. "'")
 			end
 			
 			local country = tostring(exports.global:getPlayerCountry(source))
@@ -760,7 +760,7 @@ function loginPlayer(username, password, operatingsystem)
 				
 				local ip = getPlayerIP(source)
 				
-				mysql:query("UPDATE accounts SET lastlogin=NOW(), ip='" .. ip .. "', country='" .. country .. "' WHERE id='" .. id .. "'")
+				mysql:query("UPDATE accounts SET lastlogin=NOW(), ip='" .. mysql:escape_string(ip) .. "', country='" .. mysql:escape_string(country) .. "' WHERE id='" .. mysql:escape_string(id) .. "'")
 			end
 		else
 			triggerClientEvent(source, "loginFail", source, 2)
@@ -832,7 +832,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 	exports.global:takeAllWeapons(thePlayer)
 	local accounts = { }
 
-	local result = mysql:query("SELECT id, charactername, cked, lastarea, age, gender, faction_id, faction_rank, skin, DATEDIFF(NOW(), lastlogin) as llastlogin FROM characters WHERE account='" .. id .. "'  ORDER BY cked ASC, lastlogin DESC")
+	local result = mysql:query("SELECT id, charactername, cked, lastarea, age, gender, faction_id, faction_rank, skin, DATEDIFF(NOW(), lastlogin) as llastlogin FROM characters WHERE account='" .. mysql:escape_string(id) .. "'  ORDER BY cked ASC, lastlogin DESC")
 	if (mysql:num_rows(result)>0) then
 		if (isChangeChar) then
 			triggerEvent("savePlayer", source, "Change Character", source)
@@ -865,7 +865,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 				accounts[i][7] = nil
 				accounts[i][8] = nil
 			else
-				factionResult = mysql:query_fetch_assoc("SELECT name, rank_" .. factionRank .. " as rankname FROM factions WHERE id='" .. tonumber(factionID) .. "'")
+				factionResult = mysql:query_fetch_assoc("SELECT name, rank_" .. mysql:escape_string(factionRank) .. " as rankname FROM factions WHERE id='" .. mysql:escape_string(tonumber(factionID)) .. "'")
 
 				if (factionResult) then
 					accounts[i][7] = factionResult["name"]
@@ -901,7 +901,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 		spawnPlayer(thePlayer, 258.43417358398, -41.489139556885, 1002.0234375, 268.19247436523, 0, 14, 65000+playerid)
 	end
 	
-	local emailresult = mysql:query_fetch_assoc("SELECT email FROM accounts WHERE id = '" .. id .. "'")
+	local emailresult = mysql:query_fetch_assoc("SELECT email FROM accounts WHERE id = '" .. mysql:escape_string(id) .. "'")
 	
 	if ( emailresult) then
 		local hasEmail = emailresult["email"]
@@ -925,14 +925,14 @@ addEventHandler("sendAccounts", getRootElement(), sendAccounts)
 function storeEmail(email)
 	local accountid = getElementData(source, "gameaccountid")
 	local safeemail = mysql:escape_string(email)
-	mysql:query_free("UPDATE accounts SET email = '" .. safeemail .. "' WHERE id = '" .. accountid .. "'")
+	mysql:query_free("UPDATE accounts SET email = '" .. safeemail .. "' WHERE id = '" .. mysql:escape_string(accountid) .. "'")
 end
 addEvent("storeEmail", true)
 addEventHandler("storeEmail", getRootElement(), storeEmail)
 
 function requestFriends(player)
 	local accid = getElementData(player, "gameaccountid")
-	local result = mysql:query("SELECT f.friend as friend, a.username as username, a.friendsmessage as friendsmessage, a.country as country FROM friends f LEFT JOIN accounts a ON f.friend = a.id WHERE f.id = " .. accid .. " ORDER BY a.lastlogin DESC" )
+	local result = mysql:query("SELECT f.friend as friend, a.username as username, a.friendsmessage as friendsmessage, a.country as country FROM friends f LEFT JOIN accounts a ON f.friend = a.id WHERE f.id = " .. mysql:escape_string(accid) .. " ORDER BY a.lastlogin DESC" )
 	if result then
 		local friends = { }
 		while true do
@@ -943,7 +943,7 @@ function requestFriends(player)
 			local account = row["username"]
 			
 			if account == mysql_null( ) then --
-				mysql:query_free("DELETE FROM friends WHERE id = " .. id .. " OR friend = " .. id )
+				mysql:query_free("DELETE FROM friends WHERE id = " .. mysql:escape_string(id) .. " OR friend = " .. mysql:escape_string(id) )
 			else
 				table.insert( friends, { id, account, row["friendsmessage"], row["country"] } )
 			end
@@ -952,7 +952,7 @@ function requestFriends(player)
 		mysql:free_result( result )
 		
 		local friendsmessage = ""
-		local result = mysql:query_fetch_assoc("SELECT friendsmessage FROM accounts WHERE id = " .. accid )
+		local result = mysql:query_fetch_assoc("SELECT friendsmessage FROM accounts WHERE id = " .. mysql:escape_string(accid) )
 		if result then
 			friendsmessage = result["friendsmessage"]
 			if friendsmessage == mysql_null( ) then
@@ -971,7 +971,7 @@ end
 
 function requestAccount(player)
 	local accid = getElementData(player, "gameaccountid")
-	local result = mysql:query_fetch_assoc("SELECT mtausername FROM accounts WHERE id = " .. tonumber(accid))
+	local result = mysql:query_fetch_assoc("SELECT mtausername FROM accounts WHERE id = " .. mysql:escape_string(tonumber(accid)))
 	
 	if ( result ) then
 		local mtausername = result["mtausername"]
@@ -990,7 +990,7 @@ end
 function requestAchievements(player)
 	-- Get achievements
 	local gameAccountID = getElementData(player, "gameaccountid")
-	local aresult = mysql:query("SELECT achievementid, date FROM achievements WHERE account='" .. gameAccountID .. "'")
+	local aresult = mysql:query("SELECT achievementid, date FROM achievements WHERE account='" .. mysql:escape_string(gameAccountID) .. "'")
 	
 	local achievements = { }
 	
@@ -1022,7 +1022,7 @@ function deleteCharacterByName(charname)
 	local fixedName = mysql:escape_string(string.gsub(tostring(charname), " ", "_"))
 	
 	local accountID = getElementData(source, "gameaccountid")
-	local result = mysql:query_fetch_assoc("SELECT id FROM characters WHERE charactername='" .. fixedName .. "' AND account='" .. accountID .. "' LIMIT 1")
+	local result = mysql:query_fetch_assoc("SELECT id FROM characters WHERE charactername='" .. fixedName .. "' AND account='" .. mysql:escape_string(accountID) .. "' LIMIT 1")
 	local charid = tonumber(result["id"])
 	
 	if charid then -- not ck'ed
@@ -1035,12 +1035,16 @@ function deleteCharacterByName(charname)
 				end
 			end
 		end
-		mysql:query_free("DELETE FROM vehicles WHERE owner = " .. charid )
+		mysql:query_free("DELETE FROM vehicles WHERE owner = " .. mysql:escape_string(charid) )
+
+		-- logs the deletion of the characters
+		local accountUsername = getElementData(source, "gameaccountusername")
+		exports.logs:logMessage("[DELETE CHARACTER] #" .. accountID .. "-" .. accountUsername .. " has deleted character #" .. charid .. "-" .. charname .. ".", 31)
 
 		-- un-rent all interiors
 		local old = getElementData( source, "dbid" )
 		exports['anticheat-system']:changeProtectedElementDataEx( source, "dbid", charid )
-		local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. charid .. " AND type != 2" )
+		local result = mysql:query("SELECT id FROM interiors WHERE owner = " .. mysql:escape_string(charid) .. " AND type != 2" )
 		if result then
 			while true do
 				local row = mysql:fetch_assoc()
@@ -1053,10 +1057,10 @@ function deleteCharacterByName(charname)
 		exports['anticheat-system']:changeProtectedElementDataEx( source, "dbid", old )
 		
 		-- get rid of all items
-		mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. charid )
+		mysql:query_free("DELETE FROM items WHERE type = 1 AND owner = " .. mysql:escape_string(charid) )
 		
 		-- finally delete the character
-		mysql:query_free("DELETE FROM characters WHERE id='" .. charid .. "' AND account='" .. accountID .. "' LIMIT 1")
+		mysql:query_free("DELETE FROM characters WHERE id='" .. mysql:escape_string(charid) .. "' AND account='" .. mysql:escape_string(accountID) .. "' LIMIT 1")
 	end
 	--sendAccounts(source, accountID)
 	--showChat(source, true)
@@ -1132,7 +1136,8 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 
 	local accountID = getElementData(source, "gameaccountid")
 	local accountUsername = getElementData(source, "gameaccountusername")
-	
+
+	local npid = nil
 	if (mysql:num_rows(result)>0) then -- Name is already taken
 		triggerEvent("onPlayerCreateCharacter", source, charname, gender, skincolour, weight, height, fatness, muscles, transport, description, age, skin, language, false)
 	else
@@ -1155,7 +1160,7 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 		local salt = "fingerprintscotland"
 		local fingerprint = md5(salt .. safecharname)
 		
-		local id = mysql:query_insert_free("INSERT INTO characters SET charactername='" .. safecharname .. "', x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', rotation='" .. r .. "', faction_id='-1', transport='" .. transport .. "', gender='" .. gender .. "', skincolor='" .. skincolour .. "', weight='" .. weight .. "', height='" .. height .. "', muscles='" .. muscles .. "', fat='" .. fatness .. "', description='" .. description .. "', account='" .. accountID .. "', skin='" .. skin .. "', lastarea='" .. lastarea .. "', age='" .. age .. "', fingerprint='" .. fingerprint .. "', lang1=" .. language .. ", lang1skill=100, currLang=1" )
+		local id = mysql:query_insert_free("INSERT INTO characters SET charactername='" .. safecharname .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotation='" .. mysql:escape_string(r) .. "', faction_id='-1', transport='" .. mysql:escape_string(transport) .. "', gender='" .. mysql:escape_string(gender) .. "', skincolor='" .. mysql:escape_string(skincolour) .. "', weight='" .. mysql:escape_string(weight) .. "', height='" .. mysql:escape_string(height) .. "', muscles='" .. mysql:escape_string(muscles) .. "', fat='" .. mysql:escape_string(fatness) .. "', description='" .. mysql:escape_string(description) .. "', account='" .. mysql:escape_string(accountID) .. "', skin='" .. mysql:escape_string(skin) .. "', lastarea='" .. mysql:escape_string(lastarea) .. "', age='" .. mysql:escape_string(age) .. "', fingerprint='" .. mysql:escape_string(fingerprint) .. "', lang1=" .. mysql:escape_string(language) .. ", lang1skill=100, currLang=1" )
 		
 		if (id) then
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid", id, false)
@@ -1166,18 +1171,20 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 
 			-- CELL PHONE
 			local cellnumber = id+15000
-			local update = mysql:query_free("UPDATE characters SET cellnumber='" .. cellnumber .. "' WHERE charactername='" .. safecharname .. "'")
+			local update = mysql:query_free("UPDATE characters SET cellnumber='" .. mysql:escape_string(cellnumber) .. "' WHERE charactername='" .. safecharname .. "'")
 			
 			if (update) then
 				triggerEvent("onPlayerCreateCharacter", source, charname, gender, skincolour, weight, height, fatness, muscles, transport, description, age, skin, language, true)
 			else
 				outputChatBox("Error 100003 - Report on forums.", source, 255, 0, 0)
 			end
+			npid = tonumber(id)
 		else
 			triggerEvent("onPlayerCreateCharacter", source, charname, gender, skincolour, weight, height, fatness, muscles, transport, description, age, skin, language, false)
 		end
 	end
 	exports.irc:sendMessage("[ACCOUNT] Character '" ..  charname .. "' was registered to account '" .. accountUsername .. "'")
+	exports.logs:logMessage("[CREATE CHARACTER] #" .. accountID .. "-" .. accountUsername .. " has created a character by the name " .. charname:gsub("_"," ") .. "-#" .. npid, 31)
 	sendAccounts(source, accountID)
 	
 	mysql:free_result(result)
@@ -1194,7 +1201,7 @@ function serverToggleBlur(enabled)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "blur", 0)
 		setPlayerBlurLevel(source, 0)
 	end
-	mysql:query_free("UPDATE accounts SET blur=" .. getElementData( source, "blur" ).. " WHERE id = " .. getElementData( source, "gameaccountid" ) )
+	mysql:query_free("UPDATE accounts SET blur=" .. mysql:escape_string(getElementData( source, "blur" )) .. " WHERE id = " .. mysql:escape_string(getElementData( source, "gameaccountid" )) )
 end
 addEvent("updateBlurLevel", true)
 addEventHandler("updateBlurLevel", getRootElement(), serverToggleBlur)
@@ -1211,7 +1218,7 @@ function cmdToggleBlur(thePlayer, commandName)
 		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "blur", 0)
 		setPlayerBlurLevel(thePlayer, 0)
 	end
-	mysql:query_free("UPDATE accounts SET blur=" .. ( 1 - blur ) .. " WHERE id = " .. getElementData( thePlayer, "gameaccountid" ) )
+	mysql:query_free("UPDATE accounts SET blur=" .. mysql:escape_string(( 1 - blur )) .. " WHERE id = " .. mysql:escape_string(getElementData( thePlayer, "gameaccountid" )) )
 end
 addCommandHandler("toggleblur", cmdToggleBlur)
 
@@ -1222,12 +1229,12 @@ function cguiSetNewPassword(oldPassword, newPassword)
 	local safeoldpassword = mysql:escape_string(oldPassword)
 	local safenewpassword = mysql:escape_string(newPassword)
 	
-	local query = mysql:query("SELECT username FROM accounts WHERE id='" .. gameaccountID .. "' AND password=MD5('" .. salt .. safeoldpassword .. "')")
+	local query = mysql:query("SELECT username FROM accounts WHERE id='" .. mysql:escape_string(gameaccountID) .. "' AND password=MD5('" .. salt .. safeoldpassword .. "')")
 	
 	if not (query) or (mysql:num_rows(query)==0) then
 		outputChatBox("Your current password you entered was wrong.", source, 255, 0, 0)
 	else
-		local update = mysql:query_free("UPDATE accounts SET password=MD5('" .. salt .. safenewpassword .. "') WHERE id='" .. gameaccountID .. "'")
+		local update = mysql:query_free("UPDATE accounts SET password=MD5('" .. salt .. safenewpassword .. "') WHERE id='" .. mysql:escape_string(gameaccountID) .. "'")
 
 		if (update) then
 			outputChatBox("You changed your password to '" .. newPassword .. "'", source, 0, 255, 0)
@@ -1281,7 +1288,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 			fadeCamera(jailedPlayer, true)
 			outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
 		else
-			mysql:query_free("UPDATE characters SET pdjail_time='" .. timeLeft .. "' WHERE charactername='" .. mysql:escape_string(username) .. "'")
+			mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE charactername='" .. mysql:escape_string(username) .. "'")
 		end
 	end
 end
@@ -1300,7 +1307,7 @@ addEvent("requestEditCharInformation", true)
 addEventHandler("requestEditCharInformation", getRootElement(), sendEditingInformation)
 
 function updateEditedCharacter(charname, height, weight, age, description)
-	mysql:query_free("UPDATE characters SET description='" .. mysql:escape_string(description) .. "', height=" .. height .. ", weight=" .. weight .. ", age=" .. age .. " WHERE charactername='" .. mysql:escape_string(charname:gsub(" ", "_")) .. "'")
+	mysql:query_free("UPDATE characters SET description='" .. mysql:escape_string(description) .. "', height=" .. mysql:escape_string(height) .. ", weight=" .. mysql:escape_string(weight) .. ", age=" .. mysql:escape_string(age) .. " WHERE charactername='" .. mysql:escape_string(charname:gsub(" ", "_")) .. "'")
 end
 addEvent("updateEditedCharacter", true)
 addEventHandler("updateEditedCharacter", getRootElement(), updateEditedCharacter)
