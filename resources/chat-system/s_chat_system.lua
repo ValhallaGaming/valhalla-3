@@ -1075,27 +1075,52 @@ function toggleOOC(thePlayer, commandName)
 	if(logged==1) and (exports.global:isPlayerAdmin(thePlayer)) then
 		local players = exports.pool:getPoolElementsByType("player")
 		local oocEnabled = exports.global:getOOCState()
-		
-		if (oocEnabled==0) then
-			exports.global:setOOCState(1)
-			exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " enabled OOC Chat.")
-			
-			for k, arrayPlayer in ipairs(players) do
-				local logged = getElementData(arrayPlayer, "loggedin")
+		if (commandName == "togooc") then
+			if (oocEnabled==0) then
+				exports.global:setOOCState(1)
+				exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " enabled OOC Chat.")
 				
-				if	(logged==1) then
-					outputChatBox("OOC Chat Enabled by Admin.", arrayPlayer, 0, 255, 0)
+				for k, arrayPlayer in ipairs(players) do
+					local logged = getElementData(arrayPlayer, "loggedin")
+					
+					if	(logged==1) then
+						outputChatBox("OOC Chat Enabled by Admin.", arrayPlayer, 0, 255, 0)
+					end
+				end
+			elseif (oocEnabled==1) then
+				exports.global:setOOCState(0)
+				exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " disabled OOC Chat.")
+				
+				for k, arrayPlayer in ipairs(players) do
+					local logged = getElementData(arrayPlayer, "loggedin")
+					
+					if	(logged==1) then
+						outputChatBox("OOC Chat Disabled by Admin.", arrayPlayer, 255, 0, 0)
+					end
 				end
 			end
-		elseif (oocEnabled==1) then
-			exports.global:setOOCState(0)
-			exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " disabled OOC Chat.")
-			
-			for k, arrayPlayer in ipairs(players) do
-				local logged = getElementData(arrayPlayer, "loggedin")
+		elseif (commandName == "stogooc") then
+			if (oocEnabled==0) then
+				exports.global:setOOCState(1)
 				
-				if	(logged==1) then
-					outputChatBox("OOC Chat Disabled by Admin.", arrayPlayer, 255, 0, 0)
+				for k, arrayPlayer in ipairs(players) do
+					local logged = getElementData(arrayPlayer, "loggedin")
+					local admin = getElementData(arrayPlayer, "adminlevel")
+					
+					if	(logged==1) and (tonumber(admin)>0)then
+						outputChatBox("OOC Chat Enabled Silently by Admin " .. getPlayerName(thePlayer) .. ".", arrayPlayer, 0, 255, 0)
+					end
+				end
+			elseif (oocEnabled==1) then
+				exports.global:setOOCState(0)
+				
+				for k, arrayPlayer in ipairs(players) do
+					local logged = getElementData(arrayPlayer, "loggedin")
+					local admin = getElementData(arrayPlayer, "adminlevel")
+					
+					if	(logged==1) and (tonumber(admin)>0)then
+						outputChatBox("OOC Chat Disabled Silently by Admin " .. getPlayerName(thePlayer) .. ".", arrayPlayer, 255, 0, 0)
+					end
 				end
 			end
 		end
@@ -1103,6 +1128,7 @@ function toggleOOC(thePlayer, commandName)
 end
 
 addCommandHandler("togooc", toggleOOC, false, false)
+addCommandHandler("stogooc", toggleOOC, false, false)
 		
 function togglePM(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
