@@ -51,6 +51,7 @@
 	
 	<!-- 30: Best's Towing and Recovery -->
 	<script src="BTR/interior.lua" type="client"/>
+	<script src="BTR/rooftop.lua" type="client"/>
 	
 	<!-- 36: First Court of San Andreas -->
 	<script src="FCSA/court.lua" type="client"/>
