@@ -1,6 +1,3 @@
- --   <object id="gate closed" model="976" interior="0" dimension="0" posX="3323.5270996094" posY="-1803.0314941406" posZ="0.56797444820404" rotX="0" rotY="0" rotZ="11.909912109375" />
- --   <object id="object (phils_compnd_gate) (1)" model="976" interior="0" dimension="0" posX="3326.0151367188" posY="-1802.7016601563" posZ="0.59789043664932" rotX="0" rotY="0" rotZ="7.9376220703125" />
- 
  -- map offsets
 local x = 500
 local y = 2740

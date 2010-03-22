@@ -16,7 +16,6 @@
 	<script src="ein_gate1.lua" type="server"/>
 	<script src="ein_gate2.lua" type="server"/>
 	
-	<script src="DanielsMansion.lua" type="server"/>
 	<script src="airport.lua" type="server"/>
 	
 	<script src="fd_interior.lua"/>
