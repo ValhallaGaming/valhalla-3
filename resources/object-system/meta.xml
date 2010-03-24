@@ -1,5 +1,14 @@
 <meta>
-	<info author="vG MTA Scripting Team" type="script" description="Object System"/>
+	<info author="vG MTA Scripting Team" type="script" description="Dynamic Object Loadins System"/>
+	
+	<!--  -->
+	
+	<!-- server -->
+	<script src="s_object_management.lua" type="server" />
+	<export function="removeInteriorObjects" type="server"/>
+	
+	<script src="s_object_transfer.lua" type="server" />
 
-	<script src="s_object_system.lua" type="server" />
+	<!-- client -->
+	<script src="c_object_transfer.lua" type="client" />
 </meta>
