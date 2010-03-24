@@ -174,15 +174,9 @@ local function cleanupProperty( id )
 			end
 		end
 		
-		if exports.mysql:query_free( "DELETE FROM objects WHERE dimension = " .. mysql:escape_string(id) ) then
-			local res = getResourceRootElement( getResourceFromName( "object-system" ) )
-			if res then
-				for key, value in pairs( getElementsByType( "object", res ) ) do
-					if getElementDimension( value ) == id then
-						destroyElement( value )
-					end
-				end
-			end
+		local res = getResourceRootElement( getResourceFromName( "object-system" ) )
+		if res then
+			exports['object-system']:removeInteriorObjects( tonumber(id) )
 		end
 	end
 end
