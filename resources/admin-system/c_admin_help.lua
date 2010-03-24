@@ -32,6 +32,8 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/history", "/history [player]", "checks the admin history of the player" },
 					{ "/auncuff", "/auncuff [player]", "uncuffs the player" },
 					{ "/mute", "/mute [player]", "mutes the player" },
+					{ "/togooc", "/togooc", "Toggles OOC on/off" },
+					{ "/stogooc", "/stogooc", "Siently Toggles OOC on/off" },
 					{ "/disarm", "/disarm [player]", "takes all weapon from the player" },
 					{ "/freconnect", "/freconnect [player]", "reconnects the player" },
 					{ "/giveitem", "/giveitem [player] [item id] [item value]", "gives the player the specified item, see /itemlist for ids" },
