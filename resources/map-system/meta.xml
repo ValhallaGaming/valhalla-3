@@ -3,7 +3,6 @@
 	
 	<script src="World/Bank Int.lua" type="client"/>
 	<script src="World/Church Int.lua" type="client"/>
-	<script src="World/Church2Int.lua" type="client"/>
 	<script src="World/Docks.lua" type="client"/>
 	<script src="World/Main Street.lua" type="client"/>
 	<script src="Recording Studio.lua" type="client"/>
@@ -22,48 +21,27 @@
 	
 	<!-- Los Santos Police Department -->
 	<script src="LSPD/PD Impound.lua" type="client"/>
-	<script src="LSPD/PD Interior.lua" type="client"/>
-	<script src="LSPD/PD Interior2.lua" type="client"/>
 	<script src="LSPD/PDRoof.lua" type="client"/>
 	<script src="LSPD/PD CPU Parking Lot.lua" type="client"/>
-	<script src="LSPD/swatinterior.lua" type="client"/>
 	
 	<!-- 2: Los Santos Emergency Services -->
-	<script src="LSES/ES.lua" type="client"/>
 	<script src="LSES/ES Academy.lua" type="client"/>
 	<script src="LSES/FD Interior.lua" type="client"/>
 	<script src="LSES/Hospital Int.lua" type="client"/>
 	<script src="LSES/ES-Hospital-Rooftop.lua" type="client"/>
 	
-	<!-- 3: Government of Los Santos -->
-	<script src="GOV/Gov City Hall.lua" type="client"/>
-	<script src="GOV/Gov Recreation Center.lua" type="client"/>
-	
 	<!-- 20: San Andreas Network -->
 	<script src="SAN/SAN Roof.lua" type="client"/>
-	<script src="SAN/SAN Interior.lua" type="client"/>
-	<script src="SAN/SAN Printworks.lua" type="client"/>
-	<script src="SAN/san_tv.lua" type="client"/>
 	
 	<!-- 26: Los Malvados -->
 	<script src="LM/seville.lua" type="client"/>
 	<script src="LM/Los Malvados Blob Records.lua" type="client"/>
 	
 	<!-- 30: Best's Towing and Recovery -->
-	<script src="BTR/interior.lua" type="client"/>
 	<script src="BTR/rooftop.lua" type="client"/>
-	
-	<!-- 36: First Court of San Andreas -->
-	<script src="FCSA/court.lua" type="client"/>
 	
 	<!-- 46: Little Moscow Crew -->
 	<script src="LMC/lmc-resto.lua" type="client"/>
-	<script src="LMC/lmc-backroom.lua" type="client"/>
-	<script src="LMC/lmc-interiors.lua" type="client"/>
-	<script src="LMC/LMC Vadmis Meatshop.lua" type="client"/>
-	<script src="LMC/LMC Spasibar.lua" type="client"/>
-	<script src="LMC/Spasibar-interior.lua" type="client"/>
-	<script src="LMC/Spasibar-backroom.lua" type="client"/>
 	
 	<!-- 56: Yakuza: Yamaguchi-Gumi -->
 	<script src="Yakuza/Yakuza Little Tokyo.lua" type="client"/>
@@ -77,10 +55,6 @@
 	
 	<!-- 71: San Andreas Correctional Facility -->
 	<script src="SACF/Prison Ext.lua" type="client"/>
-	<script src="SACF/Prison Int Rec.lua" type="client"/>
-	<script src="SACF/Prison Int Cells.lua" type="client"/>
-	<script src="SACF/wardenoffice.lua" type="client"/>
-	<script src="SACF/medbay.lua" type="client"/>
 	<script src="SACF/isolation.lua" type="client"/>
 	<script src="SACF/solitairy.lua" type="client"/>
 </meta>

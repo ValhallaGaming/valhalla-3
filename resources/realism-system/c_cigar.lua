@@ -73,6 +73,7 @@ function updateCig()
 		local x, y, z = getElementPosition(thePlayer)
 		local r = getPedRotation(thePlayer)
 		local dim = getElementDimension(thePlayer)
+		local int = getElementInterior(thePlayer)
 		local r = r + 170
 		if (r > 360) then
 			r = r - 360
@@ -83,6 +84,7 @@ function updateCig()
 		moveObject ( theObject, 1, bx, by, bz )
 		setElementRotation(theObject, 60, 30, r)
 		setElementDimension(theObject, dim)
+		setElementInterior(thePlayer, int)
 	end
 end
 addEventHandler("onClientPreRender", getRootElement(), updateCig)
