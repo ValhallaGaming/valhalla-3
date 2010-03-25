@@ -160,7 +160,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 			local timeLeft = timeLeft - 1
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
-			if (timeLeft<=0) and (theMagicTimer) then
+			if (timeLeft<=0) and (isTimer(theMagicTimer)) then
 				killTimer(theMagicTimer) -- 0001290: PD /release bug
 				fadeCamera(jailedPlayer, false)
 				mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
@@ -188,6 +188,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 				mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 			end
 		else -- you have served your time bug fix
+			outputDebugString(getPlayerName(jailedPlayer) .. " has time served bug.")
 			killTimer(theMagicTimer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
