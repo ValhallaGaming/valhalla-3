@@ -161,7 +161,12 @@ function timerPDUnjailPlayer(jailedPlayer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
 			if (timeLeft<=0) and (isTimer(theMagicTimer)) then
+				outputDebugString("TIME LEFT: " .. tostring(timeLeft))
+				outputDebugString("TIMER: " .. tostring(theMagicTimer))
+				outputDebugString("IS TIMER: " .. tostring(isTimer(theMagicTimer)))
+				
 				killTimer(theMagicTimer) -- 0001290: PD /release bug
+				theMagicTimer = nil
 				fadeCamera(jailedPlayer, false)
 				mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 				setElementDimension(jailedPlayer, getElementData(jailedPlayer, "pd.jailstation") <= 4 and 1 or 10583)
