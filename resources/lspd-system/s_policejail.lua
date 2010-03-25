@@ -154,36 +154,45 @@ function timerPDUnjailPlayer(jailedPlayer)
 		local timeLeft = getElementData(jailedPlayer, "pd.jailtime")
 		local theMagicTimer = getElementData(jailedPlayer, "pd.jailtimer") -- 0001290: PD /release bug
 		local username = getPlayerName(jailedPlayer)
-		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", tonumber(timeServed)+1, false)
-		local timeLeft = timeLeft - 1
-		exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
+		
+		if ( timeServed ) then
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", tonumber(timeServed)+1, false)
+			local timeLeft = timeLeft - 1
+			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
-		if (timeLeft<=0) and (theMagicTimer) then
-			killTimer(theMagicTimer) -- 0001290: PD /release bug
-			fadeCamera(jailedPlayer, false)
-			mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
-			setElementDimension(jailedPlayer, getElementData(jailedPlayer, "pd.jailstation") <= 4 and 1 or 10583)
-			setElementInterior(jailedPlayer, 10)
-			setCameraInterior(jailedPlayer, 10)
+			if (timeLeft<=0) and (theMagicTimer) then
+				killTimer(theMagicTimer) -- 0001290: PD /release bug
+				fadeCamera(jailedPlayer, false)
+				mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
+				setElementDimension(jailedPlayer, getElementData(jailedPlayer, "pd.jailstation") <= 4 and 1 or 10583)
+				setElementInterior(jailedPlayer, 10)
+				setCameraInterior(jailedPlayer, 10)
 
-			setElementPosition(jailedPlayer, 241.3583984375, 115.232421875, 1003.2257080078)
-			setPedRotation(jailedPlayer, 270)
+				setElementPosition(jailedPlayer, 241.3583984375, 115.232421875, 1003.2257080078)
+				setPedRotation(jailedPlayer, 270)
+					
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
 				
+				toggleControl(jailedPlayer,'next_weapon',true)
+				toggleControl(jailedPlayer,'previous_weapon',true)
+				toggleControl(jailedPlayer,'fire',true)
+				toggleControl(jailedPlayer,'aim_weapon',true)
+				
+				fadeCamera(jailedPlayer, true)
+				outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
+
+			elseif (timeLeft>0) then
+				mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
+			end
+		else -- you have served your time bug fix
+			killTimer(theMagicTimer)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
-			
-			toggleControl(jailedPlayer,'next_weapon',true)
-			toggleControl(jailedPlayer,'previous_weapon',true)
-			toggleControl(jailedPlayer,'fire',true)
-			toggleControl(jailedPlayer,'aim_weapon',true)
-			
-			fadeCamera(jailedPlayer, true)
-			outputChatBox("Your time has been served.", jailedPlayer, 0, 255, 0)
-
-		elseif (timeLeft>0) then
-			mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 		end
 	end
 end
