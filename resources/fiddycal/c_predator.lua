@@ -4,7 +4,8 @@ local projectiles = { }
 local x, y, z = nil
 
 function gimmepredator()
-	projectile = createProjectile(localPlayer, 20, 1153.6865234375, -1391.8251953125, 500.0, 1.0, nil, 90, 0, 0, 0, 0, -1)
+	local px, py, pz = getElementPosition(localPlayer)
+	projectile = createProjectile(localPlayer, 20, px, py, pz + 200, 2.0, nil, 90, 0, 0, 0, 0, -1)
 	
 	--for i = 1, 10 do
 	--	projectiles[i] = createProjectile(localPlayer, 20, 1153.6865234375, -1391.8251953125, 100.0, 1.0, nil, 90, 0, 0, 0, 0, -1)
@@ -57,7 +58,6 @@ function updatePredator()
 end
 
 function explodePredator(ex, ey, ez, type)
-	outputDebugString(tostring(ex) .. ", " .. tostring(ey) .. ", " .. tostring(ez))
 	triggerServerEvent("createExplode", getLocalPlayer(), ex, ey, ez)
 	setCameraMatrix(ex, ey, ez+10, ex, ey, ez)
 	setTimer(setCameraTarget, 2500, 1, localPlayer)
