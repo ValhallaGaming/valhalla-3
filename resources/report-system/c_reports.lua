@@ -15,6 +15,22 @@ function toggleReport()
 	executeCommandHandler("report")
 end
 
+function checkBinds()
+	if ( exports.global:isPlayerAdmin(getLocalPlayer()) ) then
+		local keys = getBoundKeys("ar")
+		local count = 0
+		for k,v in pairs(keys) do
+			count = count + 1
+		end
+		
+		if ( count > 0 ) then
+			outputChatBox("You had keys bound to accept reports. Please delete these binds.", 255, 0, 0)
+			triggerServerEvent("arBind", getLocalPlayer(), count)
+		end
+	end
+end
+setTimer(checkBinds, 60000, 0)
+
 function showReportMainUI()
 	local logged = getElementData(getLocalPlayer(), "loggedin")
 	if (logged==1) then

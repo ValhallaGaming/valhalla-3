@@ -411,7 +411,13 @@ end
 addCommandHandler("falsereport", falseReport, false, false)
 addCommandHandler("fr", falseReport, false, false)
 
-function acceptReport(thePlayer, commandName, id)
+function arBind(count)
+	exports.global:sendMessageToAdmins("[Admin Warning] Admin '" .. getPlayerName(client) .. "' has accept report bound to keys. Lead+ give him/her a warning.")
+end
+addEvent("arBind", true)
+addEventHandler("arBind", getRootElement(), arBind)
+
+function acceptReport(thePlayer, commandName, id, test)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		if not (id) then
 			outputChatBox("SYNTAX: /" .. commandName .. " [Report ID]", thePlayer, 255, 194, 14)
