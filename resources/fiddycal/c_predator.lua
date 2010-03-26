@@ -7,10 +7,6 @@ function gimmepredator()
 	if ( exports.global:isPlayerScripter(localPlayer) ) then
 		local px, py, pz = getElementPosition(localPlayer)
 		projectile = createProjectile(localPlayer, 20, px, py, pz + 200, 2.0, nil, 90, 0, 0, 0, 0, -1)
-		
-		--for i = 1, 10 do
-		--	projectiles[i] = createProjectile(localPlayer, 20, 1153.6865234375, -1391.8251953125, 100.0, 1.0, nil, 90, 0, 0, 0, 0, -1)
-		--end
 		showCursor(false)
 		addEventHandler("onClientPreRender", getRootElement(), updatePredator)
 		addEventHandler("onClientExplosion", localPlayer, explodePredator)
@@ -24,10 +20,6 @@ function cursorMove(cx, cy, absx, absy, wx, wy, wz)
 		if ( wx ~= x ) and ( wy ~= y ) and ( wz~= z) then
 			setElementPosition(projectile, wx, wy, z)
 		end
-		
-		--for i = 1, 10 do
-		--	setElementPosition(projectiles[i], wx, wy, z)
-		--end
 	end
 end
 
