@@ -4,7 +4,7 @@ local projectiles = { }
 local x, y, z = nil
 
 function gimmepredator()
-	if ( exports.global:isPlayerAdmin(localPlayer) ) then
+	if ( exports.global:isPlayerScripter(localPlayer) ) then
 		local px, py, pz = getElementPosition(localPlayer)
 		projectile = createProjectile(localPlayer, 20, px, py, pz + 200, 2.0, nil, 90, 0, 0, 0, 0, -1)
 		
