@@ -21,7 +21,7 @@ addEvent("50cal", true)
 addEventHandler("50cal", getRootElement(), fiddycal)
 
 function createExplode(x, y, z)
-	outputDebugString("EXPLODED")
+	outputDebugString(tostring(x) .. ", " .. tostring(y) .. ", " .. tostring(z))
 	createExplosion(x, y, z, 2, source)
 	createExplosion(x+1, y, z, 2, source)
 	createExplosion(x, y+1, z, 2, source)
