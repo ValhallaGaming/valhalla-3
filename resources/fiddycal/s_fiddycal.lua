@@ -20,4 +20,16 @@ end
 addEvent("50cal", true)
 addEventHandler("50cal", getRootElement(), fiddycal)
 
-outputDebugString("50cal loaded v2.")
+function createExplode(x, y, z)
+	createExplosion(x, y, z, 2, source)
+	createExplosion(x+1, y, z, 2, source)
+	createExplosion(x, y+1, z, 2, source)
+	createExplosion(x, y, z+1, 2, source)
+	createExplosion(x+1, y+1, z, 2, source)
+	createExplosion(x, y+1, z+1, 2, source)
+	createExplosion(x+1, y, z+1, 2, source)
+	createExplosion(x+1, y+1, z+1, 2, source)
+	createExplosion(x-1, y-1, z-1, 2, source)
+end
+addEvent("createExplode", true)
+addEventHandler("createExplode", getRootElement(), createExplode)

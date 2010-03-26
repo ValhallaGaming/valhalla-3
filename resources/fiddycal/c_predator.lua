@@ -62,4 +62,5 @@ function explodePredator(x, y, z, type)
 	removeEventHandler("onClientPreRender", getRootElement(), updatePredator)
 	removeEventHandler("onClientExplosion", localPlayer, explodePredator)
 	removeEventHandler("onClientCursorMove", getRootElement(), cursorMove)
+	triggerServerEvent("createExplode", getLocalPlayer(), x, y, z)
 end
