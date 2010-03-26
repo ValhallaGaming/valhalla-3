@@ -590,6 +590,10 @@ function timerUnjailPlayer(jailedPlayer)
 				toggleControl(jailedPlayer,'previous_weapon',true)
 				toggleControl(jailedPlayer,'fire',true)
 				toggleControl(jailedPlayer,'aim_weapon',true)
+				
+				local theTimer = getElementData(jailedPlayer, "jailtimer")
+				killTimer(theTimer)
+				
 				outputChatBox("Your time has been served, Behave next time!", jailedPlayer, 0, 255, 0)
 				exports.global:sendMessageToAdmins("AdmJail: " .. getPlayerName(jailedPlayer) .. " has served his jail time.")
 				exports.irc:sendMessage("[ADMIN] " .. getPlayerName(jailedPlayer) .. " was unjailed by script (Time Served)")
