@@ -57,10 +57,10 @@ function updatePredator()
 end
 
 function explodePredator(x, y, z, type)
+	triggerServerEvent("createExplode", getLocalPlayer(), x, y, z)
 	setCameraMatrix(x, y, z+10, x, y, z)
 	setTimer(setCameraTarget, 2500, 1, localPlayer)
 	removeEventHandler("onClientPreRender", getRootElement(), updatePredator)
 	removeEventHandler("onClientExplosion", localPlayer, explodePredator)
 	removeEventHandler("onClientCursorMove", getRootElement(), cursorMove)
-	triggerServerEvent("createExplode", getLocalPlayer(), x, y, z)
 end
