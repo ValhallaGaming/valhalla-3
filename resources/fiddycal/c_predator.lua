@@ -57,6 +57,19 @@ function updatePredator()
 			end
 		end
 	end
+	
+	for key, value in ipairs(getElementsByType("player")) do
+		if ( isElementStreamedIn(value) ) then
+			if ( isElementOnScreen(value) ) then
+				local minx, miny, minz, mx, my, mz = getElementBoundingBox(value)
+				local x, y, z = getElementPosition(value)
+				dxDrawLine3D(minx+x, miny+y, mz+z+5, minx+x, my+y ,mz+z+5, tocolor(255, 0, 0, 255), 15, false, 0)
+				dxDrawLine3D(minx+x, miny+y, mz+z+5, mx+x, miny+y ,mz+z+5, tocolor(255, 0, 0, 255), 15, false, 0)
+				dxDrawLine3D(mx+x, my+y, mz+z+5, minx+x, my+y ,mz+z+5, tocolor(255, 0, 0, 255), 15, false, 0)
+				dxDrawLine3D(mx+x, miny+y, mz+z+5, mx+x, my+y ,mz+z+5, tocolor(255, 0, 0, 255), 15, false, 0)
+			end
+		end
+	end
 end
 
 function explodePredator(ex, ey, ez, type)
