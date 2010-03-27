@@ -122,7 +122,7 @@ function spawnCharacter(charname, version)
 	
 	local safecharname = mysql:escape_string(charname)
 	
-	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. mysql:escape_string(id) .. "'")
+	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. mysql:escape_string(id) .. "' AND cked = 0")
 	
 	if (data) then
 		

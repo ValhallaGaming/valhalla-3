@@ -4726,12 +4726,16 @@ function selectItemFromVerticalMenu()
 				
 				local name = characterMenu[k]["name"]
 				local skin = characterMenu[k]["skin"]
+				local cked = characterMenu[k]["cked"]
+				if cked == 0 then
+					currentCharacterID = k
+					state = 3
+					triggerServerEvent("spawnCharacter", getLocalPlayer(), name, getVersion().mta)
 
-				currentCharacterID = k
-				state = 3
-				triggerServerEvent("spawnCharacter", getLocalPlayer(), name, getVersion().mta)
-
-				hideXMB()
+					hideXMB()
+				else
+					outputChatBox( name .. " is dead.", 255, 0, 0 )
+				end
 				break
 			end
 		end
@@ -4821,7 +4825,9 @@ function drawCharacters()
 			
 			local agestring = age .. " year old " .. gender
 			local factionstring = faction
-			if (rank ~= nil) then
+			if cked > 0 then
+				factionstring = "Dead"
+			elseif rank then
 				factionstring = rank .. " of '" .. faction .. "'."
 			end
 			
