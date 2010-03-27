@@ -616,13 +616,11 @@ function talkPhone(thePlayer, commandName, ...)
 						end
 					end
 					
-					message = call( getResourceFromName( "chat-system" ), "trunklateText", thePlayer, call( getResourceFromName( "chat-system" ), "trunklateText", target, message ) )
-					local message2 = call(getResourceFromName("language-system"), "applyLanguage", thePlayer, target, message, language)
-					
+					message = call( getResourceFromName( "chat-system" ), "trunklateText", thePlayer, message )
+					local message2 = call(getResourceFromName("language-system"), "applyLanguage", thePlayer, target, call( getResourceFromName( "chat-system" ), "trunklateText", target, message ), language)
 					outputChatBox("[" .. languagename .. "] ((" .. username .. ")) [Cellphone]: " .. message2, target)
 					
 					-- Send the message to the person on the other end of the line
-					
 					outputChatBox("[" .. languagename .. "] You [Cellphone]: " ..message, thePlayer)
 					
 					-- Send it to nearby players of the speaker
@@ -636,7 +634,7 @@ function talkPhone(thePlayer, commandName, ...)
 						
 						for index, nearbyPlayer in ipairs(getElementsByType("player")) do
 							if isElement(nearbyPlayer) and nearbyPlayer ~= target and getDistanceBetweenPoints3D(x, y, z, getElementPosition(nearbyPlayer)) < 40 and getElementDimension(nearbyPlayer) == getElementDimension(target) then
-								local message2 = call(getResourceFromName("language-system"), "applyLanguage", thePlayer, nearbyPlayer, message, language)
+								local message2 = call(getResourceFromName("language-system"), "applyLanguage", thePlayer, nearbyPlayer, call( getResourceFromName( "chat-system" ), "trunklateText", target, message ), language)
 								outputChatBox("[" .. languagename .. "] " .. username .. "'s Cellphone Loudspeaker: " .. message2, nearbyPlayer)
 							end
 						end
