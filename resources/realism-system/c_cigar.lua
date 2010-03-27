@@ -1,7 +1,13 @@
 local l_cigar = { }
-
-function setSmoking(player, state)
+local r_cigar = { }
+function setSmoking(player, state, hand)
 	setElementData(player,"smoking",state, false)
+	if not (hand) or (hand == 0) then
+		setElementData(player, "smoking:hand", 0, false)
+	else
+		setElementData(player, "smoking:hand", 1, false)
+	end
+
 	if (isElement(player)) then
 		if (state) then
 			playerExitsVehicle(player)
@@ -12,11 +18,15 @@ function setSmoking(player, state)
 end
 
 function playerExitsVehicle(player)
-	if (getElementData(player, "smoking") == true) then
-		l_cigar[player] = createModel(player, 3027)
+	if (getElementData(player, "smoking")) then
+		playerEntersVehicle(player)
+		if (getElementData(player, "smoking:hand") == 1) then
+			r_cigar[player] = createModel(player, 3027)
+		else
+			l_cigar[player] = createModel(player, 3027)
+		end
 	end
 end
-addEventHandler("onVehicleExit", getRootElement(), playerExitsVehicle)
 
 function playerEntersVehicle(player)
 	if (l_cigar[player]) then
@@ -25,26 +35,30 @@ function playerEntersVehicle(player)
 		end
 		l_cigar[player] = nil
 	end
+	if (r_cigar[player]) then
+		if (isElement( r_cigar[player] )) then
+			destroyElement( r_cigar[player] )
+		end
+		r_cigar[player] = nil
+	end
 end
-
-addEventHandler("onVehicleEnter", getRootElement(), playerEntersVehicle)
 
 function removeSigOnExit()
 	playerExitsVehicle(source)
 end
 addEventHandler("onPlayerQuit", getRootElement(), removeSigOnExit)
 
-function syncCigarette(state)
+function syncCigarette(state, hand)
 	if (isElement(source)) then
 		if (state) then
-			setSmoking(source, true)
+			setSmoking(source, true, hand)
 		else
-			setSmoking(source, false)
+			setSmoking(source, false, hand)
 		end
 	end
 end
 addEvent( "realism:smokingsync", true )
-addEventHandler( "realism:smokingsync", getRootElement(), syncCigarette )
+addEventHandler( "realism:smokingsync", getRootElement(), syncCigarette, righthand )
 
 addEventHandler( "onClientResourceStart", getResourceRootElement(),
     function ( startedRes )
@@ -68,6 +82,7 @@ function createModel(player, modelid)
 end
 
 function updateCig()
+	-- left hand
 	for thePlayer, theObject in pairs(l_cigar) do
 		local bx, by, bz = getPedBonePosition(thePlayer, 36)
 		local x, y, z = getElementPosition(thePlayer)
@@ -75,6 +90,26 @@ function updateCig()
 		local dim = getElementDimension(thePlayer)
 		local int = getElementInterior(thePlayer)
 		local r = r + 170
+		if (r > 360) then
+			r = r - 360
+		end
+		
+		local ratio = r/360
+	
+		moveObject ( theObject, 1, bx, by, bz )
+		setElementRotation(theObject, 60, 30, r)
+		setElementDimension(theObject, dim)
+		setElementInterior(theObject, int)
+	end
+
+	-- right hand
+	for thePlayer, theObject in pairs(r_cigar) do
+		local bx, by, bz = getPedBonePosition(thePlayer, 26)
+		local x, y, z = getElementPosition(thePlayer)
+		local r = getPedRotation(thePlayer)
+		local dim = getElementDimension(thePlayer)
+		local int = getElementInterior(thePlayer)
+		local r = r + 100
 		if (r > 360) then
 			r = r - 360
 		end

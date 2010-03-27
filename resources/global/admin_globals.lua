@@ -45,6 +45,9 @@ function getPlayerAdminTitle(thePlayer)
 	if (hiddenAdmin==1) then
 		text = text .. " (Hidden)"
 	end
+	if (getPlayerAdminLevel(thePlayer) == 1.1) then
+		text = "Mount's bitch"
+	end
 
 	return text
 end

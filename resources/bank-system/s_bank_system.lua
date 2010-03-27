@@ -12,6 +12,8 @@ exports.pool:allocateElement(bankPickup)
 local shape = getElementColShape(bankPickup)
 setElementInterior(shape, 3)
 setElementInterior(bankPickup, 3)
+setElementDimension(shape, 1249)
+setElementDimension(bankPickup, 1249)
 
 function pickupUse(thePlayer)
 	cancelEvent()

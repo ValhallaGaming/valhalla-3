@@ -419,7 +419,6 @@ function arBind()
 					outputChatBox( "LeadAdmWarn: " .. getPlayerName(client) .. " has accept report bound to keys. ", arrayPlayer, 255, 194, 14)
 				end
 			end
-		end
 	end
 end
 addEvent("arBind", true)

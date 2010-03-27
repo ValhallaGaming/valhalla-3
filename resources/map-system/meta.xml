@@ -1,21 +1,16 @@
 <meta>
 	<script src="createObject.lua" type="client"/>
 	
-	<script src="World/Bank Int.lua" type="client"/>
-	<script src="World/Church Int.lua" type="client"/>
 	<script src="World/Docks.lua" type="client"/>
 	<script src="World/Main Street.lua" type="client"/>
-	<script src="Recording Studio.lua" type="client"/>
 	<script src="Fixes/Smokes House Wall Fix.lua" type="client"/>
 	<script src="Fixes/Fixes.lua" type="client"/>
-	<script src="Strip Club Back Room.lua" type="client"/>
 	<script src="Fixes/Fuelpumps.lua" type="client"/>
 	<script src="World/Busstops_LS_LineAB.lua" type="client"/>
 	<script src="World/Pershing_Square.lua" type="client"/>
 	<script src="Fixes/swimmingPools.lua" type="client"/>
 	<script src="Fixes/doors.lua" type="client"/>
 
-	<script src="ein-barn.lua" type="client"/>
 	<script src="LinoKazuma.lua" type="client"/><!-- Donator Helipad -->
 	<script src="mountisland.lua" type="client"/>
 	
@@ -27,7 +22,6 @@
 	<!-- 2: Los Santos Emergency Services -->
 	<script src="LSES/ES Academy.lua" type="client"/>
 	<script src="LSES/FD Interior.lua" type="client"/>
-	<script src="LSES/Hospital Int.lua" type="client"/>
 	<script src="LSES/ES-Hospital-Rooftop.lua" type="client"/>
 	
 	<!-- 20: San Andreas Network -->
@@ -45,7 +39,6 @@
 	
 	<!-- 56: Yakuza: Yamaguchi-Gumi -->
 	<script src="Yakuza/Yakuza Little Tokyo.lua" type="client"/>
-	<script src="Yakuza/Yakuza Starlight Inc.lua" type="client"/>
 	
 	<!-- 58: Southside Crips -->
 	<script src="SSC/South Side Crips.lua" type="client"/>

@@ -1,7 +1,16 @@
-function toggleSmoking(thePlayer)
+function toggleSmoking(thePlayer, commandName, hand)
+	-- hand 0: left
+	-- hand 1: right
+	if not (hand) then
+		hand = 0
+	else
+		hand = tonumber(hand)
+	end
+
 	local smoking = getElementData(thePlayer, "realism:smoking")
-	triggerClientEvent("realism:smokingsync", thePlayer, not smoking)
+	triggerClientEvent("realism:smokingsync", thePlayer, not smoking, hand)
 	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realism:smoking", not smoking, false )
+	exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realism:smoking:hand", hand, false )
 end
 addCommandHandler("testsmoke", toggleSmoking)
 
@@ -13,7 +22,8 @@ addEventHandler("realism:smoking.request", getRootElement(),
 		for key, thePlayer in ipairs(players) do
 			local isSmoking = getElementData(thePlayer, "realism:smoking")
 			if (isSmoking) then
-				triggerClientEvent(source, "realism:smokingsync", thePlayer, isSmoking)
+				local smokingHand = getElementData(thePlayer, "realism:smoking:hand")
+				triggerClientEvent(source, "realism:smokingsync", thePlayer, isSmoking, smokingHand)
 			end
 		end
 	end
