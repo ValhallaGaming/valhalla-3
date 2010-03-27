@@ -84,7 +84,7 @@ function updateCig()
 		moveObject ( theObject, 1, bx, by, bz )
 		setElementRotation(theObject, 60, 30, r)
 		setElementDimension(theObject, dim)
-		setElementInterior(thePlayer, int)
+		setElementInterior(theObject, int)
 	end
 end
 addEventHandler("onClientPreRender", getRootElement(), updateCig)
