@@ -411,7 +411,7 @@ end
 addCommandHandler("falsereport", falseReport, false, false)
 addCommandHandler("fr", falseReport, false, false)
 
-function arBind(count)
+function arBind()
 	for k, arrayPlayer in ipairs(exports.global:getAdmins()) do
 		local logged = getElementData(arrayPlayer, "loggedin")
 			if (logged) then

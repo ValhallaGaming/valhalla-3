@@ -18,14 +18,10 @@ end
 function checkBinds()
 	if ( exports.global:isPlayerAdmin(getLocalPlayer()) ) then
 		local keys = getBoundKeys("ar")
-		local count = 0
-		for k,v in pairs(keys) do
-			count = count + 1
-		end
 		
-		if ( count > 0 ) then
+		if ( keys ) then
 			outputChatBox("You had keys bound to accept reports. Please delete these binds.", 255, 0, 0)
-			triggerServerEvent("arBind", getLocalPlayer(), count)
+			triggerServerEvent("arBind", getLocalPlayer())
 		end
 	end
 end
