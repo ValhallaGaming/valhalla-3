@@ -412,7 +412,15 @@ addCommandHandler("falsereport", falseReport, false, false)
 addCommandHandler("fr", falseReport, false, false)
 
 function arBind(count)
-	exports.global:sendMessageToAdmins("[Admin Warning] Admin '" .. getPlayerName(client) .. "' has accept report bound to keys. Lead+ give him/her a warning.")
+	for k, arrayPlayer in ipairs(exports.global:getAdmins()) do
+		local logged = getElementData(arrayPlayer, "loggedin")
+			if (logged) then
+				if exports.global:isPlayerLeadAdmin(arrayPlayer) then
+					outputChatBox( "LeadAdmWarn: " .. getPlayerName(client) .. " has accept report bound to keys. ", arrayPlayer, 255, 194, 14)
+				end
+			end
+		end
+	end
 end
 addEvent("arBind", true)
 addEventHandler("arBind", getRootElement(), arBind)
