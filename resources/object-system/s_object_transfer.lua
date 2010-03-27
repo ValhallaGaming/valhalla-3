@@ -1,5 +1,3 @@
-
-
 function transferDimension(thePlayer, theDimension)
 	if (theDimension ~= nil) and (objects[theDimension] ~= nil) then
 		local objTable = { }
