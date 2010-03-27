@@ -97,7 +97,7 @@ function leaveInterior( player )
 	for value in pairs( vehicles ) do
 		if getElementData( value, "dbid" ) == dim then
 			local x, y, z = getElementPosition( value )
-			teleportTo( player, x, y, z, getElementDimension( value ), getElementInterior( value ) )
+			teleportTo( player, x, y, z + 2, getElementDimension( value ), getElementInterior( value ) )
 			return
 		end
 	end
