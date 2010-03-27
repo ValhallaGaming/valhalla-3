@@ -55,6 +55,7 @@ end
 -- Do not even think of adding your own name here unless you made a couple of recent commits.
 local scripterAccounts = {
 	Daniels = true,
+	mabako = true,
 	Mount = true,
 	ryden = true,
 	herbjr = true --because he is awesome
