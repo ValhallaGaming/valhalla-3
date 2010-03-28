@@ -1202,20 +1202,16 @@ function unbanPlayer(thePlayer, commandName, nickName)
 							end
 							
 							if not (found) then
-								outputDebugString("TEST")
 								outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 							end
 						else
-							outputDebugString("TEST2")
 							outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 						end
 					else
-						outputDebugString("TEST3")
 						outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 					end
 					mysql:free_result(result)
 				else
-					outputDebugString("TEST4")
 					outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 				end
 			end
