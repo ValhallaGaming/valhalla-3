@@ -103,17 +103,18 @@ end
 function startObjectSystem(res)
 	local result = mysql:query("SELECT `dimension` FROM `objects` ORDER BY `dimension` ASC")
 	if (result) then
-	while true do
-		local row = mysql:fetch_assoc(result)
-		if not row then break end
-		toLoad[tonumber(row["dimension"])] = true
-	end
-	mysql:free_result(result)
-		
-	for id in pairs( toLoad ) do
-		local co = coroutine.create(loadDimension)
-		coroutine.resume(co, id, true)
-		table.insert(threads, co)
+		while true do
+			local row = mysql:fetch_assoc(result)
+			if not row then break end
+			toLoad[tonumber(row["dimension"])] = true
+		end
+		mysql:free_result(result)
+			
+		for id in pairs( toLoad ) do
+			local co = coroutine.create(loadDimension)
+			coroutine.resume(co, id, true)
+			table.insert(threads, co)
+		end
 	end
 end
 addEventHandler("onResourceStart", getResourceRootElement(), startObjectSystem)
