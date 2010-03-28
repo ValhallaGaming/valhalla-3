@@ -8,7 +8,7 @@ function transferDimension(thePlayer, theDimension)
 				objTable[objID] = objects[id]
 			end
 		end
-		outputDebugString("obj-sys-serv: sending " .. theDimension .. " to " .. getPlayerName(thePlayer) .. " (".. #objTable .. " objects)" )
+		--outputDebugString("obj-sys-serv: sending " .. theDimension .. " to " .. getPlayerName(thePlayer) .. " (".. #objTable .. " objects)" )
 		triggerClientEvent(thePlayer, "object:sync", getRootElement(), objTable, theDimension)
 	end
 end
