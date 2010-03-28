@@ -13,6 +13,7 @@
 	<script src="c_glowstick_system.lua" type="client" />
 	
 	<script src="c_headbob.lua" type="client" />
+	<script src="c_metal_detectors.lua" type="client" />
 	
 	<script src="s_enginebreak.lua" type="server" />
 	
