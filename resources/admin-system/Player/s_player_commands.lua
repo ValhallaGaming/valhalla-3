@@ -1173,8 +1173,50 @@ function unbanPlayer(thePlayer, commandName, nickName)
 				else
 					outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 				end
-			else
-				outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
+			else -- lets check by account instead
+				local result2 = mysql:query("SELECT id FROM accounts WHERE username='" .. mysql:escape_string(tostring(nickName)) .. "' LIMIT 1")
+			
+				if (mysql:num_rows(result2)>0) then
+					local row = mysql:fetch_assoc(result2)
+					local accountid = tonumber(row["id"])
+					mysql:free_result(result2)
+					
+					local result = mysql:query("SELECT ip, banned FROM accounts WHERE id='" .. mysql:escape_string(accountid) .. "'")
+						
+					if (result) then
+						if (mysql:num_rows(result)>0) then
+							local row = mysql:fetch_assoc(result)
+							local ip = tostring(row["ip"])
+							local banned = tonumber(row["banned"])
+							
+							for key, value in ipairs(bans) do
+								if (ip==getBanIP(value)) then
+									exports.global:sendMessageToAdmins(tostring(nickName) .. " was unbanned by " .. getPlayerName(thePlayer) .. ".")
+									removeBan(value, thePlayer)
+									mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE ip='" .. mysql:escape_string(ip) .. "'")
+									found = true
+									break
+								end
+							end
+							
+							if not found and banned == 1 then
+								mysql:query_free("UPDATE accounts SET banned='0', banned_by=NULL WHERE id='" .. mysql:escape_string(accountid) .. "'")
+								found = true
+							end
+							
+							if not (found) then
+								outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
+							end
+						else
+							outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
+						end
+					else
+						outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
+					end
+					mysql:free_result(result)
+				else
+					outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
+				end
 			end
 			mysql:free_result(result1)
 		end
