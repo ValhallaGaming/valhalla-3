@@ -1181,6 +1181,7 @@ function unbanPlayer(thePlayer, commandName, nickName)
 					local accountid = tonumber(row["id"])
 					mysql:free_result(result2)
 					
+					
 					local result = mysql:query("SELECT ip, banned FROM accounts WHERE id='" .. mysql:escape_string(accountid) .. "'")
 						
 					if (result) then
@@ -1205,16 +1206,20 @@ function unbanPlayer(thePlayer, commandName, nickName)
 							end
 							
 							if not (found) then
+								outputDebugString("TEST")
 								outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 							end
 						else
+							outputDebugString("TEST2")
 							outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 						end
 					else
+						outputDebugString("TEST3")
 						outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 					end
 					mysql:free_result(result)
 				else
+					outputDebugString("TEST4")
 					outputChatBox("No ban found for '" .. nickName .. "'", thePlayer, 255, 0, 0)
 				end
 			end
