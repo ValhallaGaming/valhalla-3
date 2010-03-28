@@ -51,14 +51,23 @@ function loadDimension(theDimension)
 			temparr[8] = tonumber(row["interior"])
 			temparr[9] = dimension
 			
-			table.insert(objects, tablec, temparr)
-			table.insert(objdimension, tablec, dimension)
+			insertA(tablec, temparr)
+			insertB(tablec, dimension)
+			
 		end
 		mysql:free_result(result)
 	end
 	coroutine.yield()
 	syncDimension(theDimension)
 	return count
+end
+
+function insertA(tablec, temparr)
+	table.insert(objects, tablec, temparr)
+end
+
+function insertB(tablec, dimension)
+	table.insert(objdimension, tablec, dimension)
 end
 
 function reloadDimension(thePlayer, commandName, dimensionID)
