@@ -985,6 +985,12 @@ addEvent("dropItem", true)
 addEventHandler("dropItem", getRootElement(), dropItem)
 
 local function moveItem(item, x, y, z)
+	if not ( z ) then
+		destroyElement(item)
+		exports.mysql:query_free("DELETE FROM worlditems WHERE id = " .. exports.mysql:escape_string(getElementData( item, "id" )))
+		return
+	end
+	
 	local result = mysql_query( handler, "UPDATE worlditems SET x = " .. x .. ", y = " .. y .. ", z = " .. z .. " WHERE id = " .. getElementData( item, "id" ) )
 	if result then
 		mysql_free_result( result )
