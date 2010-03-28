@@ -4727,7 +4727,7 @@ function selectItemFromVerticalMenu()
 				local name = characterMenu[k]["name"]
 				local skin = characterMenu[k]["skin"]
 				local cked = characterMenu[k]["cked"]
-				if cked == 0 then
+				if not cked or cked == 0 then
 					currentCharacterID = k
 					state = 3
 					triggerServerEvent("spawnCharacter", getLocalPlayer(), name, getVersion().mta)
@@ -4780,6 +4780,7 @@ function drawCharacters()
 		for i = 1, #characterMenu do
 			local name = characterMenu[i]["name"]
 			local age = characterMenu[i]["age"]
+			local cked = characterMenu[i]["cked"]
 			local cx = characterMenu[i]["cx"]
 			local cy = characterMenu[i]["cy"]
 			local tx = characterMenu[i]["tx"]
@@ -4825,7 +4826,7 @@ function drawCharacters()
 			
 			local agestring = age .. " year old " .. gender
 			local factionstring = faction
-			if cked > 0 then
+			if cked and cked > 0 then
 				factionstring = "Dead"
 			elseif rank then
 				factionstring = rank .. " of '" .. faction .. "'."
