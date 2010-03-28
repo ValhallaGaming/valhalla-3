@@ -1013,20 +1013,24 @@ function lockUnlockInside(vehicle)
 	local dbid = getElementData(vehicle, "dbid")
 	
 	if (owner ~= -2) then
-		if not locklessVehicle[model] or exports.global:hasItem( source, 3, dbid ) then
-			if (getElementData(source, "realinvehicle") == 1) then
-				local locked = isVehicleLocked(vehicle)
-				local seat = getPedOccupiedVehicleSeat(source)
-				if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
-					if (locked) then
-						setVehicleLocked(vehicle, false)
-						exports.global:sendLocalMeAction(source, "unlocks the vehicle doors.")
-					else
-						setVehicleLocked(vehicle, true)
-						exports.global:sendLocalMeAction(source, "locks the vehicle doors.")
+		if ( getElementData(vehicle, "Impounded") or 0 ) == 0 then
+			if not locklessVehicle[model] or exports.global:hasItem( source, 3, dbid ) then
+				if (getElementData(source, "realinvehicle") == 1) then
+					local locked = isVehicleLocked(vehicle)
+					local seat = getPedOccupiedVehicleSeat(source)
+					if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
+						if (locked) then
+							setVehicleLocked(vehicle, false)
+							exports.global:sendLocalMeAction(source, "unlocks the vehicle doors.")
+						else
+							setVehicleLocked(vehicle, true)
+							exports.global:sendLocalMeAction(source, "locks the vehicle doors.")
+						end
 					end
 				end
 			end
+		else
+			outputChatBox("(( You can't lock impounded vehicles. ))", source, 255, 195, 14)
 		end
 	else
 		outputChatBox("(( You can't lock civilian vehicles. ))", source, 255, 195, 14)
@@ -1040,28 +1044,30 @@ addEventHandler("lockUnlockInsideVehicle", getRootElement(), lockUnlockInside)
 local storeTimers = { }
 
 function lockUnlockOutside(vehicle)
-	local dbid = getElementData(vehicle, "dbid")
-	
-	exports.global:applyAnimation(source, "GHANDS", "gsign3LH", 2000, false, false, false)
-	
-	if (isVehicleLocked(vehicle)) then
-		setVehicleLocked(vehicle, false)
-		exports.global:sendLocalMeAction(source, "presses on the key to unlock the vehicle. ((" .. getVehicleName(vehicle) .. "))")
+	if (not source or exports.global:isPlayerAdmin(source)) or ( getElementData(vehicle, "Impounded") or 0 ) == 0 then
+		local dbid = getElementData(vehicle, "dbid")
 		
-		if not (exports.global:hasItem(source, 3, dbid) or (getElementData(source, "faction") > 0 and getElementData(source, "faction") == getElementData(vehicle, "faction"))) then
-			exports.logs:logMessage("[UNLOCK] car #" .. dbid .. " was unlocked by " .. getPlayerName(source), 21)
-		end
-	else
-		setVehicleLocked(vehicle, true)
-		exports.global:sendLocalMeAction(source, "presses on the key to lock the vehicle. ((" .. getVehicleName(vehicle) .. "))")
+		exports.global:applyAnimation(source, "GHANDS", "gsign3LH", 2000, false, false, false)
 		
-		if not (exports.global:hasItem(source, 3, dbid) or (getElementData(source, "faction") > 0 and getElementData(source, "faction") == getElementData(vehicle, "faction"))) then
-			exports.logs:logMessage("[LOCK] car #" .. dbid .. " was locked by " .. getPlayerName(source), 21)
+		if (isVehicleLocked(vehicle)) then
+			setVehicleLocked(vehicle, false)
+			exports.global:sendLocalMeAction(source, "presses on the key to unlock the vehicle. ((" .. getVehicleName(vehicle) .. "))")
+			
+			if not (exports.global:hasItem(source, 3, dbid) or (getElementData(source, "faction") > 0 and getElementData(source, "faction") == getElementData(vehicle, "faction"))) then
+				exports.logs:logMessage("[UNLOCK] car #" .. dbid .. " was unlocked by " .. getPlayerName(source), 21)
+			end
+		else
+			setVehicleLocked(vehicle, true)
+			exports.global:sendLocalMeAction(source, "presses on the key to lock the vehicle. ((" .. getVehicleName(vehicle) .. "))")
+			
+			if not (exports.global:hasItem(source, 3, dbid) or (getElementData(source, "faction") > 0 and getElementData(source, "faction") == getElementData(vehicle, "faction"))) then
+				exports.logs:logMessage("[LOCK] car #" .. dbid .. " was locked by " .. getPlayerName(source), 21)
+			end
 		end
-	end
 
-	if (storeTimers[vehicle] == nil) or not (isTimer(storeTimers[vehicle])) then
-		storeTimers[vehicle] = setTimer(storeVehicleLockState, 180000, 1, vehicle, dbid)
+		if (storeTimers[vehicle] == nil) or not (isTimer(storeTimers[vehicle])) then
+			storeTimers[vehicle] = setTimer(storeVehicleLockState, 180000, 1, vehicle, dbid)
+		end
 	end
 end
 addEvent("lockUnlockOutsideVehicle", true)
