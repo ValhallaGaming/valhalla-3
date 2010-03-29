@@ -1520,68 +1520,25 @@ function saveHelpInformation()
 end
 
 function saveAccountInformation(mtausername)
-	-- FORUM ACCOUNT
-	tAccount[1] = { }
-	tAccount[1].title = "Revert to Pre-Beta"
-	tAccount[1].text = "Select this to revert to the Pre-Sapphire GUI."
-	tAccount[1].cx = initX
-	tAccount[1].cy = initY + yoffset + 40
-	tAccount[1].tx = initX
-	tAccount[1].ty = initY + yoffset + 40
-
-	-- MTA USERNAME/ACCOUNT
-	if ( mtausername ) then
+	tAccount = {
+		{ title = "Revert to Pre-Beta", text = "Select this to revert to the Pre-Sapphire GUI." },
+		{ title = "MTA Account", text = mtausername and mtausername or "You currently have no account linked.\nLog into one under Settings -> Community to link it." },
+		{ title = "Forum Account", text = "You currently have no forum account linked.\nSelect this option to link one." },
+		{ title = "Playstation Network® Account", text = "You currently have no Playstation Network® account linked.\nSelect this option to link one." },
+		{ title = "Xbox Live® Account", text = "You currently have no Xbox Live® account linked.\nSelect this option to link one." },
+		{ title = "Steam® Account", text = "You currently have no Steam® account linked.\nSelect this option to link one." }
+	}
+	
+	if mtausername then
 		mtaUsername = mtausername
-		
-		tAccount[2] = { }
-		tAccount[2].title = "MTA Account"
-		tAccount[2].text = mtausername
 	else
 		MTAaccountTimer = setTimer(checkForMTAAccount, 1000, 0)
-		tAccount[2] = { }
-		tAccount[2].title = "MTA Account"
-		tAccount[2].text = "You currently have no account linked.\nLog into one under Settings -> Community to link it."
 	end
-	tAccount[2].cx = initX
-	tAccount[2].cy = initY + 2*yoffset + 40
-	tAccount[2].tx = initX
-	tAccount[2].ty = initY + 2*yoffset + 40
 	
-	-- FORUM ACCOUNT
-	tAccount[3] = { }
-	tAccount[3].title = "Forum Account"
-	tAccount[3].text = "You currently have no forum account linked.\nSelect this option to link one."
-	tAccount[3].cx = initX
-	tAccount[3].cy = initY + 3*yoffset + 40
-	tAccount[3].tx = initX
-	tAccount[3].ty = initY + 3*yoffset + 40
-	
-	-- PSN ACCOUNT
-	tAccount[4] = { }
-	tAccount[4].title = "Playstation Network® Account"
-	tAccount[4].text = "You currently have no Playstation Network® account linked.\nSelect this option to link one."
-	tAccount[4].cx = initX
-	tAccount[4].cy = initY + 4*yoffset + 40
-	tAccount[4].tx = initX
-	tAccount[4].ty = initY + 4*yoffset + 40
-	
-	-- XBOX LIVE ACCOUNT
-	tAccount[5] = { }
-	tAccount[5].title = "Xbox Live® Account"
-	tAccount[5].text = "You currently have no Xbox Live® account linked.\nSelect this option to link one."
-	tAccount[5].cx = initX
-	tAccount[5].cy = initY + 5*yoffset + 40
-	tAccount[5].tx = initX
-	tAccount[5].ty = initY + 5*yoffset + 40
-	
-	-- STEAM ACCOUNT
-	tAccount[6] = { }
-	tAccount[6].title = "Steam® Account"
-	tAccount[6].text = "You currently have no Steam® account linked.\nSelect this option to link one."
-	tAccount[6].cx = initX
-	tAccount[6].cy = initY + 6*yoffset + 40
-	tAccount[6].tx = initX
-	tAccount[6].ty = initY + 6*yoffset + 40
+	for k, v in ipairs( tAccount ) do
+		v.cy = initY + k * yoffset + 40
+		v.ty = v.cy
+	end
 	
 	loadedAccount = true
 	saveHelpInformation()
