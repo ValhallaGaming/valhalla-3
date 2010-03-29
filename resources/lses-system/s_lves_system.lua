@@ -1,18 +1,20 @@
 mysql = exports.mysql
 
 function playerDeath()
+	if getElementData(source, "dbid") then
 		local name = string.gsub(getPlayerName(source), "_", " ")
 		setPlayerNametagText(source, tostring(name))
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "nameTint", 0)	
 
-	if getElementData(source, "adminjailed") then
-		spawnPlayer(source, 263.821807, 77.848365, 1001.0390625, 270, getElementModel(source), 6, getElementData(source, "playerid")+65400, getPlayerTeam(source))
-		setCameraInterior(source, 6)
-		setCameraTarget(source)
-		fadeCamera(source, true)
-	else
-		outputChatBox("Respawn in 10 seconds.", source)
-		setTimer(respawnPlayer, 10000, 1, source)
+		if getElementData(source, "adminjailed") then
+			spawnPlayer(source, 263.821807, 77.848365, 1001.0390625, 270, getElementModel(source), 6, getElementData(source, "playerid")+65400, getPlayerTeam(source))
+			setCameraInterior(source, 6)
+			setCameraTarget(source)
+			fadeCamera(source, true)
+		else
+			outputChatBox("Respawn in 10 seconds.", source)
+			setTimer(respawnPlayer, 10000, 1, source)
+		end
 	end
 end
 addEventHandler("onPlayerWasted", getRootElement(), playerDeath)
