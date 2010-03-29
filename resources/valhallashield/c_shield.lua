@@ -37,7 +37,7 @@ end
 
 function checkCanSeeReconners()
 	for k,v in ipairs(getElementsByType("player")) do
-		if ( getElementData(v, "reconx") then
+		if ( getElementData(v, "reconx") ) then
 			if ( getElementAlpha(v) > 0 ) then
 				triggerServerEvent("reconhack", getLocalPlayer())
 			end
