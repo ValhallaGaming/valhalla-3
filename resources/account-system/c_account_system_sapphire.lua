@@ -4768,7 +4768,7 @@ function selectItemFromVerticalMenu()
 		unbindKey("arrow_u", "down", moveUp)
 		unbindKey("arrow_d", "down", moveDown)
 		unbindKey("enter", "down", selectItemFromVerticalMenu)
-		unbindKey("home", "down", toggleXMB)
+		removeCommandHandler("home", toggleXMB)
 		
 		createXMB(true)
 	end
@@ -5515,7 +5515,8 @@ function createXMBMain(characters)
 			bindKey(name, "down", manageCamera)
 		end
 	end
-	bindKey("home", "down", toggleXMB)
+	addCommandHandler("home", toggleXMB)
+	bindKey("home", "down", "home")
 end
 addEvent("loginOK", true)
 addEventHandler("loginOK", getRootElement(), createXMBMain)
