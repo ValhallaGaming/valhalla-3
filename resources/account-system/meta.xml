@@ -5,6 +5,8 @@
 	
 	<script src="s_account_system_sapphire.lua" type="server" />
 	<script src="c_account_system_sapphire.lua" type="client" />	
+	
+	<script src="c_tutorial_quiz.lua" type="client"/>
 
 	<file src="pass.png"/>
 
