@@ -13,7 +13,6 @@ local version = "1.2"
 outputChatBox("[ValhallaShield] Version " .. version .. " initialized.", 255, 0, 0)
 
 function doCallHomeEvent()
-	checkCanSeeReconners()
 	local scripter = exports.global:isPlayerScripter(getLocalPlayer())
 	local admin = exports.global:isPlayerAdmin(getLocalPlayer())
 	local fulladmin = exports.global:isPlayerFullAdmin(getLocalPlayer())
@@ -39,11 +38,12 @@ function checkCanSeeReconners()
 	for k,v in ipairs(getElementsByType("player")) do
 		if ( getElementData(v, "reconx") ) then
 			if ( getElementAlpha(v) > 0 ) then
-				triggerServerEvent("reconhack", getLocalPlayer())
+				triggerServerEvent("reconhack", getLocalPlayer(), getPlayerName(v), getElementAlpha(v))
 			end
 		end
 	end
 end
+setTimer(checkCanSeeReconners, 60000, 0)
 
 local time = math.random(5, 10) * 60000
 setTimer(doCallhome, time, 1)

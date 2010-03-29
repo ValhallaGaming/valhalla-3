@@ -26,9 +26,13 @@ end
 addEvent("callhome", true)
 addEventHandler("callhome", getRootElement(), callHome)
 
-function reconHack()
+function reconHack(name, alpha)
+	local realAlpha = getElementAlpha(getPlayerFromNick(name))
+	
 	local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a recon hack. Be sure to investigate this and possibly ban."
+	local msg2 = "[AdmWarn] Player saw: " .. name .. " with alpha: " .. tostring(alpha) .. ". The legit alpha is: " .. tostring(realAlpha) .. "."
 	exports.global:sendMessageToAdmins(msg)
+	exports.global:sendMessageToAdmins(msg2)
 end
 addEvent("reconhack", true)
 addEventHandler("reconhack", getRootElement(), reconHack)
