@@ -130,6 +130,8 @@ function spawnCharacter(charname, version)
 		local currentid = getElementData(source, "dbid")
 		if id == currentid then
 			return
+		elseif currentid then
+			triggerEvent("savePlayer", source, "Change Character", source)
 		end
 		
 		for key, value in ipairs(getElementsByType("player")) do
