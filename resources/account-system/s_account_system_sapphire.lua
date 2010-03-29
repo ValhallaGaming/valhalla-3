@@ -126,13 +126,18 @@ function spawnCharacter(charname, version)
 	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. mysql:escape_string(id) .. "' AND cked = 0")
 	
 	if (data) then
+		local id = tonumber(data["id"])
+		local currentid = getElementData(source, "dbid")
+		if id == currentid then
+			return
+		end
+		
 		for key, value in ipairs(getElementsByType("player")) do
 			if ( getElementData(value, "loggedin") == 1 and value ~= source and hasBeta[value] ) then
 				triggerClientEvent(value, "onPlayerCharacterChange", source, charname)
 			end
 		end
 		
-		local id = tonumber(data["id"])
 		local x = data["x"]
 		local y = data["y"]
 		local z = data["z"]

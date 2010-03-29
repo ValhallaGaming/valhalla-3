@@ -4722,6 +4722,7 @@ function selectItemFromVerticalMenu()
 			if ( round(characterMenu[k]["ty"], -1) >= round(initY + xoffset, -1) - 100) then -- selected
 				if ( currentCharacterID == k ) then
 					hideXMB()
+					return
 				end
 				
 				local name = characterMenu[k]["name"]
