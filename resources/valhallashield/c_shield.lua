@@ -39,6 +39,7 @@ function checkCanSeeReconners()
 		if getElementData(v, "reconx") and getElementData(v, "reconx") ~= true then
 			if ( getElementAlpha(v) > 0 ) then
 				triggerServerEvent("reconhack", getLocalPlayer(), getPlayerName(v), getElementAlpha(v))
+				break;
 			end
 		end
 	end
