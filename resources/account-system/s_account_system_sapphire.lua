@@ -125,6 +125,11 @@ function spawnCharacter(charname, version)
 	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. mysql:escape_string(id) .. "' AND cked = 0")
 	
 	if (data) then
+		for key, value in ipairs(getElementsByType("player")) do
+			if ( getElementData(value, "loggedin") == 1 and value ~= source and hasBeta[value] ) then
+				triggerClientEvent(value, "onPlayerCharacterChange", source, charname)
+			end
+		end
 		
 		local id = tonumber(data["id"])
 		local x = data["x"]
@@ -621,6 +626,11 @@ function loginPlayer(username, password, operatingsystem)
 	if (mysql:num_rows(result)>0) then
 		local data = mysql:fetch_assoc(result)
 		triggerEvent("onPlayerLogin", source, username, password)
+		for key, value in ipairs(getElementsByType("player")) do
+			if ( getElementData(value, "loggedin") == 1 and value ~= source and hasBeta[value] ) then
+				triggerClientEvent(value, "onPlayerAccountLogin", source, username)
+			end
+		end
 		
 		local id = tonumber(data["id"])
 		

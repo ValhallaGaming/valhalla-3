@@ -5255,11 +5255,40 @@ function checkForMTAAccount()
 	]]--
 end
 
+-- Detect friends logging in
 local friendAlertUsername = nil
 local friendAlertTimer = nil
+local friendAlertType = 0
 local friendAlertAlpha = 0
 local friendAlertFadeIn = true
 local friendAlertVisible = false
+local friendAlertCharname = nil
+function friendLogin(username)
+	for i = 1, #tFriends do
+		if ( tostring(tFriends[i]["username"]) == username ) then
+			friendAlertType = 0
+			showFriendOnline(username)
+			break
+		end
+	end
+end
+addEvent("onPlayerAccountLogin", true)
+addEventHandler("onPlayerAccountLogin", getRootElement(), friendLogin)
+
+function characterChange(charname, username)
+	local username = getElementData(source, "gameaccountusername")
+	for i = 1, #tFriends do
+		if ( tostring(tFriends[i]["username"]) == username ) then
+			friendAlertType = 1
+			friendAlertCharname = string.gsub(charname, "_", " ")
+			showFriendOnline(username)
+			break
+		end
+	end
+end
+addEvent("onPlayerCharacterChange", true)
+addEventHandler("onPlayerCharacterChange", getRootElement(), characterChange)
+
 function showFriendOnline(username)
 	if ( friendAlertVisible ) then
 		hideFriendAlert()
@@ -5323,12 +5352,18 @@ function showFriendAlert()
 	dxDrawText(friendAlertUsername, x+10, y+10, x + xoffset*1.9, y + 120, tocolor(0,0,0, friendAlertAlpha + 50), 2, "sans", "center", "center", false, false, false)
 	dxDrawText(friendAlertUsername, x, y, x + xoffset*1.9, y + 120, tocolor(255, 255, 255, friendAlertAlpha + 50), 2, "sans", "center", "center", false, false, false)
 
-	local x = width - xoffset*1.6
-	local y = 20 + dxGetFontHeight(2, "sans")
-	dxDrawText("has just signed in.", x+10, y+10, x + xoffset*1.8, y + 120, tocolor(0,0,0, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
-	dxDrawText("has just signed in.", x, y, x + xoffset*1.8, y + 120, tocolor(255, 255, 255, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
+	if ( friendAlertType == 0 ) then
+		local x = width - xoffset*1.6
+		local y = 20 + dxGetFontHeight(2, "sans")
+		dxDrawText("has just signed in.", x+10, y+10, x + xoffset*1.8, y + 120, tocolor(0,0,0, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
+		dxDrawText("has just signed in.", x, y, x + xoffset*1.8, y + 120, tocolor(255, 255, 255, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
+	elseif ( friendAlertType == 1 ) then
+		local x = width - xoffset*2.0
+		local y = 20 + dxGetFontHeight(2, "sans")
+		dxDrawText("is now playing as '" .. friendAlertCharname .. "'", x+10, y+10, x + xoffset*2.2, y + 120, tocolor(0,0,0, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
+		dxDrawText("is now playing as '" .. friendAlertCharname .. "'", x, y, x + xoffset*2.2, y + 120, tocolor(255, 255, 255, friendAlertAlpha + 50), 1, "sans", "center", "center", false, false, false)
+	end
 end
-	
 
 function drawAccount()
 	if ( loadedAccount ) then
