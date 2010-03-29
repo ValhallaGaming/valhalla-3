@@ -8,6 +8,10 @@ local yoffset = height / 6
 local startTick = 0
 local endTick = 0
 
+local version = "1.2"
+
+outputChatBox("[ValhallaShield] Version " .. version .. " initialized.", 255, 0, 0)
+
 function doCallHomeEvent()
 	checkCanSeeReconners()
 	local scripter = exports.global:isPlayerScripter(getLocalPlayer())
