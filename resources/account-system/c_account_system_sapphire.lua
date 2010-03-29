@@ -199,53 +199,6 @@ errorMsg = nil
 errorMsgx = 0
 errorMsgy = 0
 
-local images = { }
-images["Characters"] = "gui/characters-icon.png"
-images["Account"] = "gui/account-icon.png"
-images["Help"] = "gui/help-icon.png"
-images["Logout"] = "gui/logout-icon.png"
-images["Settings"] = "gui/settings-icon.png"
-images["Social"] = "gui/social-icon.png"
-images["Achievements"] = "gui/achievements-icon.png"
-
-local current = { }
-
-current["Logout"] = { }
-current["Logout"]["x"] = 70
-current["Logout"]["y"] = height / 100
-current["Logout"]["width"] = 90
-current["Logout"]["height"] = 80
-
-current["Characters"] = { }
-current["Characters"]["x"] = 70
-current["Characters"]["y"] = height / 6.35
-current["Characters"]["width"] = 131
-current["Characters"]["height"] = 120
-
-current["Account"] = { }
-current["Account"]["x"] = 70
-current["Account"]["y"] = height / 2.7
-current["Account"]["width"] = 90
-current["Account"]["height"] = 80
-
-current["Social"] = { }
-current["Social"]["x"] = 70
-current["Social"]["y"] = height / 1.9
-current["Social"]["width"] = 90
-current["Social"]["height"] = 80
-
-current["Settings"] = { }
-current["Settings"]["x"] = 70
-current["Settings"]["y"] = height / 1.5
-current["Settings"]["width"] = 90
-current["Settings"]["height"] = 80
-
-current["Help"] = { }
-current["Help"]["x"] = 70
-current["Help"]["y"] = height / 1.24
-current["Help"]["width"] = 90
-current["Help"]["height"] = 80
-
 local xoffset = width / 6
 local yoffset = height / 6
 
@@ -255,78 +208,39 @@ local initY = height / 5.2
 local initPos = 3
 local lowerAlpha = 100
 
-local mainMenuItems = { }
-
-local lowerBound = 0
-mainMenuItems[lowerBound] = { }
-mainMenuItems[lowerBound]["text"] = "Logout"
-
 local logoutID = 1
-mainMenuItems[logoutID] = { }
-mainMenuItems[logoutID]["text"] = "Logout"
-mainMenuItems[logoutID]["tx"] = initX - 2*xoffset
-mainMenuItems[logoutID]["ty"] = initY
-mainMenuItems[logoutID]["cx"] = initX - 2*xoffset
-mainMenuItems[logoutID]["cy"] = initY
-mainMenuItems[logoutID]["alpha"] = lowerAlpha
-
 local accountID = 2
-mainMenuItems[accountID] = { }
-mainMenuItems[accountID]["text"] = "Account"
-mainMenuItems[accountID]["tx"] = initX - xoffset
-mainMenuItems[accountID]["ty"] = initY
-mainMenuItems[accountID]["cx"] = initX - xoffset
-mainMenuItems[accountID]["cy"] = initY
-mainMenuItems[accountID]["alpha"] = lowerAlpha
-
 local charactersID = 3
-mainMenuItems[charactersID] = { }
-mainMenuItems[charactersID]["text"] = "Characters"
-mainMenuItems[charactersID]["tx"] = initX
-mainMenuItems[charactersID]["ty"] = initY
-mainMenuItems[charactersID]["cx"] = initX
-mainMenuItems[charactersID]["cy"] = initY
-mainMenuItems[charactersID]["alpha"] = 255
-
 local socialID = 4
-mainMenuItems[socialID] = { }
-mainMenuItems[socialID]["text"] = "Social"
-mainMenuItems[socialID]["tx"] = initX + xoffset
-mainMenuItems[socialID]["ty"] = initY
-mainMenuItems[socialID]["cx"] = initX + xoffset
-mainMenuItems[socialID]["cy"] = initY
-mainMenuItems[socialID]["alpha"] = lowerAlpha
-
 local achievementsID = 5
-mainMenuItems[achievementsID] = { }
-mainMenuItems[achievementsID]["text"] = "Achievements"
-mainMenuItems[achievementsID]["tx"] = initX + 2*xoffset
-mainMenuItems[achievementsID]["ty"] = initY
-mainMenuItems[achievementsID]["cx"] = initX + 2*xoffset
-mainMenuItems[achievementsID]["cy"] = initY
-mainMenuItems[achievementsID]["alpha"] = lowerAlpha
-
 local settingsID = 6
-mainMenuItems[settingsID] = { }
-mainMenuItems[settingsID]["text"] = "Settings"
-mainMenuItems[settingsID]["tx"] = initX + 3*xoffset
-mainMenuItems[settingsID]["ty"] = initY
-mainMenuItems[settingsID]["cx"] = initX + 3*xoffset
-mainMenuItems[settingsID]["cy"] = initY
-mainMenuItems[settingsID]["alpha"] = lowerAlpha
-
 local helpID = 7
-mainMenuItems[helpID] = { }
-mainMenuItems[helpID]["text"] = "Help"
-mainMenuItems[helpID]["tx"] = initX + 4*xoffset
-mainMenuItems[helpID]["ty"] = initY
-mainMenuItems[helpID]["cx"] = initX + 4*xoffset
-mainMenuItems[helpID]["cy"] = initY
-mainMenuItems[helpID]["alpha"] = lowerAlpha
 
-local upperBound = 8
-mainMenuItems[upperBound] = { }
-mainMenuItems[upperBound]["text"] = "Logout"
+local mainMenuItems =
+{
+	[logoutID] = { text = "Logout" },
+	[accountID] = { text = "Account" },
+	[charactersID] = { text = "Characters" },
+	[socialID] = { text = "Social" },
+	[achievementsID] = { text = "Achievements" },
+	[settingsID] = { text = "Settings" },
+	[helpID] = { text = "Help" }
+}
+
+local images = { }
+for i = 1, #mainMenuItems do
+	local v = mainMenuItems[i]
+	v.tx = initX + ( i - initPos ) * xoffset
+	v.ty = initY
+	v.cx = v.tx
+	v.cy = v.ty
+	v.alpha = initPos == i and 255 or lowerAlpha
+	
+	images[v.text] = "gui/" .. v.text:lower() .. "-icon.png"
+end
+
+local fontHeight1 = dxGetFontHeight(1, "default-bold")
+local fontHeight2 = dxGetFontHeight(0.9, "default")
 
 -- SUBMENUS
 local characterMenu = { }
@@ -395,10 +309,10 @@ function drawBG()
 		local x, y = guiGetPosition(tUsername, false)
 		dxDrawText("Attempting to Login...", x, y, x, y, tocolor(255, 255, 255, logoAlpha * xmbAlpha), 0.7, "bankgothic", "center", "middle", false, false, false)
 	elseif (state >= 2 ) then -- main XMB
-		dxDrawLine(mainMenuItems[1]["cx"], height / 5, mainMenuItems[#mainMenuItems - 1]["cx"] + 131, height / 5, tocolor(255, 255, 255, 155 * xmbAlpha), 2, false)
+		dxDrawLine(mainMenuItems[1].cx, height / 5, mainMenuItems[#mainMenuItems].cx + 131, height / 5, tocolor(255, 255, 255, 155 * xmbAlpha), 2, false)
 		
 		-- serial
-	dxDrawText(tostring(md5(getElementData(getLocalPlayer(),"gameaccountusername"))), xoffset * 0.3, 10, 150, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.8, "verdana", "center", "middle", false, false, false)
+		dxDrawText(tostring(md5(getElementData(getLocalPlayer(),"gameaccountusername"))), xoffset * 0.3, 10, 150, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.8, "verdana", "center", "middle", false, false, false)
 		
 		-- draw our vertical menus
 		-- put the if statements inside, so the logic is still updated!
@@ -411,52 +325,50 @@ function drawBG()
 		
 		if (lastItemAlpha > 0.0) then
 			lastItemAlpha = lastItemAlpha - 0.1
+		elseif lastItemAlpha ~= 0 then
+			lastItemAlpha = 0
 		end
 		
-		if (currentItemAlpha < 1.0) then
+		if currentItemAlpha < 1.0 then
 			currentItemAlpha = currentItemAlpha + 0.1
+		elseif currentItemAlpha ~= 1 then
+			currentItemAlpha = 1
 		end
 		
-		-- draw our progressBar
-		if (mainMenuItems[currentItem]["text"] == "Characters") then
-			--local linex = characterMenu[1]["cx"] - 100
-			--dxDrawLine(linex, characterMenu[1]["cy"], linex, characterMenu[#characterMenu]["cy"] + 85, tocolor(255, 255, 255, 155), 2, false)
-		end
-		
-		dxDrawImage(initX, initY + 20, 130, 93, "gui/icon-glow.png", 0, 0, 0, tocolor(255, 255, 255, logoAlpha * xmbAlpha), false)
-		for i = 1, #mainMenuItems - 1 do
-			local tx = mainMenuItems[i]["tx"]
-			local ty = mainMenuItems[i]["ty"]
-			local cx = mainMenuItems[i]["cx"]
-			local cy = mainMenuItems[i]["cy"]
-			local text = mainMenuItems[i]["text"]
-			local alpha = mainMenuItems[i]["alpha"]
+		dxDrawImage(initX, initY + 20, 130, 93, "gui/icon-glow.png", 0, 0, 0, tocolor(255, 255, 255, logoAlpha * xmbAlpha))
+		for i = 1, #mainMenuItems do
+			local tx = mainMenuItems[i].tx
+			local ty = mainMenuItems[i].ty
+			local cx = mainMenuItems[i].cx
+			local cy = mainMenuItems[i].cy
+			local text = mainMenuItems[i].text
+			local alpha = mainMenuItems[i].alpha
 		
 			-- ANIMATIONS
 			if ( round(cx, -1) < round(tx, -1) ) then -- we need to move right!
-				mainMenuItems[i]["cx"] = mainMenuItems[i]["cx"] + 10
+				mainMenuItems[i].cx = mainMenuItems[i].cx + 10
 			end
 			
 			if ( round(cx, -1) > round(tx, -1) ) then -- we need to move left!
-				mainMenuItems[i]["cx"] = mainMenuItems[i]["cx"] - 10
+				mainMenuItems[i].cx = mainMenuItems[i].cx - 10
 			end
 			
 			if ( round(cx, -1) == round(initX, -1) ) then -- its the selected
-				dxDrawText(text, cx+30, cy+120, cx+100, cy+140, tocolor(255, 255, 255, logoAlpha * xmbAlpha), 0.5, "bankgothic", "center", "middle", false, false, false)
+				dxDrawText(text, cx+30, cy+120, cx+100, cy+140, tocolor(255, 255, 255, logoAlpha * xmbAlpha), 0.5, "bankgothic", "center", "middle")
 			end
 			
 			-- ALPHA SMOOTHING
 			if ( round(tx, -1) == round(initX, -1) and round(alpha, -1) < 255 ) then
-				mainMenuItems[i]["alpha"] = mainMenuItems[i]["alpha"] + 10
+				mainMenuItems[i].alpha = mainMenuItems[i].alpha + 10
 			elseif ( tx ~= initX and round(alpha, -1) ~= lowerAlpha ) then
-				mainMenuItems[i]["alpha"] = mainMenuItems[i]["alpha"] - 10
+				mainMenuItems[i].alpha = mainMenuItems[i].alpha - 10
 			end
 			
-			if ( mainMenuItems[i]["alpha"] > 255 ) then
-				mainMenuItems[i]["alpha"] = 255
+			if ( mainMenuItems[i].alpha > 255 ) then
+				mainMenuItems[i].alpha = 255
 			end
 		
-			dxDrawImage(cx, cy, 131, 120, images[text], 0, 0, 0, tocolor(255, 255, 255, mainMenuItems[i]["alpha"] * xmbAlpha), false)
+			dxDrawImage(cx, cy, 131, 120, images[text], 0, 0, 0, tocolor(255, 255, 255, mainMenuItems[i].alpha * xmbAlpha))
 		end
 	end
 end
@@ -765,11 +677,11 @@ end
 
 keyTimer = nil
 function moveRight()
-	if ( round(mainMenuItems[#mainMenuItems - 1]["tx"], -1) > initX ) then -- can move left
-		for i = 1, #mainMenuItems - 1 do
-			mainMenuItems[i]["tx"] = mainMenuItems[i]["tx"] - xoffset
+	if ( round(mainMenuItems[#mainMenuItems].tx, -1) > initX ) then -- can move left
+		for i = 1, #mainMenuItems do
+			mainMenuItems[i].tx = mainMenuItems[i].tx - xoffset
 			
-			if ( round(initX, -1) == round(mainMenuItems[i]["tx"], -1) ) then
+			if ( round(initX, -1) == round(mainMenuItems[i].tx, -1) ) then
 				currentItem = i
 				currentItemAlpha = 0.0
 				lastItemAlpha = 1.0
@@ -778,18 +690,18 @@ function moveRight()
 				lastItemRight = i + 1
 			end
 		end
-		keyTimer = setTimer(checkKeyState, 200, 1, "arrow_r")
+		keyTimer = setTimer(checkKeyState, 400, 1, "arrow_r")
 		lastKey = 1
 	end
 end
 
 function moveLeft()
-	if ( mainMenuItems[1]["tx"] < initX) then -- can move left
+	if ( mainMenuItems[1].tx < initX) then -- can move left
 		lastItemAlpha = 1.0
-		for i = 1, #mainMenuItems - 1 do
-			mainMenuItems[i]["tx"] = mainMenuItems[i]["tx"] + xoffset
+		for i = 1, #mainMenuItems do
+			mainMenuItems[i].tx = mainMenuItems[i].tx + xoffset
 			
-			if ( round(initX, -1) == round(mainMenuItems[i]["tx"], -1) ) then
+			if ( round(initX, -1) == round(mainMenuItems[i].tx, -1) ) then
 				currentItem = i
 				currentItemAlpha = 0.0
 				lastItemAlpha = 1.0
@@ -800,74 +712,28 @@ function moveLeft()
 		end
 		
 		
-		keyTimer = setTimer(checkKeyState, 200, 1, "arrow_l")
+		keyTimer = setTimer(checkKeyState, 400, 1, "arrow_l")
 		lastKey = 2
 	end
 end
 
 function moveDown()
-	-- CHARACTERS
-	if ( currentItem == charactersID ) then
-		if ( characterMenu[#characterMenu]["ty"] > (initY + yoffset + 40) ) then -- can move up
+	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
+	local t = items[ currentItem ]
+	if t then
+		if ( math.ceil( t[#t].ty ) > math.ceil(initY + yoffset + 40) ) then -- can move down
 			lastItemAlpha = 1.0
-			for i = 1, #characterMenu do
-				if ( round(characterMenu[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] - 2*yoffset
+			for i = 1, #t do
+				if ( round(t[i].ty, -1) == round(initY + xoffset, -1) ) then -- its selected
+					t[i].ty = t[i].ty - 2*yoffset
 					
-					if ( not isLoggedIn() ) then
-						setElementModel(getLocalPlayer(), tonumber(characterMenu[i + 1]["skin"]))
+					if currentItem == charactersID and not isLoggedIn() then
+						setElementModel(getLocalPlayer(), tonumber(t[i + 1].skin))
 					end
-				elseif ( round(characterMenu[i]["ty"], -1) < round(initY + xoffset, -1) ) then -- its in the no mans land
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] - yoffset
+				elseif ( round(t[i].ty, -1) < round(initY + xoffset, -1) ) then -- its in the no mans land
+					t[i].ty = t[i].ty - yoffset
 				else
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] - yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_d")
-			lastKey = 3
-		end
-		
-	-- ACHIEVEMENTS
-	elseif ( currentItem == achievementsID ) then
-		if ( tAchievements[#tAchievements]["ty"] > (initY + xoffset + 40) ) then -- can move up
-			lastItemAlpha = 1.0
-			for i = 1, #tAchievements do
-				if ( round(tAchievements[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tAchievements[i]["ty"] = tAchievements[i]["ty"] - 2*yoffset
-				else
-					tAchievements[i]["ty"] = tAchievements[i]["ty"] - yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_d")
-			lastKey = 3
-		end
-		
-	-- FRIENDS
-	elseif ( currentItem == socialID ) then
-		if ( tFriends[#tFriends]["ty"] > (initY + yoffset + 40) ) then -- can move up
-			lastItemAlpha = 1.0
-			for i = 1, #tFriends do
-				if ( round(tFriends[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tFriends[i]["ty"] = tFriends[i]["ty"] - 2*yoffset
-				else
-					tFriends[i]["ty"] = tFriends[i]["ty"] - yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_d")
-			lastKey = 3
-		end
-		
-	-- ACCOUNT
-	elseif ( currentItem == accountID ) then
-		if ( tAccount[#tAccount]["ty"] > (initY + yoffset + 40) ) then -- can move up
-			lastItemAlpha = 1.0
-			for i = 1, #tAccount do
-				if ( round(tAccount[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tAccount[i]["ty"] = tAccount[i]["ty"] - 2*yoffset
-				elseif ( round(tAccount[i]["ty"], -1) < round(initY + xoffset, -1) ) then -- its in the no mans land
-					tAccount[i]["ty"] = tAccount[i]["ty"] - yoffset
-				else
-					tAccount[i]["ty"] = tAccount[i]["ty"] - yoffset
+					t[i].ty = t[i].ty - yoffset
 				end
 			end
 			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_d")
@@ -881,81 +747,25 @@ function isLoggedIn()
 end
 
 function moveUp()
-	-- CHARACTERS
-	if ( currentItem == charactersID ) then
-		if ( characterMenu[1]["ty"] < (initY + yoffset + 40) ) then -- can move down
+	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
+	local t = items[ currentItem ]
+	if t then
+		if ( math.ceil( t[1].ty ) < math.ceil(initY + yoffset + 40) ) then -- can move up
 			local selIndex = nil
-			for k = 1, #characterMenu do
-				local i = #characterMenu - (k - 1)
-				if ( round(characterMenu[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] + yoffset
+			for k = 1, #t do
+				local i = #t - (k - 1)
+				if ( round(t[i].ty, -1) == round(initY + xoffset, -1) ) then -- its selected
+					t[i].ty = t[i].ty + yoffset
 					selIndex = i - 1
 					
 				elseif (i == selIndex) then -- new selected
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] + 2*yoffset
+					t[i].ty = t[i].ty + 2*yoffset
 					
-					if ( not isLoggedIn() ) then
-						setElementModel(getLocalPlayer(), tonumber(characterMenu[i]["skin"]))
+					if currentItem == characterMenu and not isLoggedIn() then
+						setElementModel(getLocalPlayer(), tonumber(t[i].skin))
 					end
 				else
-					characterMenu[i]["ty"] = characterMenu[i]["ty"] + yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_u")
-			lastKey = 4
-		end
-	
-	-- ACHIEVEMENTS
-	elseif ( currentItem == achievementsID ) then
-		if ( tAchievements[1]["ty"] < (initY + yoffset + 40) ) then -- can move down
-			local selIndex = nil
-			for k = 1, #tAchievements do
-				local i = #tAchievements - (k - 1)
-				if ( round(tAchievements[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tAchievements[i]["ty"] = tAchievements[i]["ty"] + yoffset
-					selIndex = i - 1
-				elseif (i == selIndex) then -- new selected
-					tAchievements[i]["ty"] = tAchievements[i]["ty"] + 2*yoffset
-				else
-					tAchievements[i]["ty"] = tAchievements[i]["ty"] + yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_u")
-			lastKey = 4
-		end
-		
-	-- FRIENDS
-	elseif ( currentItem == socialID ) then
-		if ( tFriends[1]["ty"] < (initY + yoffset + 40) ) then -- can move down
-			local selIndex = nil
-			for k = 1, #tFriends do
-				local i = #tFriends - (k - 1)
-				if ( round(tFriends[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tFriends[i]["ty"] = tFriends[i]["ty"] + yoffset
-					selIndex = i - 1
-				elseif (i == selIndex) then -- new selected
-					tFriends[i]["ty"] = tFriends[i]["ty"] + 2*yoffset
-				else
-					tFriends[i]["ty"] = tFriends[i]["ty"] + yoffset
-				end
-			end
-			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_u")
-			lastKey = 4
-		end
-		
-	-- ACCOUNT
-	elseif ( currentItem == accountID ) then
-		if ( tAccount[1]["ty"] < (initY + yoffset + 40) ) then -- can move down
-			local selIndex = nil
-			for k = 1, #tAccount do
-				local i = #tAccount - (k - 1)
-				if ( round(tAccount[i]["ty"], -1) == round(initY + xoffset, -1) ) then -- its selected
-					tAccount[i]["ty"] = tAccount[i]["ty"] + yoffset
-					selIndex = i - 1
-				elseif (i == selIndex) then -- new selected
-					tAccount[i]["ty"] = tAccount[i]["ty"] + 2*yoffset
-				else
-					tAccount[i]["ty"] = tAccount[i]["ty"] + yoffset
+					t[i].ty = t[i].ty + yoffset
 				end
 			end
 			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_u")
@@ -984,20 +794,20 @@ local currentCharacterID = nil
 function selectItemFromVerticalMenu()
 	if isPlayerDead( getLocalPlayer( ) ) and getElementData( getLocalPlayer( ), "dbid" ) then
 		return
-	elseif ( mainMenuItems[currentItem]["text"] == "Characters" ) then
+	elseif ( currentItem == charactersID ) then
 		-- lets determine which character is selected
 		for k = 1, #characterMenu do
 			local i = #characterMenu - (k - 1)
 
-			if ( round(characterMenu[k]["ty"], -1) >= round(initY + xoffset, -1) - 100) then -- selected
+			if ( round(characterMenu[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
 				if ( currentCharacterID == k ) then
 					hideXMB()
 					return
 				end
 				
-				local name = characterMenu[k]["name"]
-				local skin = characterMenu[k]["skin"]
-				local cked = characterMenu[k]["cked"]
+				local name = characterMenu[k].name
+				local skin = characterMenu[k].skin
+				local cked = characterMenu[k].cked
 				if not cked or cked == 0 then
 					currentCharacterID = k
 					state = 3
@@ -1010,11 +820,11 @@ function selectItemFromVerticalMenu()
 				break
 			end
 		end
-	elseif ( mainMenuItems[currentItem]["text"] == "Account" ) then
+	elseif ( currentItem == accountID ) then
 		for k = 1, #tAccount do
 			local i = #tAccount - (k - 1)
-			if ( round(tAccount[k]["ty"], -1) >= round(initY + xoffset, -1) - 100) then -- selected
-				local title = tAccount[k]["title"]
+			if ( round(tAccount[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
+				local title = tAccount[k].title
 				
 				if ( title == "Revert to Pre-Beta" ) then -- leave the beta
 					local xml = xmlLoadFile("sapphirebeta.xml")
@@ -1027,7 +837,7 @@ function selectItemFromVerticalMenu()
 				break
 			end
 		end
-	elseif ( mainMenuItems[currentItem]["text"] == "Logout" ) then
+	elseif ( currentItem == logoutID ) then
 		-- cleanup
 		removeEventHandler("onClientRender", getRootElement(), drawBG)
 		state = 0
@@ -1047,19 +857,29 @@ end
 
 
 function drawCharacters()
+	local currentAlpha = 0
+	if currentItem == charactersID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == charactersID and lastKey == 1 ) or ( lastItemRight == charactersID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+		
+	if currentAlpha < 0.001 then
+		return
+	end
+	
+	local cx = mainMenuItems[charactersID].cx + 30
 	if ( loadedCharacters ) then
 		for i = 1, #characterMenu do
-			local name = characterMenu[i]["name"]
-			local age = characterMenu[i]["age"]
-			local cked = characterMenu[i]["cked"]
-			local cx = characterMenu[i]["cx"]
-			local cy = characterMenu[i]["cy"]
-			local tx = characterMenu[i]["tx"]
-			local ty = characterMenu[i]["ty"]
-			local faction = characterMenu[i]["faction"]
-			local rank = characterMenu[i]["rank"]
-			local lastseen = characterMenu[i]["lastseen"]
-			local skin = characterMenu[i]["skin"]
+			local name = characterMenu[i].name
+			local age = characterMenu[i].age
+			local cked = characterMenu[i].cked
+			local cy = characterMenu[i].cy
+			local ty = characterMenu[i].ty
+			local faction = characterMenu[i].faction
+			local rank = characterMenu[i].rank
+			local lastseen = characterMenu[i].lastseen
+			local skin = characterMenu[i].skin
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1070,35 +890,23 @@ function drawCharacters()
 			else
 				alpha = 255 - (dist / 2)
 			end
+			alpha = alpha * currentAlpha
 			
 			-- ANIMATIONS
 			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
-				--if ( round(ty, -1) == round((initY - yoffset + 40), -1) ) then -- up top = move faster since we're covering twice the distance
-				--	characterMenu[i]["cy"] = characterMenu[i]["cy"] - 10
-				--else
-					characterMenu[i]["cy"] = characterMenu[i]["cy"] - 10
-				--end
+				characterMenu[i].cy = characterMenu[i].cy - 10
 			end
 			
 			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
-				--if ( round(ty, -1) == round((initY + yoffset + 40), -1) ) then -- up top = move faster since we're covering twice the distance
-				--	characterMenu[i]["cy"] = characterMenu[i]["cy"] + 10
-				--else
-					characterMenu[i]["cy"] = characterMenu[i]["cy"] + 10
-				--end
+				characterMenu[i].cy = characterMenu[i].cy + 10
 			end
 			
-			local gender = characterMenu[i]["gender"]
-			if (gender == 0) then
-				gender = "Male"
-			else
-				gender = "Female"
-			end
-			
+			local gender = characterMenu[i].gender == 0 and "Male" or "Female"			
 			local agestring = age .. " year old " .. gender
+			
 			local factionstring = faction
 			if cked and cked > 0 then
-				factionstring = "Dead"
+				factionstring = "Dead."
 			elseif rank then
 				factionstring = rank .. " of '" .. faction .. "'."
 			end
@@ -1108,56 +916,19 @@ function drawCharacters()
 				laststring = "Last Seen: " .. lastseen .. " Days Ago."
 			end
 			
-			if ( mainMenuItems[currentItem]["text"] == "Characters") then
-				cx = mainMenuItems[currentItem]["cx"]
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(agestring, cx+30, cy+20, cx + 30 + dxGetTextWidth(agestring, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(factionstring, cx+30, cy+40, cx + 30 + dxGetTextWidth(factionstring, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(laststring, cx+30, cy+60, cx + 30 + dxGetTextWidth(laststring, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				if ( tonumber(skin) < 100 ) then skin = "0" .. skin end
-				dxDrawImage(cx - 78, cy, 78, 64, "img/" .. skin .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), false)
+			local color = tocolor(255, 255, 255, alpha)
 			
-			elseif ( mainMenuItems[lastItemLeft]["text"] == "Characters" and lastKey == 1 ) then 
-				cx = mainMenuItems[charactersID]["cx"]
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(agestring, cx+30, cy+20, cx + 30 + dxGetTextWidth(agestring, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(factionstring, cx+30, cy+40, cx + 30 + dxGetTextWidth(factionstring, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(laststring, cx+30, cy+60, cx + 30 + dxGetTextWidth(laststring, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				if ( tonumber(skin) < 100 ) then skin = "0" .. skin end
-				dxDrawImage(cx - 78, cy, 78, 64, "img/" .. skin .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
-			elseif ( mainMenuItems[lastItemRight]["text"] == "Characters" and lastKey == 2  ) then
-				cx = mainMenuItems[charactersID]["cx"]
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(agestring, cx+30, cy+20, cx + 30 + dxGetTextWidth(agestring, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(factionstring, cx+30, cy+40, cx + 30 + dxGetTextWidth(factionstring, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(laststring, cx+30, cy+60, cx + 30 + dxGetTextWidth(laststring, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				if ( tonumber(skin) < 100 ) then skin = "0" .. skin end
-				dxDrawImage(cx - 78, cy, 78, 64, "img/" .. skin .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
-			--[[else
-				cx = mainMenuItems[charactersID]["cx"]
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * 0.6), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(agestring, cx+30, cy+20, cx + 30 + dxGetTextWidth(agestring, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * 0.6), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(factionstring, cx+30, cy+40, cx + 30 + dxGetTextWidth(factionstring, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * 0.6), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(laststring, cx+30, cy+60, cx + 30 + dxGetTextWidth(laststring, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * 0.6), 0.9, "default", "center", "middle", false, false, false)
-				
-				if ( tonumber(skin) < 100 ) then skin = "0" .. skin end
-				dxDrawImage(cx - 78, cy, 78, 64, "img/" .. skin .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * 0.6), false)
-			]]end
+			
+			dxDrawText(name, cx-10, cy, cx + dxGetTextWidth(name, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(agestring, cx, cy+20, cx + dxGetTextWidth(agestring, 0.9), cy + 20 + fontHeight2, color, 0.9, "default", "center", "middle")
+			dxDrawText(factionstring, cx, cy+40, cx + dxGetTextWidth(factionstring, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
+			dxDrawText(laststring, cx, cy+60, cx + dxGetTextWidth(laststring, 0.9), cy + 60 + fontHeight2, color, 0.9, "default", "center", "middle")
+			
+			dxDrawImage(cx - 108, cy, 78, 64, "img/" .. ("%03d"):format(skin) .. ".png", 0, 0, 0, color)
 		end
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Characters") then
-			dxDrawImage(mainMenuItems[charactersID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Characters" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[charactersID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Characters" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[charactersID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
@@ -1254,32 +1025,12 @@ function saveFriends(friends, friendsmessage)
 	local resource = getResourceFromName("achievement-system")
 	
 	-- load ourself
-	tFriends[1] = { }
-	tFriends[1]["id"] = getElementData(getLocalPlayer(), "gameaccountid")
-	tFriends[1]["username"] = getElementData(getLocalPlayer(), "gameaccountusername")
-	tFriends[1]["message"] = friendsmessage
-	tFriends[1]["country"] = getElementData(getLocalPlayer(), "country")
-	tFriends[1]["online"] = true
-	tFriends[1]["character"] = nil
-	tFriends[1]["cx"] = initX
-	tFriends[1]["cy"] = initY - yoffset + 40
-	tFriends[1]["tx"] = initX
-	tFriends[1]["ty"] = initY - yoffset + 40
+	tFriends[1] = { id = getElementData(getLocalPlayer(), "gameaccountid"), username = getElementData(getLocalPlayer(), "gameaccountusername"), message = friendsmessage, country = getElementData(getLocalPlayer(), "country"), online = true, character = nil, cy = initY - yoffset + 40, ty = initY - yoffset + 40 }
 	
 	for k,v in pairs(friends) do
-		tFriends[k+1] = { }
-		
 		local id, username, message, country = unpack( v )
-		
-		tFriends[k+1]["id"] = id
-		tFriends[k+1]["username"] = username
-		tFriends[k+1]["message"] = message
-		tFriends[k+1]["country"] = country
-		tFriends[k+1]["online"], tFriends[k]["character"] = isPlayerOnline(id)
-		tFriends[k+1]["cx"] = initX
-		tFriends[k+1]["cy"] = initY + k*yoffset + 40
-		tFriends[k+1]["tx"] = initX
-		tFriends[k+1]["ty"] = initY + k*yoffset + 40
+		tFriends[k+1] = { id = id, username = username, message = message, country = country, cy = initY + k*yoffset + 40, ty = initY + k*yoffset + 40 }
+		tFriends[k+1].online, tFriends[k].character = isPlayerOnline(id)
 	end
 	loadedFriends = true
 end
@@ -1288,11 +1039,11 @@ addEventHandler("returnFriends", getRootElement(), saveFriends)
 
 function updateFriends()
 	for i = 1, #tFriends do
-		local id = tFriends[i]["id"]
-		local online = tFriends[i]["online"]
+		local id = tFriends[i].id
+		local online = tFriends[i].online
 		
 		if ( i ~= 1 ) then
-			tFriends[i]["online"], tFriends[i]["character"] = isPlayerOnline(id)
+			tFriends[i].online, tFriends[i].character = isPlayerOnline(id)
 		end
 	end
 end
@@ -1320,18 +1071,28 @@ function isSpawned(id)
 end
 
 function drawFriends()
+	local currentAlpha = 0
+	if currentItem == socialID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == socialID and lastKey == 1 ) or ( lastItemRight == socialID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+	
+	if currentAlpha < 0.001 then
+		return
+	end
+	
+	local cx = mainMenuItems[socialID].cx + 30
 	if ( loadedFriends ) then
 		for i = 1, #tFriends do
-			local id = tFriends[i]["id"]
-			local name = tFriends[i]["username"]
-			local message = "'" .. tFriends[i]["message"] .. "'"
-			local country = string.lower(tFriends[i]["country"])
-			local online = tFriends[i]["online"]
-			local character = tFriends[i]["character"]
-			local cx = tFriends[i]["cx"]
-			local cy = tFriends[i]["cy"]
-			local tx = tFriends[i]["tx"]
-			local ty = tFriends[i]["ty"]
+			local id = tFriends[i].id
+			local name = tFriends[i].username
+			local message = "'" .. tFriends[i].message .. "'"
+			local country = string.lower(tFriends[i].country)
+			local online = tFriends[i].online
+			local character = tFriends[i].character
+			local cy = tFriends[i].cy
+			local ty = tFriends[i].ty
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1341,14 +1102,15 @@ function drawFriends()
 			else
 				alpha = 255 - (dist / 2)
 			end
+			alpha = alpha * currentAlpha
 			
 			-- ANIMATIONS
 			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
-				tFriends[i]["cy"] = tFriends[i]["cy"] - 10
+				tFriends[i].cy = tFriends[i].cy - 10
 			end
 			
 			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
-				tFriends[i]["cy"] = tFriends[i]["cy"] + 10
+				tFriends[i].cy = tFriends[i].cy + 10
 			end
 			
 			local statusText = "Currently Offline"
@@ -1375,51 +1137,23 @@ function drawFriends()
 					characterText = "Currently at Home Menu"
 				end
 			end
-
-			cx = mainMenuItems[socialID]["cx"]
-			if ( mainMenuItems[currentItem]["text"] == "Social") then
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(statusText, cx+30, cy+20, cx + 30 + dxGetTextWidth(statusText, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(message, cx+30, cy+40, cx + 30 + dxGetTextWidth(message, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
+			
+			local color = tocolor(255, 255, 255, alpha)
+			
+			
+			dxDrawText(name, cx-10, cy, cx + dxGetTextWidth(name, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(statusText, cx, cy+20, cx + dxGetTextWidth(statusText, 0.9), cy + 20 + fontHeight2, color, 0.9, "default", "center", "middle")
+			dxDrawText(message, cx, cy+40, cx + dxGetTextWidth(message, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
 				
-				if (characterText) then
-					dxDrawText(characterText, cx+30, cy+60, cx + 30 + dxGetTextWidth(characterText, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				end
-				
-				dxDrawImage(cx - 16, cy, 16, 11, ":social-system/images/flags/" .. country .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), false)
-			elseif ( mainMenuItems[lastItemLeft]["text"] == "Social" and lastKey == 1 ) then 
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(statusText, cx+30, cy+20, cx + 30 + dxGetTextWidth(statusText, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(message, cx+30, cy+40, cx + 30 + dxGetTextWidth(message, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				if (characterText) then
-					dxDrawText(characterText, cx+30, cy+60, cx + 30 + dxGetTextWidth(characterText, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				end
-				
-				dxDrawImage(cx - 16, cy, 16, 11, ":social-system/images/flags/" .. country .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
-			elseif ( mainMenuItems[lastItemRight]["text"] == "Social" and lastKey == 2  ) then
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(statusText, cx+30, cy+20, cx + 30 + dxGetTextWidth(statusText, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(message, cx+30, cy+40, cx + 30 + dxGetTextWidth(message, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				if (characterText) then
-					dxDrawText(characterText, cx+30, cy+60, cx + 30 + dxGetTextWidth(characterText, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				end
-				
-				dxDrawImage(cx - 16, cy, 16, 11, ":social-system/images/flags/" .. country .. ".png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
+			if (characterText) then
+				dxDrawText(characterText, cx, cy+60, cx + dxGetTextWidth(characterText, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
 			end
+				
+			dxDrawImage(cx - 46, cy, 16, 11, ":social-system/images/flags/" .. country .. ".png", 0, 0, 0, color)
 		end
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Social") then
-			dxDrawImage(mainMenuItems[socialID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Social" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[socialID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Social" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[socialID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
@@ -1429,14 +1163,8 @@ function saveAchievements(achievements)
 	local resource = getResourceFromName("achievement-system")
 	
 	for k,v in pairs(achievements) do
-		tAchievements[k] = { }
-		
-		tAchievements[k]["name"], tAchievements[k]["desc"], tAchievements[k]["points"] = unpack( call( getResourceFromName( "achievement-system" ), "getAchievementInfo", v[1] ) )
-		tAchievements[k]["date"] = v[2]
-		tAchievements[k]["cx"] = initX
-		tAchievements[k]["cy"] = initY + k*yoffset + 40
-		tAchievements[k]["tx"] = initX
-		tAchievements[k]["ty"] = initY + k*yoffset + 40
+		tAchievements[k] = { date = v[2], cy = initY + k * yoffset + 40, ty = initY + k * yoffset + 40 }
+		tAchievements[k].name, tAchievements[k].desc, tAchievements[k].points = unpack( call( getResourceFromName( "achievement-system" ), "getAchievementInfo", v[1] ) )
 	end
 	loadedAchievements = true
 end
@@ -1444,16 +1172,26 @@ addEvent("returnAchievements", true)
 addEventHandler("returnAchievements", getRootElement(), saveAchievements)
 
 function drawAchievements()
+	local currentAlpha = 0
+	if currentItem == achievementsID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == achievementsID and lastKey == 1 ) or ( lastItemRight == achievementsID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+		
+	if currentAlpha < 0.001 then
+		return
+	end
+	
+	local cx = mainMenuItems[achievementsID].cx
 	if ( loadedAchievements ) then
 		for i = 1, #tAchievements do
-			local name = tAchievements[i]["name"]
-			local desc = tAchievements[i]["desc"]
-			local points = "Points: " .. tostring(tAchievements[i]["points"])
-			local date = "Unlocked: " .. tostring(tAchievements[i]["date"])
-			local cx = tAchievements[i]["cx"]
-			local cy = tAchievements[i]["cy"]
-			local tx = tAchievements[i]["tx"]
-			local ty = tAchievements[i]["ty"]
+			local name = tAchievements[i].name
+			local desc = tAchievements[i].desc
+			local points = "Points: " .. tostring(tAchievements[i].points)
+			local date = "Unlocked: " .. tostring(tAchievements[i].date)
+			local cy = tAchievements[i].cy
+			local ty = tAchievements[i].ty
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1463,51 +1201,30 @@ function drawAchievements()
 			else
 				alpha = 255 - (dist / 2)
 			end
+			alpha = alpha * currentAlpha
 			
 			-- ANIMATIONS
 			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
-				tAchievements[i]["cy"] = tAchievements[i]["cy"] - 10
+				tAchievements[i].cy = tAchievements[i].cy - 10
 			end
 			
 			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
-				tAchievements[i]["cy"] = tAchievements[i]["cy"] + 10
+				tAchievements[i].cy = tAchievements[i].cy + 10
 			end
+			
+			local color = tocolor(255, 255, 255, alpha)
 
-			cx = mainMenuItems[achievementsID]["cx"]
-			if ( mainMenuItems[currentItem]["text"] == "Achievements") then
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(desc, cx+30, cy+20, cx + 30 + dxGetTextWidth(desc, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(points, cx+30, cy+40, cx + 30 + dxGetTextWidth(points, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(date, cx+30, cy+60, cx + 30 + dxGetTextWidth(date, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				dxDrawImage(cx - 78, cy, 78, 64, ":achievement-system/achievement.png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), false)
-			elseif ( mainMenuItems[lastItemLeft]["text"] == "Achievements" and lastKey == 1 ) then 
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(desc, cx+30, cy+20, cx + 30 + dxGetTextWidth(desc, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(points, cx+30, cy+40, cx + 30 + dxGetTextWidth(points, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(date, cx+30, cy+60, cx + 30 + dxGetTextWidth(date, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				dxDrawImage(cx - 78, cy, 78, 64, ":achievement-system/achievement.png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
-			elseif ( mainMenuItems[lastItemRight]["text"] == "Achievements" and lastKey == 2  ) then
-				dxDrawText(name, cx+20, cy, cx + 30 + dxGetTextWidth(name, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(desc, cx+30, cy+20, cx + 30 + dxGetTextWidth(desc, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(points, cx+30, cy+40, cx + 30 + dxGetTextWidth(points, 0.9, "default"), cy + 40 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				dxDrawText(date, cx+30, cy+60, cx + 30 + dxGetTextWidth(date, 0.9, "default"), cy + 60 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "center", "middle", false, false, false)
-				
-				dxDrawImage(cx - 78, cy, 78, 64, ":achievement-system/achievement.png", 0, 0, 0, tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), false)
-			end
+			
+			dxDrawText(name, cx-10, cy, cx + dxGetTextWidth(name, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(desc, cx, cy+20, cx + dxGetTextWidth(desc, 0.9), cy + 20 + fontHeight2, color, 0.9, "default", "center", "middle")
+			dxDrawText(points, cx, cy+40, cx + dxGetTextWidth(points, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
+			dxDrawText(date, cx, cy+60, cx + dxGetTextWidth(date, 0.9), cy + 60 + fontHeight2, color, "default", "center", "middle")
+			
+			dxDrawImage(cx - 108, cy, 78, 64, ":achievement-system/achievement.png", 0, 0, 0, color)
 		end
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Achievements") then
-			dxDrawImage(mainMenuItems[achievementsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Achievements" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[achievementsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Achievements" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[achievementsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
@@ -1520,8 +1237,8 @@ function checkForMTAAccount()
 		killTimer(MTAaccountTimer)
 		MTAaccountTimer = nil
 		
-		tAccount[1]["title"] = "MTA Account"
-		tAccount[1]["text"] = tostring(getPlayerUserName())
+		tAccount[1].title = "MTA Account"
+		tAccount[1].text = tostring(getPlayerUserName())
 	end
 	]]--
 end
@@ -1536,7 +1253,7 @@ local friendAlertVisible = false
 local friendAlertCharname = nil
 function friendLogin(username)
 	for i = 1, #tFriends do
-		if ( tostring(tFriends[i]["username"]) == username ) then
+		if ( tostring(tFriends[i].username) == username ) then
 			friendAlertType = 0
 			showFriendOnline(username)
 			break
@@ -1549,7 +1266,7 @@ addEventHandler("onPlayerAccountLogin", getRootElement(), friendLogin)
 function characterChange(charname, username)
 	local username = getElementData(source, "gameaccountusername")
 	for i = 1, #tFriends do
-		if ( tostring(tFriends[i]["username"]) == username ) then
+		if ( tostring(tFriends[i].username) == username ) then
 			friendAlertType = 1
 			friendAlertCharname = string.gsub(charname, "_", " ")
 			showFriendOnline(username)
@@ -1637,14 +1354,24 @@ function showFriendAlert()
 end
 
 function drawAccount()
+	local currentAlpha = 0
+	if currentItem == accountID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == accountID and lastKey == 1 ) or ( lastItemRight == accountID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+	
+	if currentAlpha == 0 then
+		return
+	end
+	
+	local cx = mainMenuItems[accountID].cx + 30
 	if ( loadedAccount ) then
 		for i = 1, #tAccount do
-			local title = tAccount[i]["title"]
-			local text = tAccount[i]["text"]
-			local cx = tAccount[i]["cx"]
-			local cy = tAccount[i]["cy"]
-			local tx = tAccount[i]["tx"]
-			local ty = tAccount[i]["ty"]
+			local title = tAccount[i].title
+			local text = tAccount[i].text
+			local cy = tAccount[i].cy
+			local ty = tAccount[i].ty
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1654,68 +1381,68 @@ function drawAccount()
 			else
 				alpha = 255 - (dist / 2)
 			end
+			alpha = alpha * currentAlpha
 			
 			-- ANIMATIONS
 			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
-				tAccount[i]["cy"] = tAccount[i]["cy"] - 10
+				tAccount[i].cy = tAccount[i].cy - 10
 			end
 			
 			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
-				tAccount[i]["cy"] = tAccount[i]["cy"] + 10
+				tAccount[i].cy = tAccount[i].cy + 10
 			end
-
-			cx = mainMenuItems[accountID]["cx"]
-			if ( mainMenuItems[currentItem]["text"] == "Account") then
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			elseif ( mainMenuItems[lastItemLeft]["text"] == "Account" and lastKey == 1 ) then 
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			elseif ( mainMenuItems[lastItemRight]["text"] == "Account" and lastKey == 2  ) then
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			end
+			
+			local color = tocolor(255, 255, 255, alpha)
+			
+			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9, "default"), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
 		end
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Account") then
-			dxDrawImage(mainMenuItems[accountID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Account" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[accountID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Account" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[accountID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
 function drawSettings()
+	local currentAlpha = 0
+	if currentItem == settingsID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == settingsID and lastKey == 1 ) or ( lastItemRight == settingsID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+	
+	if currentAlpha == 0 then
+		return
+	end
+	
+	local cx = mainMenuItems[settingsID].cx + 30
 	if ( loadedSettings ) then
 		
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Settings") then
-			dxDrawImage(mainMenuItems[settingsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Settings" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[settingsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Settings" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[settingsID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
 function drawHelp()
+	local currentAlpha = 0
+	if currentItem == helpID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == helpID and lastKey == 1 ) or ( lastItemRight == helpID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+	
+	if currentAlpha == 0 then
+		return
+	end
+	
+	local cx = mainMenuItems[helpID].cx + 30
 	if ( loadedHelp ) then
 		for i = 1, #tHelp do
-			local title = tHelp[i]["title"]
-			local text = tHelp[i]["text"]
-			local cx = tHelp[i]["cx"]
-			local cy = tHelp[i]["cy"]
-			local tx = tHelp[i]["tx"]
-			local ty = tHelp[i]["ty"]
+			local title = tHelp[i].title
+			local text = tHelp[i].text
+			local cy = tHelp[i].cy
+			local ty = tHelp[i].ty
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1725,39 +1452,25 @@ function drawHelp()
 			else
 				alpha = 255 - (dist / 2)
 			end
+			alpha = alpha * currentAlpha
 			
 			-- ANIMATIONS
 			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
-				tHelp[i]["cy"] = tHelp[i]["cy"] - 10
+				tHelp[i].cy = tHelp[i].cy - 10
 			end
 			
 			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
-				tHelp[i]["cy"] = tHelp[i]["cy"] + 10
+				tHelp[i].cy = tHelp[i].cy + 10
 			end
-
-			cx = mainMenuItems[helpID]["cx"]
-			if ( mainMenuItems[currentItem]["text"] == "Help") then
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * currentItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			elseif ( mainMenuItems[lastItemLeft]["text"] == "Help" and lastKey == 1 ) then 
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			elseif ( mainMenuItems[lastItemRight]["text"] == "Help" and lastKey == 2  ) then
-				dxDrawText(title, cx+20, cy, cx + 30 + dxGetTextWidth(title, 1, "default-bold"), cy + dxGetFontHeight(1, "default-bold"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 1, "default-bold", "center", "middle", false, false, false)
-				dxDrawText(text, cx+30, cy+20, cx + 30 + dxGetTextWidth(text, 0.9, "default"), cy + 20 + dxGetFontHeight(0.9, "default"), tocolor(255, 255, 255, alpha * xmbAlpha * lastItemAlpha), 0.9, "default", "left", "middle", false, false, false)
-			end
+			
+			local color = tocolor(255, 255, 255, alpha)
+			
+			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
 		end
 	else
-		if ( mainMenuItems[currentItem]["text"] == "Help") then
-			dxDrawImage(mainMenuItems[helpID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * currentItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemLeft]["text"] == "Help" and lastKey == 1 ) then 
-			dxDrawImage(mainMenuItems[helpID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		elseif ( mainMenuItems[lastItemRight]["text"] == "Help" and lastKey == 2  ) then
-			dxDrawImage(mainMenuItems[helpID]["cx"] + 35, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, xmbAlpha * lastItemAlpha * 150), false)
-			loadingImageRotation = loadingImageRotation + 5
-		end
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
 	end
 end
 
@@ -1782,7 +1495,6 @@ function createXMBMain(characters)
 	keys = getBoundKeys("change_camera")
 	for name, state in pairs(keys) do
 		if ( name ~= "home" ) then
-			outputDebugString(tostring(name))
 			bindKey(name, "down", manageCamera)
 		end
 	end
@@ -1793,32 +1505,16 @@ addEvent("loginOK", true)
 addEventHandler("loginOK", getRootElement(), createXMBMain)
 
 function saveHelpInformation()
-	-- REPORTS
-	tHelp[1] = { }
-	tHelp[1]["title"] = "My Reports"
-	tHelp[1]["text"] = "You currently have no tickets open."
-	tHelp[1]["cx"] = initX
-	tHelp[1]["cy"] = initY + 1*yoffset + 40
-	tHelp[1]["tx"] = initX
-	tHelp[1]["ty"] = initY + 1*yoffset + 40
+	tHelp = {
+		{ title = "My Reports", text = "You currently have no tickets open." },
+		{ title = "Reports Affecting Me", text = "You currently have no reports regarding yourself." },
+		{ title = "Report a Bug", text = "Select this to report a bug directly to Mantis." }
+	}
 	
-	-- REPORTS ABOUT YOU
-	tHelp[2] = { }
-	tHelp[2]["title"] = "Reports Affecting Me"
-	tHelp[2]["text"] = "You currently have no reports regarding yourself."
-	tHelp[2]["cx"] = initX
-	tHelp[2]["cy"] = initY + 2*yoffset + 40
-	tHelp[2]["tx"] = initX
-	tHelp[2]["ty"] = initY + 2*yoffset + 40
-	
-	-- REPORT BUG
-	tHelp[3] = { }
-	tHelp[3]["title"] = "Report a Bug"
-	tHelp[3]["text"] = "Select this to report a bug directly to Mantis."
-	tHelp[3]["cx"] = initX
-	tHelp[3]["cy"] = initY + 3*yoffset + 40
-	tHelp[3]["tx"] = initX
-	tHelp[3]["ty"] = initY + 3*yoffset + 40
+	for k, v in ipairs( tHelp ) do
+		v.cy = initY + k * yoffset + 40
+		v.ty = v.cy
+	end
 	
 	loadedHelp = true
 end
@@ -1826,66 +1522,66 @@ end
 function saveAccountInformation(mtausername)
 	-- FORUM ACCOUNT
 	tAccount[1] = { }
-	tAccount[1]["title"] = "Revert to Pre-Beta"
-	tAccount[1]["text"] = "Select this to revert to the Pre-Sapphire GUI."
-	tAccount[1]["cx"] = initX
-	tAccount[1]["cy"] = initY + yoffset + 40
-	tAccount[1]["tx"] = initX
-	tAccount[1]["ty"] = initY + yoffset + 40
+	tAccount[1].title = "Revert to Pre-Beta"
+	tAccount[1].text = "Select this to revert to the Pre-Sapphire GUI."
+	tAccount[1].cx = initX
+	tAccount[1].cy = initY + yoffset + 40
+	tAccount[1].tx = initX
+	tAccount[1].ty = initY + yoffset + 40
 
 	-- MTA USERNAME/ACCOUNT
 	if ( mtausername ) then
 		mtaUsername = mtausername
 		
 		tAccount[2] = { }
-		tAccount[2]["title"] = "MTA Account"
-		tAccount[2]["text"] = mtausername
+		tAccount[2].title = "MTA Account"
+		tAccount[2].text = mtausername
 	else
 		MTAaccountTimer = setTimer(checkForMTAAccount, 1000, 0)
 		tAccount[2] = { }
-		tAccount[2]["title"] = "MTA Account"
-		tAccount[2]["text"] = "You currently have no account linked.\nLog into one under Settings -> Community to link it."
+		tAccount[2].title = "MTA Account"
+		tAccount[2].text = "You currently have no account linked.\nLog into one under Settings -> Community to link it."
 	end
-	tAccount[2]["cx"] = initX
-	tAccount[2]["cy"] = initY + 2*yoffset + 40
-	tAccount[2]["tx"] = initX
-	tAccount[2]["ty"] = initY + 2*yoffset + 40
+	tAccount[2].cx = initX
+	tAccount[2].cy = initY + 2*yoffset + 40
+	tAccount[2].tx = initX
+	tAccount[2].ty = initY + 2*yoffset + 40
 	
 	-- FORUM ACCOUNT
 	tAccount[3] = { }
-	tAccount[3]["title"] = "Forum Account"
-	tAccount[3]["text"] = "You currently have no forum account linked.\nSelect this option to link one."
-	tAccount[3]["cx"] = initX
-	tAccount[3]["cy"] = initY + 3*yoffset + 40
-	tAccount[3]["tx"] = initX
-	tAccount[3]["ty"] = initY + 3*yoffset + 40
+	tAccount[3].title = "Forum Account"
+	tAccount[3].text = "You currently have no forum account linked.\nSelect this option to link one."
+	tAccount[3].cx = initX
+	tAccount[3].cy = initY + 3*yoffset + 40
+	tAccount[3].tx = initX
+	tAccount[3].ty = initY + 3*yoffset + 40
 	
 	-- PSN ACCOUNT
 	tAccount[4] = { }
-	tAccount[4]["title"] = "Playstation Network® Account"
-	tAccount[4]["text"] = "You currently have no Playstation Network® account linked.\nSelect this option to link one."
-	tAccount[4]["cx"] = initX
-	tAccount[4]["cy"] = initY + 4*yoffset + 40
-	tAccount[4]["tx"] = initX
-	tAccount[4]["ty"] = initY + 4*yoffset + 40
+	tAccount[4].title = "Playstation Network® Account"
+	tAccount[4].text = "You currently have no Playstation Network® account linked.\nSelect this option to link one."
+	tAccount[4].cx = initX
+	tAccount[4].cy = initY + 4*yoffset + 40
+	tAccount[4].tx = initX
+	tAccount[4].ty = initY + 4*yoffset + 40
 	
 	-- XBOX LIVE ACCOUNT
 	tAccount[5] = { }
-	tAccount[5]["title"] = "Xbox Live® Account"
-	tAccount[5]["text"] = "You currently have no Xbox Live® account linked.\nSelect this option to link one."
-	tAccount[5]["cx"] = initX
-	tAccount[5]["cy"] = initY + 5*yoffset + 40
-	tAccount[5]["tx"] = initX
-	tAccount[5]["ty"] = initY + 5*yoffset + 40
+	tAccount[5].title = "Xbox Live® Account"
+	tAccount[5].text = "You currently have no Xbox Live® account linked.\nSelect this option to link one."
+	tAccount[5].cx = initX
+	tAccount[5].cy = initY + 5*yoffset + 40
+	tAccount[5].tx = initX
+	tAccount[5].ty = initY + 5*yoffset + 40
 	
 	-- STEAM ACCOUNT
 	tAccount[6] = { }
-	tAccount[6]["title"] = "Steam® Account"
-	tAccount[6]["text"] = "You currently have no Steam® account linked.\nSelect this option to link one."
-	tAccount[6]["cx"] = initX
-	tAccount[6]["cy"] = initY + 6*yoffset + 40
-	tAccount[6]["tx"] = initX
-	tAccount[6]["ty"] = initY + 6*yoffset + 40
+	tAccount[6].title = "Steam® Account"
+	tAccount[6].text = "You currently have no Steam® account linked.\nSelect this option to link one."
+	tAccount[6].cx = initX
+	tAccount[6].cy = initY + 6*yoffset + 40
+	tAccount[6].tx = initX
+	tAccount[6].ty = initY + 6*yoffset + 40
 	
 	loadedAccount = true
 	saveHelpInformation()
@@ -1897,32 +1593,7 @@ function saveCharacters(characters)
 	-- load the characters
 	setCameraMatrix(1401.4228515625, -887.6865234375, 76.401107788086, 1415.453125, -811.09375, 80.234382629395)
 	for k, v in ipairs(characters) do	
-		characterMenu[k] = { }
-		characterMenu[k]["id"] = v[1]
-		characterMenu[k]["name"] = string.gsub(v[2], "_", " ")
-		characterMenu[k]["cked"] = v[3]
-		characterMenu[k]["lastarea"] = v[4]
-		characterMenu[k]["age"] = v[5]
-		
-		if ( v[6] == 1 ) then
-			characterMenu[k]["gender"] = v[6]
-		else
-			characterMenu[k]["gender"] = 0
-		end
-		
-		if ( v[7] ~= nil ) then
-			characterMenu[k]["faction"] = v[7]
-		else
-			characterMenu[k]["faction"] = "Not in a faction."
-		end
-		characterMenu[k]["rank"] = v[8]
-		characterMenu[k]["skin"] = v[9]
-		characterMenu[k]["lastseen"] = v[10]
-		
-		characterMenu[k]["cx"] = initX
-		characterMenu[k]["cy"] = initY + k*yoffset + 40
-		characterMenu[k]["tx"] = initX
-		characterMenu[k]["ty"] = initY + k*yoffset + 40
+		characterMenu[k] = { id = v[1], name = v[2]:gsub("_", " "), cked = v[3], lastarea = v[4], age = v[5], gender = v[6], faction = v[7] or "Not in a faction.", rank = v[8], skin = v[9], lastseen = v[10], cy = initY + k * yoffset + 40, ty = initY + k * yoffset + 40 }
 	end
 	loadedCharacters = true
 end
