@@ -205,7 +205,6 @@ local yoffset = height / 6
 local initX = (width / 6.35) + xoffset
 local initY = height / 5.2
 
-local initPos = 3
 local lowerAlpha = 100
 
 local logoutID = 1
@@ -215,6 +214,8 @@ local socialID = 4
 local achievementsID = 5
 local settingsID = 6
 local helpID = 7
+
+local initPos = charactersID
 
 local mainMenuItems =
 {
