@@ -1210,6 +1210,23 @@ function payPlayer(thePlayer, commandName, targetPlayerNick, amount)
 					elseif (hoursplayed<5) and (amount>50) and not exports.global:isPlayerAdmin(thePlayer) and not exports.global:isPlayerAdmin(targetPlayer) and not exports.global:isPlayerBronzeDonator(thePlayer) then
 						outputChatBox("You must play atleast 5 hours before transferring over 50$", thePlayer, 255, 0, 0)
 					elseif exports.global:takeMoney(thePlayer, amount) then
+						if hoursplayed < 5 and not exports.global:isPlayerAdmin(targetPlayer) and not exports.global:isPlayerBronzeDonator(thePlayer) then
+							local totalAmount = ( getElementData(thePlayer, "payAmount") or 0 ) + amount
+							if totalAmount > 200 then
+								outputChatBox( "You can only /pay $200 per five minutes. /report for an admin to transfer a larger amoutn of cash.", thePlayer, 255, 0, 0 )
+								return
+							end
+							exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "payAmount", totalAmount, false)
+							setTimer(
+								function(thePlayer, amount)
+									if isElement(thePlayer) then
+										local totalAmount = ( getElementData(thePlayer, "payAmount") or 0 ) - amount
+										exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "payAmount", totalAmount <= 0 and false or totalAmount, false)
+									end
+								end,
+								300000, 1, thePlayer, amount
+							)
+						end
 						
 						exports.logs:logMessage("[Money Transfer From " .. getPlayerName(thePlayer) .. " To: " .. targetPlayerName .. "] Value: " .. amount .. "$", 5)
 						if (hoursplayed<5) then
