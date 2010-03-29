@@ -4714,7 +4714,9 @@ end
 
 local currentCharacterID = nil
 function selectItemFromVerticalMenu()
-	if ( mainMenuItems[currentItem]["text"] == "Characters" ) then
+	if isPlayerDead( getLocalPlayer( ) ) and getElementData( getLocalPlayer( ), "dbid" ) then
+		return
+	elseif ( mainMenuItems[currentItem]["text"] == "Characters" ) then
 		-- lets determine which character is selected
 		for k = 1, #characterMenu do
 			local i = #characterMenu - (k - 1)
@@ -4905,7 +4907,7 @@ function hideXMB()
 end
 
 function toggleXMB()
-	if ( state == 3 and not fading ) then
+	if ( visible or not isPlayerDead( getLocalPlayer( ) ) ) and state == 3 and not fading then
 		fading = true
 		if ( visible ) then
 			hideXMB()
