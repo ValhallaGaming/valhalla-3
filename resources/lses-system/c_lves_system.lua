@@ -3,8 +3,9 @@ vehicle = false
 effect = false
 
 function realisticDamage(attacker, weapon, bodypart)
-	if (source==getLocalPlayer()) then
-		
+	if getElementData(source, "reconx") and getElementData(source, "reconx") ~= true then
+		cancelEvent( )
+	else
 		-- Only AK47, M4 and Sniper can penetrate armor
 		local armor = getPedArmor(source)
 		
