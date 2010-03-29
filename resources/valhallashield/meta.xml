@@ -4,6 +4,9 @@
 	<script src="s_shield.lua" type="server" />
 	<script src="c_shield.lua" type="client" />	
 	
+	<script src="sobeit/s_worldhacks.lua" type="server" />
+	<script src="sobeit/c_worldhacks.lua" type="client" />
+	
 	<file src="gui/shield/shield_ok.png"/>
 	<file src="gui/shield/shield_question.png"/>
 </meta>
