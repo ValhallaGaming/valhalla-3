@@ -862,9 +862,7 @@ function adminChat(thePlayer, commandName, ...)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if(logged==1) and (exports.global:isPlayerAdmin(thePlayer))  then
-		if getElementData(thePlayer, "disableAdminChat") then
-			outputChatBox("You have Admin Chat disabled, /togglea to enable it.", thePlayer, 255, 0, 0)
-		elseif not (...) then
+		if not (...) then
 			outputChatBox("SYNTAX: /a [Message]", thePlayer, 255, 194, 14)
 		else
 			local message = table.concat({...}, " ")
@@ -876,7 +874,7 @@ function adminChat(thePlayer, commandName, ...)
 			for k, arrayPlayer in ipairs(players) do
 				local logged = getElementData(arrayPlayer, "loggedin")
 				
-				if(exports.global:isPlayerAdmin(arrayPlayer)) and (logged==1) and not getElementData(arrayPlayer, "disableAdminChat") then
+				if(exports.global:isPlayerAdmin(arrayPlayer)) and (logged==1) then
 					outputChatBox(adminTitle .. " " .. username .. ": " .. message, arrayPlayer, 51, 255, 102)
 				end
 			end
@@ -886,16 +884,6 @@ function adminChat(thePlayer, commandName, ...)
 end
 
 addCommandHandler("a", adminChat, false, false)
-
-function toggleAdminChat(thePlayer, commandName)
-	if getElementData(thePlayer, "loggedin") and exports.global:isPlayerLeadAdmin(thePlayer) then
-		local state = not getElementData(thePlayer, "disableAdminChat")
-		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "disableAdminChat", state, false)
-		
-		outputChatBox( "You " .. ( state and "dis" or "en" ) .. "abled Admin-Chat.", thePlayer, state and 255 or 0, state and 0 or 255, 0 )
-	end
-end
-addCommandHandler("togglea", toggleAdminChat)
 
 
 -- Scripter Chat
