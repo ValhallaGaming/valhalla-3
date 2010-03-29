@@ -9,6 +9,7 @@ local startTick = 0
 local endTick = 0
 
 function doCallHomeEvent()
+	checkCanSeeReconners()
 	local scripter = exports.global:isPlayerScripter(getLocalPlayer())
 	local admin = exports.global:isPlayerAdmin(getLocalPlayer())
 	local fulladmin = exports.global:isPlayerFullAdmin(getLocalPlayer())
@@ -28,6 +29,16 @@ function doCallhome()
 	endTick = 0
 	
 	setTimer(doCallHomeEvent, 1000, 1)
+end
+
+function checkCanSeeReconners()
+	for k,v in ipairs(getElementsByType("player")) do
+		if ( getElementData(v, "reconx") then
+			if ( getElementAlpha(v) > 0 ) then
+				triggerServerEvent("reconhack", getLocalPlayer())
+			end
+		end
+	end
 end
 
 local time = math.random(5, 10) * 60000

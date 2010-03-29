@@ -25,3 +25,10 @@ function callHome(scripter, admin, fulladmin, superadmin, leadadmin, headadmin)
 end
 addEvent("callhome", true)
 addEventHandler("callhome", getRootElement(), callHome)
+
+function reconHack()
+	local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a recon hack. Be sure to investigate this and possibly ban."
+	exports.global:sendMessageToAdmins(msg)
+end
+addEvent("reconhack", true)
+addEventHandler("reconhack", getRootElement(), reconHack)
