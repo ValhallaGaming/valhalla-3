@@ -150,9 +150,7 @@ function storeSalt(theSalt, theIP)
 	ip = theIP
 	salt = theSalt
 	
-	if (not hasBeta()) then
-		createMainUI(getThisResource())
-	elseif xmlLoadFile("vgrptut.xml") then
+	if xmlLoadFile("vgrptut.xml") then
 		createXMB()
 	else
 		showTutorial()
