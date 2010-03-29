@@ -908,11 +908,11 @@ function reconPlayer(thePlayer, commandName, targetPlayer)
 					
 					local x, y, z = getElementPosition(targetPlayer)
 					setElementPosition(thePlayer, x - 10, y - 10, z - 5)
-					local success = attachElements(thePlayer, targetPlayer, -10, -10, 5)
+					local success = attachElements(thePlayer, targetPlayer, -10, -10, -5)
 					if not (success) then
-						success = attachElements(thePlayer, targetPlayer, -5, -5, 5)
+						success = attachElements(thePlayer, targetPlayer, -5, -5, -5)
 						if not (success) then
-							success = attachElements(thePlayer, targetPlayer, 5, 5, 5)
+							success = attachElements(thePlayer, targetPlayer, 5, 5, -5)
 						end
 					end
 					
