@@ -866,7 +866,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 			local row = mysql:fetch_assoc(result)
 			if not row then break end
 			accounts[i] = { }
-			accounts[i][1] = row["id"]
+			accounts[i][1] = tonumber(row["id"])
 			accounts[i][2] = row["charactername"]
 			
 			if (tonumber(row["cked"]) or 0) > 0 then
@@ -874,7 +874,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 			end
 			
 			accounts[i][4] = row["lastarea"]
-			accounts[i][5] = row["age"]
+			accounts[i][5] = tonumber(row["age"])
 			
 			if (tonumber(row["gender"])==1) then
 				accounts[i][6] = tonumber(row["gender"])
@@ -901,8 +901,8 @@ function sendAccounts(thePlayer, id, isChangeChar)
 					accounts[i][8] = nil
 				end
 			end
-			accounts[i][9] = row["skin"]
-			accounts[i][10] = row["llastlogin"]
+			accounts[i][9] = tonumber(row["skin"])
+			accounts[i][10] = tonumber(row["llastlogin"])
 			i = i + 1
 		end
 		

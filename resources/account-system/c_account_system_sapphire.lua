@@ -912,8 +912,12 @@ function drawCharacters()
 				factionstring = rank .. " of '" .. faction .. "'."
 			end
 			
-			local laststring = "Last Seen: Today"
-			if (tonumber(lastseen) > 0) then
+			local laststring = "Last Seen: Today."
+			if not lastseen then
+				laststring = "Last Seen: Never."
+			elseif lastseen == 1 then
+				laststring = "Last Seen: Yesterday."
+			elseif lastseen > 1 then
 				laststring = "Last Seen: " .. lastseen .. " Days Ago."
 			end
 			
