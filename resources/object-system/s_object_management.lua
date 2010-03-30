@@ -7,7 +7,7 @@ local tablec = 1
 
 function loadDimension(theDimension)
 	local count = 0
-
+	
 	-- build us an awesome query.
 	local query = "SELECT * FROM `objects` "
 	if (theDimension ~= nil) and (tonumber(theDimension) ~= -1) then
@@ -24,7 +24,7 @@ function loadDimension(theDimension)
 			objdimension[id] = nil
 		end
 	end
-	coroutine.yield()
+
 	local result = mysql:query(query)
 	if (result) then
 		while true do
@@ -38,8 +38,7 @@ function loadDimension(theDimension)
 			if not (objects[dimension]) then
 				objects[dimension] = { }
 			end
-			
-			coroutine.yield()
+
 			local temparr = { }
 			temparr[1] = tonumber(row["model"])
 			temparr[2] = tonumber(row["posX"])
@@ -57,7 +56,7 @@ function loadDimension(theDimension)
 		end
 		mysql:free_result(result)
 	end
-	coroutine.yield()
+
 	syncDimension(theDimension)
 	return count
 end
@@ -101,21 +100,19 @@ function removeInteriorObjects(theDimension)
 end
 
 function startObjectSystem(res)
-	local result = mysql:query("SELECT `dimension` FROM `objects` ORDER BY `dimension` ASC")
+	local result = mysql:query("SELECT distinct(`dimension`) FROM `objects` ORDER BY `dimension` ASC")
 	if (result) then
 		while true do
-			local row = mysql:fetch_assoc(result)
+			row = mysql:fetch_assoc(result)
 			if not row then break end
-			toLoad[tonumber(row["dimension"])] = true
-		end
-		mysql:free_result(result)
-			
-		for id in pairs( toLoad ) do
+
 			local co = coroutine.create(loadDimension)
-			coroutine.resume(co, id, true)
+			coroutine.resume(co, row["dimension"])
 			table.insert(threads, co)
+			outputDebugString("loading " .. row["dimension"])
 		end
 	end
+	mysql:free_result(result)
 end
 addEventHandler("onResourceStart", getResourceRootElement(), startObjectSystem)
 
