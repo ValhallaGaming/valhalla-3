@@ -7,7 +7,7 @@ local function resetCooldown()
 end
 
 function checkForSobeit()
-	if ( cooldown == false ) then
+	if ( cooldown == false ) and not (exports.global:isPlayerScripter(localPlayer))then
 		if ( isWorldSpecialPropertyEnabled("hovercars") or isWorldSpecialPropertyEnabled("aircars") or isWorldSpecialPropertyEnabled("extrabunny") or isWorldSpecialPropertyEnabled("extrajump") ) then
 			cooldown = true
 			count = count + 1
