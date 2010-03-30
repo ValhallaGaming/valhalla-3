@@ -9,6 +9,8 @@ addEvent( "usedElevator", true )
 addEventHandler( "usedElevator", getRootElement(), usedElevator )
 
 function doGroundCheck()
+	if not elevatortimer then return end
+	
 	local x, y, z = getElementPosition(getLocalPlayer())
 	local groundz = getGroundPosition(x, y, z)
 	
