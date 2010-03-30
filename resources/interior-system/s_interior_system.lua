@@ -1237,9 +1237,11 @@ addCommandHandler( "enableallinteriors", enableAllInteriors )
 
 addEventHandler("onPlayerInteriorChange", getRootElement( ),
 	function( pickup, other )
-		setElementDimension( source, getElementDimension( other ) )
-		setElementInterior( source, getElementInterior( other ) )
-		setCameraInterior( source, getElementInterior( other ) )
+		if other then
+			setElementDimension( source, getElementDimension( other ) )
+			setElementInterior( source, getElementInterior( other ) )
+			setCameraInterior( source, getElementInterior( other ) )
+		end
 		
 		triggerClientEvent(source, "usedElevator", source)
 		setPedFrozen(source, true)
