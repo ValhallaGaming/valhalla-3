@@ -193,9 +193,11 @@ addEventHandler( "onClientRender", getRootElement( ),
 		if getElementInterior( getLocalPlayer( ) ) > 0 and not interior then
 			interior = true
 			setWeather( 7 )
+			setSkyGradient( 0, 0, 0, 0, 0, 0 )
 		elseif getElementInterior( getLocalPlayer( ) ) == 0 and interior then
 			interior = false
 			setWeather( currentWeather )
+			resetSkyGradient( )
 		end
 	end
 )
