@@ -467,6 +467,8 @@ addEventHandler( "onClientClick", getRootElement( ),
 									itemName = itemName .. ", reading " .. itemValue
 								elseif itemName == "Porn Tape" then
 									itemName = itemName .. ", " .. itemValue
+								elseif itemName == "LSPD Badge" then
+									itemName = itemName .. " (" .. itemValue .. ")"
 								elseif itemName == "BT&R Identification" then
 									itemName = itemName .. ", issued to " .. itemValue
 								elseif itemName == "SAN Identifcation" then

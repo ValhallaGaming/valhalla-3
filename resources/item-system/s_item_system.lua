@@ -1276,7 +1276,9 @@ end
 addCommandHandler("showinv", showInventoryRemote, false, false)
 
 -- /issueBadge Command - A commnad for leaders of the PD and ES factions to issue a police badge or ES ID badge item to their members. This will be the only IC way badges can be created.
-function givePlayerBadge(thePlayer, commandName, targetPlayer, badgeNumber )
+function givePlayerBadge(thePlayer, commandName, targetPlayer, ... )
+	local badgeNumber = table.concat( { ... }, " " )
+	badgeNumber = #badgeNumber > 0 and badgeNumber
 	local theTeam = getPlayerTeam(thePlayer)
 	local teamName = getTeamName(theTeam)
 	
