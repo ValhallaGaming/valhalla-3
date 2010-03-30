@@ -63,7 +63,7 @@ end
 -- 9 = SACF
 -- 10 = SACF CERT (Wtf is CERT?)
 -- 11 = Court
-
+-- 12 = Detective (or should I bump all of the others down?)
 -- ES
 function lvesHeal(thePlayer, commandName, targetPartialNick, price)
 	if not (targetPartialNick) or not (price) then -- if missing target player arg.
@@ -428,6 +428,19 @@ function swatduty(thePlayer, commandName)
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
 					saveSkin(thePlayer)
+				elseif (duty==12) then -- Detective
+					restoreWeapons(thePlayer)
+					outputChatBox ("You are now off duty", thePlayer )
+					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
+					setPedArmor(thePlayer, 0 )
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45 )
+					exports.global:takeItem(thePlayer, 71 )
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)						
 				end
 			end
 		end
@@ -518,12 +531,117 @@ function policeduty(thePlayer, commandName)
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
 					saveSkin(thePlayer)
+				elseif (duty==12) then -- Detective
+					restoreWeapons(thePlayer)
+					outputChatBox ("You are now off duty", thePlayer )
+					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
+					setPedArmor(thePlayer, 0 )
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45 )
+					exports.global:takeItem(thePlayer, 71 )
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)						
 				end
 			end
 		end
 	end
 end
 addCommandHandler("duty", policeduty, false, false)
+
+function detectiveduty(thePlayer, commandName)	
+	local logged = getElementData(thePlayer, "loggedin")
+	
+	if (logged==1) then
+		if (isElementWithinColShape(thePlayer, pdColShape)) or (isElementWithinColShape(thePlayer, pdColShape2) or getElementDimension(thePlayer) == 10590) then
+		
+			local duty = tonumber(getElementData(thePlayer, "duty"))
+			local theTeam = getPlayerTeam(thePlayer)
+			local factionType = getElementData(theTeam, "type")
+			
+			if (factionType==2) then
+				if (duty==0) then
+					-- not checking for duty skin -- assuming detective use plain clothes.
+					
+					outputChatBox("You are now on Detective Duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "takes their detective gear from their locker.")
+					
+					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
+						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+					end
+					
+					saveWeaponsOnDuty(thePlayer)
+					
+					--setPedArmor(thePlayer, 100)  -- Fox didn't mention armor on mantis.
+					setElementHealth(thePlayer, 100)
+					
+					exports.global:giveWeapon(thePlayer, 22, 51) -- Pistol
+					exports.global:giveWeapon(thePlayer, 43, 100 ) -- camera
+					exports.global:giveItem(thePlayer, 45, 1) -- cuffs
+					exports.global:giveItem(thePlayer, 71, 20 ) -- notepad + 20 pages. (should be more?)
+					
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 12, false)
+					
+					saveSkin(thePlayer)
+				elseif (duty==1) then -- SWAT
+					restoreWeapons(thePlayer)
+					outputChatBox("You are now off SWAT duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
+					setPedArmor(thePlayer, 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 26)
+					exports.global:takeItem(thePlayer, 27)
+					exports.global:takeItem(thePlayer, 28)
+					exports.global:takeItem(thePlayer, 29)
+					exports.global:takeItem(thePlayer, 45)
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)
+				elseif (duty==2) then -- POLICE
+					restoreWeapons(thePlayer)
+					outputChatBox("You are now off duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
+					setPedArmor(thePlayer, 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45)
+					
+				
+				elseif (duty==3) then -- CADET
+					restoreWeapons(thePlayer)
+					outputChatBox("You are now off duty.", thePlayer)
+					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
+					setPedArmor(thePlayer, 0)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45)
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)
+				elseif (duty==12) then -- Detective
+					restoreWeapons(thePlayer)
+					outputChatBox ("You are now off duty", thePlayer )
+					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
+					setPedArmor(thePlayer, 0 )
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45 )
+					exports.global:takeItem(thePlayer, 71 )
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)	
+				end
+			end
+		end
+	end
+end
+addCommandHandler("dduty", detectiveduty, false, false)
 
 function cadetduty(thePlayer, commandName)	
 	local logged = getElementData(thePlayer, "loggedin")
@@ -606,6 +724,19 @@ function cadetduty(thePlayer, commandName)
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
 					saveSkin(thePlayer)
+				elseif (duty==12) then -- Detective
+					restoreWeapons(thePlayer)
+					outputChatBox ("You are now off duty", thePlayer )
+					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
+					setPedArmor(thePlayer, 0 )
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					
+					exports.global:takeItem(thePlayer, 45 )
+					exports.global:takeItem(thePlayer, 71 )
+					
+					local casualskin = getElementData(thePlayer, "casualskin")
+					setElementModel(thePlayer, casualskin)
+					saveSkin(thePlayer)						
 				end
 			end
 		end
