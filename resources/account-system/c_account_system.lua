@@ -3406,4 +3406,6 @@ function checkForRadarMap()
 	end
 end
 addEventHandler( "onClientRender", getRootElement(), checkForRadarMap )
+
+addEvent("updateName", true) -- not using it since we send the char list on changing characters, just so it won't pop up with errors
 end

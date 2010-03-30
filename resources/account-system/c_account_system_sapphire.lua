@@ -1561,4 +1561,16 @@ function saveCharacters(characters)
 end
 addEvent("showCharacterSelection", true)
 addEventHandler("showCharacterSelection", getRootElement(), saveCharacters)
+
+addEvent("updateName", true)
+addEventHandler("updateName", getLocalPlayer(),
+	function( id )
+		for k, v in ipairs(characterMenu) do
+			if v.id == id then
+				v.name = getPlayerName(getLocalPlayer()):gsub("_", " ")
+				break
+			end
+		end
+	end
+)
 end

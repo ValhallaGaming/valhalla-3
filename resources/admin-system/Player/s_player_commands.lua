@@ -684,6 +684,7 @@ function asetPlayerName(thePlayer, commandName, targetPlayer, ...)
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "legitnamechange", 0)
 							
 							exports.logs:logMessage("[/CHANGENAME] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." changed ".. targetPlayerName .. " TO ".. tostring(newName) , 4)
+							triggerClientEvent(targetPlayer, "updateName", targetPlayer, getElementData(targetPlayer, "dbid"))
 						else
 							outputChatBox("Failed to change name.", thePlayer, 255, 0, 0)
 						end
