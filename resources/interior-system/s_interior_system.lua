@@ -839,7 +839,24 @@ addCommandHandler("setinteriorname", changeInteriorName, false, false) -- the co
 function addSafeAtPosition( thePlayer, x, y, z, rotz )
 	local dbid = getElementDimension( thePlayer )
 	local interior = getElementInterior( thePlayer )
-	if dbid == 0 or dbid > 19000 then -- vehicle interiors are 20k + dbid, so 19000 = temp -1000
+	if dbid == 0 then
+		return 2
+	elseif dbid >= 20000 then -- Vehicle Interiors
+		local vid = dbid - 20000
+		if exports['vehicle-system']:getSafe( vid ) then
+			outputChatBox("There is already a safe in this property. Type /movesafe to move it.", thePlayer, 255, 0, 0)
+			return 1
+		elseif exports.global:hasItem( thePlayer, 3, vid ) then
+			z = z - 0.5
+			rotz = rotz + 180
+			if exports.mysql:query_free( "UPDATE vehicles SET safepositionX='" .. x .. "', safepositionY='" .. y .. "', safepositionZ='" .. z .. "', safepositionRZ='" .. rotz .. "' WHERE id='" .. vid .. "'") then
+				if exports['vehicle-system']:addSafe( vid, x, y, z, rotz, interior ) then
+					return 0
+				end
+			end
+			return 1
+		end
+	elseif dbid >= 19000 then -- temp vehicle interiors
 		return 2
 	elseif ((exports.global:hasItem( thePlayer, 5, dbid ) or exports.global:hasItem( thePlayer, 4, dbid))) then
 		if safeTable[dbid] then
@@ -865,15 +882,19 @@ function moveSafe ( thePlayer, commandName )
 	local rotz = getPedRotation( thePlayer )
 	local dbid = getElementDimension( thePlayer )
 	local interior = getElementInterior( thePlayer )
-	if ((exports.global:hasItem( thePlayer, 5, dbid ) or exports.global:hasItem( thePlayer, 4, dbid))) then
-		if dbid > 0 and safeTable[dbid] then
-			local oldsafe = safeTable[dbid]
-			z = z - 0.5
-			rotz = rotz + 180
-			local query = mysql_query(handler, "UPDATE interiors SET safepositionX='" .. x .. "', safepositionY='" .. y .. "', safepositionZ='" .. z .. "', safepositionRZ='" .. rotz .. "' WHERE id='" .. dbid .. "'") -- Update the name in the sql.
-			mysql_free_result(query)
-			setElementPosition(safeTable[dbid], x, y, z)
-			setObjectRotation(safeTable[dbid], 0, 0, rotz)
+	if (dbid < 19000 and (exports.global:hasItem( thePlayer, 5, dbid ) or exports.global:hasItem( thePlayer, 4, dbid))) or (dbid >= 20000 and exports.global:hasItem(thePlayer, 3, dbid - 20000)) then
+		z = z - 0.5
+		rotz = rotz + 180
+		if dbid >= 20000 and exports['vehicle-system']:getSafe(dbid-20000) then
+			local safe = exports['vehicle-system']:getSafe(dbid-20000)
+			exports.mysql:query_free("UPDATE vehicles SET safepositionX='" .. x .. "', safepositionY='" .. y .. "', safepositionZ='" .. z .. "', safepositionRZ='" .. rotz .. "' WHERE id='" .. (dbid-20000) .. "'")
+			setElementPosition(safe, x, y, z)
+			setObjectRotation(safe, 0, 0, rotz)
+		elseif dbid > 0 and safeTable[dbid] then
+			local safe = safeTable[dbid]
+			exports.mysql:query_free("UPDATE interiors SET safepositionX='" .. x .. "', safepositionY='" .. y .. "', safepositionZ='" .. z .. "', safepositionRZ='" .. rotz .. "' WHERE id='" .. dbid .. "'") -- Update the name in the sql.
+			setElementPosition(safe, x, y, z)
+			setObjectRotation(safe, 0, 0, rotz)
 		else
 			outputChatBox("You need a safe to move!", thePlayer, 255, 0, 0)
 		end

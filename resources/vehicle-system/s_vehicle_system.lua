@@ -367,6 +367,7 @@ end
 function reloadVehicle(id)
 	local theVehicle = exports.pool:getElement("vehicle", tonumber(id))
 	if (theVehicle) then
+		removeSafe(tonumber(id))
 		exports['savevehicle-system']:saveVehicle(theVehicle)
 		destroyElement(theVehicle)
 		loadOneVehicle(id, false)
@@ -494,13 +495,16 @@ function loadOneVehicle(id, hasCoroutine)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
 			end		
 			setVehicleFuelTankExplodable(veh, false)
-		
+			
 			-- handbrake
 			if row.handbrake > 0 then
 				setVehicleFrozen(veh, true)
 			end
 			
-			exports['vehicle-interiors']:add( veh )
+			local hasInterior, interior = exports['vehicle-interiors']:add( veh )
+			if hasInterior and row.safepositionX and row.safepositionY and row.safepositionZ and row.safepositionRZ then
+				addSafe( row.id, row.safepositionX, row.safepositionY, row.safepositionZ, row.safepositionRZ, interior )
+			end
 		end
 	end
 end
@@ -1450,3 +1454,25 @@ function detachVehicle(thePlayer)
 	end
 end
 addCommandHandler("detach", detachVehicle)
+
+--------------
+
+safeTable = {}
+
+function addSafe( dbid, x, y, z, rz, interior )
+	local tempobject = createObject(2332, x, y, z, 0, 0, rz)
+	setElementInterior(tempobject, interior)
+	setElementDimension(tempobject, dbid + 20000)
+	safeTable[dbid] = tempobject
+end
+
+function removeSafe( dbid )
+	if safeTable[dbid] then
+		destroyElement(safeTable[dbid])
+		safeTable[dbid] = nil
+	end
+end
+
+function getSafe( dbid )
+	return safeTable[dbid]
+end

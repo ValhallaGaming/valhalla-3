@@ -11,4 +11,7 @@
 	<export function="getCharacterName" type="server"/>
 	<export function="getCharacterName" type="server"/>
 	<export function="reloadVehicle" type="server" />
+	
+	<export function="addSafe" type="server"/>
+	<export function="getSafe" type="server"/>
 </meta>

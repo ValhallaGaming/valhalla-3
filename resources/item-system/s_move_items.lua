@@ -66,7 +66,7 @@ local function moveToElement( element, slot, ammo, event )
 				outputChatBox( "The Inventory is full.", source, 255, 0, 0 )
 			else
 				if getElementType( element ) == "object" then -- safe
-					if ( item[1] == 4 or item[1] == 5 ) and getElementDimension( element ) == item[2] then -- keys to that safe as well
+					if ( getElementDimension( element ) < 19000 and ( item[1] == 4 or item[1] == 5 ) and getElementDimension( element ) == item[2] ) or ( getElementDimension( element ) >= 20000 and item[1] == 3 and getElementDimension( element ) - 20000 == item[2] ) then -- keys to that safe as well
 						if countItems( source, item[1], item[2] ) < 2 then
 							outputChatBox("You can't place your only key to that safe in the safe.", source, 255, 0, 0)
 							return

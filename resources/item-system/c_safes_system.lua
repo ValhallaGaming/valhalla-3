@@ -24,7 +24,8 @@ function clickSafe(button, state, absX, absY, wx, wy, wz, element)
 				hideSafeMenu()
 			end
 			
-			if hasItem(getLocalPlayer(), 5, getElementDimension(getLocalPlayer())) or hasItem(getLocalPlayer(), 4, getElementDimension(getLocalPlayer())) then
+			local dimension = getElementDimension(getLocalPlayer())
+			if ( dimension < 19000 and ( hasItem(getLocalPlayer(), 5, dimension) or hasItem(getLocalPlayer(), 4, dimension) ) ) or ( dimension >= 20000 and hasItem(getLocalPlayer(), 3, dimension-20000) ) then
 				showCursor(true)
 				ax = absX
 				ay = absY
