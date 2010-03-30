@@ -282,12 +282,10 @@ function spawnCharacter(charname, version)
 		--outputChatBox("Looking for animations? /animlist", source, 255, 194, 14)
 		outputChatBox("Need Help? /helpme", source, 255, 194, 14)
 		
-	
-		if (interior==3) then
-			triggerClientEvent(source, "usedElevator", source)
-			setPedFrozen(source, true)
-			setPedGravity(source, 0)
-		end
+		-- freeze the player, will be unfrozen client-side when on ground/after 2 secs
+		triggerClientEvent(source, "usedElevator", source)
+		setPedFrozen(source, true)
+		setPedGravity(source, 0)
 		
 		-- Load the character info
 		spawnPlayer(source, x, y, z, rot, skin)	

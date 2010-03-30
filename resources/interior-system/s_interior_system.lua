@@ -1240,5 +1240,9 @@ addEventHandler("onPlayerInteriorChange", getRootElement( ),
 		setElementDimension( source, getElementDimension( other ) )
 		setElementInterior( source, getElementInterior( other ) )
 		setCameraInterior( source, getElementInterior( other ) )
+		
+		triggerClientEvent(source, "usedElevator", source)
+		setPedFrozen(source, true)
+		setPedGravity(source, 0)
 	end
 )

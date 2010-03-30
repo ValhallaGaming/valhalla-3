@@ -226,12 +226,10 @@ function spawnCharacter(charname, version)
 		outputChatBox("Need Help? /helpme", source, 255, 194, 14)
 		
 	
-		-- If in bank/prison, freeze them
-		if (interior==3) or (x >= 654 and x <= 971 and y >= -3541 and y <= -3205) then
-			triggerClientEvent(source, "usedElevator", source)
-			setPedFrozen(source, true)
-			setPedGravity(source, 0)
-		end
+		-- freeze the player, will be unfrozen client-side when on ground/after 2 secs
+		triggerClientEvent(source, "usedElevator", source)
+		setPedFrozen(source, true)
+		setPedGravity(source, 0)
 		
 		-- Load the character info
 		spawnPlayer(source, x, y, z, rot, skin)

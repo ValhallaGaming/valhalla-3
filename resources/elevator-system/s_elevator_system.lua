@@ -313,11 +313,9 @@ function enterElevator(player, pickup)
 							-- fade camera in
 							setTimer(fadeCamera, 1000, 1 , player , true, 2)
 							
-							if interior == 3 or interior == 4 then
-								triggerClientEvent(player, "usedElevator", player)
-								setPedFrozen(player, true)
-								setPedGravity(player, 0)
-							end
+							triggerClientEvent(player, "usedElevator", player)
+							setPedFrozen(player, true)
+							setPedGravity(player, 0)
 						end
 					end
 				end
