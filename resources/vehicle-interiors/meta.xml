@@ -2,4 +2,5 @@
 	<script src="s_vehicle_interiors.lua"/>
 	
 	<export function="add"/>
+	<export function="isNearExit"/>
 </meta>

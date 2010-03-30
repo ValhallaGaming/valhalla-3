@@ -96,19 +96,29 @@ function leaveInterior( player )
 	local dim = getElementDimension( player ) - 20000
 	for value in pairs( vehicles ) do
 		if getElementData( value, "dbid" ) == dim then
-			local x, y, z = getElementPosition( value )
-			teleportTo( player, x, y, z + 2, getElementDimension( value ), getElementInterior( value ) )
-			return
+			if isVehicleLocked( value ) then
+				outputChatBox( "You try the door handle, but it seems to be locked.", player, 255, 0, 0 )
+			else
+				local x, y, z = getElementPosition( value )
+				teleportTo( player, x, y, z + 2, getElementDimension( value ), getElementInterior( value ) )
+				return
+			end
 		end
 	end
 end
 
 -- cancel picking up our pickups
 function isInPickup( thePlayer, thePickup, distance )
+	if not isElement(thePickup) then return false end
+	
 	local ax, ay, az = getElementPosition(thePlayer)
 	local bx, by, bz = getElementPosition(thePickup)
 	
 	return getDistanceBetweenPoints3D(ax, ay, az, bx, by, bz) < ( distance or 2 ) and getElementInterior(thePlayer) == getElementInterior(thePickup) and getElementDimension(thePlayer) == getElementDimension(thePickup)
+end
+
+function isNearExit( thePlayer, theVehicle )
+	return isInPickup( thePlayer, vehicles[ theVehicle ] )
 end
 
 function checkLeavePickup( player, pickup )

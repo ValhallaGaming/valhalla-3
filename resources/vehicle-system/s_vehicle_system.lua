@@ -733,6 +733,32 @@ function toggleLock(source, key, keystate)
 	if (veh) and (inVehicle==1) then
 		triggerEvent("lockUnlockInsideVehicle", source, veh)
 	elseif not veh then
+		if getElementDimension(source) >= 19000 then
+			local vehicle = exports.pool:getElement("vehicle", getElementDimension(source) - 20000)
+			if vehicle and exports['vehicle-interiors']:isNearExit(source, vehicle) then
+				local model = getElementModel(vehicle)
+				local owner = getElementData(vehicle, "owner")
+				local dbid = getElementData(vehicle, "dbid")
+				
+				if (owner ~= -2) then
+					if ( getElementData(vehicle, "Impounded") or 0 ) == 0 then
+						local locked = isVehicleLocked(vehicle)
+						if (locked) then
+							setVehicleLocked(vehicle, false)
+							exports.global:sendLocalMeAction(source, "unlocks the vehicle doors.")
+						else
+							setVehicleLocked(vehicle, true)
+							exports.global:sendLocalMeAction(source, "locks the vehicle doors.")
+						end
+					else
+						outputChatBox("(( You can't lock impounded vehicles. ))", source, 255, 195, 14)
+					end
+				else
+					outputChatBox("(( You can't lock civilian vehicles. ))", source, 255, 195, 14)
+				end
+				return
+			end
+		end
 		if not triggerEvent("lockUnlockHouse", source) then
 			local x, y, z = getElementPosition(source)
 			local nearbyVehicles = exports.global:getNearbyElements(source, "vehicle", 30)
