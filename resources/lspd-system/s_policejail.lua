@@ -26,6 +26,18 @@ function isInArrestColshape( thePlayer )
 	return false
 end
 
+function destroyJailTimer ( ) -- 0001290: PD /release bug
+	local theMagicTimer = getElementData(source, "pd.jailtimer") -- 0001290: PD /release bug
+	if (isTimer(theMagicTimer)) then
+		killTimer(theMagicTimer) 
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailserved", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtime", 0, false)
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtimer")
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailstation")
+	end
+end
+addEventHandler ( "onPlayerQuit", getRootElement(), destroyJailTimer )
+
 -- /arrest
 function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, ...)
 	local logged = getElementData(thePlayer, "loggedin")
