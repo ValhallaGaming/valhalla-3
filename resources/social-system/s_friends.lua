@@ -112,10 +112,8 @@ addEvent("sendFriends", false)
 addEventHandler("sendFriends", getRootElement(), toggleFriends)
 
 function updateFriendsMessage(message)
-	local safemessage = mysql:escape_string(tostring(message))
 	local accid = getElementData(source, "gameaccountid")
-	
-	local query = mysql:query_free("UPDATE accounts SET friendsmessage='" .. mysql:escape_string(safemessage) .. "' WHERE id='" .. mysql:escape_string(accid) .. "'")
+	local query = mysql:query_free("UPDATE accounts SET friendsmessage='" .. mysql:escape_string(tostring(message)) .. "' WHERE id='" .. mysql:escape_string(accid) .. "'")
 	if not (query) then
 		outputChatBox("Error updating friends message - ensure you used no special characters!", source, 255, 0, 0)
 	end
