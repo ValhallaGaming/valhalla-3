@@ -1,15 +1,7 @@
 function transferDimension(thePlayer, theDimension)
-	if (theDimension ~= nil) and (objects[theDimension] ~= nil) then
-		local objTable = { }
-		local objID = 0
-		for id, dimension in ipairs(objdimension) do
-			if (dimension == theDimension) then
-				objID = objID + 1
-				objTable[objID] = objects[id]
-			end
-		end
-		--outputDebugString("obj-sys-serv: sending " .. theDimension .. " to " .. getPlayerName(thePlayer) .. " (".. #objTable .. " objects)" )
-		triggerClientEvent(thePlayer, "object:sync", getRootElement(), objTable, theDimension)
+	if theDimension and objects[theDimension] then
+		-- outputDebugString("obj-sys-serv: sending " .. theDimension .. " to " .. getPlayerName(thePlayer) .. " (".. #objects[theDimension] .. " objects)" )
+		triggerClientEvent(thePlayer, "object:sync", getRootElement(), objects[theDimension], theDimension)
 	end
 end
 

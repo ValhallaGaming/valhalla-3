@@ -2,71 +2,30 @@ mysql = exports.mysql
 local threads = {}
 local toLoad = {}
 objects = { }
-objdimension = { }
 local tablec = 1
 
-function loadDimension(theDimension)
-	local count = 0
-	
-	-- build us an awesome query.
-	local query = "SELECT * FROM `objects` "
-	if (theDimension ~= nil) and (tonumber(theDimension) ~= -1) then
-		query = query .. "WHERE `dimension`='".. mysql:escape_string(theDimension).. "' " 
-	else
-		theDimension = -1
-		query = query .. "ORDER BY `dimension` ASC"
-	end
-
-	-- Clear the old data
-	for id, dimensiona in ipairs(objdimension) do
-		if (dimensiona == theDimension) or (theDimension == -1) then
-			objects[id] = nil
-			objdimension[id] = nil
-		end
-	end
-
-	local result = mysql:query(query)
-	if (result) then
-		while true do
-			local row = mysql:fetch_assoc(result)
-			if not row then	break end
-			local dbid = tonumber(row["id"])
-			local dimension = tonumber(row["dimension"])
-			
-			count = count + 1
-						
-			if not (objects[dimension]) then
-				objects[dimension] = { }
+function loadDimension(dimension)
+	if dimension and dimension > 0 then
+		objects[ dimension ] = { }
+		
+		local result = mysql:query("SELECT * FROM `objects` WHERE dimension = " .. dimension)
+		if (result) then
+			while true do
+				local row = mysql:fetch_assoc(result)
+				if not row then	break end
+				
+				for key, value in pairs( row ) do
+					row[key] = tonumber(value)
+				end
+				
+				table.insert( objects[ dimension ], { row.model, row.posX, row.posY, row.posZ, row.rotX, row.rotY, row.rotZ, row.interior } )
 			end
-
-			local temparr = { }
-			temparr[1] = tonumber(row["model"])
-			temparr[2] = tonumber(row["posX"])
-			temparr[3] = tonumber(row["posY"])
-			temparr[4] = tonumber(row["posZ"])
-			temparr[5] = tonumber(row["rotX"])
-			temparr[6] = tonumber(row["rotY"])
-			temparr[7] = tonumber(row["rotZ"])
-			temparr[8] = tonumber(row["interior"])
-			temparr[9] = dimension
-			
-			insertA(tablec, temparr)
-			insertB(tablec, dimension)
-			
+			mysql:free_result(result)
 		end
-		mysql:free_result(result)
+
+		syncDimension(theDimension)
+		return #objects[ dimension ]
 	end
-
-	syncDimension(theDimension)
-	return count
-end
-
-function insertA(tablec, temparr)
-	table.insert(objects, tablec, temparr)
-end
-
-function insertB(tablec, dimension)
-	table.insert(objdimension, tablec, dimension)
 end
 
 function reloadDimension(thePlayer, commandName, dimensionID)
@@ -107,9 +66,8 @@ function startObjectSystem(res)
 			if not row then break end
 
 			local co = coroutine.create(loadDimension)
-			coroutine.resume(co, row["dimension"])
+			coroutine.resume(co, tonumber(row.dimension))
 			table.insert(threads, co)
-			outputDebugString("loading " .. row["dimension"])
 		end
 	end
 	mysql:free_result(result)
