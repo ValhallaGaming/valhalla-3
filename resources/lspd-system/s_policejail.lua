@@ -193,12 +193,14 @@ function timerPDUnjailPlayer(jailedPlayer)
 				mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
 			end
 		else -- you have served your time bug fix
-			outputDebugString(getPlayerName(jailedPlayer) .. " has time served bug.")
-			killTimer(theMagicTimer)
-			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
-			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
+			if (isElement(jailedPlayer)) then
+				outputDebugString(getPlayerName(jailedPlayer) .. " has time served bug.")
+				killTimer(theMagicTimer)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
+			end
 		end
 	end
 end
