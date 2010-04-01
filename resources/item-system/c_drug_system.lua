@@ -273,15 +273,7 @@ function doDrug6Effect()
 	end
 end
 
-local drugMessages = { }
-drugMessages[1] = "Fuck You Pal!"
-drugMessages[2] = "Wow man, your flyyyyyyyying"
-drugMessages[3] = "We need some drugs PAL!"
-drugMessages[4] = "Some of the ol' Love Fist Fury!"
-drugMessages[5] = "Yo mannnnnnnnnnn, why are your legs turned to mush?"
-drugMessages[6] = "You wanna dance muthafucka?"
-drugMessages[7] = "Dude, I want some of that shit. What is it?"
-drugMessages[8] = "I'mma call the cops."
+local drugMessages = { "Fuck You Pal!", "Wow man, your flyyyyyyyying!", "We need some drugs PAL!", "Some of the ol' Love Fist Fury!", "Yo mannnnnnnnnnn, why are your legs turned to mush?", "You wanna dance muthafucka?", "Dude, I want some of that shit. What is it?", "I'mma call the cops." }
 
 function doRandomMessage()
 	local x, y, z = getElementPosition(localPlayer)
@@ -293,7 +285,7 @@ function doRandomMessage()
 		if (value~=localPlayer) then
 			local px, py , pz = getElementPosition(value)
 			if (getDistanceBetweenPoints3D(x, y, z, px, py, pz)<15) then
-				local rand2 = math.random(1, 8)
+				local rand2 = math.random(1, #drugMessages)
 				local charname = getPlayerName(value)
 				charname = string.gsub(tostring(charname), "_", " ")
 				outputChatBox(charname .. " Says: " .. drugMessages[rand2], 255, 255, 255)
