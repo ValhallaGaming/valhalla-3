@@ -47,12 +47,54 @@ function checkSpeed(theVehicle, thePlayer, colshape, maxSpeed)
 	end
 end
 
+
+--Color Names	
+local colors = {
+	"white", "blue", "red", "dark green", "purple",
+	"yellow", "blue", "gray", "blue", "silver",
+	"gray", "blue", "dark gray", "silver", "gray",
+	"green", "red", "red", "gray", "blue",
+	"red", "red", "gray", "dark gray", "dark gray",
+	"silver", "brown", "blue", "silver", "brown",
+	"red", "blue", "gray", "gray", "dark gray",
+	"black", "green", "light green", "blue", "black",
+	"brown", "red", "red", "green", "red",
+	"pale", "brown", "gray", "silver", "gray",
+	"green", "blue", "dark blue", "dark blue", "brown",
+	"silver", "pale", "red", "blue", "gray",
+	"brown", "red", "silver", "silver", "green",
+	"dark red", "blue", "pale", "light pink", "red",
+	"blue", "brown", "light green", "red", "black",
+	"silver", "pale", "red", "blue", "dark red",
+	"purple", "dark red", "dark green", "dark brown", "purple",
+	"green", "blue", "red", "pale", "silver",
+	"dark blue", "gray", "blue", "blue", "blue",
+	"silver", "light blue", "gray", "pale", "blue",
+	"black", "pale", "blue", "pale", "gray",
+	"blue", "pale", "blue", "dark gray", "brown",
+	"silver", "blue", "dark brown", "dark green", "red",
+	"dark blue", "red", "silver", "dark brown", "brown",
+	"red", "gray", "brown", "red", "blue",
+	"pink", [0] = "black" }
+
+local function vehicleColor( c1, c2 )
+	local color1 = colors[ c1 ] or "Unknown"
+	local color2 = colors[ c2 ] or "Unknown"
+	
+	if color1 ~= color2 then
+		return color1 .. " & " .. color2
+	else
+		return color1
+	end
+end
+
 function sendWarningToCops(theVehicle, thePlayer, speed, x, y, z)
 
 	local direction = "in an unknown direction"
 	local areaName = getZoneName(x, y, z)
 	local nx, ny, nz = getElementPosition(thePlayer)
 	local vehicleName = getVehicleName(theVehicle)
+	local color1, color2 = getVehicleColor(theVehicle)
 	
 	local dx = nx - x
 	local dy = ny - y
@@ -74,7 +116,7 @@ function sendWarningToCops(theVehicle, thePlayer, speed, x, y, z)
 		local duty = tonumber(getElementData(value, "duty"))
 			if (duty>0) then
 				outputChatBox("[RADIO] All units, Traffic violation at " .. areaName .. ".", value, 255, 194, 14)
-				outputChatBox("[RADIO] Vehicle was a " .. vehicleName .. " travelling at " .. tostring(math.ceil(speed)) .. " KPH.", value, 255, 194, 14)
+				outputChatBox("[RADIO] Vehicle was a " .. vehicleColor(color1, color2) .. " " .. vehicleName .. " travelling at " .. tostring(math.ceil(speed)) .. " KPH.", value, 255, 194, 14)
 				outputChatBox("[RADIO] The plate is '"..  getVehiclePlateText ( theVehicle ) .."' and heading " .. direction .. ".", value, 255, 194, 14)
 			end
 		end
