@@ -73,7 +73,7 @@ function createPermVehicle(thePlayer, commandName, ...)
 			outputChatBox("NOTE: If it is a faction vehicle, The cost is taken from the faction fund, rather than the player.", thePlayer, 255, 194, 14)
 		else
 			local vehicleID = tonumber(args[1])
-			local col1, col2, userName, factionVehicle, cost
+			local col1, col2, userName, factionVehicle, cost, tint
 			
 			if not vehicleID then -- vehicle is specified as name
 				local vehicleEnd = 1
@@ -97,6 +97,7 @@ function createPermVehicle(thePlayer, commandName, ...)
 				userName = args[4]
 				factionVehicle = tonumber(args[5])
 				cost = tonumber(args[6])
+				tint = tonumber(args[7])
 			end
 			
 			local id = vehicleID
@@ -167,7 +168,7 @@ function createPermVehicle(thePlayer, commandName, ...)
 						
 					local dimension = getElementDimension(thePlayer)
 					local interior = getElementInterior(thePlayer)
-					local insertid = mysql:query_insert_free("INSERT INTO vehicles SET model='" .. mysql:escape_string(id) .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', color1='" .. mysql:escape_string(col1) .. "', color2='" .. mysql:escape_string(col2) .. "', faction='" .. mysql:escape_string(factionVehicle) .. "', owner='" .. mysql:escape_string(( factionVehicle == -1 and dbid or -1 )) .. "', plate='" .. mysql:escape_string(plate) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='0', currry='0', currrz='" .. mysql:escape_string(r) .. "', locked=1, interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "'")
+					local insertid = mysql:query_insert_free("INSERT INTO vehicles SET model='" .. mysql:escape_string(id) .. "', x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotx='" .. mysql:escape_string(rx) .. "', roty='" .. mysql:escape_string(ry) .. "', rotz='" .. mysql:escape_string(rz) .. "', color1='" .. mysql:escape_string(col1) .. "', color2='" .. mysql:escape_string(col2) .. "', faction='" .. mysql:escape_string(factionVehicle) .. "', owner='" .. mysql:escape_string(( factionVehicle == -1 and dbid or -1 )) .. "', plate='" .. mysql:escape_string(plate) .. "', currx='" .. mysql:escape_string(x) .. "', curry='" .. mysql:escape_string(y) .. "', currz='" .. mysql:escape_string(z) .. "', currrx='0', currry='0', currrz='" .. mysql:escape_string(r) .. "', locked=1, interior='" .. mysql:escape_string(interior) .. "', currinterior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "', currdimension='" .. mysql:escape_string(dimension) .. "', tint='" .. mysql:escape_string(tint) .. "'")
 
 					if (insertid) then
 						exports.pool:allocateElement(veh, insertid)
@@ -1480,6 +1481,50 @@ function detachVehicle(thePlayer)
 	end
 end
 addCommandHandler("detach", detachVehicle)
+
+----------------------[Tinted Windows]--------------------------------------
+function startTint(enplayer)
+	local vid = getElementData(source, "dbid")
+	local tinted = mysql:query_fetch_assoc("SELECT tintedwindows FROM vehicles WHERE id = '" .. mysql:escape_string(vid) .. "'")
+	local isptint = getElementData(enplayer, "intinted")
+
+	if (tinted) then 
+		if (tonumber(tinted["tintedwindows"]) == 1) then
+			local fixedName = "Unknown Person(Tint)"
+			setPlayerNametagText(enplayer, tostring(fixedName))
+
+			exports['anticheat-system']:changeProtectedElementDataEx(enplayer, "intinted", 1, false)		
+		end
+	end
+	mysql:free_result(tinted)
+end
+addEventHandler("onVehicleEnter", getRootElement(), startTint)
+
+function stopTint(explayer)
+	local isptint = getElementData(explayer, "intinted")
+	
+	if (isptint==1) then
+		local name = string.gsub(getPlayerName(explayer), "_", " ")
+		setPlayerNametagText(explayer, tostring(name))
+
+		exports['anticheat-system']:changeProtectedElementDataEx(explayer, "intinted", 0, false)
+	end
+end
+addEventHandler("onVehicleExit", getRootElement(), stopTint)
+addEvent("resetTintName", true)
+addEventHandler("resetTintName", getRootElement(), stopTint)
+
+function stopTintDeath()
+	local isptint = getElementData(source, "intinted")
+	
+	if (isptint==1) then
+		local name = string.gsub(getPlayerName(source), "_", " ")
+		setPlayerNametagText(source, tostring(name))
+
+		exports['anticheat-system']:changeProtectedElementDataEx(source, "intinted", 0, false)
+	end
+end
+addEventHandler("onPlayerWasted", getRootElement(), stopTintDeath)
 
 --------------
 

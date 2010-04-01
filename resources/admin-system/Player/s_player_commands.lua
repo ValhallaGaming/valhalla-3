@@ -748,6 +748,7 @@ function slapPlayer(thePlayer, commandName, targetPlayer)
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " slapped " .. targetPlayerName .. ".")
 						exports.logs:logMessage("[/SLAP] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." slapped ".. targetPlayerName , 4)
+						triggerEvent("removeTintName", thePlayer)
 					end
 				end
 			end
@@ -788,6 +789,7 @@ function hugeSlapPlayer(thePlayer, commandName, targetPlayer)
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " huge-slapped " .. targetPlayerName .. ".")
 						exports.logs:logMessage("[/HUGESLAP] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." slapped ".. targetPlayerName , 4)
+						triggerEvent("removeTintName", thePlayer)						
 					end
 				end
 			end
@@ -2070,6 +2072,7 @@ function ejectPlayer(thePlayer, commandName, target)
 						outputChatBox("You have thrown " .. targetPlayerName .. " out of your vehicle.", thePlayer, 0, 255, 0)
 						removePedFromVehicle(targetPlayer)
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "realinvehicle", 0, false)
+						triggerEvent("removeTintName", targetPlayer)
 					end
 				end
 			end
