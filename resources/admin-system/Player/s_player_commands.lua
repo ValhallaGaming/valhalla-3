@@ -748,7 +748,7 @@ function slapPlayer(thePlayer, commandName, targetPlayer)
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " slapped " .. targetPlayerName .. ".")
 						exports.logs:logMessage("[/SLAP] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." slapped ".. targetPlayerName , 4)
-						triggerEvent("removeTintName", thePlayer)
+						triggerEvent("removeTintName", targetPlayer)
 					end
 				end
 			end
@@ -789,7 +789,7 @@ function hugeSlapPlayer(thePlayer, commandName, targetPlayer)
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " huge-slapped " .. targetPlayerName .. ".")
 						exports.logs:logMessage("[/HUGESLAP] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." slapped ".. targetPlayerName , 4)
-						triggerEvent("removeTintName", thePlayer)						
+						triggerEvent("removeTintName", targetPlayer)						
 					end
 				end
 			end

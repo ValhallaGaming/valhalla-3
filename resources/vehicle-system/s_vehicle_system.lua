@@ -90,6 +90,7 @@ function createPermVehicle(thePlayer, commandName, ...)
 					userName = args[vehicleEnd + 2]
 					factionVehicle = tonumber(args[vehicleEnd + 3])
 					cost = tonumber(args[vehicleEnd + 4])
+					tint = tonumber(args[vehicleEnd + 5])
 				end
 			else
 				col1 = tonumber(args[2])
@@ -190,6 +191,9 @@ function createPermVehicle(thePlayer, commandName, ...)
 						exports['anticheat-system']:changeProtectedElementDataEx(veh, "dimension", dimension, false)
 						exports['anticheat-system']:changeProtectedElementDataEx(veh, "interior", interior, false)
 						exports['anticheat-system']:changeProtectedElementDataEx(veh, "handbrake", 0, false)
+						if tint and tint == 1 then
+							exports['anticheat-system']:changeProtectedElementDataEx(veh, "tinted", true, false)
+						end
 						
 						setElementDimension(veh, dimension)
 						setElementInterior(veh, interior)
@@ -505,6 +509,10 @@ function loadOneVehicle(id, hasCoroutine)
 			local hasInterior, interior = exports['vehicle-interiors']:add( veh )
 			if hasInterior and row.safepositionX and row.safepositionY and row.safepositionZ and row.safepositionRZ then
 				addSafe( row.id, row.safepositionX, row.safepositionY, row.safepositionZ, row.safepositionRZ, interior )
+			end
+			
+			if row.tintedwindows == 1 then
+				exports['anticheat-system']:changeProtectedElementDataEx(veh, "tinted", true, false)
 			end
 		end
 	end
@@ -1483,48 +1491,25 @@ end
 addCommandHandler("detach", detachVehicle)
 
 ----------------------[Tinted Windows]--------------------------------------
-function startTint(enplayer)
-	local vid = getElementData(source, "dbid")
-	local tinted = mysql:query_fetch_assoc("SELECT tintedwindows FROM vehicles WHERE id = '" .. mysql:escape_string(vid) .. "'")
-	local isptint = getElementData(enplayer, "intinted")
-
-	if (tinted) then 
-		if (tonumber(tinted["tintedwindows"]) == 1) then
-			local fixedName = "Unknown Person(Tint)"
-			setPlayerNametagText(enplayer, tostring(fixedName))
-
-			exports['anticheat-system']:changeProtectedElementDataEx(enplayer, "intinted", 1, false)		
+local nametag = "Unknown Person (Tint)"
+function startTint(player)
+	if getElementData( source, "tinted" ) then 
+		if getPlayerNametagText( player ) ~= nametag then
+			setPlayerNametagText(player, nametag)
 		end
 	end
-	mysql:free_result(tinted)
 end
 addEventHandler("onVehicleEnter", getRootElement(), startTint)
 
-function stopTint(explayer)
-	local isptint = getElementData(explayer, "intinted")
-	
-	if (isptint==1) then
-		local name = string.gsub(getPlayerName(explayer), "_", " ")
-		setPlayerNametagText(explayer, tostring(name))
-
-		exports['anticheat-system']:changeProtectedElementDataEx(explayer, "intinted", 0, false)
+function stopTint()
+	if getPlayerNametagText( source ) == nametag then
+		setPlayerNametagText(source, getPlayerName(source):gsub("_", " "))
 	end
 end
-addEventHandler("onVehicleExit", getRootElement(), stopTint)
+addEventHandler("onPlayerVehicleExit", getRootElement(), stopTint)
+addEventHandler("onPlayerWasted", getRootElement(), stopTint)
 addEvent("resetTintName", true)
 addEventHandler("resetTintName", getRootElement(), stopTint)
-
-function stopTintDeath()
-	local isptint = getElementData(source, "intinted")
-	
-	if (isptint==1) then
-		local name = string.gsub(getPlayerName(source), "_", " ")
-		setPlayerNametagText(source, tostring(name))
-
-		exports['anticheat-system']:changeProtectedElementDataEx(source, "intinted", 0, false)
-	end
-end
-addEventHandler("onPlayerWasted", getRootElement(), stopTintDeath)
 
 --------------
 
