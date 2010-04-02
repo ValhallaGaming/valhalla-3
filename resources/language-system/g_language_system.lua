@@ -1,5 +1,5 @@
 languages = {
-	"Engrish",
+	"English",
 	"Russian",
 	"German",
 	"French",
