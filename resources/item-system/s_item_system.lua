@@ -5,6 +5,7 @@ blackFemales = {[9] = true, [10] = true, [11] = true, [12] = true, [13] = true, 
 whiteFemales = {[12] = true, [31] = true, [38] = true, [39] = true, [40] = true, [41] = true, [53] = true, [54] = true, [55] = true, [56] = true, [64] = true, [75] = true, [77] = true, [85] = true, [86] = true, [87] = true, [88] = true, [89] = true, [90] = true, [91] = true, [92] = true, [93] = true, [129] = true, [130] = true, [131] = true, [138] = true, [140] = true, [145] = true, [150] = true, [151] = true, [152] = true, [157] = true, [172] = true, [178] = true, [192] = true, [193] = true, [194] = true, [196] = true, [197] = true, [198] = true, [199] = true, [201] = true, [205] = true, [211] = true, [214] = true, [216] = true, [224] = true, [225] = true, [226] = true, [231] = true, [232] = true, [233] = true, [237] = true, [243] = true, [246] = true, [251] = true, [257] = true, [263] = true }
 asianFemales = {[38] = true, [53] = true, [54] = true, [55] = true, [56] = true, [88] = true, [141] = true, [169] = true, [178] = true, [224] = true, [225] = true, [226] = true, [263] = true}
 local fittingskins = {[0] = {[0] = blackMales, [1] = whiteMales, [2] = asianMales}, [1] = {[0] = blackFemales, [1] = whiteFemales, [2] = asianFemales}}
+local badges = { [64]= { "PDbadge", "a Police Badge" }, [65] = { "ESbadge", "an Emergency Services ID" }, [86] = { "SANbadge", "a SAN ID" }, [87] ={ "GOVbadge", "a Government Badge." }, [103] = { "USMSbadge", "a U.S Marshals Service Badge." } }
 
 function removeAnimation(player)
 	exports.global:removeAnimation(player)
@@ -402,48 +403,6 @@ function useItem(itemSlot, additional)
 			takeItemFromSlot(source, itemSlot)
 			exports.global:sendLocalMeAction(source, "drinks some Scottish Whiskey.")
 			setElementHealth(source,getElementHealth(source)-10)
-		elseif (itemID==64) then -- PD Badge
-			if(getElementData(source,"PDbadge")==1)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-				exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-			else
-				if(getElementData(source,"ESbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
-				end
-				if(getElementData(source,"GOVbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
-				end
-				if(getElementData(source,"SANbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
-				end
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge", 1, false)
-				exports.global:sendLocalMeAction(source, "puts on a Police Badge.")
-			end
-			exports.global:updateNametagColor(source)
-		elseif (itemID==65) then -- ES ID Card
-			if(getElementData(source,"ESbadge")==1)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-				exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")			
-			else
-				if(getElementData(source,"PDbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-				end
-				if(getElementData(source,"GOVbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
-				end
-				if(getElementData(source,"SANbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
-				end
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge", 1, false)
-				exports.global:sendLocalMeAction(source, "puts on an Emergency Services ID.")
-			end
-			exports.global:updateNametagColor(source)
 		elseif (itemID==69) then -- Dictionary
 			local learned = call(getResourceFromName("language-system"), "learnLanguage", source, itemValue, true)
 			local lang = call(getResourceFromName("language-system"), "getLanguageName", itemValue)
@@ -523,48 +482,6 @@ function useItem(itemSlot, additional)
 			exports.global:applyAnimation(source, "VENDING", "VEND_Drink_P", 4000, false, true, true)
 			exports.global:sendLocalMeAction(source, "drinks a cup of coffee.")
 			takeItemFromSlot(source, itemSlot)
-		elseif (itemID==86) then -- SAN ID
-			if(getElementData(source,"SANbadge")==1)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-				exports.global:sendLocalMeAction(source, "removes a SAN ID.")			
-			else
-				if(getElementData(source,"PDbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-				end
-				if(getElementData(source,"ESbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
-				end
-				if(getElementData(source,"GOVbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
-				end
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge", 1, false)
-				exports.global:sendLocalMeAction(source, "puts on a SAN ID.")
-			end
-			exports.global:updateNametagColor(source)
-		elseif (itemID==87) then -- Gov badge
-			if(getElementData(source,"GOVbadge")==1)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-				exports.global:sendLocalMeAction(source, "removes a Government Badge.")			
-			else
-				if(getElementData(source,"PDbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-				end
-				if(getElementData(source,"ESbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
-				end
-				if(getElementData(source,"SANbadge")==1)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
-				end
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge", 1, false)
-				exports.global:sendLocalMeAction(source, "puts on a Government Badge.")
-			end
-			exports.global:updateNametagColor(source)
 		elseif (itemID==88) then -- earpiece
 			outputChatBox("You can use this earpiece with an radio.", source, 255, 194, 14)
 		elseif (itemID==89) then -- Generic Food
@@ -663,6 +580,23 @@ function useItem(itemSlot, additional)
 			toggleAllControls(source, true, true, true)
 			exports.global:sendLocalMeAction(source, "eats a head of Cabbage.")
 			takeItemFromSlot(source, itemSlot)
+		elseif ( itemID==64 or itemID==65 or itemID==86 or itemID==87 or itemID==103 ) then  -- i dumped all the badges here, seemed like a hassle to have to update all the other ones just to add one badge.
+			if ( getElementData( source, badges[itemID][1] ) == 1 ) then
+				exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
+				exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2] )
+			else	
+				for key, badge in pairs ( badges ) do
+					if key ~= itemID then
+						if ( getElementData ( source, badge[1] ) == 1 ) then
+							exports['anticheat-system']:changeProtectedElementDataEx( source, badge[1] )
+							exports.global:sendLocalMeAction( source, "removes " .. badge[2] )
+						end
+					end
+				end
+				exports['anticheat-system']:changeProtectedElementDataEx( source, badges[itemID][1], 1, false )
+				exports.global:sendLocalMeAction( source, "puts on " .. badges[itemID][2] )
+			end
+			exports.global:updateNametagColor(source)	
 		else
 			outputChatBox("Error 800001 - Report on http://bugs.valhallagaming.net", source, 255, 0, 0)
 		end
@@ -758,21 +692,11 @@ function destroyItem(itemID)
 				end
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET skin = " .. getElementModel( source ) .. " WHERE id = " .. getElementData( source, "dbid" ) ) )
 				mysql_free_result(result)
-			elseif tonumber(itemID) == 64 and not exports.global:hasItem(source, 64) then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-				exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-				exports.global:updateNametagColor(source)
-			elseif  tonumber(itemID) == 65 and not exports.global:hasItem(source, 65)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-				exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
-				exports.global:updateNametagColor(source)
-			elseif  tonumber(itemID) == 86 and not hasItem(source, 86)then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-				exports.global:sendLocalMeAction(source, "removes a SAN ID.")
-				exports.global:updateNametagColor(source)
-			elseif tonumber(itemID) == 87 and not hasItem(source, 87) then
-				exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-				exports.global:sendLocalMeAction(source, "removes a Government Badge.")
+			elseif ( tonumber(itemID)==64 and not hasItem ( source, 64 ) ) or ( tonumber(itemID)==65 and not hasItem ( source, 65 ) ) or ( tonumber(itemID)==86 and not hasItem ( source, 86 ) ) or ( tonumber(itemID)==87 and not hasItem ( source, 87 ) ) or ( tonumber(itemID)==103 and not hasItem ( source, 103 ) ) then
+				if ( getElementData( source, badges[tonumber(itemID)][1] ) == 1 ) then
+					exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2])
+				end	
+				exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
 				exports.global:updateNametagColor(source)
 			elseif tonumber(itemID) == 76 and not exports.global:hasItem(source, 76) then
 				destroyElement(shields[source])
@@ -893,21 +817,11 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 						end
 					end
 					mysql_free_result(result)
-				elseif tonumber(itemID) == 64 and not hasItem(source, 64) then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"PDbadge")
-					exports.global:sendLocalMeAction(source, "removes a Police Badge.")
-					exports.global:updateNametagColor(source)
-				elseif  tonumber(itemID) == 65 and not hasItem(source, 65)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"ESbadge")
-					exports.global:sendLocalMeAction(source, "removes an Emergency Services ID.")
-					exports.global:updateNametagColor(source)
-				elseif  tonumber(itemID) == 86 and not hasItem(source, 86)then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"SANbadge")
-					exports.global:sendLocalMeAction(source, "removes a SAN ID.")
-					exports.global:updateNametagColor(source)
-				elseif tonumber(itemID) == 87 and not hasItem(source, 87) then
-					exports['anticheat-system']:changeProtectedElementDataEx(source,"GOVbadge")
-					exports.global:sendLocalMeAction(source, "removes a Government Badge.")
+				elseif ( tonumber(itemID)==64 and not hasItem ( source, 64 ) ) or ( tonumber(itemID)==65 and not hasItem ( source, 65 ) ) or ( tonumber(itemID)==86 and not hasItem ( source, 86 ) ) or ( tonumber(itemID)==87 and not hasItem ( source, 87 ) ) or ( tonumber(itemID)==103 and not hasItem ( source, 103 ) ) then
+					if ( getElementData( source, badges[tonumber(itemID)][1] ) == 1 ) then
+						exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2])
+					end	
+					exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
 					exports.global:updateNametagColor(source)
 				elseif tonumber(itemID)== 76 and not exports.global:hasItem(source, 76) then
 					destroyElement(shields[source])
@@ -1275,21 +1189,25 @@ function showInventoryRemote(thePlayer, commandName, targetPlayer)
 end
 addCommandHandler("showinv", showInventoryRemote, false, false)
 
--- /issueBadge Command - A commnad for leaders of the PD and ES factions to issue a police badge or ES ID badge item to their members. This will be the only IC way badges can be created.
+-- /issueBadge Command - A commnad for leaders of the PD, ES, SAN, GOV and BT&R
 function givePlayerBadge(thePlayer, commandName, targetPlayer, ... )
 	local badgeNumber = table.concat( { ... }, " " )
 	badgeNumber = #badgeNumber > 0 and badgeNumber
 	local theTeam = getPlayerTeam(thePlayer)
 	local teamName = getTeamName(theTeam)
 	
-	if (teamName=="Los Santos Police Department") or (teamName=="Los Santos Emergency Services") or (teamName=="Government of Los Santos") or (teamName=="San Andreas Network") or (teamName=="Best's Towing and Recovery") then -- Are they in the PD or ES or Gov?
+	if (teamName=="Los Santos Police Department") or (teamName=="Los Santos Emergency Services") or (teamName=="Government of Los Santos") or (teamName=="San Andreas Network") or (teamName=="Best's Towing and Recovery") then -- Are they in the PD or ES or Gov or SAN or BTR?
 		local leader = getElementData(thePlayer, "factionleader")
 		
 		if not (tonumber(leader)==1) then -- If the player is not the leader
 			outputChatBox("You must be a faction leader to issue badges.", thePlayer, 255, 0, 0) -- If they aren't leader they can't give out badges.
 		else	
 			if not (targetPlayer) or ( not (badgeNumber) and teamName~="San Andreas Network" ) or ( not (badgeNumber) and teamName~="Best's Towing and Recovery") then
-				outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID][Badge Number]", thePlayer, 255, 194, 14)
+				if teamName~="Government of Los Santos" then
+					outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID] [Badge Number]", thePlayer, 255, 194, 14)
+				else
+					outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID] [Badge ID 1 or 2] [Badge Number]", thePlayer, 255, 194, 14)
+				end	
 			else
 				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, targetPlayer)
 				if targetPlayer then -- is the player online?
@@ -1312,8 +1230,18 @@ function givePlayerBadge(thePlayer, commandName, targetPlayer, ... )
 							exports.global:giveItem(targetPlayer, 86, getPlayerName(targetPlayer):gsub("_", " ")) -- Give the player the badge.
 							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a SAN ID.")
 						elseif (teamName=="Government of Los Santos") then -- If the player is a GOV leader
-							exports.global:giveItem(targetPlayer, 87, badgeNumber) -- Give the player the badge.
-							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Los Santos Government badge with number "..badgeNumber..".")
+							local badgeID = table.concat ( { ... }, " ", 1, 1 ) -- 1st var = badgeID (1 || 2)
+							local badgeNumber = table.concat( { ... }, " ", 2) -- 2nd var --> = badgeNumber
+							badgeNumber = #badgeNumber > 0 and badgeNumber
+							if tonumber(badgeID) == 1 and badgeNumber then -- LS Gov badge
+								exports.global:giveItem(targetPlayer, 87, badgeNumber) 
+								exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Los Santos Government badge with number "..badgeNumber..".")
+							elseif tonumber(badgeID) == 2 and badgeNumber then -- USMS badge
+								exports.global:giveItem(targetPlayer, 103, badgeNumber) 
+								exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a U.S. Marshals Service badge with number "..badgeNumber..".")
+							else
+								outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID] [Badge ID 1 or 2] [Badge Number]", thePlayer, 255, 194, 14)
+							end	
 						elseif (teamName=="Best's Towing and Recovery") then
 							exports.global:giveItem(targetPlayer, 82, getPlayerName(targetPlayer):gsub("_", " "))
 							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Best's Towing and Recovery ID.")						

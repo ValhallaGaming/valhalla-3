@@ -11,6 +11,8 @@ function updateNametagColor(thePlayer)
 		setPlayerNametagColor(thePlayer, 50, 150, 50)
 	elseif (getElementData(thePlayer,"SANbadge")==1) then -- SAN Badge
 		setPlayerNametagColor(thePlayer, 150, 150, 255)
+	elseif (getElementData(thePlayer,"USMSbadge")==1) then -- USMS Badge || Not sure about the color, may cause confusion between ES and USMS? 
+		setPlayerNametagColor(thePlayer, 100, 0, 0)
 	elseif isPlayerBronzeDonator(thePlayer) then -- Donator
 		setPlayerNametagColor(thePlayer, 167, 133, 63)
 	else

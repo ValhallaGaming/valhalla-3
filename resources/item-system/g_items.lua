@@ -94,7 +94,7 @@ g_items = {
 	{ "Coffee", "A small cup of Coffee.", 1, 2647, 0, 0, 0, 0.12 },
 	{ "Escort 9500ci Radar Detector", "Detects Police within a half mile.", 7, 330, 90, 90, 0, -0.05 },
 	{ "Emergency Siren", "An emergency siren to put in your car.", 7, 330, 90, 90, 0, -0.05 },
-	{ "SAN Identifcation", "An SAN Identification issued to #v.", 7, 330, 90, 90, 0, -0.05 },
+	{ "SAN Identifcation", "A SAN Identification issued to #v.", 7, 330, 90, 90, 0, -0.05 },
 	{ "LS Government Badge", "A Los Santos Government Badge.", 4, 1581, 270, 270, 0, 0 },
 	{ "Earpiece", "A small earpiece, can be connected to a radio.", 7, 1581, 270, 270, 0, 0 },
 	{ "Food", "", 1, 2222, 0, 0, 0, 0.07 },
@@ -111,7 +111,8 @@ g_items = {
 	{ "Small Milk Carton", "Lumps included!", 1, 2856, 0, 0, 0, 0 },
 	{ "Small Juice Carton", "Thirsty?", 1, 2647, 0, 0, 0, 0.12 },
 	{ "Cabbage", "For those Vegi-Lovers.", 1, 1271, 0, 0, 0, 0.1 },
-	--Chairs = { 1663, 1671, 1720, 1721, 1810, 1811, 2079, 2120, 2121, 2125, 2777, 2788, 1369 }
+	--Chairs = { 1663, 1671, 1720, 1721, 1810, 1811, 2079, 2120, 2121, 2125, 2777, 2788, 1369 },
+	{ "USMS Badge", "A United States Marshals Service Badge", 4, 1581, 270, 270, 0, 0 }
 }
 
 function getItemRotInfo(id)
