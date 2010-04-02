@@ -74,7 +74,6 @@ function commandsHelp()
 					{ "GOV", "/setincometax [percent]", "Sets the income tax that is deducted from the wage each payday.", "/setincometax 10" },
 					{ "GOV", "/setwelfare [amount]", "Sets the State Benefits unemployed people get (not in a company) per payday.", "/setwelfare 150" },
 					{ "GOV", "/gettax", "Shows Tax, Income Tax and Welfare.", "/gettax" },
-					{ "GOV", "/issuebadge [player] [badge id] [number/name]", "Issues a badge to the player. Can be either badge id 1 (US Gov) or id 2 (US Marshals)", "/issuebadge Daniela_Lane 1 Miss Lane" },
 					{ "SAN", "/n [IC Text]", "Broadcasts a news line.", "/n Good Morning, Los Santos!" },
 					{ "SAN", "/interview [player]", "Invites someone for an interview.", "/interview Hans_Vanderburg" },
 					{ "SAN", "/endinterview [player]", "Ends an Interview.", "/endinterview Hans_Vanderburg" },
