@@ -49,7 +49,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/pban", "/pban [player] [hours] [reason]", "bans the player for the given time, specify 0 as hours for permanent ban" },
 					{ "/unban", "/unban [full char name]", "unbans the player with the given character name" },
 					{ "/unbanip", "/unbanip [ip]", "unbans the specified ip" },
-					{ "/gotoplace", "/gotoplace [ls/sf/lv]", "teleports you to one of those 3 cities" },
+					{ "/gotoplace", "/gotoplace [ls/sf/lv/pc]", "teleports you to one of those 4 places" },
 					{ "/jail", "/jail [player] [minutes] [reason]", "jails the player, if minutes >= 999 it's permanent" },
 					{ "/unjail", "/unjail [player]", "unjails the player" },
 					{ "/jailed", "/jailed", "shows a list of players that are in adminjail, including time left and reason" },

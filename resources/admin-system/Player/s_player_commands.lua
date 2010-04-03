@@ -1328,6 +1328,28 @@ function teleportToPresetPoint(thePlayer, commandName, target)
 					setElementInterior(thePlayer, 0)
 				end
 				outputChatBox("Teleported to Las Venturas!", thePlayer, 0, 255, 0)
+			elseif (target=="pc") then
+				if (isPedInVehicle(thePlayer)) then
+					local veh = getPedOccupiedVehicle(thePlayer)
+					setVehicleTurnVelocity(veh, 0, 0, 0)
+					setElementPosition(veh, 2253.66796875, -85.0478515625, 28.086099624634)
+					setVehicleRotation(veh, 0, 0, 180)
+					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
+					
+					setElementDimension(veh, 0)
+					setElementInterior(veh, 0)
+
+					setElementDimension(thePlayer, 0)
+					setElementInterior(thePlayer, 0)
+					setCameraInterior(thePlayer, 0)
+				else
+					setElementPosition(thePlayer, 2253.66796875, -85.0478515625, 28.086099624634)
+					setPedRotation(thePlayer, 180)
+					setElementDimension(thePlayer, 0)
+					setCameraInterior(thePlayer, 0)
+					setElementInterior(thePlayer, 0)
+				end
+				outputChatBox("Teleported to Palomino Creek!", thePlayer, 0, 255, 0)
 			else
 				outputChatBox("Invalid Place Entered!", thePlayer, 255, 0, 0)
 			end
