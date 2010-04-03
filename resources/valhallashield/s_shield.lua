@@ -7,7 +7,7 @@ function callHome(scripter, admin, fulladmin, superadmin, leadadmin, headadmin)
 		local serverleadadmin = exports.global:isPlayerLeadAdmin(client)
 		local serverheadadmin = exports.global:isPlayerHeadAdmin(client)
 	
-		if ( (client~=source) or (scripter and not serverscripter) or (admin and not serveradmin) or (admin~=serveradmin) or (fulladmin~=serverfulladmin) or (superadmin~=serversuperadmin) or (leadadmin~=serverleadadmin) or (headadmin~=serverheadadmin) ) then
+		if ( (client~=source) or (scripter and not serverscripter) or (admin and not serveradmin) or (fulladmin and not serverfulladmin) or (superadmin and not serversuperadmin) or (leadadmin and not serverleadadmin) or (headadmin and not serverheadadmin) ) then
 			local msg = "[AdmWarn] " .. getPlayerName(client) .. " was detected with a hacked client. Player has been banned."
 			exports.global:sendMessageToAdmins(msg)
 			local accountusername = getElementData(client, "gameaccountusername")
