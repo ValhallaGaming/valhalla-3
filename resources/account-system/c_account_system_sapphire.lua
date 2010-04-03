@@ -903,7 +903,7 @@ function drawCharacters()
 			end
 			
 			local gender = characterMenu[i].gender == 0 and "Male" or "Female"			
-			local agestring = age .. " year old " .. gender
+			local agestring = age .. " year old " .. gender .. "."
 			
 			local factionstring = faction
 			if cked and cked > 0 then
@@ -1554,7 +1554,7 @@ addEventHandler("storeAccountInformation", getLocalPlayer(), saveAccountInformat
 function saveCharacters(characters)
 	-- load the characters
 	setCameraMatrix(1401.4228515625, -887.6865234375, 76.401107788086, 1415.453125, -811.09375, 80.234382629395)
-	for k, v in ipairs(characters) do	
+	for k, v in ipairs(characters) do
 		characterMenu[k] = { id = v[1], name = v[2]:gsub("_", " "), cked = v[3], lastarea = v[4], age = v[5], gender = v[6], faction = v[7] or "Not in a faction.", rank = v[8], skin = v[9], lastseen = v[10], cy = initY + k * yoffset + 40, ty = initY + k * yoffset + 40 }
 	end
 	loadedCharacters = true

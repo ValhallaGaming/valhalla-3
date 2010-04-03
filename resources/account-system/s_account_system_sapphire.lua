@@ -857,10 +857,7 @@ function sendAccounts(thePlayer, id, isChangeChar)
 			
 			accounts[i][4] = row["lastarea"]
 			accounts[i][5] = tonumber(row["age"])
-			
-			if (tonumber(row["gender"])==1) then
-				accounts[i][6] = tonumber(row["gender"])
-			end
+			accounts[i][6] = tonumber(row["gender"])
 			
 			local factionID = tonumber(row["faction_id"])
 			local factionRank = tonumber(row["faction_rank"])
