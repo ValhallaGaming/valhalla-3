@@ -46,7 +46,7 @@ g_items = {
 	{ "Drug 2", "A marijuana joint laced in cocaine.", 3, 1576, 0, 0, 0, 0 },
 	{ "Drug 3", "50mg of cocaine laced in lysergic acid.", 3, 1578, 0, 0, 0, -0.02 },
 	{ "Drug 4", "50mg of cocaine laced in phencyclidine.", 3, 1579, 0, 0, 0, 0 },
-	{ "Marijuana", "A marijuana joint.", 3, 3044, 0, 0, 0, 0 },
+	{ "Marijuana", "A marijuana joint.", 3, 3044, 0, 0, 0, 0.04 }, 
 	{ "Drug 6", "A marijuana joint laced in lysergic acid.", 3, 1580, 0, 0, 0, 0 },
 	{ "Angel Dust", "A marijuana joint laced in phencyclidine.", 3, 1575, 0, 0, 0, -0.02 },
 	{ "LSD", "80 micrograms of LSD.", 3, 1576, 0, 0, 0, 0 },
