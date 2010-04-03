@@ -684,8 +684,6 @@ function loginPlayer(username, password, operatingsystem)
 			local country = tostring(exports.global:getPlayerCountry(source))
 			if username == "Daniels" then
 				country = "SC"
-			elseif username == "mcreary" then
-				country = "UK"
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "country", country)
 			
@@ -697,11 +695,7 @@ function loginPlayer(username, password, operatingsystem)
 			if donator > 0 then -- check if they're a donator
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "pmblocked", pmblocked, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "tognews", newsblocked, false)
-				if (adblocked == 1) then
-					exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", true, false)
-				else
-					exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", false, false)
-				end
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", adblocked == 1, false)
 			else -- no donator, set default things
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "pmblocked", 0, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "disableAds", false, false)
@@ -715,17 +709,7 @@ function loginPlayer(username, password, operatingsystem)
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "donator", tonumber(donator))
 			
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "blur", blur)
-			if (blur==0) then
-				setPlayerBlurLevel(source, 0)
-			else
-				setPlayerBlurLevel(source, 38)
-			end
-			
-			if (disableads == 1) then
-			
-			else
-			
-			end
+			setPlayerBlurLevel(source, blur == 0 and 0 or 38)
 			
 			if (appstate==0) then
 				clearChatBox(source)
