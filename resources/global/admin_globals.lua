@@ -54,8 +54,9 @@ local scripterAccounts = {
 	Daniels = true,
 	mabako = true,
 	Mount = true,
-	ryden = true
+	ryden = true,
+	Jumba = true,
 }
 function isPlayerScripter(thePlayer)
-	return getElementType(thePlayer) == "console" or scripterAccounts[getElementData(thePlayer, "gameaccountusername")] or false
+	return getElementType(thePlayer) == "console" or scripterAccounts[thePlayer] or scripterAccounts[getElementData(thePlayer, "gameaccountusername")] or false
 end

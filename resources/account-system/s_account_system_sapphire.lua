@@ -675,7 +675,7 @@ function loginPlayer(username, password, operatingsystem)
 			local chatbubbles = tonumber(data["chatbubbles"])
 			local appstate = tonumber(data["appstate"])
 			
-			if ( admin <= 0 and hasBeta[source] ) then -- non admin with beta? ban
+			if ( admin <= 0 and hasBeta[source] and not exports.global:isPlayerScripter( username ) ) then -- non admin with beta? ban
 				exports.global:sendMessageToAdmins("[AdmWarn] " .. getPlayerName(source) .. " was banned for running a hacked Sapphire Beta.")
 				local ban = banPlayer(source, true, false, false, getRootElement(), "Hacked Beta.", 0)
 				mysql:query_free("UPDATE accounts SET banned='1', banned_reason='Hacked Beta.', banned_by='Script' WHERE id='" .. mysql:escape_string(id) .. "'")
