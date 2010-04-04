@@ -199,7 +199,7 @@ function lvesduty(thePlayer, commandName)
 						exports.global:giveItem(thePlayer, 70, 7) -- first aid kit
 						setElementModel(thePlayer, dutyskin)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 4, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 4)
 						
 						saveSkin(thePlayer)
 					end
@@ -207,7 +207,7 @@ function lvesduty(thePlayer, commandName)
 					restoreWeapons(thePlayer)
 					outputChatBox("You are now off Medic Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their uniform into their locker.")
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -248,7 +248,7 @@ function govduty(thePlayer, commandName)
 					exports.global:giveWeapon(thePlayer, 22, 30) -- colt 45
 					exports.global:giveWeapon(thePlayer, 41, 1000) -- pepper spray
 					
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 7, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 7)
 						
 					saveSkin(thePlayer)
 				elseif (duty==7) then -- gov
@@ -257,7 +257,7 @@ function govduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "puts their uniform into their locker.")
 					exports.global:takeItem(thePlayer, 46)
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -303,7 +303,7 @@ function lvfdduty(thePlayer, commandName)
 						exports.global:giveItem(thePlayer, 70, 3) -- first aid kit
 						setElementModel(thePlayer, dutyskin)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 5, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 5)
 						
 						saveSkin(thePlayer)
 					end
@@ -311,7 +311,7 @@ function lvfdduty(thePlayer, commandName)
 					restoreWeapons(thePlayer)
 					outputChatBox("You are now off Firefighter Duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their firefighter gear into their locker.")
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -382,7 +382,7 @@ function swatduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, 285)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 1, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 1)
 						
 						saveSkin(thePlayer)
 					else
@@ -393,7 +393,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -409,7 +409,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -421,7 +421,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -433,7 +433,7 @@ function swatduty(thePlayer, commandName)
 					outputChatBox ("You are now off duty", thePlayer )
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0 )
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45 )
 					exports.global:takeItem(thePlayer, 71 )
@@ -487,7 +487,7 @@ function policeduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 2, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 2)
 						
 						saveSkin(thePlayer)
 					end
@@ -496,7 +496,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -512,7 +512,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -524,7 +524,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -536,7 +536,7 @@ function policeduty(thePlayer, commandName)
 					outputChatBox ("You are now off duty", thePlayer )
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0 )
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45 )
 					exports.global:takeItem(thePlayer, 71 )
@@ -582,7 +582,7 @@ function detectiveduty(thePlayer, commandName)
 					exports.global:giveItem(thePlayer, 45, 1) -- cuffs
 					exports.global:giveItem(thePlayer, 71, 20 ) -- notepad + 20 pages. (should be more?)
 					
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 12, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 12)
 					
 					saveSkin(thePlayer)
 				elseif (duty==1) then -- SWAT
@@ -590,7 +590,7 @@ function detectiveduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -606,7 +606,7 @@ function detectiveduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -616,7 +616,7 @@ function detectiveduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -628,7 +628,7 @@ function detectiveduty(thePlayer, commandName)
 					outputChatBox ("You are now off duty", thePlayer )
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0 )
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45 )
 					exports.global:takeItem(thePlayer, 71 )
@@ -680,7 +680,7 @@ function cadetduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 3, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 3)
 						
 						saveSkin(thePlayer)
 					end
@@ -689,7 +689,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off SWAT duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their SWAT gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 26)
 					exports.global:takeItem(thePlayer, 27)
@@ -705,7 +705,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -717,7 +717,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their cadet gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -729,7 +729,7 @@ function cadetduty(thePlayer, commandName)
 					outputChatBox ("You are now off duty", thePlayer )
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0 )
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45 )
 					exports.global:takeItem(thePlayer, 71 )
@@ -777,7 +777,7 @@ function fbiduty(thePlayer, commandName)
 						
 						setElementModel(thePlayer, dutyskin)
 						
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 6, false)
+						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 6)
 						
 						saveSkin(thePlayer)
 					end
@@ -786,7 +786,7 @@ function fbiduty(thePlayer, commandName)
 					outputChatBox("You are now off FBI duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their FBI gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					exports.global:takeItem(thePlayer, 45)
 					
@@ -796,7 +796,7 @@ function fbiduty(thePlayer, commandName)
 				else
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					saveSkin(thePlayer)
 				end
 			end
@@ -890,7 +890,7 @@ function sacfduty(thePlayer, commandName)
 					
 					setElementModel(thePlayer, 71)
 					
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 9, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 9)
 					
 					saveSkin(thePlayer)
 				elseif (duty==9) then
@@ -898,7 +898,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -941,7 +941,7 @@ function sacfduty(thePlayer, commandName)
 					
 					setElementModel(thePlayer, 285)
 					
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 10, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 10)
 					
 					saveSkin(thePlayer)
 				elseif (duty==10) then
@@ -949,7 +949,7 @@ function sacfduty(thePlayer, commandName)
 					outputChatBox("You are now off Cert duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their gear into their locker.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
@@ -989,7 +989,7 @@ function courtduty(thePlayer, commandName)
 					
 					setElementModel(thePlayer, 286)
 					
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 11, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 11)
 					
 					saveSkin(thePlayer)
 				elseif (duty==11) then
@@ -997,7 +997,7 @@ function courtduty(thePlayer, commandName)
 					outputChatBox("You are now off duty.", thePlayer)
 					exports.global:sendLocalMeAction(thePlayer, "puts their equipment back into their box.")
 					setPedArmor(thePlayer, 0)
-					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0, false)
+					exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "duty", 0)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
