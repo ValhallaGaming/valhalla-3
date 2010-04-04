@@ -20,11 +20,11 @@ addEventHandler("onResourceStart", getResourceRootElement(), timeCheck)
 
 function createStevie()
 
-	stevie = createPed (258, 2511.6015625, -1680.1962890625, 1049.6678466797)
+	stevie = createPed (258, 2510.5732421875, -1679.5458984375, 1249.6678466797)
 	exports.pool:allocateElement(stevie)
 	setPedRotation (stevie, 90)
 	exports['anticheat-system']:changeProtectedElementDataEx(stevie, "rotation", getPedRotation(stevie), false)
-	setElementInterior (stevie, 3)
+	setElementInterior (stevie, 1)
 	setElementDimension (stevie, 10601)
 	setPedFrozen(stevie, true)
 	setPedAnimation(stevie, "FOOD", "FF_Sit_Loop",  -1, true, false, true) -- Set the Peds Animation.
