@@ -331,7 +331,7 @@ function spawnCharacter(charname, version)
 			setPedRotation(source, 267.438446)
 			
 			if jailed_time ~= 999 then
-				local theTimer = setTimer(timerUnjailPlayer, 60000, jailed_time, source)
+				local theTimer = setTimer(timerUnjailPlayer, 60000, 1, source)
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtime", jailed_time, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(source, "jailtimer", theTimer)
 			else
@@ -348,7 +348,7 @@ function spawnCharacter(charname, version)
 		elseif pdjail == 1 then -- PD JAIL
 			outputChatBox("You still have " .. pdjail_time .. " minute(s) to serve of your state jail sentance.", source, 255, 0, 0)
 			
-			local theTimer = setTimer(timerPDUnjailPlayer, 60000, pdjail_time, source)
+			local theTimer = setTimer(timerPDUnjailPlayer, 60000, 1, source)
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailserved", 0, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtime", pdjail_time, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "pd.jailtimer", theTimer, false)

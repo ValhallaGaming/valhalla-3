@@ -83,7 +83,7 @@ function arrestPlayer(thePlayer, commandName, targetPlayerNick, fine, jailtime, 
 								exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "bankmoney", bankmoney-fineleft)
 							end
 						
-							local theTimer = setTimer(timerPDUnjailPlayer, 60000, jailtime, targetPlayer)
+							local theTimer = setTimer(timerPDUnjailPlayer, 60000, 1, targetPlayer)
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailserved", 0, false)
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtime", jailtime, false)
 							exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "pd.jailtimer", theTimer, false)
@@ -164,7 +164,6 @@ function timerPDUnjailPlayer(jailedPlayer)
 	if(isElement(jailedPlayer)) then
 		local timeServed = tonumber(getElementData(jailedPlayer, "pd.jailserved"))
 		local timeLeft = getElementData(jailedPlayer, "pd.jailtime")
-		local theMagicTimer = getElementData(jailedPlayer, "pd.jailtimer") -- 0001290: PD /release bug
 		local username = getPlayerName(jailedPlayer)
 		
 		if ( timeServed ) then
@@ -172,12 +171,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 			local timeLeft = timeLeft - 1
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", timeLeft, false)
 
-			if (timeLeft<=0) and (isTimer(theMagicTimer)) then
-				outputDebugString("TIME LEFT: " .. tostring(timeLeft))
-				outputDebugString("TIMER: " .. tostring(theMagicTimer))
-				outputDebugString("IS TIMER: " .. tostring(isTimer(theMagicTimer)))
-				
-				killTimer(theMagicTimer) -- 0001290: PD /release bug
+			if (timeLeft<=0) then
 				theMagicTimer = nil
 				fadeCamera(jailedPlayer, false)
 				mysql:query_free("UPDATE characters SET pdjail_time='0', pdjail='0', pdjail_station='0' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
@@ -203,15 +197,9 @@ function timerPDUnjailPlayer(jailedPlayer)
 
 			elseif (timeLeft>0) then
 				mysql:query_free("UPDATE characters SET pdjail_time='" .. mysql:escape_string(timeLeft) .. "' WHERE id=" .. mysql:escape_string(getElementData(jailedPlayer, "dbid")))
-			end
-		else -- you have served your time bug fix
-			if (isElement(jailedPlayer)) then
-				outputDebugString(getPlayerName(jailedPlayer) .. " has time served bug.")
-				killTimer(theMagicTimer)
-				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailserved", 0, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtime", 0, false)
-				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
-				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailstation")
+				local theTimer = setTimer(timerPDUnjailPlayer, 60000, 1, jailedPlayer)
+				exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer", theTimer, false)
+				outputDebugString("JAIL: " .. getPlayerName(jailedPlayer) .. " has ".. timeLeft .. " minutes left. New timer set.")
 			end
 		end
 	end
