@@ -13,9 +13,6 @@
 	<script src="tow_door2.lua" type="server"/>
 	<script src="tow_door3.lua" type="server"/>
 	
-	<script src="ein_gate1.lua" type="server"/>
-	<script src="ein_gate2.lua" type="server"/>
-	
 	<script src="airport.lua" type="server"/>
 	
 	<script src="fd_interior.lua"/>
