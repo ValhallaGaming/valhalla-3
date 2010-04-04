@@ -471,7 +471,6 @@ function getIDFromAWSColshape(colshape)
 end
 
 function syncSignal(id, reverse)
-	outputChatBox("You synced your signal change.")
 	if (reverse) then
 		triggerServerEvent("syncSSIn", getLocalPlayer(), id, true)
 	else
@@ -481,7 +480,6 @@ end
 
 function syncSignalState(id, reverse)
 	if not reverse then
-		outputChatBox("You got a signal sync from " .. getPlayerName(source) .. ".")
 		updateState(id, 0)
 					
 		if (id == 1) then -- fix for invalid index
@@ -499,7 +497,6 @@ function syncSignalState(id, reverse)
 			updateState(id-3, 3)
 		end
 	else
-		outputChatBox("You got a reverse signal sync from " .. getPlayerName(source) .. ".")
 		updateState(id, 3)
 				
 		if (id == 1) then -- fix for invalid index
