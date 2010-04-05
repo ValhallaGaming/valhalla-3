@@ -20,6 +20,7 @@
 	<script src="Prison Ext.lua"/>
 	<script src="Prison Int Rec.lua"/>
 	<script src="Prison Int Cells.lua"/>
+	<script src="Prison Int Cells 2.lua" />
 	
 	<script src="MountIsland.lua" type="server"/>
 	<script src="c_doors.lua" type="client"/>
