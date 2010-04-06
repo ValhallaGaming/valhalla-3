@@ -15,4 +15,7 @@
 
 	<script src="s_ty.lua" type="server" />
 	<script src="c_ty.lua" type="client" />
+	
+	<script src="s_gio.lua" type="server" />
+	<script src="c_gio.lua" type="client" />	
 </meta>
