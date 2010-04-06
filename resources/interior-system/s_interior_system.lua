@@ -128,6 +128,39 @@ function updateInteriorExit(thePlayer, commandName)
 end
 addCommandHandler("setinteriorexit", updateInteriorExit, false, false)
 
+function updateInteriorEntrance(thePlayer, commandName, intID)
+	if (exports.global:isPlayerLeadAdmin(thePlayer)) then
+		local intID = tonumber(intID)
+		if not (intID) then
+			outputChatBox( "SYNTAX: /" .. commandName .. " [Interior ID]", thePlayer, 255, 194, 14 )		
+		else
+			local dbid, entrance, exit = findProperty(thePlayer, intID)
+			if entrance then
+				local dw = getElementDimension(thePlayer)
+				local iw = getElementInterior(thePlayer)
+				local x, y, z = getElementPosition(thePlayer)
+				local rot = getPedRotation(thePlayer)
+				local query = mysql_query(handler, "UPDATE interiors SET x='" .. x .. "', y='" .. y .. "', z='" .. z .. "', angle='" .. rot .. "', dimensionwithin='" .. dw .. "', interiorwithin='" .. iw .. "' WHERE id='" .. dbid .. "'")
+				
+				if (query) then
+					setElementPosition(entrance, x, y, z)
+					setElementInterior(entrance, iw)
+					setElementDimension(entrance, dw)
+					
+					outputChatBox("Interior Entrance #" .. dbid .. " has been Updated!", thePlayer, 0, 255, 0)
+
+					mysql_free_result(query)
+				else
+					outputChatBox("Error with the query.", thePlayer, 255, 0, 0)
+				end
+			else
+				outputChatBox( "Invalid Interior ID.", thePlayer, 255, 0, 0 )
+			end
+		end
+	end
+end
+addCommandHandler("setinteriorentrance", updateInteriorEntrance, false, false)
+
 function findProperty(thePlayer, dimension)
 	local dbid = dimension or getElementDimension( thePlayer )
 	if dbid > 0 then

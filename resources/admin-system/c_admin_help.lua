@@ -103,7 +103,6 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/y", "/z [value]", "increases your y-coordinate by the given value" },
 					{ "/z", "/y [value]", "increases your z-coordinate by the given value" },
 					{ "/set*", "/set[any combination of xyz] [coordinates]", "sets your coordinates - available combinations: x, y, z, xyz, xy, xz, yz" },
-					{ "/setinteriorexit", "/setinteriorexit  [Interior ID] [TYPE] [Cost] [Name]","adds an interior" },
 					{ "/reloadinterior", "/reloadinterior [id]","reloads an interior from the database" },
 					{ "/nearbyinteriors", "/nearbyinteriors","shows nearby interiors" },
 					{ "/setinteriorname", "/setinteriorname [newname]","changes an interior name" },
@@ -187,6 +186,8 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/setinteriorprice", "/setinteriorprice [price]","changes the interiors price" },
 					{ "/toggleinterior", "/toggleinterior [id]","sets the interior enabled or disabled" },
 					{ "/enableallinteriors", "/enableallinteriors","enables all the interiors" },
+					{ "/setinteriorexit", "/setinteriorexit","changes an interior exit marker" },
+					{ "/setinteriorentrance", "/setinteriorexit  [Interior ID]","changes an interior entrance marker" },
 					
 					-- factions/*
 					{ "/setfactionleader", "/setfactionleader [id] [factionid]", "puts a player into a faction and makes the player leader" },
