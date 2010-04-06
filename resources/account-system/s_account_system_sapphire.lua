@@ -191,6 +191,7 @@ function spawnCharacter(charname, version)
 		local desc = data["description"]
 		local maxvehicles = tonumber(data["maxvehicles"])
 		local factionleader = tonumber(data["faction_leader"])
+		local d_addiction = tostring(data["d_addiction"])
 		
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "chardescription", desc)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "age", age)
@@ -544,6 +545,14 @@ function spawnCharacter(charname, version)
 				if amount > 0 then
 					outputChatBox("((Best's Towing & Recovery)) #999 [SMS]: " .. amount .. " of your vehicles are impounded. Head over to the Impound to release them.", source, 120, 255, 80)
 				end
+			end
+		end
+		
+		-- drug addictions
+		if (tostring(d_addiction)~=tostring(mysql_null())) then
+			local getdrug = split(d_addiction, string.byte(';'))
+			for k, v in ipairs(getdrug) do
+				exports['anticheat-system']:changeProtectedElementDataEx(source, "drug." ..k, tonumber(v))
 			end
 		end
 		
