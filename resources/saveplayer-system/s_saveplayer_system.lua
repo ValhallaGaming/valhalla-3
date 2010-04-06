@@ -76,6 +76,7 @@ function savePlayer(reason, player)
 		local armor = getPedArmor(source)
 		local interior = getElementInterior(source)
 		local dimension = getElementDimension(source)
+		local d_addiction = ( getElementData(source, "drug.1") or 0 ) .. ";" .. ( getElementData(source, "drug.2") or 0 ) .. ";" .. ( getElementData(source, "drug.3") or 0 ) .. ";" .. ( getElementData(source, "drug.4") or 0 ) .. ";" .. ( getElementData(source, "drug.5") or 0 ) .. ";" .. ( getElementData(source, "drug.6") or 0 ) .. ";" .. ( getElementData(source, "drug.7") or 0 ) .. ";" .. ( getElementData(source, "drug.8") or 0 ) .. ";" .. ( getElementData(source, "drug.9") or 0 ) .. ";" .. ( getElementData(source, "drug.10") or 0 )
 		money = getElementData(source, "stevie.money")
 		if money and money > 0 then
 			money = 'money = money + ' .. money .. ', '
@@ -111,7 +112,7 @@ function savePlayer(reason, player)
 			zone = "Unknown"
 		end
 		
-		local update = mysql:query_free("UPDATE characters SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotation='" .. mysql:escape_string(rot) .. "', health='" .. mysql:escape_string(health) .. "', armor='" .. mysql:escape_string(armor) .. "', dimension_id='" .. mysql:escape_string(dimension) .. "', interior_id='" .. mysql:escape_string(interior) .. "', " .. mysql:escape_string(money) .. mysql:escape_string(businessprofit) .. "lastlogin=NOW(), lastarea='" .. mysql:escape_string(zone) .. "', timeinserver='" .. mysql:escape_string(timeinserver) .. "' WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
+		local update = mysql:query_free("UPDATE characters SET x='" .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', rotation='" .. mysql:escape_string(rot) .. "', health='" .. mysql:escape_string(health) .. "', armor='" .. mysql:escape_string(armor) .. "', dimension_id='" .. mysql:escape_string(dimension) .. "', interior_id='" .. mysql:escape_string(interior) .. "', " .. mysql:escape_string(money) .. mysql:escape_string(businessprofit) .. "lastlogin=NOW(), lastarea='" .. mysql:escape_string(zone) .. "', timeinserver='" .. mysql:escape_string(timeinserver) .. "', d_addiction='" .. mysql:escape_string(d_addiction) .. "' WHERE id=" .. mysql:escape_string(getElementData(source, "dbid")))
 		if not (update) then
 			outputDebugString( "Saveplayer Update:" )
 		end

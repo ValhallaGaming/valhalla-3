@@ -53,6 +53,7 @@ end
 local scripterAccounts = {
 	Daniels = true,
 	mabako = true,
+	herbjr = true,
 	Mount = true,
 	ryden = true,
 	Jumba = true,
