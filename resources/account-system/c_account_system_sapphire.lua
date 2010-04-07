@@ -1,4 +1,11 @@
 local version = "0.1"
+local motd = ""
+
+function saveMOTD(theMOTD)
+	motd = theMOTD
+end
+addEvent("updateMOTD", true)
+addEventHandler("updateMOTD", getRootElement(), saveMOTD)
 
 function hasBeta()	
 	local xmlRoot = xmlLoadFile( "sapphirebeta.xml" )
@@ -146,9 +153,10 @@ function generateTimestamp(daysAhead)
 	return tostring( 50000000 + getRealTime().year * 366 + getRealTime().yearday + daysAhead )
 end
 
-function storeSalt(theSalt, theIP)
+function storeSalt(theSalt, theIP, theMOTD)
 	ip = theIP
 	salt = theSalt
+	motd = theMOTD
 	
 	if xmlLoadFile("vgrptut.xml") then
 		createXMB()
@@ -271,6 +279,10 @@ local tHelp = { }
 
 local currentVerticalItem = 1
 lastKey = 0
+
+-- MOTD
+local motdX = guiGetScreenSize()
+local motdSpeed = 1
 function drawBG()
 	local width, height = guiGetScreenSize()
 	-- background
@@ -280,6 +292,15 @@ function drawBG()
 	dxDrawText("Valhalla MTA Server", width - 350,80, width-200, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.7, "bankgothic", "center", "middle", false, false, false)
 	dxDrawText("Sapphire V" .. version, width - 350, 100, width-200, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.5, "bankgothic", "center", "middle", false, false, false)
 	dxDrawImage(width - 131, 30, 131, 120, "gui/valhalla1.png", 0, 0, 0, tocolor(255, 255, 255, 200 * xmbAlpha), false)
+	
+	-- MOTD
+	dxDrawRectangle(0, height - 40, width, 20, tocolor(195, 195, 195, 150 * xmbAlpha), false)
+	dxDrawText(motd, motdX, height - 40, width, 20, tocolor(255, 255, 255, 200 * xmbAlpha), 0.5, "bankgothic", "left", "middle", false, false, false)
+	motdX = motdX - motdSpeed
+	
+	if ( motdX < 0 - dxGetTextWidth(motd, 0.5, "bankgothic") ) then
+		motdX = width
+	end
 	
 	-- fading
 	local step = 3

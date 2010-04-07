@@ -2031,6 +2031,7 @@ function setMOTD(thePlayer, commandName, ...)
 		else
 			local message = table.concat({...}, " ")
 			local query = mysql:query_free("UPDATE settings SET value='" .. mysql:escape_string(message) .. "' WHERE name='motd'")
+			triggerClientEvent("updateMOTD", thePlayer, message)
 			
 			if (query) then
 				outputChatBox("MOTD set to '" .. message .. "'.", thePlayer, 0, 255, 0)

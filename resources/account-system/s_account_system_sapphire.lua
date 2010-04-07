@@ -54,7 +54,7 @@ addEventHandler("acceptBeta", getRootElement(), acceptBeta)
 -- end gay beta code
 
 function sendSalt()
-	triggerClientEvent(source, "sendSalt", source, salt, getPlayerIP(source))
+	triggerClientEvent(source, "sendSalt", source, salt, getPlayerIP(source), getElementData(getRootElement(), "account:motd"))
 end
 addEvent("getSalt", true)
 addEventHandler("getSalt", getRootElement(), sendSalt)
