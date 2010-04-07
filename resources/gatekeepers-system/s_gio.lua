@@ -22,14 +22,14 @@ function createGio()
 	exports.pool:allocateElement(giovanna)
 
 	setElementInterior(giovanna, 6)
-	setElementDimension(giovanna, 1336)
+	setElementDimension(giovanna, 1376)
 	setPedFrozen(giovanna, true)
 --	setPedAnimation(giovanna, "ped", "SEAT_idle", -1, true, false, false)
 	setPedRotation(giovanna, 143.82147216797)
 
 --[[local gioChair = createObject(1369, 2442.44140625, -2533.6845703125, 5095.03, 0, 0, 312.97503662109)
 	setElementInterior(gioChair, 6)
-	setElementDimension(gioChair, 1336)--]]
+	setElementDimension(gioChair, 1376)--]]
 	
 	exports['anticheat-system']:changeProtectedElementDataEx(giovanna, "rotation", getPedRotation(giovanna), false)
 	exports['anticheat-system']:changeProtectedElementDataEx(giovanna, "name", "Giovanna Remini")
