@@ -130,7 +130,6 @@ function createTempVehicle(thePlayer, commandName, ...)
 		end
 	end
 end
-
 addCommandHandler("veh", createTempVehicle, false, false)
 	
 -- /oldcar
@@ -922,3 +921,58 @@ function deleteThisVehicle(thePlayer, commandName)
 	end						
 end
 addCommandHandler("delthisveh", deleteThisVehicle, false, false)
+
+function setVehTFFaction(thePlayer, commandName, pid, fid)
+	if (exports.global:isPlayerLeadAdmin(thePlayer)) then
+		if not (pid) or not (fid) then
+			outputChatBox("SYNTAX: /" .. commandName .. " [player] [faction or -1]", thePlayer, 255, 194, 14)
+		else
+			local username = getPlayerName(thePlayer):gsub("_"," ")
+			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, pid)
+			if (targetPlayer) then
+				local pv = getPedOccupiedVehicle(targetPlayer)
+				if (pv) then
+					local faction = tonumber(fid)
+					local oowner,ofaction,ocarid = nil
+					local tnplayer = getElementData(targetPlayer, "dbid")
+					if (faction == -1) then
+						for key, value in ipairs(exports.pool:getPoolElementsByType("vehicle")) do
+							if (getElementData(value, "dbid") == getElementData(pv, "dbid")) then
+								ocarid = tonumber(getElementData(value, "dbid"))
+								oowner = tonumber(getElementData(value, "owner"))
+								ofaction = tonumber(getElementData(value, "faction"))
+								
+								exports['anticheat-system']:changeProtectedElementDataEx(value, "faction", -1, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(value, "owner", tnplayer, false)
+								exports['savevehicle-system']:saveVehicle(pv)
+							end
+						end
+						outputChatBox("Car #" .. ocarid .. " was set from faction '" .. ofaction .. "' to owner '" .. targetPlayerName .. "'.", thePlayer, 0, 255, 0)
+						outputChatBox("Admin " .. username .. " has set your vehicle's owner to you from faction: " .. ofaction .. ".", targetPlayer, 0, 255, 0)
+						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set from faction '" .. ofaction .. "' to owner [Player: " .. targetPlayerName .. "(" .. tnplayer .. ")]." , 9)
+					elseif (exports.pool:getElement("team", faction)) then
+						for key, value in ipairs(exports.pool:getPoolElementsByType("vehicle")) do
+							if (getElementData(value, "dbid") == getElementData(pv, "dbid")) then
+								ocarid = tonumber(getElementData(value, "dbid"))
+								oowner = tonumber(getElementData(value, "owner"))
+								ofaction = tonumber(getElementData(value, "faction"))
+	
+								exports['anticheat-system']:changeProtectedElementDataEx(value, "faction", faction, false)
+								exports['anticheat-system']:changeProtectedElementDataEx(value, "owner", -1, false)
+								exports['savevehicle-system']:saveVehicle(pv)
+							end
+						end
+						outputChatBox("Car #" .. ocarid .. " was set to faction '" .. faction .. "' from '" .. ofaction .. "'.", thePlayer, 0, 255, 0)
+						outputChatBox("Admin " .. username .. " has set your vehicle's owner from you to faction '" .. faction .. "'.", targetPlayer, 0, 255, 0)
+						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set to faction '" .. faction .. "' from [Player: " .. oowner .. " Faction: " .. ofaction .. "].", 9)
+					else
+						outputChatBox("Invalid Faction.", thePlayer, 255, 0, 0)
+					end
+				else
+					outputChatBox("Player not in a vehicle.", thePlayer, 255, 194, 14)
+				end
+			end
+		end
+	end
+end
+addCommandHandler("setvehfaction", setVehTFFaction)

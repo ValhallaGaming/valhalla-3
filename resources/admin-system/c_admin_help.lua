@@ -191,6 +191,7 @@ function adminhelp (sourcePlayer, commandName)
 					
 					-- factions/*
 					{ "/setfactionleader", "/setfactionleader [id] [factionid]", "puts a player into a faction and makes the player leader" },
+					{ "/setvehfaction", "/setfactionveh [carid] [factionid]", "sets a vehicle as faction or not" },
 					
 					-- fuelpoints/*
 					{ "/addfuelpoint", "/addfuelpoint", "creates a new fuelpoint" },
