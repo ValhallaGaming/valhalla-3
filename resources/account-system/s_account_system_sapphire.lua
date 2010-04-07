@@ -140,9 +140,9 @@ function spawnCharacter(charname, version)
 			end
 		end
 		
-		local x = data["x"]
-		local y = data["y"]
-		local z = data["z"]
+		local x = tonumber(data["x"])
+		local y = tonumber(data["y"])
+		local z = tonumber(data["z"])
 		
 		local rot = tonumber(data["rotation"])
 		local interior = tonumber(data["interior_id"])
