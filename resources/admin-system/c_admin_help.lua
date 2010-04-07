@@ -187,7 +187,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/toggleinterior", "/toggleinterior [id]","sets the interior enabled or disabled" },
 					{ "/enableallinteriors", "/enableallinteriors","enables all the interiors" },
 					{ "/setinteriorexit", "/setinteriorexit","changes an interior exit marker" },
-					{ "/setinteriorentrance", "/setinteriorexit  [Interior ID]","changes an interior entrance marker" },
+					{ "/setinteriorentrance", "/setinteriorentrance  [Interior ID]","changes an interior entrance marker" },
 					
 					-- factions/*
 					{ "/setfactionleader", "/setfactionleader [id] [factionid]", "puts a player into a faction and makes the player leader" },
