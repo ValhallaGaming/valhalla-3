@@ -40,6 +40,27 @@ function clickVehicle(button, state, absX, absY, wx, wy, wz, element)
 end
 addEventHandler("onClientClick", getRootElement(), clickVehicle, true)
 
+--Needs to be redone to run better
+function isNotAllowedV(theVehicle)
+	local vmodel = getElementModel(theVehicle)
+	if (getVehicleType(vmodel) == "Plane") then
+		return true
+	end
+	if (getVehicleType(vmodel) == "Helicopter") then
+		return true
+	end
+	if (getVehicleType(vmodel) == "Boat") then
+		return true
+	end
+	if (getVehicleType(vmodel) == "Train") then
+		return true
+	end
+	if (getVehicleType(vmodel) == "Trailer") then
+		return true
+	end
+	return false
+end
+
 function showVehicleMenu()
 	wRightClick = guiCreateWindow(ax, ay, 150, 200, getVehicleName(vehicle), false)
 	
@@ -60,7 +81,7 @@ function showVehicleMenu()
 		y = y + 0.14
 	end
 
-	if getElementDimension(localPlayer) > 0 or getElementInterior(localPlayer) > 0 then
+	if getElementDimension(localPlayer) > 0 or getElementInterior(localPlayer) > 0 or isNotAllowedV(vehicle) then
 		if getElementData(localPlayer, "job") == 5 or getElementData(localPlayer, "faction") == 30 then -- Mechanic or BTR
 			bFix = guiCreateButton(0.05, y, 0.87, 0.1, "Fix/Upgrade", true, wRightClick)
 			addEventHandler("onClientGUIClick", bFix, openMechanicWindow, false)
