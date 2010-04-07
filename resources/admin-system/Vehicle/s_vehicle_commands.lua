@@ -949,7 +949,7 @@ function setVehTFFaction(thePlayer, commandName, pid, fid)
 						end
 						outputChatBox("Car #" .. ocarid .. " was set from faction '" .. ofaction .. "' to owner '" .. targetPlayerName .. "'.", thePlayer, 0, 255, 0)
 						outputChatBox("Admin " .. username .. " has set your vehicle's owner to you from faction: " .. ofaction .. ".", targetPlayer, 0, 255, 0)
-						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set from faction '" .. ofaction .. "' to owner [Player: " .. targetPlayerName .. "(" .. tnplayer .. ")]." , 9)
+						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set by " .. username .. " from faction '" .. ofaction .. "' to owner [Player: " .. targetPlayerName .. "(" .. tnplayer .. ")]." , 9)
 					elseif (exports.pool:getElement("team", faction)) then
 						for key, value in ipairs(exports.pool:getPoolElementsByType("vehicle")) do
 							if (getElementData(value, "dbid") == getElementData(pv, "dbid")) then
@@ -964,7 +964,7 @@ function setVehTFFaction(thePlayer, commandName, pid, fid)
 						end
 						outputChatBox("Car #" .. ocarid .. " was set to faction '" .. faction .. "' from '" .. ofaction .. "'.", thePlayer, 0, 255, 0)
 						outputChatBox("Admin " .. username .. " has set your vehicle's owner from you to faction '" .. faction .. "'.", targetPlayer, 0, 255, 0)
-						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set to faction '" .. faction .. "' from [Player: " .. oowner .. " Faction: " .. ofaction .. "].", 9)
+						exports.logs:logMessage("[SET FACTION] Car #" .. ocarid .. " was set by " .. username .. " to faction '" .. faction .. "' from [Player: " .. oowner .. " Faction: " .. ofaction .. "].", 9)
 					else
 						outputChatBox("Invalid Faction.", thePlayer, 255, 0, 0)
 					end
