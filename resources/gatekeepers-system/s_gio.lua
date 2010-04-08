@@ -33,7 +33,7 @@ function createGio()
 	
 	exports['anticheat-system']:changeProtectedElementDataEx(giovanna, "rotation", getPedRotation(giovanna), false)
 	exports['anticheat-system']:changeProtectedElementDataEx(giovanna, "name", "Giovanna Remini")
-	exports['anticheat-system']:changeProtectedElementDataEx (tyrese, "activeConvo",  0)
+	exports['anticheat-system']:changeProtectedElementDataEx(giovanna, "activeConvo",  0)
 	exports['anticheat-system']:changeProtectedElementDataEx(giovanna,"talk",true)
 	doneDeals = 0
 	exports['anticheat-system']:changeProtectedElementDataEx( getRootElement( ), "gio.done", 0, false )
