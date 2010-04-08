@@ -8,6 +8,26 @@ mysql = exports.mysql
 -- 4: warn
 -- 5: auto-ban
 
+-- wardrobe temp fix..
+function fixWardrobe(thePlayer)
+	if ( getElementData(thePlayer, "loggedin") == 1 ) then
+		local dimension = getElementDimension(thePlayer)
+		local interior = getElementInterior(thePlayer)
+		
+		if ( dimension == 65025 and interior == 14 ) then
+			setElementPosition(thePlayer, 1520.0029296875, -1701.2421875, 13.546875)
+			setPedRotation(thePlayer, 275.82971191406)
+			setElementDimension(thePlayer, 0)
+			setElementInterior(thePlayer, 0)
+		else
+			outputChatBox("You do not have the wardrobe bug.", thePlayer, 255, 0, 0)
+		end
+	else
+		outputChatBox("You do not have the wardrobe bug.", thePlayer, 255, 0, 0)
+	end
+end
+addCommandHandler("fixwardrobe", fixWardrobe)
+
 --/AUNCUFF
 function adminUncuff(thePlayer, commandName, targetPlayer)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
