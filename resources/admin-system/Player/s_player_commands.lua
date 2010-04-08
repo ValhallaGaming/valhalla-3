@@ -14,7 +14,7 @@ function fixWardrobe(thePlayer)
 		local dimension = getElementDimension(thePlayer)
 		local interior = getElementInterior(thePlayer)
 		
-		if ( dimension == 65025 and interior == 14 ) then
+		if ( interior == 14 ) then
 			setElementPosition(thePlayer, 1520.0029296875, -1701.2421875, 13.546875)
 			setPedRotation(thePlayer, 275.82971191406)
 			setElementDimension(thePlayer, 0)
