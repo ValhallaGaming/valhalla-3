@@ -1302,3 +1302,28 @@ addEventHandler("onPlayerInteriorChange", getRootElement( ),
 		setPedGravity(source, 0)
 	end
 )
+
+function playerKnocking(player)
+	if (player) then
+		local px,py,pz = getElementPosition(player)
+		for i, v in pairs(exports.global:getNearbyElements(player, "pickup", 5)) do
+			if isElement(v) then
+				local mx,my,mz = getElementPosition(v)
+				local dis = getDistanceBetweenPoints3D(px, py, pz, mx, my, mz)
+				local pd = getElementDimension(player)
+				if (dis <= 3) then
+					local dbid, entrance, exit = findProperty(player, getElementData(v, "dbid"))
+					if (exit) and (getElementData(v, "dbid") ~= getElementDimension(player))then
+						exports.global:sendLocalText(player, " *" .. getPlayerName(player):gsub("_"," ") .. " begins to knock on the door.", 255, 51, 102)
+						exports.global:sendLocalText(exit, " * Knocks can be heard coming from the door *	(( " .. getPlayerName(player):gsub("_"," ") .. " ))", 255, 51, 102)
+					end
+				end
+			else
+				outputChatBox("Not an element.", source)
+			end
+		end
+	else
+		outputChatBox("No Source")
+	end
+end
+addCommandHandler("knock", playerKnocking)
