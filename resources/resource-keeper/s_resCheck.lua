@@ -1,0 +1,50 @@
+--Add any resources needing to be checked here
+local mainRes = { "admin-system", "account-system" }
+
+--Sends messages to Head Admins and Scripters
+function displayAdminM(message)
+	for k, arrayPlayer in ipairs(exports.global:getAdmins()) do
+		local logged = getElementData(arrayPlayer, "loggedin")
+		if (logged) then
+			if exports.global:isPlayerHeadAdmin(arrayPlayer) or exports.global:isPlayerScripter(arrayPlayer) then
+				outputChatBox("ResWarn: " .. message, arrayPlayer, 255, 194, 14)
+			end
+		end
+	end
+end
+
+--The magic
+local attempts = { "0", "0" }
+
+function checkRes()
+	for i, res in ipairs(mainRes) do
+		local resName = getResourceFromName(res)
+		if (resName) then
+			local cState = getResourceState(resName)
+			if (cState ~= "running") then
+				displayAdminM("Resource '" .. res .. "' was not running. Attempting to start missing resource.")
+				local startingRes = startResource(resName, true)
+				if (tonumber(attempts[i]) < 4) then
+					if not (startingRes) then
+						displayAdminM("Fail to load Resource '" .. res .. "'.")
+						local nreasonRes = getResourceLoadFailureReason(resName)
+						displayAdminM("Reason: " .. nreasonRes)
+						attempts[i] = attempts[i] + 1
+					else
+						displayAdminM("Resource '" .. res .. "' started successfully.")
+					end
+				end
+			end
+		end
+	end
+	setTimer(checkRes, 1800000, 1)
+end
+addEventHandler("onResourceStart", getRootElement(), checkRes)
+
+function runResCheck(admin, command)
+	if (exports.global:isPlayerHeadAdmin(admin)) then
+		checkRes()
+		outputChatBox("Running Resource Checker.", admin, 0, 255, 0)
+	end
+end
+addCommandHandler("rescheck", runResCheck)
