@@ -42,7 +42,7 @@ end
 addEventHandler("onResourceStart", getRootElement(), checkRes)
 
 function runResCheck(admin, command)
-	if (exports.global:isPlayerHeadAdmin(admin)) then
+	if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
 		checkRes()
 		outputChatBox("Running Resource Checker.", admin, 0, 255, 0)
 	end
