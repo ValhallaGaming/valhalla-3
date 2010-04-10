@@ -2,11 +2,8 @@
 -- Best's Towing & Recovery --
 -------------------------
 
--- Website owner's forum name: livelethal
--- Website owner's Character's name: Patrick Andersson
-------------------------CONTACT FOR ADJUSTMENTS AND BUGS:-----------------------------------
--- Website builder's forum name: Morgfarm1
--- Website builder's Character's name: Dale Greene
+-- Website owner's forum name: morgfarm1
+-- Website owner's Character's name: Dale Greene
 
 function www_beststowing_sa()
 	
@@ -18,7 +15,7 @@ function www_beststowing_sa()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
 	
 	------------
 	-- Header --
@@ -27,9 +24,9 @@ function www_beststowing_sa()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -38,8 +35,9 @@ function www_beststowing_sa()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -48,8 +46,9 @@ function www_beststowing_sa()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -58,10 +57,11 @@ function www_beststowing_sa()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -77,11 +77,11 @@ function www_beststowing_sa()
 
 	-- Left Column
 	------------- Latest News -------------
-	local top_story_image = guiCreateStaticImage(95,90,280,189,"websites/images/towtruck.png",false,bg)
+	local top_story_image = guiCreateStaticImage(110,90,280,189,"websites/images/towtruck.png",false,bg)
 	local top_story_mask_t = guiCreateStaticImage(5,112,450,5,"websites/colours/1.png",false,bg)
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
-	local latest_news_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local latest_news_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local latest_news_title = guiCreateLabel(10,92,450,20,"Welcome to BT&R!",false,bg)
 	guiSetFont(latest_news_title,"default-bold-small")
 	
@@ -99,7 +99,7 @@ function www_beststowing_sa()
 	guiLabelSetHorizontalAlign(top_story_summary,"left",true)
 	
 	------------- Other News -------------
-	local other_news_header_bg = guiCreateStaticImage(0,360,455,22,"websites/colours/0.png",false,bg)
+	local other_news_header_bg = guiCreateStaticImage(0,360,455,22,"websites/colours/1.png",false,bg)
 	local other_news_title = guiCreateLabel(10,362,450,20,"More Information",false,bg)
 	guiSetFont(other_news_title,"default-bold-small")
 	
@@ -122,7 +122,7 @@ function www_beststowing_sa()
 	
 	-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -163,14 +163,23 @@ function www_beststowing_sa()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
 				get_page(url)
 			end,false)
 			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
+				get_page(url)
+			end,false)
+	
 	------------
 	-- Footer --
 	------------
@@ -206,7 +215,7 @@ function www_beststowing_sa_aboutus()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
 	
 	------------
 	-- Header --
@@ -215,9 +224,9 @@ function www_beststowing_sa_aboutus()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -226,8 +235,9 @@ function www_beststowing_sa_aboutus()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -236,8 +246,9 @@ function www_beststowing_sa_aboutus()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -246,10 +257,11 @@ function www_beststowing_sa_aboutus()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -269,7 +281,7 @@ function www_beststowing_sa_aboutus()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"About Best's Towing & Recovery",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
@@ -281,9 +293,9 @@ function www_beststowing_sa_aboutus()
 	guiLabelSetHorizontalAlign(article,"left",true)
 
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -324,11 +336,20 @@ function www_beststowing_sa_aboutus()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
+				get_page(url)
+			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
 				get_page(url)
 			end,false)
 			
@@ -365,7 +386,12 @@ function www_beststowing_sa_jobs()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -374,9 +400,9 @@ function www_beststowing_sa_jobs()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -385,8 +411,9 @@ function www_beststowing_sa_jobs()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -395,8 +422,9 @@ function www_beststowing_sa_jobs()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -405,10 +433,11 @@ function www_beststowing_sa_jobs()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -428,7 +457,7 @@ function www_beststowing_sa_jobs()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"Employment at BT&R",false,bg)
 	guiSetFont(title,"default-bold-small")
 
@@ -437,13 +466,13 @@ function www_beststowing_sa_jobs()
 	You must also know the rules of the road, as stated in the 'Los Santos Highway Code' Driver's manual. A criminal History may or may not be a factor in your potential hiring, but is always considered.\
 	To Apply,Visit the 'Apply at BT&R' Section of this website. Please leave your name, daytime and night time phone numbers, and Reasons why you think\
 	You should be considered for work at Best's Towing and Revcovery.\
-	All necesarry questions are on the page.",false,bg)
+	All necesarry questions are on the page (( watch the forums out-of-game )).",false,bg)
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -484,11 +513,20 @@ function www_beststowing_sa_jobs()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
+				get_page(url)
+			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
 				get_page(url)
 			end,false)
 			
@@ -524,7 +562,12 @@ function www_beststowing_sa_999()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -533,9 +576,9 @@ function www_beststowing_sa_999()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -544,8 +587,9 @@ function www_beststowing_sa_999()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -554,8 +598,9 @@ function www_beststowing_sa_999()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -564,10 +609,11 @@ function www_beststowing_sa_999()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -587,7 +633,7 @@ function www_beststowing_sa_999()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"Proper Use of 999",false,bg)
 	guiSetFont(title,"default-bold-small")
 
@@ -598,9 +644,9 @@ function www_beststowing_sa_999()
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -641,11 +687,20 @@ function www_beststowing_sa_999()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
+				get_page(url)
+			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
 				get_page(url)
 			end,false)
 			
@@ -681,7 +736,12 @@ function www_beststowing_sa_report()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -690,9 +750,9 @@ function www_beststowing_sa_report()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -701,8 +761,9 @@ function www_beststowing_sa_report()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -711,8 +772,9 @@ function www_beststowing_sa_report()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -721,10 +783,11 @@ function www_beststowing_sa_report()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -744,7 +807,7 @@ function www_beststowing_sa_report()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"About Best's Towing & Recovery",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
@@ -754,9 +817,9 @@ function www_beststowing_sa_report()
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -797,11 +860,20 @@ function www_beststowing_sa_report()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
+				get_page(url)
+			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
 				get_page(url)
 			end,false)
 			
@@ -837,7 +909,12 @@ function www_beststowing_sa_services()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -846,9 +923,9 @@ function www_beststowing_sa_services()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -857,8 +934,9 @@ function www_beststowing_sa_services()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -867,8 +945,9 @@ function www_beststowing_sa_services()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -877,10 +956,11 @@ function www_beststowing_sa_services()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -900,7 +980,7 @@ function www_beststowing_sa_services()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"BT&R Services",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
@@ -922,16 +1002,16 @@ function www_beststowing_sa_services()
 	SPECIAL NOTICE: Any and all Special paint jobs have a minimum charge of $7800, INCLUDING THE REMOVAL OF SUCH PAINT JOBS.\
 	A Special paint job change with a regular paint change (( Changes the tone and appearance of the skin )) will cost between $7900 and $8000, No exceptions.\
 	\
-	Towing: We have no set price for the towing or the recovery of wrecked cars. However, if we have to travel long distances, you may be charged a fee to travel to, repair and right your vehicle."
+	Towing: There may be a $50 towing charge to Unity Garage."
 	,false,bg)
 	
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -972,14 +1052,23 @@ function www_beststowing_sa_services()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
 				get_page(url)
 			end,false)
 			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
+				get_page(url)
+			end,false)
+	end		
 	------------
 	-- Footer --
 	------------
@@ -989,7 +1078,7 @@ function www_beststowing_sa_services()
 	guiSetFont(footer_text,"default-small")
 	
 	local copyright = guiCreateStaticImage(38,739,12,12,"websites/images/copyright.png",false,bg)
-end
+	
 ----------------------------------------------------------------------
 
 -- Contact
@@ -1004,18 +1093,19 @@ function www_beststowing_sa_contact()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
 	
 	------------
 	-- Header --
 	------------
 	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
+	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -1024,8 +1114,9 @@ function www_beststowing_sa_contact()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -1034,8 +1125,9 @@ function www_beststowing_sa_contact()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -1044,10 +1136,11 @@ function www_beststowing_sa_contact()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -1067,24 +1160,25 @@ function www_beststowing_sa_contact()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"Contact",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
 	-- Text
 	local article =  guiCreateLabel(10,318,440,410,"How to Contact the Bosses of BT&R:\
-	Owner/CEO Patrick Andersson: P.Andersson@btr.sa\
-	Head Driver Dale Greene: email D.Greene@btr.sa\
-	Head Driver James Fields: email J.Fields@btr.sa\
-	Lead Driver Rachel Wood: No contact information at this time"
+	Owner & CEO Dale Greene: D.Greene@btr.sa\
+	Assistant CEO James Fields: J.Fields@btr.sa\
+	Supervisor Ashley Greene: No Contact information at this time\
+	Supervisor Rachel Wood: No Contact information at this time\
+	Team Leader Junior Alvarez: No contact information at this time"
  	,false,bg)
  	
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -1125,14 +1219,23 @@ function www_beststowing_sa_contact()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
 				get_page(url)
 			end,false)
 			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
+				get_page(url)
+			end,false)
+	end		
 	------------
 	-- Footer --
 	------------
@@ -1142,7 +1245,7 @@ function www_beststowing_sa_contact()
 	guiSetFont(footer_text,"default-small")
 	
 	local copyright = guiCreateStaticImage(38,739,12,12,"websites/images/copyright.png",false,bg)
-end
+	
 ----------------------------------------------------------------------
 
 -- Drivers
@@ -1156,7 +1259,12 @@ function www_beststowing_sa_drivers()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -1165,9 +1273,9 @@ function www_beststowing_sa_drivers()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -1176,8 +1284,9 @@ function www_beststowing_sa_drivers()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -1186,8 +1295,9 @@ function www_beststowing_sa_drivers()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -1196,10 +1306,11 @@ function www_beststowing_sa_drivers()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -1219,25 +1330,25 @@ function www_beststowing_sa_drivers()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"The Bosses of BT&R",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
 	-- Text
-	local article =  guiCreateLabel(10,318,440,410,"Owner & CEO: Patrick Andersson\
-	Head Driver: Dale Greene\
-	Co-Head Driver: James Fields\
-	Lead Driver: Rachel Wood\
-	Training Division (Experimental Division):Ashley Greene, Jimmy Queen"
+	local article =  guiCreateLabel(10,318,440,410,"Owner & CEO: Dale Greene\
+	Assistant CEO: James Fields\
+	Supervisor: Rachel Wood\
+	Supervisor: Ashley Greene\
+	Team Leader: Junior Alvarez"
 	,false,bg)
 	
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -1278,18 +1389,32 @@ function www_beststowing_sa_drivers()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
 				get_page(url)
 			end,false)
-				
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
+				get_page(url)
+			end,false)
+	end			
 	------------
 	-- Footer --
 	------------
-end
+		local footer_bg = guiCreateStaticImage(0,725,660,40,"websites/colours/6.png",false,bg)
+	local footer_text = guiCreateLabel(14,739,254,14,"BTR       2010 Best's Towing & Recovery",false,bg)
+	guiSetFont(footer_text,"default-small")
+	
+	local copyright = guiCreateStaticImage(38,739,12,12,"websites/images/copyright.png",false,bg)
+---------------------------------------------------------------------------------------------------------------
 	
 -- Apply Part 1
 function www_beststowing_sa_apply()
@@ -1302,7 +1427,12 @@ function www_beststowing_sa_apply()
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
+	
+	------------
+	-- Header --
+	------------
+	local btr_logo = guiCreateStaticImage(5,0,659,73,"websites/images/btr-logo.png",false,bg)
 	
 	------------
 	-- Header --
@@ -1311,9 +1441,9 @@ function www_beststowing_sa_apply()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -1322,8 +1452,9 @@ function www_beststowing_sa_apply()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -1332,8 +1463,9 @@ function www_beststowing_sa_apply()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -1342,10 +1474,11 @@ function www_beststowing_sa_apply()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -1365,46 +1498,22 @@ function www_beststowing_sa_apply()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
 	local title = guiCreateLabel(10,92,450,20,"Part 1 - IC Section",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
 	-- Text
-	local article =  guiCreateMemo(10,318,440,375,"To Apply at Best's Towing & Recovery, Please answer these questions HONESTLY AND COMPLETELY.\
-	Your Name:\
-	Age:\
-	Daytime & Nighttime Phone number(s):\
-	Address (If Available):\
-	Native Language:\
-	Past Employment:\
-	Reasons for quitting and or Firing:\
-	Past Experience in Auto Mechanics?\
-	Ever Been Employed Here before?\
-	Currently Employed?\
-	\
-	May we run a criminal background check and or a drug screening? (Are usually random):\
-	Have you been convicted of a Felony or major crimes?:\
-	If yes to the previous question, explain:\
-	(( Copy and paste this page after filling in answers,)) Foreward to: D.Greene@btr.sa with 'BT&R Application, Part 1' in the subject line."
+	local article =  guiCreateLabel(10,318,440,375,"(( Use the forums at www.valhallagaming.net, Go to the MTA Section>Legal Factions> Best's Towing & Recovery ))"
 	,false,bg)
 	
-	-- Page 2 Link
-	local continue_link = guiCreateLabel(10,690,440,16,"Continue to Page 2",false,bg)
-	guiLabelSetColor(continue_link,38,38,38)
-	guiSetFont(continue_link,"default-bold-small")
-	guiLabelSetHorizontalAlign(continue_link,"right")
-	addEventHandler("onClientGUIClick",continue_link,function()
-		local url = tostring("www.beststowing.sa/apply_2")
-		get_page(url)
-	end,false)
-	
+		
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -1445,13 +1554,23 @@ function www_beststowing_sa_apply()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
 				get_page(url)
 			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
+				get_page(url)
+			end,false)
+	end		
 			
 	------------
 	-- Footer --
@@ -1462,20 +1581,21 @@ function www_beststowing_sa_apply()
 	guiSetFont(footer_text,"default-small")
 	
 	local copyright = guiCreateStaticImage(38,739,12,12,"websites/images/copyright.png",false,bg)
-end
---------------------------------------------------------------------------------------------------------
--- Apply Part 2
-function www_beststowing_sa_apply_2()
+		
+------------------------------------------------------------------------------------------------------
+---Mechanics-------------------------------------------------------------------------------------------------
 
+function www_beststowing_sa_mechanics()
+	
 	-- Webpage Properties
 	---------------------
 	local page_length = 764
-	guiSetText(internet_address_label, "Best's Towing & Recovery - Applications Part 2 (Beta)")
-	guiSetText(address_bar,"www.beststowing.sa/apply_2")
+	guiSetText(internet_address_label, "Best's Towing & Recovery - Mechanics Division")
+	guiSetText(address_bar,"www.beststowing.sa/mechanics")
 	
 	-- Page Background Colour
 	-------------------------
-	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/44.png",false,internet_pane)
+	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/53.png",false,internet_pane)
 	
 	------------
 	-- Header --
@@ -1484,9 +1604,9 @@ function www_beststowing_sa_apply_2()
 	
 	-- Nav Links
 		-- Home
-		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/0.png",false,bg)
+		local news_link_bg = guiCreateStaticImage(369,49,62,22,"websites/colours/1.png",false,bg)
 		local news_link = guiCreateLabel(369,52,62,22,"Home",false,bg)
-		guiLabelSetColor(news_link,132,5,16)
+		guiLabelSetColor(news_link,0,0,192)
 		guiSetFont(news_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(news_link,"center")
 		addEventHandler("onClientGUIClick",news_link,function()
@@ -1495,8 +1615,9 @@ function www_beststowing_sa_apply_2()
 		end,false)
 	
 		-- Info
-		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local jobs_link_bg = guiCreateStaticImage(443,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local jobs_link = guiCreateLabel(443,52,62,22,"Services",false,bg)
+		guiLabelSetColor(jobs_link,0,0,192)
 		guiSetFont(jobs_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(jobs_link,"center")
 		addEventHandler("onClientGUIClick",jobs_link,function()
@@ -1505,8 +1626,9 @@ function www_beststowing_sa_apply_2()
 		end,false)
 		
 		-- Drivers
-		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/0.png",false,btr_logo)
+		local places_link_bg = guiCreateStaticImage(517,49,62,22,"websites/colours/1.png",false,btr_logo)
 		local places_link = guiCreateLabel(517,52,62,22,"Drivers",false,bg)
+		guiLabelSetColor(places_link,0,0,192)
 		guiSetFont(places_link,"default-bold-small")
 		guiLabelSetHorizontalAlign(places_link,"center")
 		addEventHandler("onClientGUIClick",places_link,function()
@@ -1515,10 +1637,11 @@ function www_beststowing_sa_apply_2()
 		end,false)
 		
 		-- 
-		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/0.png",false,btr_logo)
-		local corporate_link = guiCreateLabel(599,52,62,22,"Contact",false,bg)
+		local corporate_link_bg = guiCreateStaticImage(599,49,62,22,"websites/colours/1.png",false,btr_logo)
+		local corporate_link = guiCreateLabel(610,52,62,22,"Contact",false,bg)
+		guiLabelSetColor(corporate_link,0,0,192)
 		guiSetFont(corporate_link,"default-bold-small")
-		guiLabelSetHorizontalAlign(corporate_link,"center")
+		guiLabelSetHorizontalAlign(corperate_link,"center")
 		addEventHandler("onClientGUIClick",corporate_link,function()
 			local url = tostring("www.beststowing.sa/contact")
 			get_page(url)
@@ -1538,39 +1661,25 @@ function www_beststowing_sa_apply_2()
 	local top_story_mask_b = guiCreateStaticImage(5,290,450,26,"websites/colours/1.png",false,bg)
 	
 	-- Title
-	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/0.png",false,bg)
-	local title = guiCreateLabel(10,92,450,20,"Application - Part 2",false,bg)
+	local title_header_bg = guiCreateStaticImage(0,90,455,22,"websites/colours/1.png",false,bg)
+	local title = guiCreateLabel(10,92,450,20,"About Best's Towing & Recovery",false,bg)
 	guiSetFont(title,"default-bold-small")
 	
 	-- Text
-	local article =  guiCreateMemo(10,318,440,410,"Part 2 - OOC Section\
-	RL Age:\
-	Gender:\
-	Timezone:\
-	Game Activity (average hours/day):\
-	Forums Activity:\
-	Any Admin jails, kicks or warnings? if so, state Why:\
-	Why Do you want to Join BT&R? (Long answer):\
-	Do you know and understand fully and completly the server rules?:\
-	\
-	YOU ARE BOUND BY FACTION RULES ONCE ACCPTED, THIS MEANS:\
-	Absolutly NO Alts\
-	You are not allowed to tow any vehicle that is parked legally\
-	You may not /park a towtruck FOR ANY REASON unless otherwise stated by a BT&R leader\
-	You are to be courteous and respect all other players and BT&R members\
-	\
-	NOTICE: WE MAY AND PROBABLY WILL CHECK YOUR ADMINISTRATOR RECORDS, DONT FUDGE THEM HERE!\
-	By Submitting this application, you understand and agree to the faction rules, and if the rules are violated, you realize you can and likely will be kicked from the BT&R faction\
-	(( Copy and paste this page after filling in answers,)) Foreward to: D.Greene@btr.sa with 'BT&R Application, Part 2' in the subject line."
+	local article =  guiCreateLabel(10,318,440,410,"After the BT&R Mechanics Division died just prior to the transfer of ownership from Hans Vanderburg to Nicky Corozzo,\
+	The BT&R Mechanics Team was dissolved and those members became Towtruck Drivers. Due to more and more repair service calls, We are happy to announce the return of the BT&R\
+	Mechanic Team. You do nothing different to contact our mechanics; Call 999, state you need a repair, and a service truck will come examine your vehicle.\
+	If the damage is to heavy to drive, Contact a towtruck and the towtruck will take you to the Unity Repair Center for service where a mechanic will be waiting, you can then drop\
+	off your vehicle while its being fixed and pick it up when its finished."
 	,false,bg)
 	
 	guiLabelSetColor(article,38,38,38)
 	guiLabelSetHorizontalAlign(article,"left",true)
 
 	
-	-- Right Column
+-- Right Column
 	--------------------------- Top Links ---------------------------
-	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/0.png",false,bg)
+	local top_links_header_bg = guiCreateStaticImage(465,90,195,22,"websites/colours/1.png",false,bg)
 	local top_links_title = guiCreateLabel(480,92,180,20,"More Information",false,bg)
 	guiSetFont(top_links_title,"default-bold-small")
 		
@@ -1611,11 +1720,20 @@ function www_beststowing_sa_apply_2()
 			end,false)
 			
 			-- Applications
-		local top_link_1_bp = guiCreateStaticImage(474,121,6,6,"websites/images/dots/black_dot.png",false,bg)
-		local top_link_1 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
-		guiLabelSetColor(top_link_1,38,38,38)
-		addEventHandler("onClientGUIClick",top_link_1,function()
+		local top_link_5_bp = guiCreateStaticImage(474,185,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_5 = guiCreateLabel(490,178,142,16,"Apply at BT&R",false,bg)
+		guiLabelSetColor(top_link_5,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_5,function()
 				local url = tostring("www.beststowing.sa/apply")
+				get_page(url)
+			end,false)
+			
+			-- Mechanics Division
+		local top_link_6_bp = guiCreateStaticImage(474,201,6,6,"websites/images/dots/black_dot.png",false,bg)
+		local top_link_6 = guiCreateLabel(490,194,142,16,"BT&R's Mechanics Division",false,bg)
+		guiLabelSetColor(top_link_6,38,38,38)
+		addEventHandler("onClientGUIClick",top_link_6,function()
+				local url = tostring("www.beststowing.sa/mechanics")
 				get_page(url)
 			end,false)
 			
@@ -1628,7 +1746,6 @@ function www_beststowing_sa_apply_2()
 	guiSetFont(footer_text,"default-small")
 	
 	local copyright = guiCreateStaticImage(38,739,12,12,"websites/images/copyright.png",false,bg)
---------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------	
 	if(page_length>=397)then
 		guiScrollPaneSetScrollBars(internet_pane,false,true)
