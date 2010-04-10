@@ -121,7 +121,7 @@ addEventHandler( "updateReportsCount", localPlayer,
 addEventHandler( "onClientPlayerQuit", getRootElement(), updateGUI )
 
 function drawText ( )
-	if show then
+	if show and ( getPedWeapon( localPlayer ) ~= 43 or not getControlState( "aim_weapon" ) ) then
 		local color
 		--if ondutystatus then
 			color = tocolor ( 255, 255, 255, 255 )
