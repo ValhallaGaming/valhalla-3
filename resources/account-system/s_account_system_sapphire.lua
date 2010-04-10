@@ -683,6 +683,8 @@ function loginPlayer(username, password, operatingsystem)
 			local warns = tonumber(data["warns"])
 			local chatbubbles = tonumber(data["chatbubbles"])
 			local appstate = tonumber(data["appstate"])
+			local liveusername = data["liveusername"]
+			local steamusername = data["steamusername"]
 			
 			if ( admin <= 0 and hasBeta[source] and not exports.global:isPlayerScripter( username ) ) then -- non admin with beta? ban
 				exports.global:sendMessageToAdmins("[AdmWarn] " .. getPlayerName(source) .. " was banned for running a hacked Sapphire Beta.")
@@ -699,6 +701,14 @@ function loginPlayer(username, password, operatingsystem)
 			if tonumber(admin) == 0 then
 				adminduty = 0
 				hiddenadmin = 0
+			end
+			
+			if ( liveusername ~= mysql_null() and hasBeta[source] ) then
+				callRemote("http://valhallagaming.net/mtaucp/mta/lookup_live.php", xboxReturnExisting, tostring(liveusername), source)
+			end
+			
+			if ( steamusername ~= mysql_null() and hasBeta[source] ) then
+				callRemote("http://valhallagaming.net/mtaucp/mta/lookup_steam.php", steamReturnExisting, tostring(steamusername), source)
 			end
 			
 			if donator > 0 then -- check if they're a donator
@@ -1321,3 +1331,102 @@ function updateEditedCharacter(charname, height, weight, age, description)
 end
 addEvent("updateEditedCharacter", true)
 addEventHandler("updateEditedCharacter", getRootElement(), updateEditedCharacter)
+
+
+---------------------------------
+-- XBOX LIVE LOOKUPS
+---------------------------------
+function xboxReturn(result, player, gamertag, status, activity, lastgame, level )
+	local result = tonumber(result)
+	if ( result == 0 ) then
+		if ( isElement(player) ) then
+			triggerClientEvent(player, "CxboxFail", player)
+		end
+	else
+		if ( isElement(player) ) then
+			-- sql update
+			mysql:query_free("UPDATE accounts SET liveusername='" .. mysql:escape_string(gamertag) .. "' WHERE username='" .. getElementData(player, "gameaccountusername") .. "' LIMIT 1")
+			triggerClientEvent(player, "CxboxSuccess", player, gamertag, status, activity, lastgame, level)
+		end
+	end
+end
+
+function xboxReturnExisting(result, player, gamertag, status, activity, lastgame, level )
+	local result = tonumber(result)
+
+	if ( result == 0 ) then
+		if ( isElement(player) ) then
+			mysql:query_free("UPDATE accounts SET liveusername=NULL WHERE username='" .. getElementData(player, "gameaccountusername") .. "' LIMIT 1")
+		end
+	else
+		if ( isElement(player) ) then
+			triggerClientEvent(player, "CxboxSuccess", player, gamertag, status, activity, lastgame, level)
+		end
+	end
+end
+
+function updateAccountXbox(username)
+	callRemote("http://valhallagaming.net/mtaucp/mta/lookup_live.php", xboxReturn, username, source)
+end
+addEvent("SupdateXbox", true)
+addEventHandler("SupdateXbox", getRootElement(), updateAccountXbox)
+
+
+---------------------------------
+-- STEAM LOOKUPS
+---------------------------------
+-- STATES:
+-- 0 = Service Unavailable
+-- 1 = Invalid Username
+-- 2 = OK, but profile is private
+-- 3 = OK
+function steamReturn(result, player, name, nickname, online, state, game, timeplayed)
+	local result = tonumber(result)
+	if ( result == 0 ) then
+		if ( isElement(player) ) then
+			triggerClientEvent(player, "CsteamDown", player)
+		end
+	elseif ( result == 1 ) then
+		if ( isElement(player) ) then
+			triggerClientEvent(player, "CsteamFail", player)
+		end
+	else
+		if ( isElement(player) ) then
+			-- sql update
+			mysql:query_free("UPDATE accounts SET steamusername='" .. mysql:escape_string(name) .. "' WHERE username='" .. getElementData(player, "gameaccountusername") .. "' LIMIT 1")
+			
+			if ( result == 3 ) then
+				triggerClientEvent(player, "CsteamSuccess", player, name, nickname, online, state, game, timeplayed)
+			else
+				triggerClientEvent(player, "CsteamSuccess", player, name, nickname, online)
+			end
+		end
+	end
+end
+
+function steamReturnExisting(result, player, name, nickname, online, state, game, timeplayed)
+	local result = tonumber(result)
+	if ( result == 0 ) then
+		if ( isElement(player) ) then
+			triggerClientEvent(player, "CsteamDown", player)
+		end
+	elseif ( result == 1 ) then
+		if ( isElement(player) ) then
+			mysql:query_free("UPDATE accounts SET steamusername=NULL WHERE username='" .. getElementData(player, "gameaccountusername") .. "' LIMIT 1")
+		end
+	else
+		if ( isElement(player) ) then
+			if ( result == 3 ) then
+				triggerClientEvent(player, "CsteamSuccess", player, name, nickname, online, state, game, timeplayed)
+			else
+				triggerClientEvent(player, "CsteamSuccess", player, name, nickname, online)
+			end
+		end
+	end
+end
+
+function updateAccountSteam(username)
+	callRemote("http://valhallagaming.net/mtaucp/mta/lookup_steam.php", steamReturn, username, source)
+end
+addEvent("SupdateSteam", true)
+addEventHandler("SupdateSteam", getRootElement(), updateAccountSteam)

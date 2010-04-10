@@ -1,5 +1,6 @@
-local version = "0.1"
+local version = "0.2"
 local motd = ""
+local canScroll = true
 
 function saveMOTD(theMOTD)
 	motd = theMOTD
@@ -637,8 +638,11 @@ end
 -- 4 = LOGIN FILE MODIFIED EXTERNALLY
 -- 5 = LOGIN FILE DOES NOT BELONG TO THIS PC
 -- 6 = LOGIN FILE EXPIRED
+-- 7 = INVALID LIVE ACCOUNT
 errorTimer = nil
-function showError(errorCode)
+errorCode = 0
+function showError(theErrorCode)
+	errorCode = theErrorCode
 	if (errorCode == 1) then -- wrong pw
 		errorMsg = "Invalid Username or Password"
 		errorMsgx, errorMsgy = guiGetPosition(tUsername, false)
@@ -681,6 +685,45 @@ function showError(errorCode)
 		errorMsgx = errorMsgx + (width * 2.5)
 		toggleLoginVisibility(true)
 		state = 0
+	elseif (errorCode == 7) then
+		errorMsg = "Invalid Live Username"
+		local cx = mainMenuItems[accountID].cx
+		errorMsgx = cx + (xoffset/1.5)
+		
+		for k = 1, #tAccount do
+			local title = tAccount[k].title
+			
+			if ( title == "Xbox Live® Account" ) then
+				hideXbox()
+				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
+			end
+		end
+	elseif (errorCode == 8) then
+		errorMsg = "Invalid Steam Username"
+		local cx = mainMenuItems[accountID].cx
+		errorMsgx = cx + (xoffset/1.5)
+		
+		for k = 1, #tAccount do
+			local title = tAccount[k].title
+			
+			if ( title == "Steam® Account" ) then
+				hideSteam()
+				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
+			end
+		end
+	elseif (errorCode == 9) then
+		errorMsg = "Service Unavailable"
+		local cx = mainMenuItems[accountID].cx
+		errorMsgx = cx + (xoffset/1.5)
+		
+		for k = 1, #tAccount do
+			local title = tAccount[k].title
+			
+			if ( title == "Steam® Account" ) then
+				hideSteam()
+				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
+			end
+		end
 	end
 	
 	playSoundFrontEnd(4)
@@ -699,7 +742,7 @@ end
 
 keyTimer = nil
 function moveRight()
-	if ( round(mainMenuItems[#mainMenuItems].tx, -1) > initX ) then -- can move left
+	if ( round(mainMenuItems[#mainMenuItems].tx, -1) > initX and canScroll) then -- can move left
 		for i = 1, #mainMenuItems do
 			mainMenuItems[i].tx = mainMenuItems[i].tx - xoffset
 			
@@ -714,11 +757,13 @@ function moveRight()
 		end
 		keyTimer = setTimer(checkKeyState, 400, 1, "arrow_r")
 		lastKey = 1
+		
+		checkForInvalidErrors()
 	end
 end
 
 function moveLeft()
-	if ( mainMenuItems[1].tx < initX) then -- can move left
+	if ( mainMenuItems[1].tx < initX and canScroll) then -- can move left
 		lastItemAlpha = 1.0
 		for i = 1, #mainMenuItems do
 			mainMenuItems[i].tx = mainMenuItems[i].tx + xoffset
@@ -736,13 +781,15 @@ function moveLeft()
 		
 		keyTimer = setTimer(checkKeyState, 400, 1, "arrow_l")
 		lastKey = 2
+		
+		checkForInvalidErrors()
 	end
 end
 
 function moveDown()
 	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
 	local t = items[ currentItem ]
-	if t then
+	if t and canScroll then
 		if ( math.ceil( t[#t].ty ) > math.ceil(initY + yoffset + 40) ) then -- can move down
 			lastItemAlpha = 1.0
 			for i = 1, #t do
@@ -760,6 +807,8 @@ function moveDown()
 			end
 			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_d")
 			lastKey = 3
+			
+			checkForInvalidErrors()
 		end
 	end
 end
@@ -768,10 +817,21 @@ function isLoggedIn()
 	return getElementData(getLocalPlayer(), "loggedin") == 1
 end
 
+function checkForInvalidErrors()
+	-- update error message which shouldnt show on move
+	if ( errorCode == 7 ) then
+		if (isTimer(errorTimer)) then
+			killTimer(errorTimer)
+		end
+		errorCode = 0
+		errorMsg = nil
+	end
+end
+
 function moveUp()
 	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
 	local t = items[ currentItem ]
-	if t then
+	if t and canScroll then
 		if ( math.ceil( t[1].ty ) < math.ceil(initY + yoffset + 40) ) then -- can move up
 			local selIndex = nil
 			for k = 1, #t do
@@ -792,7 +852,10 @@ function moveUp()
 			end
 			keyTimer = setTimer(checkKeyState, 200, 1, "arrow_u")
 			lastKey = 4
+			
+			checkForInvalidErrors()
 		end
+
 	end
 end
 
@@ -811,6 +874,18 @@ function checkKeyState(key)
 		keyTimer = nil
 	end
 end
+
+-- XBOX LIVE
+local tXboxUsername = nil
+local bXboxUpdate = nil
+local bXboxCancel = nil
+local xboxUsername = nil
+
+-- STEAM
+local tSteamUsername = nil
+local bSteamUpdate = nil
+local bSteamCancel = nil
+local steamUsername = nil
 
 local currentCharacterID = nil
 function selectItemFromVerticalMenu()
@@ -847,6 +922,7 @@ function selectItemFromVerticalMenu()
 			local i = #tAccount - (k - 1)
 			if ( round(tAccount[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
 				local title = tAccount[k].title
+				local stateAccount = tAccount[k].state
 				
 				if ( title == "Revert to Pre-Beta" ) then -- leave the beta
 					local xml = xmlLoadFile("sapphirebeta.xml")
@@ -855,6 +931,57 @@ function selectItemFromVerticalMenu()
 					xmlSaveFile(xml)
 					xmlUnloadFile(xml)
 					triggerServerEvent("acceptBeta", getLocalPlayer())
+					
+				elseif ( title == "Xbox Live® Account" and stateAccount == 0 ) then
+					local cx = mainMenuItems[accountID].cx + 30
+					
+					local text = "Xbox Live Username"
+					if (xboxUsername ~= nil) then
+						text = xboxUsername
+					end
+					
+					tXboxUsername = guiCreateEdit(cx, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 15, 150, 17, text, false)
+					guiSetFont(tXboxUsername, "default-bold-small")
+					guiEditSetMaxLength(tXboxUsername, 20)
+					
+					bXboxUpdate = guiCreateButton(cx, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40, 75, 17, "Update", false)
+					guiSetFont(bXboxUpdate, "default-bold-small")
+					addEventHandler("onClientGUIClick", bXboxUpdate, updateXbox, false)
+					
+					bXboxCancel = guiCreateButton(cx + 80, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40, 75, 17, "Cancel", false)
+					guiSetFont(bXboxCancel, "default-bold-small")
+					addEventHandler("onClientGUIClick", bXboxCancel, cancelXbox, false)
+					
+					showCursor(true)
+					guiSetInputEnabled(true)
+					
+					tAccount[k].state = 1
+					canScroll = false
+				elseif ( title == "Steam® Account" and stateAccount == 0 ) then
+					local cx = mainMenuItems[accountID].cx + 30
+					
+					local text = "Steam Community Name"
+					if (steamUsername ~= nil) then
+						text = steamUsername
+					end
+					
+					tSteamUsername = guiCreateEdit(cx, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 15, 150, 17, text, false)
+					guiSetFont(tSteamUsername, "default-bold-small")
+					guiEditSetMaxLength(tSteamUsername, 20)
+					
+					bSteamUpdate = guiCreateButton(cx, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40, 75, 17, "Update", false)
+					guiSetFont(bSteamUpdate, "default-bold-small")
+					addEventHandler("onClientGUIClick", bSteamUpdate, updateSteam, false)
+					
+					bSteamCancel = guiCreateButton(cx + 80, tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40, 75, 17, "Cancel", false)
+					guiSetFont(bXboxCancel, "default-bold-small")
+					addEventHandler("onClientGUIClick", bSteamCancel, cancelSteam, false)
+					
+					showCursor(true)
+					guiSetInputEnabled(true)
+					
+					tAccount[k].state = 1
+					canScroll = false
 				end
 				break
 			end
@@ -877,6 +1004,187 @@ function selectItemFromVerticalMenu()
 	end
 end
 
+function updateXbox(button, state)
+	if ( button == "left" ) then
+		guiSetEnabled(tXboxUsername, false)
+		guiSetEnabled(bXboxUpdate, false)
+		guiSetEnabled(bXboxCancel, false)
+		
+		-- update our state
+		for k = 1, #tAccount do
+			local title = tAccount[k].title
+			
+			if ( title == "Xbox Live® Account" ) then
+				tAccount[k].state = 2
+			end
+		end
+		
+		triggerServerEvent("SupdateXbox", getLocalPlayer(), guiGetText(tXboxUsername))
+		
+		local x, y = getCursorPosition()
+		setCursorPosition(x+50, y+50)
+		showCursor(false)
+		guiSetInputEnabled(false)
+	end
+end
+
+function xboxSuccessfulUpdate(gamertag, status, activity, lastgame, level)
+	for k = 1, #tAccount do
+		local title = tAccount[k].title
+		
+		if ( title == "Xbox Live® Account" ) then
+			if ( lastgame == nil ) then
+				lastgame = "None"
+			end
+			
+			if ( activity == "" ) then
+				activity = "Never Seen"
+			end
+		
+			xboxUsername = gamertag
+			tAccount[k].text = gamertag .. " (" .. status .. " - " .. level .. ")\nActivity: " .. tostring(activity) .. "\nLast Game Played: " .. tostring(lastgame)
+			tAccount[k].state = 0
+			
+			if ( isElement(tXboxUsername) ) then
+				hideXbox()
+			end
+		end
+	end
+end
+addEvent("CxboxSuccess", true)
+addEventHandler("CxboxSuccess", getLocalPlayer(), xboxSuccessfulUpdate)
+
+function xboxFailedUpdate()
+	showError(7)
+end
+addEvent("CxboxFail", true)
+addEventHandler("CxboxFail", getLocalPlayer(), xboxFailedUpdate)
+
+function cancelXbox(button, state)
+	if ( button == "left" ) then
+		hideXbox()
+	end
+end
+
+function hideXbox()
+	destroyElement(tXboxUsername)
+	tXboxUsername = nil
+	
+	destroyElement(bXboxUpdate)
+	bXboxUpdate = nil
+	
+	destroyElement(bXboxCancel)
+	bXboxCancel = nil
+	
+	canScroll = true
+	
+	-- reset our state
+	for k = 1, #tAccount do
+		local title = tAccount[k].title
+		
+		if ( title == "Xbox Live® Account" ) then
+			tAccount[k].state = 0
+		end
+	end
+	
+	showCursor(false)
+	guiSetInputEnabled(false)
+end
+
+-- STEAM
+function updateSteam(button, state)
+	if ( button == "left" ) then
+		guiSetEnabled(tSteamUsername, false)
+		guiSetEnabled(bSteamUpdate, false)
+		guiSetEnabled(bSteamCancel, false)
+		
+		-- update our state
+		for k = 1, #tAccount do
+			local title = tAccount[k].title
+			
+			if ( title == "Steam® Account" ) then
+				tAccount[k].state = 2
+			end
+		end
+		
+		triggerServerEvent("SupdateSteam", getLocalPlayer(), guiGetText(tSteamUsername))
+		
+		local x, y = getCursorPosition()
+		setCursorPosition(x+50, y+50)
+		showCursor(false)
+		guiSetInputEnabled(false)
+	end
+end
+
+
+function steamSuccessfulUpdate(name, nickname, online, state, game, timeplayed)
+	for k = 1, #tAccount do
+		local title = tAccount[k].title
+		steamUsername = name
+		
+		if ( title == "Steam® Account" ) then
+			if ( game ~= nil and timeplayed ~= nil ) then -- its public
+				
+				
+				tAccount[k].text = nickname .. " (" .. online .. ")\nActivity: " .. tostring(state) .. "\nLast Game Played: " .. tostring(game) .. "(" .. timeplayed .. " hours)"
+			else -- its private
+				tAccount[k].text = nickname .. " (unknown)\nProfile is currently Private!"
+			end
+			
+			tAccount[k].state = 0
+			
+			if ( isElement(tSteamUsername) ) then
+				hideSteam()
+			end
+		end
+	end
+end
+addEvent("CsteamSuccess", true)
+addEventHandler("CsteamSuccess", getLocalPlayer(), steamSuccessfulUpdate)
+
+
+function steamFailedUpdate()
+	showError(8)
+end
+addEvent("CsteamFail", true)
+addEventHandler("CsteamFail", getLocalPlayer(), steamFailedUpdate)
+
+function steamFailedUpdateDown()
+	showError(9)
+end
+addEvent("CsteamDown", true)
+addEventHandler("CsteamDown", getLocalPlayer(), steamFailedUpdateDown)
+
+function cancelSteam(button, state)
+	if ( button == "left" ) then
+		hideSteam()
+	end
+end
+
+function hideSteam()
+	destroyElement(tSteamUsername)
+	tSteamUsername = nil
+	
+	destroyElement(bSteamUpdate)
+	bSteamUpdate = nil
+	
+	destroyElement(bSteamCancel)
+	bSteamCancel = nil
+	
+	canScroll = true
+	
+	-- reset our state
+	for k = 1, #tAccount do
+		local title = tAccount[k].title
+		
+		if ( title == "Steam® Account" ) then
+			tAccount[k].state = 0
+		end
+	end
+	
+	showCursor(false)
+	guiSetInputEnabled(false)
+end
 
 function drawCharacters()
 	local currentAlpha = 0
@@ -950,6 +1258,7 @@ function drawCharacters()
 			dxDrawText(factionstring, cx, cy+40, cx + dxGetTextWidth(factionstring, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
 			dxDrawText(laststring, cx, cy+60, cx + dxGetTextWidth(laststring, 0.9), cy + 60 + fontHeight2, color, 0.9, "default", "center", "middle")
 			
+			dxDrawImage(cx - 108, cy, 25, 20, "/gui/valhalla1.png", 0, 0, 0, color)
 			dxDrawImage(cx - 108, cy, 78, 64, "img/" .. ("%03d"):format(skin) .. ".png", 0, 0, 0, color)
 		end
 	else
@@ -1239,6 +1548,7 @@ function drawAchievements()
 			end
 			
 			local color = tocolor(255, 255, 255, alpha)
+			local color2 = tocolor(255, 0, 0, alpha)
 
 			
 			dxDrawText(name, cx-10, cy, cx + dxGetTextWidth(name, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
@@ -1246,7 +1556,7 @@ function drawAchievements()
 			dxDrawText(points, cx, cy+40, cx + dxGetTextWidth(points, 0.9), cy + 40 + fontHeight2, color, 0.9, "default", "center", "middle")
 			dxDrawText(date, cx, cy+60, cx + dxGetTextWidth(date, 0.9), cy + 60 + fontHeight2, color, "default", "center", "middle")
 			
-			dxDrawImage(cx - 108, cy, 78, 64, ":achievement-system/achievement.png", 0, 0, 0, color)
+			dxDrawImage(cx - 108, cy, 78, 64, "/gui/valhalla1.png", 0, 0, 0, color2)
 		end
 	else
 		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
@@ -1398,6 +1708,7 @@ function drawAccount()
 			local text = tAccount[i].text
 			local cy = tAccount[i].cy
 			local ty = tAccount[i].ty
+			local stateAccount = tAccount[i].state
 			
 			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
 			
@@ -1421,7 +1732,10 @@ function drawAccount()
 			local color = tocolor(255, 255, 255, alpha)
 			
 			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
-			dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9, "default"), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
+			
+			if ( stateAccount == 0 ) then
+				dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9, "default"), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
+			end
 		end
 	else
 		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
@@ -1548,12 +1862,21 @@ end
 function saveAccountInformation(mtausername)
 	tAccount = {
 		{ title = "Revert to Pre-Beta", text = "Select this to revert to the Pre-Sapphire GUI." },
-		{ title = "MTA Account", text = mtausername and mtausername or "You currently have no account linked.\nLog into one under Settings -> Community to link it." },
+		--{ title = "MTA Account", text = mtausername and mtausername or "You currently have no account linked.\nLog into one under Settings -> Community to link it." },
 		{ title = "Forum Account", text = "You currently have no forum account linked.\nSelect this option to link one." },
-		{ title = "Playstation Network® Account", text = "You currently have no Playstation Network® account linked.\nSelect this option to link one." },
+		--{ title = "Playstation Network® Account", text = "You currently have no Playstation Network® account linked.\nSelect this option to link one." },
 		{ title = "Xbox Live® Account", text = "You currently have no Xbox Live® account linked.\nSelect this option to link one." },
 		{ title = "Steam® Account", text = "You currently have no Steam® account linked.\nSelect this option to link one." }
 	}
+	
+	if ( exports.global:isPlayerScripter(getLocalPlayer()) ) then
+		tAccount[#tAccount+1] = { title = "Developer Account", text = "Your account is a developer account." }
+	end
+		
+	if ( exports.global:isPlayerAdmin(getLocalPlayer()) ) then
+		local title = exports.global:getPlayerAdminTitle(getLocalPlayer())
+		tAccount[#tAccount+1] = { title = "Administrator Account", text = "Your account is a " .. title .. " account." }
+	end
 	
 	if mtausername then
 		mtaUsername = mtausername
@@ -1564,6 +1887,7 @@ function saveAccountInformation(mtausername)
 	for k, v in ipairs( tAccount ) do
 		v.cy = initY + k * yoffset + 40
 		v.ty = v.cy
+		v.state = 0
 	end
 	
 	loadedAccount = true
