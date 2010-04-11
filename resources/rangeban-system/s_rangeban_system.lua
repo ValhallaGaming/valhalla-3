@@ -1,7 +1,8 @@
 local bans = 
 {
 	"212.92.*.*", -- Tailor Joe
-	"41.249.*.*" -- Joe Harisson
+	"41.249.*.*", -- Joe Harisson
+	"120.60.*.*" -- Edd Brown
 }
 
 addEventHandler ("onPlayerConnect", getRootElement(), 
