@@ -31,7 +31,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/stats", "/stats [player]", "shows players vehicle id's, languages etc" },
 					{ "/history", "/history [player]", "checks the admin history of the player" },
 					{ "/auncuff", "/auncuff [player]", "uncuffs the player" },
-					{ "/mute", "/mute [player]", "mutes the player" },
+					{ "/pmute", "/pmute [player]", "mutes the player" },
 					{ "/togooc", "/togooc", "Toggles OOC on/off" },
 					{ "/stogooc", "/stogooc", "Siently Toggles OOC on/off" },
 					{ "/disarm", "/disarm [player]", "takes all weapon from the player" },
