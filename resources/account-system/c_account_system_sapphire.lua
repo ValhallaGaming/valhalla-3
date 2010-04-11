@@ -1,6 +1,8 @@
-local version = "0.2"
+local version = "0.21"
 local motd = ""
 local canScroll = true
+
+local language = "English"
 
 function saveMOTD(theMOTD)
 	motd = theMOTD
@@ -74,15 +76,48 @@ function hideInterfaceComponents()
 	showPlayerHudComponent("area_name", false)
 	showPlayerHudComponent("radar", false)
 	--triggerEvent("hideHud", getLocalPlayer())
+	
+	loadSettings()
+	saveLanguageInformation()
 end
 addEventHandler("onClientResourceStart", getResourceRootElement(getThisResource()), hideInterfaceComponents)
 
 
+settingsNode = nil
+langNode = nil
+function loadSettings()
+	settingsNode = xmlLoadFile("sapphire-settings.xml")
+	
+	if not (settingsNode) then
+		loadDefaultSettings()
+	else
+		langNode = xmlFindChild(settingsNode, "language", 0)
+		
+		if not (langNode) then
+			loadDefaultSettings()
+		end
+		
+		language = xmlNodeGetValue(langNode)
+		
+		-- check its a valid language
+		if ( strings[language] == nil ) then
+			loadDefaultSettings()
+		end
+	end
+end
 
+function loadDefaultSettings()
+	settingsNode = xmlCreateFile("sapphire-settings.xml", "settings")
+	langNode = xmlCreateChild(settingsNode, "language")
+	xmlNodeSetValue(langNode, "English")
+	language = "English"
+	xmlSaveFile(settingsNode)
+end
 
-
-
-
+function saveSettings()
+	xmlNodeSetValue(langNode, tostring(language))
+	xmlSaveFile(settingsNode)
+end
 
 ---------------------- [ ACCOUNT SCRIPT ] ----------------------
 -- increasing this will reshow the tos as updated
@@ -217,24 +252,26 @@ local initY = height / 5.2
 local lowerAlpha = 100
 
 local logoutID = 1
-local accountID = 2
-local charactersID = 3
-local socialID = 4
-local achievementsID = 5
-local settingsID = 6
-local helpID = 7
+local languagesID = 2
+local accountID = 3
+local charactersID = 4
+local socialID = 5
+local achievementsID = 6
+local settingsID = 7
+local helpID = 8
 
 local initPos = charactersID
-
+outputDebugString(tostring(strings[language]["Logout"]))
 local mainMenuItems =
 {
-	[logoutID] = { text = "Logout" },
-	[accountID] = { text = "Account" },
-	[charactersID] = { text = "Characters" },
-	[socialID] = { text = "Social" },
-	[achievementsID] = { text = "Achievements" },
-	[settingsID] = { text = "Settings" },
-	[helpID] = { text = "Help" }
+	[logoutID] = { text = "Logout", image = "logout-icon.png" },
+	[languagesID] = { text = "Languages", image = "submit-app-icon.png" },
+	[accountID] = { text = "Account", image = "account-icon.png" },
+	[charactersID] = { text = "Characters", image = "characters-icon.png" },
+	[socialID] = { text = "Social", image = "social-icon.png" },
+	[achievementsID] = { text = "Achievements", image = "achievements-icon.png" },
+	[settingsID] = { text = "Settings", image = "settings-icon.png" },
+	[helpID] = { text = "Help", image = "help-icon.png" }
 }
 
 local images = { }
@@ -246,7 +283,7 @@ for i = 1, #mainMenuItems do
 	v.cy = v.ty
 	v.alpha = initPos == i and 255 or lowerAlpha
 	
-	images[v.text] = "gui/" .. v.text:lower() .. "-icon.png"
+	images[v.text] = "gui/" .. v.image
 end
 
 local fontHeight1 = dxGetFontHeight(1, "default-bold")
@@ -256,13 +293,14 @@ local fontHeight2 = dxGetFontHeight(0.9, "default")
 local characterMenu = { }
 
 local xmbAlpha = 1.0
-local currentItem = 3
+local currentItem = charactersID
 local currentItemAlpha = 1.0
 local lastItemLeft = 2
 local lastItemRight = 4
 local lastItemAlpha = 1.0
 
 local loadedCharacters = false
+local loadedLanguages = false
 local loadedAchievements = false
 local loadedFriends = false
 local loadedAccount = false
@@ -277,6 +315,7 @@ local tFriends =  { }
 local tAchievements =  { }
 local tAccount = { }
 local tHelp = { }
+local tLanguages = { }
 
 local currentVerticalItem = 1
 lastKey = 0
@@ -340,6 +379,7 @@ function drawBG()
 		-- draw our vertical menus
 		-- put the if statements inside, so the logic is still updated!
 		drawCharacters()
+		drawLanguages()
 		drawAchievements()
 		drawFriends()
 		drawAccount()
@@ -364,7 +404,7 @@ function drawBG()
 			local ty = mainMenuItems[i].ty
 			local cx = mainMenuItems[i].cx
 			local cy = mainMenuItems[i].cy
-			local text = mainMenuItems[i].text
+			local text = strings[language][mainMenuItems[i].text]
 			local alpha = mainMenuItems[i].alpha
 		
 			-- ANIMATIONS
@@ -391,7 +431,7 @@ function drawBG()
 				mainMenuItems[i].alpha = 255
 			end
 		
-			dxDrawImage(cx, cy, 131, 120, images[text], 0, 0, 0, tocolor(255, 255, 255, mainMenuItems[i].alpha * xmbAlpha))
+			dxDrawImage(cx, cy, 131, 120, images[mainMenuItems[i].text], 0, 0, 0, tocolor(255, 255, 255, mainMenuItems[i].alpha * xmbAlpha))
 		end
 	end
 end
@@ -787,7 +827,7 @@ function moveLeft()
 end
 
 function moveDown()
-	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
+	local items = { [accountID] = tAccount, [languagesID] = tLanguages, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
 	local t = items[ currentItem ]
 	if t and canScroll then
 		if ( math.ceil( t[#t].ty ) > math.ceil(initY + yoffset + 40) ) then -- can move down
@@ -829,7 +869,7 @@ function checkForInvalidErrors()
 end
 
 function moveUp()
-	local items = { [accountID] = tAccount, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
+	local items = { [accountID] = tAccount, [languagesID] = tLanguages, [charactersID] = characterMenu, [socialID] = tFriends, [achievementsID] = tAchievements, [helpID] = tHelp }
 	local t = items[ currentItem ]
 	if t and canScroll then
 		if ( math.ceil( t[1].ty ) < math.ceil(initY + yoffset + 40) ) then -- can move up
@@ -921,10 +961,10 @@ function selectItemFromVerticalMenu()
 		for k = 1, #tAccount do
 			local i = #tAccount - (k - 1)
 			if ( round(tAccount[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
-				local title = tAccount[k].title
+				local title = strings[language][tAccount[k].title]
 				local stateAccount = tAccount[k].state
 				
-				if ( title == "Revert to Pre-Beta" ) then -- leave the beta
+				if ( title == strings[language]["Revert"] ) then -- leave the beta
 					local xml = xmlLoadFile("sapphirebeta.xml")
 					local betaNode = xmlFindChild(xml, "beta", 0)
 					xmlDestroyNode(betaNode)
@@ -932,7 +972,7 @@ function selectItemFromVerticalMenu()
 					xmlUnloadFile(xml)
 					triggerServerEvent("acceptBeta", getLocalPlayer())
 					
-				elseif ( title == "Xbox Live® Account" and stateAccount == 0 ) then
+				elseif ( title == strings[language]["Xbox"] and stateAccount == 0 ) then
 					local cx = mainMenuItems[accountID].cx + 30
 					
 					local text = "Xbox Live Username"
@@ -957,7 +997,7 @@ function selectItemFromVerticalMenu()
 					
 					tAccount[k].state = 1
 					canScroll = false
-				elseif ( title == "Steam® Account" and stateAccount == 0 ) then
+				elseif ( title == strings[language]["Steam"] and stateAccount == 0 ) then
 					local cx = mainMenuItems[accountID].cx + 30
 					
 					local text = "Steam Community Name"
@@ -984,6 +1024,20 @@ function selectItemFromVerticalMenu()
 					canScroll = false
 				end
 				break
+			end
+		end
+	elseif ( currentItem == languagesID ) then
+		for k = 1, #tLanguages do
+			local i = #tLanguages - (k - 1)
+			if ( round(tLanguages[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
+				local title = strings[language][tLanguages[k].title]
+				local stateAccount = tLanguages[k].state
+
+				language = tLanguages[k].title
+				-- save language
+				saveSettings()
+				return
+
 			end
 		end
 	elseif ( currentItem == logoutID ) then
@@ -1082,7 +1136,7 @@ function hideXbox()
 	for k = 1, #tAccount do
 		local title = tAccount[k].title
 		
-		if ( title == "Xbox Live® Account" ) then
+		if ( title == strings[language]["Xbox"] ) then
 			tAccount[k].state = 0
 		end
 	end
@@ -1177,7 +1231,7 @@ function hideSteam()
 	for k = 1, #tAccount do
 		local title = tAccount[k].title
 		
-		if ( title == "Steam® Account" ) then
+		if ( title == strings[language]["Steam"] ) then
 			tAccount[k].state = 0
 		end
 	end
@@ -1689,6 +1743,56 @@ function showFriendAlert()
 	end
 end
 
+function drawLanguages()
+	local currentAlpha = 0
+	if currentItem == languagesID then
+		currentAlpha = xmbAlpha * currentItemAlpha
+	elseif ( lastItemLeft == languagesID and lastKey == 1 ) or ( lastItemRight == languagesID and lastKey == 2 ) then
+		currentAlpha = xmbAlpha * lastItemAlpha
+	end
+	
+	if currentAlpha == 0 then
+		return
+	end
+	
+	local cx = mainMenuItems[languagesID].cx + 30
+	if ( loadedLanguages) then
+		for i = 1, #tLanguages do
+			local title = strings[language][tLanguages[i].title]
+			local text = strings[language][tLanguages[i].text]
+			local cy = tLanguages[i].cy
+			local ty = tLanguages[i].ty
+			
+			local dist = getDistanceBetweenPoints2D(0, initY + yoffset + 40, 0, cy)
+			
+			local alpha = 255
+			if ( cy < (initY + 2*yoffset)) then
+				alpha = 255 - ( dist/ 2 )
+			else
+				alpha = 255 - (dist / 2)
+			end
+			alpha = alpha * currentAlpha
+			
+			-- ANIMATIONS
+			if ( round(cy, -1) > round(ty, -1) ) then -- we need to move down!
+				tLanguages[i].cy = tLanguages[i].cy - 10
+			end
+			
+			if ( round(cy, -1) < round(ty, -1) ) then -- we need to move up!
+				tLanguages[i].cy = tLanguages[i].cy + 10
+			end
+			
+			local color = tocolor(255, 255, 255, alpha)
+			
+			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
+			dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9, "default"), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
+		end
+	else
+		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
+		loadingImageRotation = loadingImageRotation + 5
+	end
+end
+
 function drawAccount()
 	local currentAlpha = 0
 	if currentItem == accountID then
@@ -1704,8 +1808,8 @@ function drawAccount()
 	local cx = mainMenuItems[accountID].cx + 30
 	if ( loadedAccount ) then
 		for i = 1, #tAccount do
-			local title = tAccount[i].title
-			local text = tAccount[i].text
+			local title = strings[language][tAccount[i].title]
+			local text = strings[language][tAccount[i].text]
 			local cy = tAccount[i].cy
 			local ty = tAccount[i].ty
 			local stateAccount = tAccount[i].state
@@ -1859,23 +1963,35 @@ function saveHelpInformation()
 	loadedHelp = true
 end
 
+function saveLanguageInformation()
+	tLanguages = {
+		{ title = "English", text = "EnglishDesc" },
+		{ title = "Gaelic", text = "GaelicDesc" },
+		{ title = "Estonian", text = "EstonianDesc" },
+	}
+	
+	for k, v in ipairs( tLanguages ) do
+		v.cy = initY + k * yoffset + 40
+		v.ty = v.cy
+	end
+	
+	loadedLanguages = true
+end
+
 function saveAccountInformation(mtausername)
 	tAccount = {
-		{ title = "Revert to Pre-Beta", text = "Select this to revert to the Pre-Sapphire GUI." },
-		--{ title = "MTA Account", text = mtausername and mtausername or "You currently have no account linked.\nLog into one under Settings -> Community to link it." },
-		{ title = "Forum Account", text = "You currently have no forum account linked.\nSelect this option to link one." },
-		--{ title = "Playstation Network® Account", text = "You currently have no Playstation Network® account linked.\nSelect this option to link one." },
-		{ title = "Xbox Live® Account", text = "You currently have no Xbox Live® account linked.\nSelect this option to link one." },
-		{ title = "Steam® Account", text = "You currently have no Steam® account linked.\nSelect this option to link one." }
+		{ title = "Revert", text = "RevertSubtext" },
+		{ title = "Forum", text = "ForumSubtext" },
+		{ title = "Xbox", text = "XboxSubtext" },
+		{ title = "Steam", text = "SteamSubtext" }
 	}
 	
 	if ( exports.global:isPlayerScripter(getLocalPlayer()) ) then
-		tAccount[#tAccount+1] = { title = "Developer Account", text = "Your account is a developer account." }
+		tAccount[#tAccount+1] = { title = "Developer", text = "DeveloperSubtext" }
 	end
 		
 	if ( exports.global:isPlayerAdmin(getLocalPlayer()) ) then
-		local title = exports.global:getPlayerAdminTitle(getLocalPlayer())
-		tAccount[#tAccount+1] = { title = "Administrator Account", text = "Your account is a " .. title .. " account." }
+		tAccount[#tAccount+1] = { title = "Administrator", text = "AdministratorSubtext"  }
 	end
 	
 	if mtausername then
