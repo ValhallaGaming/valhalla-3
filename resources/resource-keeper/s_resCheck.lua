@@ -34,6 +34,8 @@ function checkRes()
 						displayAdminM("Resource '" .. res .. "' started successfully.")
 					end
 				end
+			else
+				displayAdminM("All resources are running as they should")
 			end
 		end
 	end
