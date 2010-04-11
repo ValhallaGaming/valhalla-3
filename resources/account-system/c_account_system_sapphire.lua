@@ -1784,7 +1784,8 @@ function drawLanguages()
 	if ( loadedLanguages) then
 		for i = 1, #tLanguages do
 			local title = strings[tLanguages[i].title][tLanguages[i].title]
-			local text = strings[tLanguages[i].title][tLanguages[i].text]
+			local text = strings[tLanguages[i].title][tLanguages[i].title .. "Desc"]
+			local flag = tLanguages[i].flag
 			local cy = tLanguages[i].cy
 			local ty = tLanguages[i].ty
 			
@@ -1808,9 +1809,15 @@ function drawLanguages()
 			end
 			
 			local color = tocolor(255, 255, 255, alpha)
+			local color2 = tocolor(255, 0, 0, alpha)
 			
 			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
 			dxDrawText(text, cx, cy+20, cx + dxGetTextWidth(text, 0.9, "default"), cy + 20 + fontHeight2, color, 0.9, "default", "left", "middle")
+			
+			dxDrawImage(cx - 46, cy, 16, 11, ":social-system/images/flags/" .. flag .. ".png", 0, 0, 0, color)
+			if language == tLanguages[i].title then
+				dxDrawImage(cx - 98, cy + 10, 58, 44, "/gui/valhalla1.png", 0, 0, 0, color2)
+			end
 		end
 	else
 		dxDrawImage(cx + 5, initY + yoffset + 40, 66, 66, "gui/loading.png", loadingImageRotation, 0, 0, tocolor(255, 255, 255, currentAlpha * 150))
@@ -1995,11 +2002,11 @@ end
 
 function saveLanguageInformation()
 	tLanguages = {
-		{ title = "English", text = "EnglishDesc" },
-		{ title = "Gaelic", text = "GaelicDesc" },
-		{ title = "Estonian", text = "EstonianDesc" },
-		{ title = "Dutch", text = "DutchDesc" },
-		{ title = "German", text = "GermanDesc" }
+		{ title = "English", flag = "uk" },
+		{ title = "Gaelic", flag = "sc" },
+		{ title = "Estonian", flag = "es" },
+		{ title = "Dutch", flag = "nl" },
+		{ title = "German", flag = "de" }
 	}
 	
 	for k, v in ipairs( tLanguages ) do
