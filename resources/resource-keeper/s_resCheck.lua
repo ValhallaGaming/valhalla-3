@@ -15,7 +15,7 @@ end
 
 --The magic
 local attempts = { "0", "0" }
-
+local count = 0
 function checkRes()
 	for i, res in ipairs(mainRes) do
 		local resName = getResourceFromName(res)
@@ -34,8 +34,12 @@ function checkRes()
 						displayAdminM("Resource '" .. res .. "' started successfully.")
 					end
 				end
-			else
+			end
+			count = count + 1
+
+			if count == #mainRes then
 				displayAdminM("All resources are running as they should")
+				count = 0
 			end
 		end
 	end
