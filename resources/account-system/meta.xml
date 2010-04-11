@@ -5,13 +5,13 @@
 	<script src="langpacks/english.lua" type="client"/>
 	<script src="langpacks/gaelic.lua" type="client"/>
 	<script src="langpacks/estonian.lua" type="client"/>
-	
+	<script src="langpacks/dutch.lua" type="client"/>	
+
 	<script src="c_account_system.lua" type="client" />	
 	
 	<script src="s_account_system_sapphire.lua" type="server" />
 	<script src="c_account_system_sapphire.lua" type="client" />
-	
-	
+
 	
 	<script src="c_tutorial_quiz.lua" type="client"/>
 
