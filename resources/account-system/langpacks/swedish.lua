@@ -24,6 +24,6 @@ strings.Swedish =
 	Administrator = "Administratörs Konto",
 	AdministratorSubtext = "Ditt konto är ett administratörs konto.",
 	
-	Dutch = "Swedish",
-	DutchDesc = "Spoken in Sweden.",
+	Swedish = "Svenska",
+	SwedishDesc = "Talas i Sverige.",
 }
