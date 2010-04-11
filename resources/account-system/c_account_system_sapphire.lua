@@ -733,7 +733,7 @@ function showError(theErrorCode)
 		for k = 1, #tAccount do
 			local title = tAccount[k].title
 			
-			if ( title == "Xbox Live® Account" ) then
+			if ( title == strings[language]["Xbox"] ) then
 				hideXbox()
 				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
 			end
@@ -746,7 +746,7 @@ function showError(theErrorCode)
 		for k = 1, #tAccount do
 			local title = tAccount[k].title
 			
-			if ( title == "Steam® Account" ) then
+			if ( title == strings[language]["Steam"] ) then
 				hideSteam()
 				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
 			end
@@ -759,7 +759,7 @@ function showError(theErrorCode)
 		for k = 1, #tAccount do
 			local title = tAccount[k].title
 			
-			if ( title == "Steam® Account" ) then
+			if ( title == strings[language]["Steam"] ) then
 				hideSteam()
 				errorMsgy = tAccount[k].ty + dxGetFontHeight(0.9, "default") + 40
 			end
@@ -1068,7 +1068,7 @@ function updateXbox(button, state)
 		for k = 1, #tAccount do
 			local title = tAccount[k].title
 			
-			if ( title == "Xbox Live® Account" ) then
+			if ( title == strings[language]["Xbox"] ) then
 				tAccount[k].state = 2
 			end
 		end
@@ -1082,11 +1082,12 @@ function updateXbox(button, state)
 	end
 end
 
+xboxString = nil
 function xboxSuccessfulUpdate(gamertag, status, activity, lastgame, level)
 	for k = 1, #tAccount do
-		local title = tAccount[k].title
+		local title = strings[language][tAccount[k].title]
 		
-		if ( title == "Xbox Live® Account" ) then
+		if ( title == strings[language]["Xbox"] ) then
 			if ( lastgame == nil ) then
 				lastgame = "None"
 			end
@@ -1096,7 +1097,7 @@ function xboxSuccessfulUpdate(gamertag, status, activity, lastgame, level)
 			end
 		
 			xboxUsername = gamertag
-			tAccount[k].text = gamertag .. " (" .. status .. " - " .. level .. ")\nActivity: " .. tostring(activity) .. "\nLast Game Played: " .. tostring(lastgame)
+			xboxString = gamertag .. " (" .. status .. " - " .. level .. ")\nActivity: " .. tostring(activity) .. "\nLast Game Played: " .. tostring(lastgame)
 			tAccount[k].state = 0
 			
 			if ( isElement(tXboxUsername) ) then
@@ -1146,6 +1147,7 @@ function hideXbox()
 end
 
 -- STEAM
+steamString = nil
 function updateSteam(button, state)
 	if ( button == "left" ) then
 		guiSetEnabled(tSteamUsername, false)
@@ -1156,7 +1158,7 @@ function updateSteam(button, state)
 		for k = 1, #tAccount do
 			local title = tAccount[k].title
 			
-			if ( title == "Steam® Account" ) then
+			if ( title == strings[language]["Steam"]) then
 				tAccount[k].state = 2
 			end
 		end
@@ -1173,16 +1175,16 @@ end
 
 function steamSuccessfulUpdate(name, nickname, online, state, game, timeplayed)
 	for k = 1, #tAccount do
-		local title = tAccount[k].title
+		local title = strings[language][tAccount[k].title]
 		steamUsername = name
 		
-		if ( title == "Steam® Account" ) then
+		if ( title == strings[language]["Steam"] ) then
 			if ( game ~= nil and timeplayed ~= nil ) then -- its public
 				
 				
-				tAccount[k].text = nickname .. " (" .. online .. ")\nActivity: " .. tostring(state) .. "\nLast Game Played: " .. tostring(game) .. "(" .. timeplayed .. " hours)"
+				steamString = nickname .. " (" .. online .. ")\nActivity: " .. tostring(state) .. "\nLast Game Played: " .. tostring(game) .. "(" .. timeplayed .. " hours)"
 			else -- its private
-				tAccount[k].text = nickname .. " (unknown)\nProfile is currently Private!"
+				steamString = nickname .. " (unknown)\nProfile is currently Private!"
 			end
 			
 			tAccount[k].state = 0
@@ -1835,6 +1837,11 @@ function drawAccount()
 			
 			local color = tocolor(255, 255, 255, alpha)
 			
+			if ( strings[language][tAccount[i].title] == strings[language]["Xbox"] and xboxString ) then
+				text = xboxString
+			elseif ( strings[language][tAccount[i].title] == strings[language]["Steam"] and steamString ) then
+				text = steamString
+			end
 			dxDrawText(title, cx-10, cy, cx + dxGetTextWidth(title, 1, "default-bold"), cy + fontHeight1, color, 1, "default-bold", "center", "middle")
 			
 			if ( stateAccount == 0 ) then
