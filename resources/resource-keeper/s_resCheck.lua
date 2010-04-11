@@ -1,5 +1,5 @@
 --Add any resources needing to be checked here
-local mainRes = { "admin-system", "account-system" }
+local mainRes = { "admin-system", "account-system", "global" }
 
 --Sends messages to Head Admins and Scripters
 function displayAdminM(message)
@@ -14,7 +14,7 @@ function displayAdminM(message)
 end
 
 --The magic
-local attempts = { "0", "0" }
+local attempts = { 0, 0 }
 local count = 0
 function checkRes(res)
 	for i, res in ipairs(mainRes) do
@@ -24,7 +24,7 @@ function checkRes(res)
 			if (cState ~= "running") then
 				displayAdminM("Resource '" .. res .. "' was not running. Attempting to start missing resource.")
 				local startingRes = startResource(resName, true)
-				if (tonumber(attempts[i]) < 4) then
+				if (attempts[i] < 4) then
 					if not (startingRes) then
 						displayAdminM("Fail to load Resource '" .. res .. "'.")
 						local nreasonRes = getResourceLoadFailureReason(resName)
