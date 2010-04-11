@@ -1,25 +1,29 @@
-strings["Gaelic"] = { }
-strings["Gaelic"]["Logout"] = "Breach Síos Amach"
-strings["Gaelic"]["Languages"] = "Athraigh Teanga"
-strings["Gaelic"]["Account"] = "Cuntas"
-strings["Gaelic"]["Characters"] = "Carachtar Liosta"
-strings["Gaelic"]["Social"] = "Sóisialta"
-strings["Gaelic"]["Achievements"] = "Ardsaothar"
-strings["Gaelic"]["Settings"] = "Roghanna"
-strings["Gaelic"]["Help"] = "Cuidiú"
-
-strings["Gaelic"]["Revert"] = "Filleadh ar Réamh-Réamhthaispeántas"
-strings["Gaelic"]["RevertSubtext"] = "Togh seo filleadh ar an GUI Réamh-Réamhthaispeántas."
-strings["Gaelic"]["Forum"] = "Fhóraim Cuntas"
-strings["Gaelic"]["ForumSubtext"] = "Tú faoi láthair níl an fhóraim cuntas tháite.\nTogh seo rogha go tháite aon."
-strings["Gaelic"]["Xbox"] = "Xbox® Live Cuntas"
-strings["Gaelic"]["XboxSubtext"] = "Tú faoi láthair níl an Xbox Live®  cuntas tháite.\nTogh seo rogha go tháite aon."
-strings["Gaelic"]["Steam"] = "Steam® Live Cuntas"
-strings["Gaelic"]["SteamSubtext"] = "Tú faoi láthair níl an Steam®  cuntas tháite.\nTogh seo rogha go tháite aon."
-strings["Gaelic"]["Developer"] = "Réalóir Cuntas"
-strings["Gaelic"]["DeveloperSubtext"] = "Bhur cuntas ina réalóir cuntas."
-strings["Gaelic"]["Administrator"] = "Riarthóir Cuntas"
-strings["Gaelic"]["AdministratorSubtext"] = "Bhur cuntas ina riarthóir cuntas."
-
-strings["Gaelic"]["Gaelic"] = "Gàidhlig"
-strings["Gaelic"]["GaelicDesc"] = "Labhartha i Alba is Éire."
+strings.Gaelic =
+{
+	flag = "sc",
+	
+	Logout = "Breach Síos Amach",
+	Languages = "Athraigh Teanga",
+	Account = "Cuntas",
+	Characters = "Carachtar Liosta",
+	Social = "Sóisialta",
+	Achievements = "Ardsaothar",
+	Settings = "Roghanna",
+	Help = "Cuidiú",
+	
+	Revert = "Filleadh ar Réamh-Réamhthaispeántas",
+	RevertSubtext = "Togh seo filleadh ar an GUI Réamh-Réamhthaispeántas.",
+	Forum = "Fhóraim Cuntas",
+	ForumSubtext = "Tú faoi láthair níl an fhóraim cuntas tháite.\nTogh seo rogha go tháite aon.",
+	Xbox = "Xbox® Live Cuntas",
+	XboxSubtext = "Tú faoi láthair níl an Xbox Live®  cuntas tháite.\nTogh seo rogha go tháite aon.",
+	Steam = "Steam® Live Cuntas",
+	SteamSubtext = "Tú faoi láthair níl an Steam®  cuntas tháite.\nTogh seo rogha go tháite aon.",
+	Developer = "Réalóir Cuntas",
+	DeveloperSubtext = "Bhur cuntas ina réalóir cuntas.",
+	Administrator = "Riarthóir Cuntas",
+	AdministratorSubtext = "Bhur cuntas ina riarthóir cuntas.",
+	
+	Gaelic = "Gàidhlig",
+	GaelicDesc = "Labhartha i Alba is Éire.",
+}

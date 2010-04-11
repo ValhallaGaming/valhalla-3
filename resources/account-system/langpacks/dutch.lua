@@ -1,27 +1,29 @@
-strings["Dutch"] = { }
-strings["Dutch"]["Logout"] = "Uitloggen"
-strings["Dutch"]["Languages"] = "Talen"
-strings["Dutch"]["Account"] = "Account"
-strings["Dutch"]["Characters"] = "Personen"
-strings["Dutch"]["Social"] = "Sociaal"
-strings["Dutch"]["Achievements"] = "Behaalde resultaten"
-strings["Dutch"]["Settings"] = "Instellingen"
-strings["Dutch"]["Help"] = "Help"
-
-strings["Dutch"]["Revert"] = "Terug naar oude versie"
-strings["Dutch"]["RevertSubtext"] = "Selecteer dit om de oude versie te herstellen."
-strings["Dutch"]["Forum"] = "Forum Account"
-strings["Dutch"]["ForumSubtext"] = "Je hebt op het moment geen forum account gekoppeld.\nKies deze optie om er een te koppelen."
-strings["Dutch"]["Xbox"] = "Xbox® Live Account"
-strings["Dutch"]["XboxSubtext"] = "Je hebt op het moment geen Xbox Live® account gekoppeld.\nKies deze optie om er een te koppelen."
-strings["Dutch"]["Steam"] = "Steam® Account"
-strings["Dutch"]["SteamSubtext"] = "Je hebt op het moment geen Steam® account gekoppeld.\nKies deze optie om er een te koppelen."
-strings["Dutch"]["Developer"] = "Developer Account"
-strings["Dutch"]["DeveloperSubtext"] = "Je account heeft developer rechten."
-strings["Dutch"]["Administrator"] = "Administrator Account"
-strings["Dutch"]["AdministratorSubtext"] = "Je account heeft administrator rechten."
-
-strings["Dutch"]["Dutch"] = "Nederlands"
-strings["Dutch"]["DutchDesc"] = "Wordt gesproken in Nederland, België\nen op de Nederlands Antillen."
-strings["Dutch"]["German"] = "Duits"
-strings["Dutch"]["GermanDesc"] = "Wordt gesproken in Duitsland, Oostenrijk en Zwitzerland."
+strings.Dutch =
+{
+	flag = "nl",
+	
+	Logout = "Uitloggen",
+	Languages = "Talen",
+	Account = "Account",
+	Characters = "Personen",
+	Social = "Sociaal",
+	Achievements = "Behaalde resultaten",
+	Settings = "Instellingen",
+	Help = "Help",
+	
+	Revert = "Terug naar oude versie",
+	RevertSubtext = "Selecteer dit om de oude versie te herstellen.",
+	Forum = "Forum Account",
+	ForumSubtext = "Je hebt op het moment geen forum account gekoppeld.\nKies deze optie om er een te koppelen.",
+	Xbox = "Xbox® Live Account",
+	XboxSubtext = "Je hebt op het moment geen Xbox Live® account gekoppeld.\nKies deze optie om er een te koppelen.",
+	Steam = "Steam® Account",
+	SteamSubtext = "Je hebt op het moment geen Steam® account gekoppeld.\nKies deze optie om er een te koppelen.",
+	Developer = "Developer Account",
+	DeveloperSubtext = "Je account heeft developer rechten.",
+	Administrator = "Administrator Account",
+	AdministratorSubtext = "Je account heeft administrator rechten.",
+	
+	Dutch = "Nederlands",
+	DutchDesc = "Wordt gesproken in Nederland, België\nen op de Nederlands Antillen.",
+}

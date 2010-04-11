@@ -1,25 +1,29 @@
-strings["Estonian"] = { }
-strings["Estonian"]["Logout"] = "Logi välja"
-strings["Estonian"]["Languages"] = "Keeled"
-strings["Estonian"]["Account"] = "Konto"
-strings["Estonian"]["Characters"] = "Karakterid"
-strings["Estonian"]["Social"] = "Sõbrad"
-strings["Estonian"]["Achievements"] = "Saavutused"
-strings["Estonian"]["Settings"] = "Sätted"
-strings["Estonian"]["Help"] = "Abi"
-
-strings["Estonian"]["Revert"] = "Tagasi beta-eelsesse versiooni"
-strings["Estonian"]["RevertSubtext"] = "Vajuta siia, et minna tagasi Sapphire'i-eelsesse GUIsse"
-strings["Estonian"]["Forum"] = "Foorumi konto"
-strings["Estonian"]["ForumSubtext"] = "Sinul ei ole praegu ühtegi foorumi kontot ühendatud.\nVajuta siia, et ühendada."
-strings["Estonian"]["Xbox"] = "Xbox® Live Account"
-strings["Estonian"]["XboxSubtext"] = "Sinul ei ole praegu ühtegi Xbox Live® kontot ühendatud\nVajuta siia, et ühendada."
-strings["Estonian"]["Steam"] = "Steam® Account"
-strings["Estonian"]["SteamSubtext"] = "Sinul ei ole praegu ühtegi Steam® kontot ühendatud\nVajuta siia, et ühendada."
-strings["Estonian"]["Developer"] = "Arendaja konto"
-strings["Estonian"]["DeveloperSubtext"] = "Sinul on arendaja konto."
-strings["Estonian"]["Administrator"] = "Administraatori konto"
-strings["Estonian"]["AdministratorSubtext"] = "Sinul on administraatori konto"
-
-strings["Estonian"]["Estonian"] = "Eesti keel"
-strings["Estonian"]["EstonianDesc"] = "Kasutusel Eestis."
+strings.Estonian =
+{
+	flag = "es",
+	
+	Logout = "Logi välja",
+	Languages = "Keeled",
+	Account = "Konto",
+	Characters = "Karakterid",
+	Social = "Sõbrad",
+	Achievements = "Saavutused",
+	Settings = "Sätted",
+	Help = "Abi",
+	
+	Revert = "Tagasi beta-eelsesse versiooni",
+	RevertSubtext = "Vajuta siia, et minna tagasi Sapphire'i-eelsesse GUIsse",
+	Forum = "Foorumi konto",
+	ForumSubtext = "Sinul ei ole praegu ühtegi foorumi kontot ühendatud.\nVajuta siia, et ühendada.",
+	Xbox = "Xbox® Live Account",
+	XboxSubtext = "Sinul ei ole praegu ühtegi Xbox Live® kontot ühendatud\nVajuta siia, et ühendada.",
+	Steam = "Steam® Account",
+	SteamSubtext = "Sinul ei ole praegu ühtegi Steam® kontot ühendatud\nVajuta siia, et ühendada.",
+	Developer = "Arendaja konto",
+	DeveloperSubtext = "Sinul on arendaja konto.",
+	Administrator = "Administraatori konto",
+	AdministratorSubtext = "Sinul on administraatori konto",
+	
+	Estonian = "Eesti keel",
+	EstonianDesc = "Kasutusel Eestis.",
+}

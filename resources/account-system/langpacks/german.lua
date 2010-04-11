@@ -1,33 +1,27 @@
-strings["German"] = { }
-strings["German"]["Logout"] = "Logout"
-strings["German"]["Languages"] = "Sprachen"
-strings["German"]["Account"] = "Account"
-strings["German"]["Characters"] = "Charaktere"
-strings["German"]["Social"] = "Sozial"
-strings["German"]["Achievements"] = "Errungenschaften"
-strings["German"]["Settings"] = "Einstellungen"
-strings["German"]["Help"] = "Hilfe"
-
-strings["German"]["Revert"] = "Zur Vor-Beta zurückkehren"
-strings["German"]["RevertSubtext"] = "Wähle dies aus, um zum GUI vor Sapphire zurückzukehren."
-strings["German"]["Forum"] = "Forum Account"
-strings["German"]["ForumSubtext"] = "Du hast zur Zeit keinen Forum Account verbunden.\n Wähle dies aus um einen zu verbinden."
-strings["German"]["Xbox"] = "Xbox® Live Account"
-strings["German"]["XboxSubtext"] = "Du hast zur Zeit keinen Xbox® Live Account verbunden.\n Wähle dies aus um einen zu verbinden."
-strings["German"]["Steam"] = "Steam® Account"
-strings["German"]["SteamSubtext"] = "Du hast zur Zeit keinen Steam® Account verbunden.\n Wähle dies aus um einen zu verbinden."
-strings["German"]["Developer"] = "Developer Account"
-strings["German"]["DeveloperSubtext"] = "Dein Account ist ein Entwickleraccount."
-strings["German"]["Administrator"] = "Administrator Account"
-strings["German"]["AdministratorSubtext"] = "Dein Account ist ein Administratoraccount."
-
-strings["German"]["English"] = "Englisch"
-strings["German"]["EnglishDesc"] = "Überall auf der Welt gesprochen.\nHauptsächlich gesprochen im Vereinigten Königreich, Kanada und Amerika."
-strings["German"]["Gaelic"] = "Gälisch"
-strings["German"]["GaelicDesc"] = "Gesprochen in Schottland und Irland."
-strings["German"]["Estonian"] = "Estnisch"
-strings["German"]["EstonianDesc"] = "Gesprochen in Estland."
-strings["German"]["Dutch"] = "Holländisch"
-strings["German"]["DutchDesc"] = "Gesprochen in den Niederlanden, Belgien und den Niederländischen Antillen."
-strings["German"]["German"] = "Deutsch"
-strings["German"]["GermanDesc"] = "Gesprochen in Deutschland, Österreich und der Schweiz."
+strings.German =
+{
+	Logout = "Logout",
+	Languages = "Sprachen",
+	Account = "Account",
+	Characters = "Charaktere",
+	Social = "Sozial",
+	Achievements = "Errungenschaften",
+	Settings = "Einstellungen",
+	Help = "Hilfe",
+	
+	Revert = "Zur Vor-Beta zurückkehren",
+	RevertSubtext = "Wähle dies aus, um zum GUI vor Sapphire zurückzukehren.",
+	Forum = "Forum Account",
+	ForumSubtext = "Du hast zur Zeit keinen Forum Account verbunden.\n Wähle dies aus um einen zu verbinden.",
+	Xbox = "Xbox® Live Account",
+	XboxSubtext = "Du hast zur Zeit keinen Xbox® Live Account verbunden.\n Wähle dies aus um einen zu verbinden.",
+	Steam = "Steam® Account",
+	SteamSubtext = "Du hast zur Zeit keinen Steam® Account verbunden.\n Wähle dies aus um einen zu verbinden.",
+	Developer = "Developer Account",
+	DeveloperSubtext = "Dein Account ist ein Entwickleraccount.",
+	Administrator = "Administrator Account",
+	AdministratorSubtext = "Dein Account ist ein Administratoraccount.",
+	
+	German = "Deutsch",
+	GermanDesc = "Gesprochen in Deutschland, Österreich und der Schweiz.",
+}
