@@ -1999,6 +1999,7 @@ function saveLanguageInformation()
 		{ title = "Gaelic", text = "GaelicDesc" },
 		{ title = "Estonian", text = "EstonianDesc" },
 		{ title = "Dutch", text = "DutchDesc" },
+		{ title = "German", text = "GermanDesc" }
 	}
 	
 	for k, v in ipairs( tLanguages ) do

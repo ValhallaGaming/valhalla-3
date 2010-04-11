@@ -6,7 +6,7 @@
 	<script src="langpacks/gaelic.lua" type="client"/>
 	<script src="langpacks/estonian.lua" type="client"/>
 	<script src="langpacks/dutch.lua" type="client"/>	
-
+	<script src="langpacks/german.lua" type="client"/>	
 	<script src="c_account_system.lua" type="client" />	
 	
 	<script src="s_account_system_sapphire.lua" type="server" />
