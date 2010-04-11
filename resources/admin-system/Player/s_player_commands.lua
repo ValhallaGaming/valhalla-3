@@ -317,7 +317,7 @@ function ckPlayer(thePlayer, commandName, targetPlayer)
 					triggerEvent("sendAccounts", targetPlayer, targetPlayer, id, true)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "loggedin", 0, false)
 					outputChatBox("Your character was CK'ed by " .. getPlayerName(thePlayer) .. ".", targetPlayer, 255, 194, 14)
-					showChat(targetPlayer, true)
+					showChat(targetPlayer, false)
 					outputChatBox("You have CK'ed ".. targetPlayerName ..".", thePlayer, 255, 194, 1, 14)
 					exports.logs:logMessage("[/CK] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." CK'ED ".. targetPlayerName , 4)
 				end

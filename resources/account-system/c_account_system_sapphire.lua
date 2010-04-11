@@ -2054,6 +2054,15 @@ function saveCharacters(characters)
 	for k, v in ipairs(characters) do
 		characterMenu[k] = { id = v[1], name = v[2]:gsub("_", " "), cked = v[3], lastarea = v[4], age = v[5], gender = v[6], faction = v[7] or "Not in a faction.", rank = v[8], skin = v[9], lastseen = v[10], cy = initY + k * yoffset + 40, ty = initY + k * yoffset + 40 }
 	end
+	
+	-- CK
+	if loadedCharacters and not visible and state == 3 and not fading then
+		fading = true
+		showXMB()
+		currentCharacterID = nil
+		state = 2
+	end
+	
 	loadedCharacters = true
 end
 addEvent("showCharacterSelection", true)
