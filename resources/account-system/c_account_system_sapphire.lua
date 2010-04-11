@@ -261,7 +261,7 @@ local settingsID = 7
 local helpID = 8
 
 local initPos = charactersID
-outputDebugString(tostring(strings[language]["Logout"]))
+
 local mainMenuItems =
 {
 	[logoutID] = { text = "Logout", image = "logout-icon.png" },
