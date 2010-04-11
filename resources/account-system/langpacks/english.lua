@@ -25,5 +25,5 @@ strings.English =
 	AdministratorSubtext = "Your account is an administrator account.",
 	
 	English = "English",
-	EnglishDesc = "Spoken all over the world\nMainly used in UK, Canada and America.",
+	EnglishDesc = "Spoken all over the world,\nmainly used in UK, Canada and America.",
 }
