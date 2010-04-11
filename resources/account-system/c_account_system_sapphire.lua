@@ -2000,13 +2000,11 @@ function saveHelpInformation()
 end
 
 function saveLanguageInformation()
-	tLanguages = {
-		{ title = "English", flag = "uk" },
-		{ title = "Gaelic", flag = "sc" },
-		{ title = "Estonian", flag = "es" },
-		{ title = "Dutch", flag = "nl" },
-		{ title = "German", flag = "de" }
-	}
+	tLanguages = { }
+	for language, data in pairs( strings ) do
+		table.insert( tLanguages,  { title = language, flag = data.flag, order = data.order } )
+	end
+	table.sort( tLanguages, function( a, b ) return a.order < b.order end )
 	
 	for k, v in ipairs( tLanguages ) do
 		v.cy = initY + k * yoffset + 40
