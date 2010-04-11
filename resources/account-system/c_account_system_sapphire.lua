@@ -1,4 +1,4 @@
-local version = "0.21"
+local version = "0.22"
 local motd = ""
 local canScroll = true
 
@@ -356,6 +356,27 @@ function drawBG()
 		logoAlpha = logoAlpha - step
 	end
 	-- end fading
+	
+	local time = getRealTime()
+	-- fix trailing 0's
+	local hour = tostring(time.hour)
+	local mins = tostring(time.minute)
+	local secs = tostring(time.second)
+	
+	if ( time.hour < 10 ) then
+		hour = "0" .. hour
+	end
+	
+	if ( time.minute < 10 ) then
+		mins = "0" .. mins
+	end
+	
+	if ( time.second < 10 ) then
+		secs = "0" .. secs
+	end
+	
+	dxDrawText(hour .. ":" .. mins, width - 75, 20, width - 50, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.7, "bankgothic", "center", "middle", false, false, false)
+	dxDrawText(":" .. secs, width - 30, 20, width - 5, 30, tocolor(255, 255, 255, 200 * xmbAlpha), 0.5, "bankgothic", "center", "middle", false, false, false)
 	
 	-- error msg
 	if (errorMsg ~= nil) then
@@ -1365,6 +1386,7 @@ function decreaseAlpha()
 		showPlayerHudComponent("breath", true)
 		showPlayerHudComponent("radar", true)
 		showPlayerHudComponent("area_name", true)
+		showPlayerHudComponent("clock", true)
 	
 		fading = false
 	
@@ -1405,6 +1427,7 @@ function showXMB()
 	showPlayerHudComponent("breath", false)
 	showPlayerHudComponent("radar", false)
 	showPlayerHudComponent("area_name", false)
+	showPlayerHudComponent("clock", false)
 
 	
 	addEventHandler("onClientRender", getRootElement(), increaseAlpha)
