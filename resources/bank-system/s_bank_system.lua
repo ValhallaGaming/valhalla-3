@@ -96,14 +96,12 @@ function transferMoneyToPersonal(business, name, amount, reason)
 	reason = mysql:escape_string(reason)
 	local reciever = getPlayerFromName(string.gsub(name," ","_"))
 	local dbid = nil
-	local raccount = nil
 	if not reciever then
-		local result = mysql:query("SELECT id,account FROM characters WHERE charactername='" .. mysql:escape_string(string.gsub(name," ","_")) .. "' LIMIT 1")
+		local result = mysql:query("SELECT id FROM characters WHERE charactername='" .. mysql:escape_string(string.gsub(name," ","_")) .. "' LIMIT 1")
 		if result then
 			if mysql:num_rows(result) > 0 then
 				local row = mysql:fetch_assoc(result)
 				dbid = tonumber(row["id"])
-				raccount = tonumber(row["account"])
 				found = true
 			end
 			mysql:free_result(result)
@@ -112,7 +110,6 @@ function transferMoneyToPersonal(business, name, amount, reason)
 		end
 	else
 		dbid = getElementData(reciever, "dbid")
-		raccount = getElementData(reciever, "gameaccountid")
 	end
 	
 	if not dbid and not reciever then
@@ -140,19 +137,8 @@ function transferMoneyToPersonal(business, name, amount, reason)
 		if reciever then
 			exports['anticheat-system']:changeProtectedElementDataEx(reciever, "bankmoney", getElementData(reciever, "bankmoney") + amount)
 			saveBank(reciever)
-			if (raccount == getElementData(source, "gameaccountid")) then
-				local p1 = getPlayerName(receiver):gsub("_"," ")
-				local p2 = getPlayerName(source):gsub("_"," ")
-				exports.global:sendMessageToAdmins("AdmWrn: " .. p2 .. "(#" .. getElementData(source, "gameaccountid") .. ") has sent $" .. amount .. " to " .. p1 .. "(#" .. getElementData(receivera, "gameaccountid") .. ").")
-			end
 		else
 			mysql:query_free("UPDATE characters SET bankmoney=bankmoney+" .. mysql:escape_string(amount) .. " WHERE id=" .. mysql:escape_string(dbid))
-			if (raccount == getElementData(source, "gameaccountid")) then
-				local p1 = string.gsub(name, "_"," ")
-				local p2 = getPlayerName(source):gsub("_"," ")
-				exports.global:sendMessageToAdmins("AdmWrn: Same Account Transfer: " .. p2 .. "(#" .. getElementData(source, "gameaccountid") .. ") has sent $" .. amount .. " to " .. p1 .. "(#" .. raccount .. ").")
-				exports.logs:logMessage("[ALT<->ALT Money Transfer From " .. p2 .. "(#" .. getElementData(source, "gameaccountid") .. ") To: " .. p1 .. "(#" .. raccount .. ")] Value: " .. amount .. "$", 5)
-			end
 		end
 		triggerClientEvent(source, "hideBankUI", source)
 		outputChatBox("You transfered " .. amount .. "$ from your "..(business and "business" or "personal").." account to "..name..(string.sub(name,-1) == "s" and "'" or "'s").." account.", source, 255, 194, 14)
