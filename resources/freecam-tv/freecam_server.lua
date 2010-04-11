@@ -1,5 +1,5 @@
 -- Default position on start of the resource
-local x = 
+local x = 1309.3671875
 local y = -1393.1240234375
 local z = 1022.1019897461
 local int = 3
@@ -7,6 +7,7 @@ local dim = 127
 
 -- Some variables needed
 local marker = nil
+local cameraRadius = 15
 
 function setPlayerFreecamEnabled(player)
 	if not isPlayerFreecamEnabled(player) then
@@ -122,6 +123,7 @@ addCommandHandler("starttv",
 				exports.logs:logMessage("(start) " .. getPlayerName(player):gsub("_", " ") .. " started a TV Show.", 20)
 				watching = 0
 				earnings = 0
+				setElementDimension(marker, dim)
 			else
 				outputChatBox("The TV Show is already running.", player, 255, 0, 0)
 			end
@@ -133,6 +135,7 @@ addCommandHandler("endtv",
 	function(player)
 		if getElementData(player, "faction") == 20 then
 			if isTVRunning() then
+				setElementDimension(marker, 65535)
 				outputChatBox("[TV] " .. getPlayerName(player):gsub("_", " ") .. " ended the TV Show.", getRootElement( ), 200, 100, 200)
 				
 				for k, v in ipairs( getElementsByType( "player" ) ) do
@@ -156,11 +159,23 @@ addCommandHandler("endtv",
 )
 
 function isTVRunning()
-	return not getElementDimension(marker) == 65535
+	if getElementDimension(marker) == 65535 then
+		return false
+	end
+	return true
 end
 
-function add( shownto, message )
-	if isTVRunning() then
+function isPlayerInCameraRadius(sourceplayer)
+	local x,y,z = getElementPosition(sourceplayer)  
+	local xx, xy, xz = getElementPosition(marker) 
+	if (getDistanceBetweenPoints2D ( x, y, xx, xy ) < cameraRadius) then
+		return true
+	end
+	return false
+end
+
+function add( shownto, message, sourceplayer )
+	if isTVRunning() and (isPlayerInCameraRadius(sourceplayer)) then
 		watching = math.max( shownto, watching )
 		earnings = earnings + 10 * shownto
 		

@@ -161,9 +161,7 @@ function localIC(source, message, language)
 		end
 	end
 	
-	if dimension == 127 then -- TV SHOW!
-		exports['freecam-tv']:add(shownto, playerName .. " says: " .. message)
-	end
+	exports['freecam-tv']:add(shownto, playerName .. " says: " .. message, source)
 end
 for i = 1, 3 do
 	addCommandHandler( tostring( i ), 
