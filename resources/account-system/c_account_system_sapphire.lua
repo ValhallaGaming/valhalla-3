@@ -109,9 +109,8 @@ end
 function loadDefaultSettings()
 	settingsNode = xmlCreateFile("sapphire-settings.xml", "settings")
 	langNode = xmlCreateChild(settingsNode, "language")
-	xmlNodeSetValue(langNode, "English")
 	language = "English"
-	xmlSaveFile(settingsNode)
+	saveSettings()
 end
 
 function saveSettings()
