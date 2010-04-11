@@ -23,11 +23,3 @@ strings["English"]["AdministratorSubtext"] = "Your account is an administrator a
 
 strings["English"]["English"] = "English"
 strings["English"]["EnglishDesc"] = "Spoken all over the world\nMainly used in UK, Canada and America."
-strings["English"]["Gaelic"] = "Gaelic"
-strings["English"]["GaelicDesc"] = "Spoken in Scotland and Ireland."
-strings["English"]["Estonian"] = "Estonian"
-strings["English"]["EstonianDesc"] = "Spoken in Estonia."
-strings["English"]["Dutch"] = "Dutch"
-strings["English"]["DutchDesc"] = "Spoken in the Netherlands, Belgium and the\nNetherlands Antilles."
-strings["English"]["German"] = "German"
-strings["English"]["GermanDesc"] = "Spoken in Germany, Austria and Switzerland."

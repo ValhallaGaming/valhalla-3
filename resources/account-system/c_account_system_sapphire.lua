@@ -1051,7 +1051,7 @@ function selectItemFromVerticalMenu()
 		for k = 1, #tLanguages do
 			local i = #tLanguages - (k - 1)
 			if ( round(tLanguages[k].ty, -1) >= round(initY + xoffset, -1) - 100) then -- selected
-				local title = strings[language][tLanguages[k].title]
+				local title = tLanguages[k]
 				local stateAccount = tLanguages[k].state
 
 				language = tLanguages[k].title
@@ -1783,8 +1783,8 @@ function drawLanguages()
 	local cx = mainMenuItems[languagesID].cx + 30
 	if ( loadedLanguages) then
 		for i = 1, #tLanguages do
-			local title = strings[language][tLanguages[i].title]
-			local text = strings[language][tLanguages[i].text]
+			local title = strings[tLanguages[i].title][tLanguages[i].title]
+			local text = strings[tLanguages[i].title][tLanguages[i].text]
 			local cy = tLanguages[i].cy
 			local ty = tLanguages[i].ty
 			
