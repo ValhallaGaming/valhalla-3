@@ -1444,7 +1444,7 @@ function saveFriends(friends, friendsmessage)
 	for k,v in pairs(friends) do
 		local id, username, message, country = unpack( v )
 		tFriends[k+1] = { id = id, username = username, message = message, country = country, cy = initY + k*yoffset + 40, ty = initY + k*yoffset + 40 }
-		tFriends[k+1].online, tFriends[k].character = isPlayerOnline(id)
+		tFriends[k+1].online, tFriends[k+1].character = isPlayerOnline(id)
 	end
 	loadedFriends = true
 end
