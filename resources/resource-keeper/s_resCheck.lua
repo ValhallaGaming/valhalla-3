@@ -16,7 +16,7 @@ end
 --The magic
 local attempts = { "0", "0" }
 local count = 0
-function checkRes()
+function checkRes(res)
 	for i, res in ipairs(mainRes) do
 		local resName = getResourceFromName(res)
 		if (resName) then
@@ -45,7 +45,7 @@ function checkRes()
 	end
 	setTimer(checkRes, 3600000, 1)
 end
-addEventHandler("onResourceStart", getRootElement(), checkRes)
+addEventHandler("onResourceStart", getResourceRootElement(), checkRes)
 
 function runResCheck(admin, command)
 	if (command == "rescheck") then
