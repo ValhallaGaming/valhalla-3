@@ -1,26 +1,52 @@
+-- Default position on start of the resource
+local x = 
+local y = -1393.1240234375
+local z = 1022.1019897461
+local int = 3
+local dim = 127
+
+-- Some variables needed
+local marker = nil
+
 function setPlayerFreecamEnabled(player)
 	if not isPlayerFreecamEnabled(player) then
 		removePedFromVehicle(player)
 		setElementData(player, "realinvehicle", 0, false)
-		startX, startY, startZ = getElementPosition(player)
+		local startX, startY, startZ = getElementPosition(player)
 		setElementData(player, "tv:dim", getElementDimension(player), false)
 		setElementData(player, "tv:int", getElementInterior(player), false)
 		setElementData(player, "tv:x", startX, false)
 		setElementData(player, "tv:y", startY, false)
 		setElementData(player, "tv:z", startZ, false)
-		setElementDimension(player, 127)
-		setElementInterior(player, 3)
+		setElementDimension(player, dim)
+		setElementInterior(player, int)
 		setElementAlpha(player, 0)
 		setElementData(player, "reconx", true)
-		return triggerClientEvent(player,"doSetFreecamEnabledTV", getRootElement(), 1309.3671875, -1393.1240234375, 1022.1019897461, false)
+		return triggerClientEvent(player,"doSetFreecamEnabledTV", getRootElement(), x,y,z, false)
 	else
 		return false
 	end
 end
 
-local marker = createMarker( 1309.3671875, -1393.1240234375, 1022.1019897461, 'corona', 1, 255, 127, 0, 127)
-setElementInterior(marker, 3)
-setElementDimension(marker, 126)
+function moveCamera(newx, newy, newz, newint, newdim)
+	if (marker) then
+		destroyElement(marker)
+	end
+	
+	marker = createMarker( newx, newy, newz, 'corona', 1, 255, 127, 0, 127)
+	setElementInterior(marker, newint)
+	setElementDimension(marker, 65535)
+	
+	x = newx
+	y = newy
+	z = newz
+	int = newint
+	dim = newdim
+	return true
+end
+
+-- Move to the default position
+moveCamera(x, y, z, int, dim)
 
 function setPlayerFreecamDisabled(player)
 	if isPlayerFreecamEnabled(player) then
@@ -43,6 +69,8 @@ function isPlayerFreecamEnabled(player)
 	return getElementData(player,"freecamTV:state")
 end
 
+
+
 -- 
 
 local earnings = 0
@@ -62,10 +90,34 @@ addCommandHandler("tv",
 	end
 )
 
+addCommandHandler("movetv",
+	function(player)
+		if getElementData(player, "faction") == 20 then
+			if isTVRunning() then
+				outputChatBox("There is already a TV show running.", player, 255, 0, 0)
+			else
+				-- I like to ... move it!
+				local posX, posY, posZ = getElementPosition(player)
+				local posDim = getElementDimension(player)
+				local posInt = getElementInterior(player)
+				if moveCamera(posX, posY, posZ, posInt, posDim) then
+					for k, v in ipairs( getElementsByType( "player" ) ) do
+						if getElementData(v, "faction") == 20 then
+							outputChatBox("[TV] ".. getPlayerName(player):gsub("_", " ") .. " moved the camera position.", v, 200, 100, 200)
+						end
+					end
+				else
+					outputChatBox("Error!", player, 255, 0,0)
+				end
+			end
+		end
+	end
+)
+
 addCommandHandler("starttv",
 	function(player)
 		if getElementData(player, "faction") == 20 then
-			if setElementDimension(marker, 127) then
+			if not isTVRunning() then
 				outputChatBox("[TV] " .. getPlayerName(player):gsub("_", " ") .. " started a TV Show. (( /tv to watch ))", getRootElement( ), 200, 100, 200)
 				exports.logs:logMessage("(start) " .. getPlayerName(player):gsub("_", " ") .. " started a TV Show.", 20)
 				watching = 0
@@ -80,7 +132,7 @@ addCommandHandler("starttv",
 addCommandHandler("endtv",
 	function(player)
 		if getElementData(player, "faction") == 20 then
-			if setElementDimension(marker, 126) then
+			if isTVRunning() then
 				outputChatBox("[TV] " .. getPlayerName(player):gsub("_", " ") .. " ended the TV Show.", getRootElement( ), 200, 100, 200)
 				
 				for k, v in ipairs( getElementsByType( "player" ) ) do
@@ -104,7 +156,7 @@ addCommandHandler("endtv",
 )
 
 function isTVRunning()
-	return getElementDimension(marker) == 127
+	return not getElementDimension(marker) == 65535
 end
 
 function add( shownto, message )
