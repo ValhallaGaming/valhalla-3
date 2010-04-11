@@ -1,5 +1,7 @@
 strings.German =
 {
+	flag = "de",
+	
 	Logout = "Logout",
 	Languages = "Sprachen",
 	Account = "Account",
