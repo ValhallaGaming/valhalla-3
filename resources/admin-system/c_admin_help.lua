@@ -227,7 +227,9 @@ function adminhelp (sourcePlayer, commandName)
 					-- resource/*
 					{ "/startres", "/startres [resource name]", "starts the resource" },
 					{ "/stopres", "/stopres [resource name]", "stops the resource" },
-					{ "/restartres", "/restartres [resource name]", "restarts the resource" }
+					{ "/restartres", "/restartres [resource name]", "restarts the resource" },
+					{ "/rescheck", "/rescheck", "checks for ceatain down resources and startes them" },
+					{ "/rcs", "/rcs", "check if the resource \"Resource-Keeper\" is running" }
 				},
 				-- level 6: Owner
 				{

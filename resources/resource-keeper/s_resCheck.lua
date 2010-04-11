@@ -37,14 +37,21 @@ function checkRes()
 			end
 		end
 	end
-	setTimer(checkRes, 1800000, 1)
+	setTimer(checkRes, 3600000, 1)
 end
 addEventHandler("onResourceStart", getRootElement(), checkRes)
 
 function runResCheck(admin, command)
-	if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
-		checkRes()
-		outputChatBox("Running Resource Checker.", admin, 0, 255, 0)
+	if (command == "rescheck") then
+		if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
+			outputChatBox("Running Resource Checker:", admin, 0, 255, 0)
+			checkRes()
+		end
+	elseif (command == "rcs") then
+		if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
+			outputChatBox("Resource Keeper is running.", admin, 0, 255, 0)
+		end
 	end
 end
 addCommandHandler("rescheck", runResCheck)
+addCommandHandler("rcs", runResCheck)
