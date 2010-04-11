@@ -20,7 +20,7 @@ addEventHandler("onResourceStart", getResourceRootElement(), timeCheck)
 
 function createStevie()
 
-	stevie = createPed (258, 2510.5732421875, -1679.5458984375, 1249.6678466797)
+	stevie = createPed (258, 2511.619140625, -1680.7958984375, 1249.6678466797)
 	exports.pool:allocateElement(stevie)
 	setPedRotation (stevie, 90)
 	exports['anticheat-system']:changeProtectedElementDataEx(stevie, "rotation", getPedRotation(stevie), false)
@@ -93,7 +93,7 @@ function statement2_S()
 	exports.global:sendLocalText(source, "Steven Pullman says: Sure, sit down. Have you tried the food here? It's f****** unbelievable.", 255, 255, 255, 5) -- Stevies next question
 	
 	-- Set players position and anim so they are sitting opposite Stevie. Freeze them so they can't move until they end the conversation
-	setElementPosition (source, 2510.71484375, -1680.1376953125, 1049.6678466797)
+	setElementPosition (source,  2510.529296875, -1680.796875, 1249.6678466797)
 	setPedRotation (source, 270)
 	exports.global:applyAnimation(source, "INT_OFFICE", "OFF_Sit_Watch", -1, false, false, true)
 	

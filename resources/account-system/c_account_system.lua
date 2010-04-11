@@ -857,7 +857,7 @@ function showCharacterUI(accounts, firstTime, needsEmail)
 		end
 		
 		-- Gender
-		if (gender==nil) then
+		if (tonumber(gender)==0) then
 			gender = "Male"
 		else
 			gender = "Female"
