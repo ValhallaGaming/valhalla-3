@@ -29,7 +29,7 @@ function clearCache(theDimension)
 	outputDebugString("obj-sys: received clear request for dimension " .. theDimension or -1)
 	clearObjects(theDimension)
 	if theDimension then
-		objects[theDimension] = nil
+		objects[ tonumber(theDimension) ] = nil
 	else
 		objects = { }
 	end
