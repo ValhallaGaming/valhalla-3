@@ -29,7 +29,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/forceapp", "/forceapp [player]", "forced the player to reapply at the UCP" },
 					{ "/check", "/check [player]", "retrieves specified player's information" },
 					{ "/stats", "/stats [player]", "shows players vehicle id's, languages etc" },
-					{ "/history", "/history [player]", "checks the admin history of the player" },
+					{ "/history", "/history [player/account]", "checks the admin history of the player, works also when offline." },
 					{ "/auncuff", "/auncuff [player]", "uncuffs the player" },
 					{ "/pmute", "/pmute [player]", "mutes the player" },
 					{ "/togooc", "/togooc", "Toggles OOC on/off" },
@@ -142,7 +142,8 @@ function adminhelp (sourcePlayer, commandName)
 				},
 				-- level 3: Super Admin
 				{
-					{ "/setweather", "/setweather", "change the weather" }
+					{ "/setweather", "/setweather", "change the weather" },
+					{ "/findip", "/findip [player/username/ip]", "shows all accounts the player has" }
 				},
 				-- level 4: Lead Admins
 				{

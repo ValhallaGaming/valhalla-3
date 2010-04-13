@@ -2501,6 +2501,7 @@ function findAltAccIP(thePlayer, commandName, ...)
 						local row = mysql:fetch_assoc(result)
 						local ip = row["ip"] or '0.0.0.0'
 						showIPAlts( thePlayer, ip )
+						mysql:free_result( result )
 						return
 					else
 						-- select by ip
@@ -2510,6 +2511,7 @@ function findAltAccIP(thePlayer, commandName, ...)
 								local row2 = mysql:fetch_assoc(result2)
 								local ip = tonumber( row2["ip"] ) or '0.0.0.0'
 								showIPAlts( thePlayer, ip )
+								mysql:free_result( result2 )
 								return
 							end
 							mysql:free_result( result2 )
@@ -2519,7 +2521,7 @@ function findAltAccIP(thePlayer, commandName, ...)
 				end
 				outputChatBox("Player not found or multiple were found.", thePlayer, 255, 0, 0)
 			else -- select by online player
-				showIPAlts( thePlayer, getPlayerIP(thePlayer) )
+				showIPAlts( thePlayer, getPlayerIP(targetPlayer) )
 			end
 		end
 	end

@@ -98,20 +98,79 @@ end
 addEvent( "showAdminHistory", true )
 addEventHandler( "showAdminHistory", getRootElement(), showAdminHistory )
 
+function showOfflineAdminHistory( gameaccountid )
+	if exports.global:isPlayerAdmin( source ) and tonumber(gameaccountid) then
+		local targetID = gameaccountid
+		local result = mysql:query("SELECT date, action, reason, duration, a.username, user_char FROM adminhistory h LEFT JOIN accounts a ON a.id = h.admin WHERE user = " .. mysql:escape_string(targetID) .. " ORDER BY h.id DESC" )
+		if result then
+			local info = {}
+			local continue = true
+			while continue do
+				local row = mysql:fetch_assoc(result)
+				if not row then break end
+				local record = {}
+				record[1] = row["date"]
+				record[2] = row["action"]
+				record[3] = row["reason"]
+				record[4] = row["duration"]
+				record[5] = row["username"]
+				record[6] = row["user_char"]
+				
+				table.insert( info, record )
+			end
+			triggerClientEvent( source, "cshowAdminHistory", source, info )
+			mysql:free_result( result )
+		else
+			outputDebugString( "admin-system\showOfflineAdminHistory: Error." )
+			outputChatBox( "Failed to retrieve history.", source, 255, 0, 0)
+		end
+	end
+end
+addEvent( "showOfflineAdminHistory", true )
+addEventHandler( "showOfflineAdminHistory", getRootElement(), showOfflineAdminHistory )
+
 addCommandHandler( "history", 
 	function( thePlayer, commandName, ... )
 		if exports.global:isPlayerAdmin( thePlayer ) then
 			if not (...) then
 				outputChatBox("SYNTAX: /" .. commandName .. " [player]", thePlayer, 255, 194, 14)
 			else
-				local targetPlayer = exports.global:findPlayerByPartialNick(thePlayer, table.concat({...},"_"))
-				local logged = getElementData(targetPlayer, "loggedin")
+				local targetPlayer = exports.global:findPlayerByPartialNick(nil, table.concat({...},"_"))
 				if targetPlayer then
+					local logged = getElementData(targetPlayer, "loggedin")
 					if (logged==0) then
 						outputChatBox("Player is not logged in.", thePlayer, 255, 0, 0)
 					else
 						triggerEvent("showAdminHistory", thePlayer, targetPlayer)
 					end
+				else
+					local targetPlayerName = table.concat({...},"_")
+					-- select by charactername
+					local result = mysql:query("SELECT account FROM characters WHERE charactername = '" .. mysql:escape_string(targetPlayerName ) .. "'" )
+					if result then
+						if mysql:num_rows( result ) == 1 then
+							local row = mysql:fetch_assoc(result)
+							local id = row["account"] or '0'
+							triggerEvent("showOfflineAdminHistory", thePlayer, id)
+							mysql:free_result( result )
+							return
+						else
+							-- select by account
+							local result2 = mysql:query("SELECT id FROM accounts WHERE username = '" .. mysql:escape_string( targetPlayerName ) .. "'" )
+							if result2 then
+								if mysql:num_rows( result2 ) == 1 then
+									local row2 = mysql:fetch_assoc(result2)
+									local id = tonumber( row2["id"] ) or '0'
+									triggerEvent("showOfflineAdminHistory", thePlayer, id)
+									mysql:free_result( result2 )
+									return
+								end
+								mysql:free_result( result2 )
+							end
+						end
+						mysql:free_result( result )
+					end
+					outputChatBox("Player not found or multiple were found.", thePlayer, 255, 0, 0)
 				end
 			end
 		end
