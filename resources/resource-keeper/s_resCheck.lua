@@ -52,12 +52,12 @@ addEventHandler("onResourceStart", getResourceRootElement(),
 
 function runResCheck(admin, command)
 	if (command == "rescheck") then
-		if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
+		if (getElementData(admin, "adminlevel") >= 5 or exports.global:isPlayerScripter(admin)) then
 			outputChatBox("Running Resource Checker:", admin, 0, 255, 0)
 			checkRes()
 		end
 	elseif (command == "rcs") then
-		if (exports.global:isPlayerHeadAdmin(admin) or exports.global:isPlayerScripter(admin)) then
+		if (getElementData(admin, "adminlevel") >= 5 or exports.global:isPlayerScripter(admin)) then
 			outputChatBox("Resource Keeper is running.", admin, 0, 255, 0)
 		end
 	end
