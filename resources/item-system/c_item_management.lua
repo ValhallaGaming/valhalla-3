@@ -87,9 +87,9 @@ function getInventorySlots(element)
 		elseif getVehicleType( element ) == "BMX" then
 			return 5
 		elseif getVehicleType( element ) == "Bike" then
-			return 10
+			return 6
 		elseif isTruck( element ) then
-			return 40
+			return 50
 		else
 			return 20
 		end
