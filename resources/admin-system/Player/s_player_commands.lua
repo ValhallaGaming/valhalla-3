@@ -2360,9 +2360,9 @@ addCommandHandler("resetcharacter", resetCharacter)
 
 -- FIND ALT CHARS
 local function showAlts(thePlayer, id)
-	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = " .. mysql:escape_string(id) )
+	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = '" .. mysql:escape_string(id) .. "'" )
 	if result then
-		local name = mysql:query_fetch_assoc("SELECT username, banned FROM accounts WHERE id = " .. mysql:escape_string(id) )
+		local name = mysql:query_fetch_assoc("SELECT username, banned FROM accounts WHERE id = '" .. mysql:escape_string(id) .. "'" )
 		if name then
 			local uname = name["username"]
 			if uname and uname ~= mysql_null() then
@@ -2459,7 +2459,7 @@ end
 addCommandHandler( "findalts", findAltChars )
 
 local function showIPAlts(thePlayer, ip)
-	result = mysql:query("SELECT username,lastlogin,banned,banned_by FROM accounts WHERE ip = " .. mysql:escape_string(ip) )
+	result = mysql:query("SELECT username,lastlogin,banned,banned_by FROM accounts WHERE ip = '" .. mysql:escape_string(ip) .. "'" )
 	if result then
 		local count = 0
 		local continue = true
