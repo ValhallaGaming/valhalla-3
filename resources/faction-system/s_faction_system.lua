@@ -349,7 +349,7 @@ function callbackRemovePlayer(removedPlayerName)
 			end
 			outputChatBox(username .. " removed you from the faction '" .. tostring(theTeamName) .. "'", removedPlayer)
 			setPlayerTeam(removedPlayer, getTeamFromName("Citizen"))
-			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "faction", -1, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "faction", -1)
 			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "dutyskin", -1, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(removedPlayer, "factionleader", 0, false)
 			if getElementData(removedPlayer, "duty") and getElementData(removedPlayer, "duty") > 0 then
