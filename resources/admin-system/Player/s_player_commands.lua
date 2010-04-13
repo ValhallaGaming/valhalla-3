@@ -2362,11 +2362,15 @@ addCommandHandler("resetcharacter", resetCharacter)
 local function showAlts(thePlayer, id)
 	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = " .. mysql:escape_string(id) )
 	if result then
-		local name = mysql:query_fetch_assoc("SELECT username FROM accounts WHERE id = " .. mysql:escape_string(id) )
+		local name = mysql:query_fetch_assoc("SELECT username, banned FROM accounts WHERE id = " .. mysql:escape_string(id) )
 		if name then
 			local uname = name["username"]
 			if uname and uname ~= mysql_null() then
-				outputChatBox( "~-~-~-~-~-~ " .. uname .. " ~-~-~-~-~-~", thePlayer, 255, 194, 14 )
+				if (tonumber(name["banned"])) == 1 then
+					outputChatBox( "WHOIS " .. uname .. ": (BANNED)", thePlayer, 255, 194, 14 )
+				else
+					outputChatBox( "WHOIS " .. uname .. ": ", thePlayer, 255, 194, 14 )
+				end
 			else
 				outputChatBox( " ", thePlayer )
 			end
@@ -2404,7 +2408,7 @@ local function showAlts(thePlayer, id)
 		end
 		mysql:free_result( result )
 	else
-		outputChatBox( "Error #9100 - Report on Forums", thePlayer, 255, 0, 0)
+		outputChatBox( "Error #9102 - Report on Forums", thePlayer, 255, 0, 0)
 	end
 end
 
@@ -2453,6 +2457,75 @@ function findAltChars(thePlayer, commandName, ...)
 	end
 end
 addCommandHandler( "findalts", findAltChars )
+
+local function showIPAlts(thePlayer, ip)
+	result = mysql:query("SELECT username,lastlogin,banned,banned_by FROM accounts WHERE ip = " .. mysql:escape_string(ip) )
+	if result then
+		local count = 0
+		local continue = true
+		while continue do
+			local row = mysql:fetch_assoc(result)
+			if not row then break end
+			count = count + 1
+			if (count == 1) then
+				outputChatBox( " IP Address: " .. ip, thePlayer)
+			end
+			
+			local text = "#" .. count .. ": " .. row["username"]
+			if tonumber( row["banned"] ) == 1 then
+				text = text .. " (Banned by " .. row["banned_by"] .. ")"
+			else
+				text = text .. " (Last login: " .. row["lastlogin"] .. ")"
+			end	
+			outputChatBox( text, thePlayer)
+		end
+		mysql:free_result( result )
+	else
+		outputChatBox( "Error #9101 - Report on Forums", thePlayer, 255, 0, 0)
+	end
+end
+
+function findAltAccIP(thePlayer, commandName, ...)
+	if exports.global:isPlayerSuperAdmin( thePlayer ) then
+		if not (...) then
+			outputChatBox("SYNTAX: /" .. commandName .. " [Partial Player Nick]", thePlayer, 255, 194, 14)
+		else
+			local targetPlayerName = table.concat({...}, "_")
+			local targetPlayer = exports.global:findPlayerByPartialNick(nil, targetPlayerName)
+			
+			if not targetPlayer or getElementData( targetPlayer, "loggedin" ) ~= 1 then
+				-- select by accountname
+				local result = mysql:query("SELECT ip FROM accounts WHERE username = '" .. mysql:escape_string(targetPlayerName ) .. "'" )
+				if result then
+					if mysql:num_rows( result ) == 1 then
+						local row = mysql:fetch_assoc(result)
+						local ip = row["ip"] or '0.0.0.0'
+						showIPAlts( thePlayer, ip )
+						return
+					else
+						-- select by ip
+						local result2 = mysql:query("SELECT ip FROM accounts WHERE ip = '" .. mysql:escape_string( targetPlayerName ) .. "'" )
+						if result2 then
+							if mysql:num_rows( result2 ) == 1 then
+								local row2 = mysql:fetch_assoc(result2)
+								local ip = tonumber( row2["ip"] ) or '0.0.0.0'
+								showIPAlts( thePlayer, ip )
+								return
+							end
+							mysql:free_result( result2 )
+						end
+					end
+					mysql:free_result( result )
+				end
+				outputChatBox("Player not found or multiple were found.", thePlayer, 255, 0, 0)
+			else -- select by online player
+				showIPAlts( thePlayer, getPlayerIP(thePlayer) )
+			end
+		end
+	end
+end
+addCommandHandler( "findip", findAltAccIP )
+
 
 --give player license
 function givePlayerLicense(thePlayer, commandName, targetPlayerName, licenseType)
