@@ -1277,99 +1277,46 @@ function unbanPlayerIP(thePlayer, commandName, ip)
 end
 addCommandHandler("unbanip", unbanPlayerIP, false, false)
 
+local teleportLocations = {
+	-- 			x					y					z			int dim	rot
+	ls = { 		1520.0029296875, 	-1701.2425537109, 	13.546875, 	0, 	0,	275	},
+	sf = { 		-1689.0689697266, 	-536.7919921875, 	18.854997, 	0, 	0,	252	},
+	lv = { 		1691.6801757813, 	1449.1293945313, 	12.765375,	0, 	0,	268	},
+	pc = { 		2253.66796875, 		-85.0478515625, 	28.086093,	0, 	0,	180	},
+	bank = { 	593.32421875, 		-1245.466796875, 	18.083688,	0, 	0,	198	},
+	cityhall = {1484.369140625, 	-1763.861328125, 	18.795755,	0, 	0,	180	},
+	igs = {		1970.248046875, 	-1778.4609375, 		13.546875,	0, 	0,	90	}
+	
+}
+
 function teleportToPresetPoint(thePlayer, commandName, target)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		if not (target) then
-			outputChatBox("SYNTAX: /" .. commandName .. " [LS/SF/LV]", thePlayer, 255, 194, 14)
+			outputChatBox("SYNTAX: /" .. commandName .. " [place]", thePlayer, 255, 194, 14)
 		else
-			target = string.lower(tostring(target))
+			local target = string.lower(tostring(target))
 			
-			if (target=="ls") then -- LOS SANTOS
-				if (isPedInVehicle(thePlayer)) then
-					local veh = getPedOccupiedVehicle(thePlayer)
-					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
-					setElementPosition(veh, 1520.0029296875, -1701.2425537109, 16.546875)
-					setVehicleRotation(veh, 0, 0, 275.82763671875)
-					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
-					setElementDimension(veh, 0)
-					setElementInterior(veh, 0)
-					
-					setElementDimension(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-				else
-					setElementPosition(thePlayer, 1520.0029296875, -1701.2425537109, 13.546875)
-					setPedRotation(thePlayer, 275.82763671875)
-					setElementDimension(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-				end
-				outputChatBox("Teleported to Los Santos!", thePlayer, 0, 255, 0)
-			elseif (target=="sf") then -- SAN FIERRO
+			if (teleportLocations[target] ~= nil) then
 				if (isPedInVehicle(thePlayer)) then
 					local veh = getPedOccupiedVehicle(thePlayer)
 					setVehicleTurnVelocity(veh, 0, 0, 0)
-					setElementPosition(veh, -1689.0689697266, -536.7919921875, 18.854997634888)
-					setVehicleRotation(veh, 0, 0, 252.35975646973)
+					setElementPosition(veh, teleportLocations[target][1], teleportLocations[target][2], teleportLocations[target][3])
+					setVehicleRotation(veh, 0, 0, teleportLocations[target][6])
 					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
 					
-					setElementDimension(veh, 0)
-					setElementInterior(veh, 0)
-					
-					setElementDimension(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-				else
-					setElementPosition(thePlayer, -1689.0689697266, -536.7919921875, 15.854997634888)
-					setPedRotation(thePlayer, 252.35975646973)
-					setElementDimension(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-				end
-				outputChatBox("Teleported to San Fierro!", thePlayer, 0, 255, 0)
-			elseif (target=="lv") then -- LAS VENTURAS
-				if (isPedInVehicle(thePlayer)) then
-					local veh = getPedOccupiedVehicle(thePlayer)
-					setVehicleTurnVelocity(veh, 0, 0, 0)
-					setElementPosition(veh, 1691.6801757813, 1449.1293945313, 12.765375137329)
-					setVehicleRotation(veh, 0, 0, 268.20239257813)
-					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
-					setElementDimension(veh, 0)
-					setElementInterior(veh, 0)
-					
-					setElementDimension(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-				else
-					setElementPosition(thePlayer, 1691.6801757813, 1449.1293945313, 12.765375137329)
-					setPedRotation(thePlayer, 268.20239257813)
-					setElementDimension(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-				end
-				outputChatBox("Teleported to Las Venturas!", thePlayer, 0, 255, 0)
-			elseif (target=="pc") then
-				if (isPedInVehicle(thePlayer)) then
-					local veh = getPedOccupiedVehicle(thePlayer)
-					setVehicleTurnVelocity(veh, 0, 0, 0)
-					setElementPosition(veh, 2253.66796875, -85.0478515625, 28.086099624634)
-					setVehicleRotation(veh, 0, 0, 180)
-					setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
-					
-					setElementDimension(veh, 0)
-					setElementInterior(veh, 0)
+					setElementDimension(veh, teleportLocations[target][5])
+					setElementInterior(veh, teleportLocations[target][4])
 
-					setElementDimension(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
+					setElementDimension(thePlayer, teleportLocations[target][5])
+					setElementInterior(thePlayer, teleportLocations[target][4])
+					setCameraInterior(thePlayer, teleportLocations[target][4])
 				else
-					setElementPosition(thePlayer, 2253.66796875, -85.0478515625, 28.086099624634)
-					setPedRotation(thePlayer, 180)
-					setElementDimension(thePlayer, 0)
-					setCameraInterior(thePlayer, 0)
-					setElementInterior(thePlayer, 0)
+					setElementPosition(thePlayer, teleportLocations[target][1], teleportLocations[target][2], teleportLocations[target][3])
+					setPedRotation(thePlayer, teleportLocations[target][6])
+					setElementDimension(thePlayer, teleportLocations[target][5])
+					setCameraInterior(thePlayer, teleportLocations[target][4])
+					setElementInterior(thePlayer, teleportLocations[target][4])
 				end
-				outputChatBox("Teleported to Palomino Creek!", thePlayer, 0, 255, 0)
 			else
 				outputChatBox("Invalid Place Entered!", thePlayer, 255, 0, 0)
 			end
