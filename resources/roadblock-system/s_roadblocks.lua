@@ -92,5 +92,5 @@ addCommandHandler("rbs", onRoadblockStart, false, false)
 
 function isRoadblockEditAllowed(thePlayer)
 	local duty = getElementData(thePlayer, "duty")
-	return duty == 1 or duty == 2 or duty == 3 or duty == 6
+	return duty == 1 or duty == 2 or duty == 3 or duty == 4 or duty == 5 or duty == 6
 end
