@@ -43,9 +43,12 @@ function checkRes(res)
 			end
 		end
 	end
-	setTimer(checkRes, 3600000, 1)
 end
-addEventHandler("onResourceStart", getResourceRootElement(), checkRes)
+addEventHandler("onResourceStart", getResourceRootElement(),
+	function()
+		setTimer(checkRes, 3600000, 0)
+	end
+)
 
 function runResCheck(admin, command)
 	if (command == "rescheck") then
