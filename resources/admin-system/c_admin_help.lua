@@ -191,8 +191,9 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/setinteriorentrance", "/setinteriorentrance  [Interior ID]","changes an interior entrance marker" },
 					
 					-- factions/*
-					{ "/setfactionleader", "/setfactionleader [id] [factionid]", "puts a player into a faction and makes the player leader" },
+					{ "/setfactionleader", "/setfactionleader [player] [factionid]", "puts a player into a faction and makes the player leader" },
 					{ "/setvehfaction", "/setfactionveh [carid] [factionid]", "sets a vehicle as faction or not" },
+					{ "/setfactionrank", "/setfactionrank [player] [rank]", "sets a player to a specific faction rank" },
 					
 					-- fuelpoints/*
 					{ "/addfuelpoint", "/addfuelpoint", "creates a new fuelpoint" },

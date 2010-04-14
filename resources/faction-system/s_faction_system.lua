@@ -633,6 +633,38 @@ function adminSetFactionLeader(thePlayer, commandName, partialNick, factionID)
 end
 addCommandHandler("setfactionleader", adminSetFactionLeader, false, false)
 
+function adminSetFactionRank(thePlayer, commandName, partialNick, factionRank)
+	if (exports.global:isPlayerLeadAdmin(thePlayer)) then
+		factionRank = math.ceil(tonumber(factionRank) or -1)
+		if not (partialNick) or not (factionRank)  then
+			outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Name] [Faction Rank, 1-15]", thePlayer, 255, 194, 14)
+		elseif factionRank >= 1 and factionRank <= 15 then
+			local targetPlayer, targetPlayerNick = exports.global:findPlayerByPartialNick(thePlayer, partialNick)
+			
+			if targetPlayer then
+				local theTeam = getPlayerTeam(targetPlayer)
+				if not theTeam or getTeamName( theTeam ) == "Citizen" then
+					outputChatBox("Player is not in a faction.", thePlayer, 255, 0, 0)
+					return
+				end
+				
+				if mysql:query_free("UPDATE characters SET faction_rank = " .. factionRank .. " WHERE id = " .. getElementData(targetPlayer, "dbid")) then
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "factionrank", factionRank)
+					
+					outputChatBox("Player " .. targetPlayerNick .. " is now on rank " .. factionRank .. ".", thePlayer, 0, 255, 0)
+					
+					exports.logs:logMessage("[FACTIONRANK] " .. getPlayerName( thePlayer ) .. " set " .. getPlayerName( targetPlayer ) .. " to rank " .. factionRank, 15)
+				else
+					outputChatBox("Error #125151 - Report on Mantis.", thePlayer, 255, 0, 0)
+				end
+			end
+		else
+			outputChatBox( "Invalid Rank - valid ones are 1 to 15", thePlayer, 255, 0, 0 )
+		end
+	end
+end
+addCommandHandler("setfactionrank", adminSetFactionRank, false, false)
+
 function adminDeleteFaction(thePlayer, commandName, factionID)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		if not (factionID)  then
