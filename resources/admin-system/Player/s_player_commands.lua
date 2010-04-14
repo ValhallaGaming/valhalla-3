@@ -8,6 +8,14 @@ mysql = exports.mysql
 -- 4: warn
 -- 5: auto-ban
 
+--
+
+local getPlayerName_ = getPlayerName
+getPlayerName = function( ... )
+	s = getPlayerName_( ... )
+	return s and s:gsub( "_", " " ) or s
+end
+
 -- wardrobe temp fix..
 function fixWardrobe(thePlayer)
 	if ( getElementData(thePlayer, "loggedin") == 1 ) then
