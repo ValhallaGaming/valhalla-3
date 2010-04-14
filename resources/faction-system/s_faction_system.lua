@@ -1106,3 +1106,9 @@ function timeSaved(thePlayer)
 	end
 end
 addCommandHandler("timesaved", timeSaved)
+
+function hideFactionMenu()
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 0, true)
+end
+addEvent("factionmenu:hide", true)
+addEventHandler("factionmenu:hide", getRootElement(), hideFactionMenu)
