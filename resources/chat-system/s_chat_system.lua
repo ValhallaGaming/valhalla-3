@@ -1393,7 +1393,21 @@ function newsMessage(thePlayer, commandName, ...)
 				local message = table.concat({...}, " ")
 				local name = getPlayerName(thePlayer)
 				
-				exports.logs:logMessage("[IC: News] " .. name .. ": " .. message, 18)
+				local abuse = true
+				if (getElementDimension(thePlayer) == 9902) then
+					abuse = false
+				end
+				for index, nearbyVehicle in ipairs( exports.global:getNearbyElements(thePlayer, "vehicle", 25) ) do
+					if (getElementModel(nearbyVehicle) == 582) then
+					 abuse = false
+					end
+				end
+				
+				if (abuse) then
+					exports.logs:logMessage("[IC: News] " .. name .. ": " .. message, 18)
+				else
+					exports.logs:logMessage("[A" .. getElementDimension(thePlayer) .. "][IC: News] " .. name .. ": " .. message, 18)
+				end
 				
 				for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
 						
