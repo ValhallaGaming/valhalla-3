@@ -65,6 +65,7 @@ function showFactionMenu(motd, memberUsernames, memberRanks, memberLeaders, memb
 			local theRank = tonumber(memberRanks[k])
 			local rankName = factionRanks[theRank]
 			guiGridListSetItemText(gMemberGrid, row, colRank, tostring(rankName), false, false)
+			guiGridListSetItemData(gMemberGrid, row, colRank, tostring(theRank))
 			
 			local login = "Never"
 			if (not memberLastLogin[k]) then
@@ -509,28 +510,23 @@ end
 
 function btPromotePlayer(button, state)
 	if (button=="left") and (state=="up") and (source==gButtonPromote) then
-		local playerName = string.gsub(guiGridListGetItemText(gMemberGrid, guiGridListGetSelectedItem(gMemberGrid), 1), " ", "_")
-		local currentRank = guiGridListGetItemText(gMemberGrid, guiGridListGetSelectedItem(gMemberGrid), 2)
+		local row = guiGridListGetSelectedItem(gMemberGrid)
+		local playerName = string.gsub(guiGridListGetItemText(gMemberGrid, row, 1), " ", "_")
+		local currentRank = guiGridListGetItemText(gMemberGrid, row, 2)
 		
 		if (playerName~="") then
-			local row, col = guiGridListGetSelectedItem(gMemberGrid)
-			
-			local currRankNumber
-			for k, v in ipairs(arrFactionRanks) do
-				if (v==currentRank) then
-					currRankNumber = k
-				end
-			end
-			
+			local currRankNumber = tonumber( guiGridListGetItemData(gMemberGrid, row, colRank) )
 			if (currRankNumber==15) then
 				outputChatBox(playerName .. " is already at the highest rank.", 255, 0, 0)
 			else
-				local row = guiGridListGetSelectedItem(gMemberGrid)
 				guiGridListSetSelectedItem(gMemberGrid, 0, 0)
-				guiGridListSetItemText(gMemberGrid, row, tonumber(colRank), arrFactionRanks[currRankNumber+1], false, false)
-				guiGridListSetItemText(gMemberGrid, row, tonumber(colWage), arrFactionWages[currRankNumber+1], false, true)
+				guiGridListSetItemText(gMemberGrid, row, colRank, arrFactionRanks[currRankNumber+1], false, false)
+				if colWage then
+					guiGridListSetItemText(gMemberGrid, row, colWage, arrFactionWages[currRankNumber+1], false, true)
+				end
+				guiGridListSetItemData(gMemberGrid, row, colRank, tostring(currRankNumber+1))
 				triggerServerEvent("cguiPromotePlayer", getLocalPlayer(), playerName, currRankNumber+1, arrFactionRanks[currRankNumber], arrFactionRanks[currRankNumber+1])
-				guiGridListSetSelectedItem(gMemberGrid, row, tonumber(colRank))
+				guiGridListSetSelectedItem(gMemberGrid, row, colRank)
 			end
 		else
 			outputChatBox("Please select a member to promote.")
@@ -540,28 +536,23 @@ end
 
 function btDemotePlayer(button, state)
 	if (button=="left") and (state=="up") and (source==gButtonDemote) then
-		local playerName = string.gsub(guiGridListGetItemText(gMemberGrid, guiGridListGetSelectedItem(gMemberGrid), 1), " ", "_")
-		local currentRank = guiGridListGetItemText(gMemberGrid, guiGridListGetSelectedItem(gMemberGrid), 2)
+		local row = guiGridListGetSelectedItem(gMemberGrid)
+		local playerName = string.gsub(guiGridListGetItemText(gMemberGrid, row, 1), " ", "_")
+		local currentRank = guiGridListGetItemText(gMemberGrid, row, 2)
 		
 		if (playerName~="") then
-			local row, col = guiGridListGetSelectedItem(gMemberGrid)
-			
-			local currRankNumber
-			for k, v in ipairs(arrFactionRanks) do
-				if (v==currentRank) then
-					currRankNumber = k
-				end
-			end
-			
+			local currRankNumber = tonumber( guiGridListGetItemData(gMemberGrid, row, colRank) )
 			if (currRankNumber==1) then
 				outputChatBox(playerName .. " is already at the lowest rank.", 255, 0, 0)
 			else
-				local row = guiGridListGetSelectedItem(gMemberGrid)
 				guiGridListSetSelectedItem(gMemberGrid, 0, 0)
-				guiGridListSetItemText(gMemberGrid, row, tonumber(colRank), arrFactionRanks[currRankNumber-1], false, false)
-				guiGridListSetItemText(gMemberGrid, row, tonumber(colWage), arrFactionWages[currRankNumber-1], false, true)
+				guiGridListSetItemText(gMemberGrid, row, colRank, arrFactionRanks[currRankNumber-1], false, false)
+				if colWage then
+					guiGridListSetItemText(gMemberGrid, row, colWage, arrFactionWages[currRankNumber-1], false, true)
+				end
+				guiGridListSetItemData(gMemberGrid, row, colRank, tostring(currRankNumber-1))
 				triggerServerEvent("cguiDemotePlayer", getLocalPlayer(), playerName, currRankNumber-1, arrFactionRanks[currRankNumber], arrFactionRanks[currRankNumber-1])
-				guiGridListSetSelectedItem(gMemberGrid, row, tonumber(colRank))
+				guiGridListSetSelectedItem(gMemberGrid, row, colRank)
 			end
 		else
 			outputChatBox("Please select a member to demote.")
