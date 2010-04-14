@@ -3,11 +3,11 @@ mysql = exports.mysql
 -- ////////////////////////////////////
 -- //			MYSQL				 //
 -- ////////////////////////////////////		
-sqlUsername = exports.mysql:getMySQLUsername()
-sqlPassword = exports.mysql:getMySQLPassword()
-sqlDB = exports.mysql:getMySQLDBName()
-sqlHost = exports.mysql:getMySQLHost()
-sqlPort = exports.mysql:getMySQLPort()
+sqlUsername = mysql:getMySQLUsername()
+sqlPassword = mysql:getMySQLPassword()
+sqlDB = mysql:getMySQLDBName()
+sqlHost = mysql:getMySQLHost()
+sqlPort = mysql:getMySQLPort()
 
 handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
 
@@ -35,14 +35,13 @@ addEventHandler("onResourceStop", getResourceRootElement(getThisResource()), clo
 -- ////////////////////////////////////
 
 local unemployedPay = 150
-local result = mysql_query( handler, "SELECT value FROM settings WHERE name = 'welfare'" )
+local result = mysql:query_fetch_assoc( "SELECT value FROM settings WHERE name = 'welfare'" )
 if result then
-	if mysql_num_rows( result ) == 0 then
-		mysql_free_result( mysql_query( handler, "INSERT INTO settings (name, value) VALUES ('welfare', " .. unemployedPay .. ")" ) )
+	if not result.value then
+		mysql:query_free( "INSERT INTO settings (name, value) VALUES ('welfare', " .. unemployedPay .. ")" )
 	else
-		unemployedPay = tonumber( mysql_result( result, 1, 1 ) ) or 150
+		unemployedPay = tonumber( result.value ) or 150
 	end
-	mysql_free_result( result )
 end
 result = nil
 
@@ -112,7 +111,7 @@ function loadAllFactions(res)
 		local players = exports.pool:getPoolElementsByType("player")
 		for k, thePlayer in ipairs(players) do
 			local username = getPlayerName(thePlayer)
-			local safeusername = mysql_escape_string(handler, username)
+			local safeusername = mysql:escape_string(username)
 			
 			local result = mysql_query(handler, "SELECT faction_id FROM characters WHERE charactername='" .. safeusername .. "' LIMIT 1")
 			if (result) then
@@ -246,7 +245,7 @@ function callbackUpdateRanks(ranks, wages)
 	local factionID = getElementData(theTeam, "id")
 	
 	for key, value in ipairs(ranks) do
-		ranks[key] = mysql_escape_string(handler, ranks[key])
+		ranks[key] = mysql:escape_string(ranks[key])
 	end
 	
 	if (wages) then
@@ -254,13 +253,11 @@ function callbackUpdateRanks(ranks, wages)
 			wages[key] = tonumber(wages[key]) or 0
 		end
 		
-		local update = mysql_query(handler, "UPDATE factions SET wage_1='" .. wages[1] .. "', wage_2='" .. wages[2] .. "', wage_3='" .. wages[3] .. "', wage_4='" .. wages[4] .. "', wage_5='" .. wages[5] .. "', wage_6='" .. wages[6] .. "', wage_7='" .. wages[7] .. "', wage_8='" .. wages[8] .. "', wage_9='" .. wages[9] .. "', wage_10='" .. wages[10] .. "', wage_11='" .. wages[11] .. "', wage_12='" .. wages[12] .. "', wage_13='" .. wages[13] .. "', wage_14='" .. wages[14] .. "', wage_15='" .. wages[15] .. "' WHERE id='" .. factionID .. "'")
-		mysql_free_result(update)
+		mysql:query_free("UPDATE factions SET wage_1='" .. wages[1] .. "', wage_2='" .. wages[2] .. "', wage_3='" .. wages[3] .. "', wage_4='" .. wages[4] .. "', wage_5='" .. wages[5] .. "', wage_6='" .. wages[6] .. "', wage_7='" .. wages[7] .. "', wage_8='" .. wages[8] .. "', wage_9='" .. wages[9] .. "', wage_10='" .. wages[10] .. "', wage_11='" .. wages[11] .. "', wage_12='" .. wages[12] .. "', wage_13='" .. wages[13] .. "', wage_14='" .. wages[14] .. "', wage_15='" .. wages[15] .. "' WHERE id='" .. factionID .. "'")
 		exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "wages", wages, false)
 	end
 	
-	local query = mysql_query(handler, "UPDATE factions SET rank_1='" .. ranks[1] .. "', rank_2='" .. ranks[2] .. "', rank_3='" .. ranks[3] .. "', rank_4='" .. ranks[4] .. "', rank_5='" .. ranks[5] .. "', rank_6='" .. ranks[6] .. "', rank_7='" .. ranks[7] .. "', rank_8='" .. ranks[8] .. "', rank_9='" .. ranks[9] .. "', rank_10='" .. ranks[10] .. "', rank_11='" .. ranks[11] .. "', rank_12='" .. ranks[12] .. "', rank_13='" .. ranks[13] .. "', rank_14='" .. ranks[14] .. "', rank_15='" .. ranks[15] .. "' WHERE id='" .. factionID .. "'")
-	mysql_free_result(query)
+	mysql:query_free("UPDATE factions SET rank_1='" .. ranks[1] .. "', rank_2='" .. ranks[2] .. "', rank_3='" .. ranks[3] .. "', rank_4='" .. ranks[4] .. "', rank_5='" .. ranks[5] .. "', rank_6='" .. ranks[6] .. "', rank_7='" .. ranks[7] .. "', rank_8='" .. ranks[8] .. "', rank_9='" .. ranks[9] .. "', rank_10='" .. ranks[10] .. "', rank_11='" .. ranks[11] .. "', rank_12='" .. ranks[12] .. "', rank_13='" .. ranks[13] .. "', rank_14='" .. ranks[14] .. "', rank_15='" .. ranks[15] .. "' WHERE id='" .. factionID .. "'")
 	exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "ranks", ranks, false)
 	
 	outputChatBox("Faction information updated successfully.", source, 0, 255, 0)
@@ -310,15 +307,11 @@ function callbackUpdateMOTD(motd)
 	local theTeam = getPlayerTeam(source)
 	
 	if (faction~=-1) then
-		local safemotd = mysql_escape_string(handler, motd)
-		local query = mysql_query(handler, "UPDATE factions SET motd='" .. tostring(safemotd) .. "' WHERE id='" .. faction .. "'")
-
-		if (query) then
-			mysql_free_result(query)
+		if exports.mysql:query_free("UPDATE factions SET motd='" .. tostring(mysql:escape_string(motd)) .. "' WHERE id='" .. faction .. "'") then
 			outputChatBox("You changed your faction's MOTD to '" .. motd .. "'", source, 0, 255, 0)
-			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", safemotd, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", motd, false)
 		else
-			outputChatBox("Error 300000 - Ensure your MOTD does not include characters such as '@!,.", source, 255, 0, 0)
+			outputChatBox("Error 300000 - Report on Mantis.", source, 255, 0, 0)
 		end
 	end
 end
@@ -326,12 +319,7 @@ addEvent("cguiUpdateMOTD", true )
 addEventHandler("cguiUpdateMOTD", getRootElement(), callbackUpdateMOTD)
 
 function callbackRemovePlayer(removedPlayerName)
-	local safename = mysql_escape_string(handler, removedPlayerName)
-	
-	local query = mysql_query(handler, "UPDATE characters SET faction_id='-1', faction_leader='0', faction_rank='1', dutyskin = 0, duty = 0 WHERE charactername='" .. safename .. "'")
-	
-	if (query) then
-		mysql_free_result(query)
+	if mysql:query_free("UPDATE characters SET faction_id='-1', faction_leader='0', faction_rank='1', dutyskin = 0, duty = 0 WHERE charactername='" .. mysql:escape_string(removedPlayerName) .. "'") then
 		local theTeam = getPlayerTeam(source)
 		local theTeamName = "None"
 		if (theTeam) then
@@ -376,12 +364,7 @@ function callbackToggleLeader(playerName, isLeader)
 	
 	if (isLeader) then -- Make player a leader
 		local username = getPlayerName(source)
-		local safename = mysql_escape_string(handler, playerName)
-		
-		local query = mysql_query(handler, "UPDATE characters SET faction_leader='1' WHERE charactername='" .. safename .. "'")
-		
-		if (query) then
-			mysql_free_result(query)
+		if mysql:query_free("UPDATE characters SET faction_leader='1' WHERE charactername='" .. mysql:escape_string(playerName) .. "'") then
 			exports.irc:sendMessage("[SCRIPT] " .. username .. " promoted " .. tostring(playerName) .. " to leader.")
 			
 			-- Send message to everyone in the faction
@@ -400,12 +383,7 @@ function callbackToggleLeader(playerName, isLeader)
 		end
 	else
 		local username = getPlayerName(source)
-		local safename = mysql_escape_string(handler, playerName)
-		
-		local query = mysql_query(handler, "UPDATE characters SET faction_leader='0' WHERE charactername='" .. safename .. "'")
-		
-		if (query) then
-			mysql_free_result(query)
+		if mysql:query_free("UPDATE characters SET faction_leader='0' WHERE charactername='" .. mysql:escape_string(playerName) .. "'") then
 			exports.irc:sendMessage("[SCRIPT] " .. username .. " demoted " .. tostring(playerName) .. " to member.")
 			
 			local thePlayer = getPlayerFromName(playerName)
@@ -432,12 +410,7 @@ addEventHandler("cguiToggleLeader", getRootElement(), callbackToggleLeader)
 
 function callbackPromotePlayer(playerName, rankNum, oldRank, newRank)
 	local username = getPlayerName(source)
-	local safename = mysql_escape_string(handler, playerName)
-	
-	local query = mysql_query(handler, "UPDATE characters SET faction_rank='" .. rankNum .. "' WHERE charactername='" .. safename .. "'")
-	
-	if (query) then
-		mysql_free_result(query)
+	if mysql:query_free("UPDATE characters SET faction_rank='" .. rankNum .. "' WHERE charactername='" .. mysql:escape_string(playerName) .. "'") then
 		local thePlayer = getPlayerFromName(playerName)
 		if(thePlayer) then -- Player is online, set his rank
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", rankNum)
@@ -460,12 +433,9 @@ addEventHandler("cguiPromotePlayer", getRootElement(), callbackPromotePlayer)
 
 function callbackDemotePlayer(playerName, rankNum, oldRank, newRank)
 	local username = getPlayerName(source)
-	local safename = mysql_escape_string(handler, playerName)
+	local safename = mysql:escape_string(playerName)
 	
-	local query = mysql_query(handler, "UPDATE characters SET faction_rank='" .. rankNum .. "' WHERE charactername='" .. safename .. "'")
-	
-	if (query) then
-		mysql_free_result(query)
+	if mysql:query_free("UPDATE characters SET faction_rank='" .. rankNum .. "' WHERE charactername='" .. safename .. "'") then
 		local thePlayer = getPlayerFromName(playerName)
 		if(thePlayer) then -- Player is online, tell them
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", rankNum)
@@ -488,14 +458,11 @@ addEventHandler("cguiDemotePlayer", getRootElement(), callbackDemotePlayer)
 
 function callbackQuitFaction()
 	local username = getPlayerName(source)
-	local safename = mysql_escape_string(handler, username)
+	local safename = mysql:escape_string(username)
 	local theTeam = getPlayerTeam(source)
 	local theTeamName = getTeamName(theTeam)
 	
-	local query = mysql_query(handler, "UPDATE characters SET faction_id='-1', faction_leader='0', dutyskin = -1, duty = 0 WHERE charactername='" .. safename .. "'")
-	
-	if (query) then
-		mysql_free_result(query)
+	if mysql:query_free("UPDATE characters SET faction_id='-1', faction_leader='0', dutyskin = -1, duty = 0 WHERE charactername='" .. safename .. "'") then
 		outputChatBox("You quit the faction '" .. theTeamName .. "'.", source)
 		
 		local newTeam = getTeamFromName("Citizen")
@@ -527,12 +494,9 @@ function callbackInvitePlayer(invitedPlayer)
 	local faction = tonumber(getElementData(source, "faction"))
 
 	local invitedPlayerNick = getPlayerName(invitedPlayer)
-	local safename = mysql_escape_string(handler, invitedPlayerNick)
+	local safename = mysql:escape_string(invitedPlayerNick)
 	
-	local query = mysql_query(handler, "UPDATE characters SET faction_leader = 0, faction_id = " .. faction .. ", faction_rank = 1, dutyskin = -1 WHERE charactername='" .. safename .. "'")
-	
-	if (query) then
-		mysql_free_result(query)
+	if mysql:query_free("UPDATE characters SET faction_leader = 0, faction_id = " .. faction .. ", faction_rank = 1, dutyskin = -1 WHERE charactername='" .. safename .. "'") then
 		local theTeam = getPlayerTeam(source)
 		local theTeamName = getTeamName(theTeam)
 		
@@ -569,15 +533,11 @@ function createFaction(thePlayer, commandName, factionType, ...)
 			
 			local theTeam = createTeam(tostring(factionName))
 			if theTeam then
-				local query = mysql_query(handler, "INSERT INTO factions SET name='" .. mysql_escape_string(handler, factionName) .. "', bankbalance='0', type='" .. mysql_escape_string(handler, factionType) .. "'")
-				
-				if (query) then
-					local id = mysql_insert_id(handler)
-					mysql_free_result(query)
+				if mysql:query_free("INSERT INTO factions SET name='" .. mysql:escape_string(factionName) .. "', bankbalance='0', type='" .. mysql:escape_string(factionType) .. "'") then
+					local id = mysql:insert_id()
 					exports.pool:allocateElement(theTeam, id)
 					
-					query = mysql_query(handler, "UPDATE factions SET rank_1='Dynamic Rank #1', rank_2='Dynamic Rank #2', rank_3='Dynamic Rank #3', rank_4='Dynamic Rank #4', rank_5='Dynamic Rank #5', rank_6='Dynamic Rank #6', rank_7='Dynamic Rank #7', rank_8='Dynamic Rank #8', rank_9='Dynamic Rank #9', rank_10='Dynamic Rank #10', rank_11='Dynamic Rank #11', rank_12='Dynamic Rank #12', rank_13='Dynamic Rank #13', rank_14='Dynamic Rank #14', rank_15='Dynamic Rank #15', motd='Welcome to the faction.' WHERE id='" .. id .. "'")
-					mysql_free_result(query)
+					mysql:query_free("UPDATE factions SET rank_1='Dynamic Rank #1', rank_2='Dynamic Rank #2', rank_3='Dynamic Rank #3', rank_4='Dynamic Rank #4', rank_5='Dynamic Rank #5', rank_6='Dynamic Rank #6', rank_7='Dynamic Rank #7', rank_8='Dynamic Rank #8', rank_9='Dynamic Rank #9', rank_10='Dynamic Rank #10', rank_11='Dynamic Rank #11', rank_12='Dynamic Rank #12', rank_13='Dynamic Rank #13', rank_14='Dynamic Rank #14', rank_15='Dynamic Rank #15', motd='Welcome to the faction.' WHERE id='" .. id .. "'")
 					outputChatBox("Faction " .. factionName .. " created with ID #" .. id .. ".", thePlayer, 0, 255, 0)
 					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "type", tonumber(factionType))
 					exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "id", tonumber(id))
@@ -614,11 +574,10 @@ function adminRenameFaction(thePlayer, commandName, factionID, ...)
 				local theTeam = exports.pool:getElement("team", factionID)
 				if (theTeam) then
 					local factionName = table.concat({...}, " ")
-					local updated = mysql_query(handler, "UPDATE factions SET name='" .. mysql_escape_string(handler, factionName) .. "' WHERE id='" .. factionID .. "'")
+					mysql:query_free("UPDATE factions SET name='" .. mysql:escape_string(factionName) .. "' WHERE id='" .. factionID .. "'")
 					
 					setTeamName(theTeam, factionName)
 					
-					mysql_free_result(updated)
 					outputChatBox("Faction #" .. factionID .. " was renamed to " .. factionName .. ".", thePlayer, 0, 255, 0)
 				else
 					outputChatBox("Invalid Faction ID.", thePlayer, 255, 0, 0)
@@ -645,12 +604,8 @@ function adminSetPlayerFaction(thePlayer, commandName, partialNick, factionID)
 					outputChatBox("Invalid Faction ID.", thePlayer, 255, 0, 0)
 					return
 				end
-
-				local query = mysql_query(handler, "UPDATE characters SET faction_leader = 0, faction_id = " .. factionID .. ", faction_rank = 1, duty = 0, dutyskin = -1 WHERE id=" .. getElementData(targetPlayer, "dbid"))
 				
-				if (query) then
-					mysql_free_result(query)
-				
+				if mysql:query_free("UPDATE characters SET faction_leader = 0, faction_id = " .. factionID .. ", faction_rank = 1, duty = 0, dutyskin = -1 WHERE id=" .. getElementData(targetPlayer, "dbid")) then
 					setPlayerTeam(targetPlayer, theTeam)
 					if factionID > 0 then
 						exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "faction", factionID)
@@ -703,10 +658,7 @@ function adminSetFactionLeader(thePlayer, commandName, partialNick, factionID)
 					return
 				end
 				
-				local query = mysql_query(handler, "UPDATE characters SET faction_leader = 1, faction_id = " .. tonumber(factionID) .. ", faction_rank = 1, dutyskin = -1, duty = 0 WHERE id = " .. getElementData(targetPlayer, "dbid"))
-				
-				if (query) then
-					mysql_free_result(query)
+				if mysql:query_free("UPDATE characters SET faction_leader = 1, faction_id = " .. tonumber(factionID) .. ", faction_rank = 1, dutyskin = -1, duty = 0 WHERE id = " .. getElementData(targetPlayer, "dbid")) then
 					setPlayerTeam(targetPlayer, theTeam)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "faction", factionID, false)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "factionrank", 1)
@@ -745,9 +697,8 @@ function adminDeleteFaction(thePlayer, commandName, factionID)
 						outputChatBox("So you did it! HA! Logged. Now stop deleting factions needed for the script. -Mount", thePlayer, 255, 0, 0)
 						exports.logs:logMessage("[BANKFACTION] " .. getPlayerName( thePlayer ) .. " tried to delete faction " .. getTeamName(theTeam) .. " (#" .. factionID .. ")", 15)
 					else
-						local deleted = mysql_query(handler, "DELETE FROM factions WHERE id='" .. factionID .. "'")
+						mysql:query_free("DELETE FROM factions WHERE id='" .. factionID .. "'")
 						
-						mysql_free_result(deleted)
 						outputChatBox("Faction #" .. factionID .. " was deleted.", thePlayer, 0, 255, 0)
 						exports.logs:logMessage("[FACTION] " .. getPlayerName( thePlayer ) .. " deleted faction " .. getTeamName(theTeam) .. " (#" .. factionID .. ")", 15)
 						local civTeam = getTeamFromName("Citizen")
@@ -842,7 +793,7 @@ function setFactionBudget(thePlayer, commandName, factionID, amount)
 						if exports.global:takeMoney(getPlayerTeam(thePlayer), amount) then
 							exports.global:giveMoney(theTeam, amount)
 							outputChatBox("You added $" .. amount .. " to the budget of '" .. getTeamName(theTeam) .. "' (Total: " .. exports.global:getMoney(theTeam) .. ").", thePlayer, 255, 194, 14)
-							mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. -getElementData(getPlayerTeam(thePlayer), "id") .. ", " .. -getElementData(theTeam, "id") .. ", " .. amount .. ", '', 8)" ) )
+							mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. -getElementData(getPlayerTeam(thePlayer), "id") .. ", " .. -getElementData(theTeam, "id") .. ", " .. amount .. ", '', 8)" )
 						else
 							outputChatBox("You can't afford this.", thePlayer, 255, 194, 14)
 						end
@@ -891,10 +842,11 @@ function setWelfare(thePlayer, commandName, amount)
 		local amount = tonumber( amount )
 		if not amount or amount <= 0 then
 			outputChatBox("SYNTAX: /" .. commandName .. " [Money]", thePlayer, 255, 194, 14)
-		else
+		elseif mysql:query_free( "UPDATE settings SET value = " .. unemployedPay .. " WHERE name = 'welfare'" ) then
 			unemployedPay = amount
 			outputChatBox("New Welfare is $" .. unemployedPay .. "/payday", thePlayer, 0, 255, 0)
-			mysql_free_result( mysql_query( handler, "UPDATE settings SET value = " .. unemployedPay .. " WHERE name = 'welfare'" ) )
+		else
+			outputChatBox("Error 129314 - Report on Mantis.", thePlayer, 255, 0, 0)
 		end
 	end
 end
@@ -983,7 +935,7 @@ function payWage(player, pay, faction, tax)
 	end
 	
 	local interest = math.ceil(interestrate * bankmoney)
-	mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (-57, " .. getElementData(player, "dbid") .. ", " .. interest .. ", 'BANKINTEREST', 6)" ) )
+	mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (-57, " .. getElementData(player, "dbid") .. ", " .. interest .. ", 'BANKINTEREST', 6)" )
 	
 	local incomeTax = exports.global:getIncomeTaxAmount()
 	
@@ -1008,7 +960,7 @@ function payWage(player, pay, faction, tax)
 	if not faction then
 		if pay >= 0 then
 			governmentIncome = governmentIncome - pay
-			mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (-3, " .. getElementData(player, "dbid") .. ", " .. pay .. ", 'STATEBENEFITS', 6)" ) )
+			mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (-3, " .. getElementData(player, "dbid") .. ", " .. pay .. ", 'STATEBENEFITS', 6)" )
 		else
 			pay = 0
 		end
@@ -1020,7 +972,7 @@ function payWage(player, pay, faction, tax)
 			else
 				teamid = -teamid
 			end
-			mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. teamid .. ", " .. getElementData(player, "dbid") .. ", " .. pay .. ", 'WAGE', 6)" ) )
+			mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. teamid .. ", " .. getElementData(player, "dbid") .. ", " .. pay .. ", 'WAGE', 6)" )
 		else
 			pay = 0
 		end
@@ -1030,7 +982,7 @@ function payWage(player, pay, faction, tax)
 		pay = pay - tax
 		bankmoney = bankmoney - tax
 		governmentIncome = governmentIncome + tax
-		mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. tax .. ", 'INCOMETAX', 6)" ) )
+		mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. tax .. ", 'INCOMETAX', 6)" )
 	end
 	
 	local vtax = taxVehicles[ getElementData(player, "dbid") ] or 0
@@ -1042,7 +994,7 @@ function payWage(player, pay, faction, tax)
 			exports.global:givePlayerAchievement(player, 19)
 		end
 		
-		mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. vtax .. ", 'VEHICLETAX', 6)" ) )
+		mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. vtax .. ", 'VEHICLETAX', 6)" )
 
 		
 		governmentIncome = governmentIncome + vtax
@@ -1054,7 +1006,7 @@ function payWage(player, pay, faction, tax)
 		ptax = math.min( ptax, bankmoney )
 		bankmoney = bankmoney - ptax
 		governmentIncome = governmentIncome + ptax
-		mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. ptax .. ", 'PROPERTYTAX', 6)" ) )
+		mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", -3, " .. ptax .. ", 'PROPERTYTAX', 6)" )
 	end
 	
 	if (rent > 0) then
@@ -1067,7 +1019,7 @@ function payWage(player, pay, faction, tax)
 			
 			-- gov shouldnt get anything of this
 			--governmentIncome = governmentIncome + rent
-			mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", 0, " .. rent .. ", 'HOUSERENT', 6)" ) )
+			mysql:query_free( "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (" .. getElementData(player, "dbid") .. ", 0, " .. rent .. ", 'HOUSERENT', 6)" )
 		end
 	end
 
@@ -1134,14 +1086,14 @@ function payAllWages(timer)
 		end
 		
 		if (logged==1) and (timeinserver>=60) then
-			mysql_free_result( mysql_query( handler, "UPDATE characters SET jobcontract = jobcontract - 1 WHERE id = " .. getElementData( value, "dbid" ) .. " AND jobcontract > 0" ) )
+			mysql:query_free( "UPDATE characters SET jobcontract = jobcontract - 1 WHERE id = " .. getElementData( value, "dbid" ) .. " AND jobcontract > 0" )
 			if getElementData(value, "license.car") and getElementData(value, "license.car") < 0 then
 				exports['anticheat-system']:changeProtectedElementDataEx(value, "license.car", getElementData(value, "license.car") + 1)
-				mysql_free_result( mysql_query( handler, "UPDATE characters SET car_license = car_license + 1 WHERE id = " .. getElementData( value, "dbid" ) ) )
+				mysql:query_free( "UPDATE characters SET car_license = car_license + 1 WHERE id = " .. getElementData( value, "dbid" ) )
 			end
 			if getElementData(value, "license.gun") and getElementData(value, "license.gun") < 0 then
 				exports['anticheat-system']:changeProtectedElementDataEx(value, "license.gun", getElementData(value, "license.gun") + 1)
-				mysql_free_result( mysql_query( handler, "UPDATE characters SET gun_license = gun_license + 1 WHERE id = " .. getElementData( value, "dbid" ) ) )
+				mysql:query_free( "UPDATE characters SET gun_license = gun_license + 1 WHERE id = " .. getElementData( value, "dbid" ) )
 			end
 			local playerFaction = getElementData(value, "faction")
 			if (playerFaction~=-1) then -- In a faction
@@ -1151,14 +1103,10 @@ function payAllWages(timer)
 				if (factionType==2) or (factionType==3) or (factionType==4) or (factionType==5) or (factionType==6) then -- Factions with wages
 					local username = getPlayerName(value)
 					
-					local factionRankresult = mysql_query(handler, "SELECT faction_rank FROM characters WHERE id = " .. getElementData( value, "dbid" ) .. " LIMIT 1")
-					local factionRank = mysql_result(factionRankresult, 1, 1)
-					mysql_free_result(factionRankresult)
-					
-					local rankWageresult = mysql_query(handler, "SELECT wage_" .. factionRank .. " FROM factions WHERE id='" .. playerFaction .. "'")
-					local rankWage = tonumber(mysql_result(rankWageresult, 1, 1))
-					mysql_free_result(rankWageresult)
-					
+					local factionRank = getElementData(value, "factionrank")
+					local rankWageresult = mysql:query_fetch_assoc("SELECT wage_" .. factionRank .. " FROM factions WHERE id='" .. playerFaction .. "'")
+					local rankWage = tonumber( rankWageresult['wage_' .. factionRank] )
+					outputChatBox( tostring( rankWage ) )
 					local taxes = 0
 					if not exports.global:takeMoney(theTeam, rankWage) then
 						rankWage = -1
@@ -1187,7 +1135,7 @@ function payAllWages(timer)
 
 			local hoursplayed = getElementData(value, "hoursplayed") or 0
 			exports['anticheat-system']:changeProtectedElementDataEx(value, "hoursplayed", hoursplayed+1, false)
-			mysql_free_result( mysql_query( handler, "UPDATE characters SET hoursplayed = hoursplayed + 1, bankmoney = " .. getElementData( value, "bankmoney" ) .. " WHERE id = " .. getElementData( value, "dbid" ) ) )
+			mysql:query_free( "UPDATE characters SET hoursplayed = hoursplayed + 1, bankmoney = " .. getElementData( value, "bankmoney" ) .. " WHERE id = " .. getElementData( value, "dbid" ) )
 		elseif (logged==1) and (timeinserver) and (timeinserver<60) then
 			outputChatBox("You have not played long enough to recieve a payday. (You require another " .. 60-timeinserver .. " Minutes of play.)", value, 255, 0, 0)
 		end
