@@ -1,39 +1,5 @@
 mysql = exports.mysql
 
--- ////////////////////////////////////
--- //			MYSQL				 //
--- ////////////////////////////////////		
-sqlUsername = mysql:getMySQLUsername()
-sqlPassword = mysql:getMySQLPassword()
-sqlDB = mysql:getMySQLDBName()
-sqlHost = mysql:getMySQLHost()
-sqlPort = mysql:getMySQLPort()
-
-handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
-
-function hideFactionMenu()
-	exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 0, true)
-end
-addEvent("factionmenu:hide", true)
-addEventHandler("factionmenu:hide", getRootElement(), hideFactionMenu)
-
-function checkMySQL()
-	if not (mysql_ping(handler)) then
-		handler = mysql_connect(sqlHost, sqlUsername, sqlPassword, sqlDB, sqlPort)
-	end
-end
-setTimer(checkMySQL, 300000, 0)
-
-function closeMySQL()
-	if (handler) then
-		mysql_close(handler)
-	end
-end
-addEventHandler("onResourceStop", getResourceRootElement(getThisResource()), closeMySQL)
--- ////////////////////////////////////
--- //			MYSQL END			 //
--- ////////////////////////////////////
-
 local unemployedPay = 150
 local result = mysql:query_fetch_assoc( "SELECT value FROM settings WHERE name = 'welfare'" )
 if result then
@@ -66,15 +32,18 @@ function loadAllFactions(res)
 	local minutes = 60 - mins
 	setTimer(payAllWages, 60000*minutes, 1, true)
 	
-	local result = mysql_query(handler, "SELECT id, name, bankbalance, type FROM factions")
+	local result = mysql:query("SELECT * FROM factions ORDER BY id ASC")
 	local counter = 0
 	
-	if (result) then
-		for result, row in mysql_rows(result) do
-			local id = tonumber(row[1])
-			local name = row[2]
-			local money = tonumber(row[3])
-			local factionType = tonumber(row[4])
+	if result then
+		while true do
+			local row = mysql:fetch_assoc(result)
+			if not row then break end
+			
+			local id = tonumber(row.id)
+			local name = row.name
+			local money = tonumber(row.bankbalance)
+			local factionType = tonumber(row.type)
 			
 			local theTeam = createTeam(tostring(name))
 			exports.pool:allocateElement(theTeam, id)
@@ -82,27 +51,20 @@ function loadAllFactions(res)
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "money", money)
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "id", id)
 			
-			local query2 = mysql_query(handler, "SELECT rank_1, rank_2, rank_3, rank_4, rank_5, rank_6, rank_7, rank_8, rank_9, rank_10, rank_11, rank_12, rank_13, rank_14, rank_15 FROM factions WHERE id='" .. id .. "' LIMIT 1")
-			local query3 = mysql_query(handler, "SELECT wage_1, wage_2, wage_3, wage_4, wage_5, wage_6, wage_7, wage_8, wage_9, wage_10, wage_11, wage_12, wage_13, wage_14, wage_15, motd FROM factions WHERE id='" .. id .. "' LIMIT 1")
-								
-			local rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10, rank11, rank12, rank13, rank14, rank15 = mysql_result(query2, 1, 1), mysql_result(query2, 1, 2), mysql_result(query2, 1, 3), mysql_result(query2, 1, 4), mysql_result(query2, 1, 5), mysql_result(query2, 1, 6), mysql_result(query2, 1, 7), mysql_result(query2, 1, 8), mysql_result(query2, 1, 9), mysql_result(query2, 1, 10), mysql_result(query2, 1, 11), mysql_result(query2, 1, 12), mysql_result(query2, 1, 13), mysql_result(query2, 1, 14), mysql_result(query2, 1, 15)
-			local wage1, wage2, wage3, wage4, wage5, wage6, wage7, wage8, wage9, wage10, wage11, wage12, wage13, wage14, wage15 = mysql_result(query3, 1, 1), mysql_result(query3, 1, 2), mysql_result(query3, 1, 3), mysql_result(query3, 1, 4), mysql_result(query3, 1, 5), mysql_result(query3, 1, 6), mysql_result(query3, 1, 7), mysql_result(query3, 1, 8), mysql_result(query3, 1, 9), mysql_result(query3, 1, 10), mysql_result(query3, 1, 11), mysql_result(query3, 1, 12), mysql_result(query3, 1, 13), mysql_result(query3, 1, 14), mysql_result(query3, 1, 15)
-	
-			local factionRanks = {rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10, rank11, rank12, rank13, rank14, rank15 }
-			local factionWages = {wage1, wage2, wage3, wage4, wage5, wage6, wage7, wage8, wage9, wage10, wage11, wage12, wage13, wage14, wage15 }
-			for k, v in ipairs(factionWages) do
-				factionWages[k] = tonumber(v)
+			local factionRanks = {}
+			local factionWages = {}
+			for i = 1, 15 do
+				factionRanks[i] = row['rank_'..i]
+				factionWages[i] = tonumber(row['wage_'..i])
 			end
-			local motd = mysql_result(query3, 1, 16)
+			local motd = row.motd
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "ranks", factionRanks, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "wages", factionWages, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", motd, false)
-								
-			mysql_free_result(query2)
-			mysql_free_result(query3)
+			
 			counter = counter + 1
 		end
-		mysql_free_result(result)
+		mysql:free_result(result)
 		
 		local citteam = createTeam("Citizen", 255, 255, 255)
 		exports.pool:allocateElement(citteam, -1)
@@ -113,29 +75,14 @@ function loadAllFactions(res)
 			local username = getPlayerName(thePlayer)
 			local safeusername = mysql:escape_string(username)
 			
-			local result = mysql_query(handler, "SELECT faction_id FROM characters WHERE charactername='" .. safeusername .. "' LIMIT 1")
-			if (result) then
-				local factionID = tonumber(mysql_result(result, 1, 1))
-
+			local result = mysql:query_fetch_assoc("SELECT faction_id, faction_rank, faction_leader FROM characters WHERE charactername='" .. safeusername .. "' LIMIT 1")
+			if result then
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionMenu", 0)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", factionID)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", result.faction_id)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", result.faction_rank)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", result.faction_leader, false)				
 				
-				mysql_free_result(result)
-				if (factionID) then
-					if (factionID~=-1) then
-						result = mysql_query(handler, "SELECT name FROM factions WHERE id='" .. factionID .. "' LIMIT 1")
-
-						if (result) then
-							local factionName = tostring(mysql_result(result, 1, 1))
-							local theTeam = getTeamFromName(factionName)
-							setPlayerTeam(thePlayer, theTeam)
-							mysql_free_result(result)
-						end
-					else
-						local theTeam = getTeamFromName("Citizen")
-						setPlayerTeam(thePlayer, theTeam)
-					end
-				end
+				setPlayerTeam(thePlayer, exports.pool:getElement("team", result.faction_id) or citteam)
 			end
 		end
 	end
@@ -170,8 +117,8 @@ function showFactionMenu(source)
 			
 			if (factionID~=-1) then
 				local theTeam = getPlayerTeam(source)
-				local query = mysql_query(handler, "SELECT charactername, faction_rank, faction_leader, DATEDIFF(NOW(), lastlogin) FROM characters WHERE faction_ID='" .. factionID .. "' ORDER BY faction_rank DESC, charactername ASC")
-				if (query) then
+				local query = mysql:query("SELECT charactername, faction_rank, faction_leader, DATEDIFF(NOW(), lastlogin) AS lastlogin FROM characters WHERE faction_ID='" .. factionID .. "' ORDER BY faction_rank DESC, charactername ASC")
+				if query then
 					
 					local memberUsernames = {}
 					local memberRanks = {}
@@ -186,12 +133,15 @@ function showFactionMenu(source)
 					if (motd == "") then motd = nil end
 					
 					local i = 1
-					for result, row in mysql_rows(query) do
-						local playerName = row[1]
-						memberUsernames[i] = playerName
-						memberRanks[i] = row[2]
+					while true do
+						local row = mysql:fetch_assoc(query)
+						if not row then break end
 						
-						if (tonumber(row[3])==1) then
+						local playerName = row.charactername
+						memberUsernames[i] = playerName
+						memberRanks[i] = row.faction_rank
+						
+						if (tonumber(row.faction_leader)==1) then
 							memberLeaders[i] = true
 						else
 							memberLeaders[i] = false
@@ -199,7 +149,7 @@ function showFactionMenu(source)
 						
 						local login = ""
 						
-						memberLastLogin[i] = tonumber(row[4])
+						memberLastLogin[i] = tonumber(row.lastlogin)
 						
 						
 						local targetPlayer = getPlayerFromName(tostring(playerName))
@@ -225,7 +175,7 @@ function showFactionMenu(source)
 						i = i + 1
 					end
 					exports['anticheat-system']:changeProtectedElementDataEx(source, "factionMenu", 1)
-					mysql_free_result(query)
+					mysql:free_result(query)
 					
 					local theTeam = getPlayerTeam(source)
 					triggerClientEvent(source, "showFactionMenu", getRootElement(), motd, memberUsernames, memberRanks, memberLeaders, memberOnline, memberLastLogin, memberLocation, factionRanks, factionWages, theTeam)
@@ -307,7 +257,7 @@ function callbackUpdateMOTD(motd)
 	local theTeam = getPlayerTeam(source)
 	
 	if (faction~=-1) then
-		if exports.mysql:query_free("UPDATE factions SET motd='" .. tostring(mysql:escape_string(motd)) .. "' WHERE id='" .. faction .. "'") then
+		if mysql:query_free("UPDATE factions SET motd='" .. tostring(mysql:escape_string(motd)) .. "' WHERE id='" .. faction .. "'") then
 			outputChatBox("You changed your faction's MOTD to '" .. motd .. "'", source, 0, 255, 0)
 			exports['anticheat-system']:changeProtectedElementDataEx(theTeam, "motd", motd, false)
 		else
@@ -721,30 +671,21 @@ addCommandHandler("delfaction", adminDeleteFaction, false, false)
 
 function adminShowFactions(thePlayer)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
-		local result = mysql_query(handler, "SELECT id, name, type, (SELECT COUNT(*) FROM characters c WHERE c.faction_id = f.id) FROM factions f ORDER BY id ASC")
+		local result = mysql:query("SELECT id, name, type, (SELECT COUNT(*) FROM characters c WHERE c.faction_id = f.id) AS members FROM factions f ORDER BY id ASC")
 		
 		
 		
-		if (result) then
+		if result then
 			local factions = { }
-			local key = 1
 			
-			for result, row in mysql_rows(result) do
-				factions[key] = { }
-				factions[key][1] = row[1]
-				factions[key][2] = row[2]
-				factions[key][3] = row[3]
+			while true do
+				local row = mysql:fetch_assoc(result)
+				if not row then break end
 				
-				local team = getTeamFromName(row[2])
-				if team then
-					factions[key][4] = #getPlayersInTeam(team) .. " / " .. row[4]
-				else
-					factions[key][4] = "?? / " .. row[4]
-				end
-				key = key + 1
+				table.insert( factions, { row.id, row.name, row.type, ( getTeamFromName( row.name ) and #getPlayersInTeam( getTeamFromName( row.name ) ) or "?" ) .. " / " .. row.members } )
 			end
 			
-			mysql_free_result(result)
+			mysql:free_result(result)
 			triggerClientEvent(thePlayer, "showFactionList", getRootElement(), factions)
 		else
 			outputChatBox("Error 300001 - Report on forums.", thePlayer, 255, 0, 0)
@@ -1030,14 +971,6 @@ function payWage(player, pay, faction, tax)
 		
 	-- let the client tell them the (bad) news
 	triggerClientEvent(player, "cPayDay", player, faction, noWage and -1 or pay, profit, interest, donatormoney, tax, incomeTax, vtax, ptax, rent, grossincome)
-	
-	-- Insert in Transactions
-	
-	-- 0 is government
-	-- -3 is faction government
-	
-	
-	--mysql_free_result( mysql_query( handler, "INSERT INTO wiretransfers (`from`, `to`, `amount`, `reason`, `type`) VALUES (0, " .. getElementData(player, "dbid") .. ", " .. grossincome .. ", '', 7)" ) )
 	return governmentIncome
 end
 

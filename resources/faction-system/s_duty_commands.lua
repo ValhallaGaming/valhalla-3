@@ -1,3 +1,5 @@
+mysql = exports.mysql
+
 pdColShape = createColSphere(272.53515625, 118.1806640625, 1005.2736816406, 3)
 exports.pool:allocateElement(pdColShape)
 setElementDimension(pdColShape, 1)
@@ -189,7 +191,7 @@ function lvesduty(thePlayer, commandName)
 						
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						
 						saveWeaponsOnDuty(thePlayer)
@@ -237,7 +239,7 @@ function govduty(thePlayer, commandName)
 						
 					
 					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+						mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 					end
 					
 					saveWeaponsOnDuty(thePlayer)
@@ -291,7 +293,7 @@ function lvfdduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their firefighter gear from their locker.")
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						
 						saveWeaponsOnDuty(thePlayer)
@@ -359,7 +361,7 @@ function swatduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their swat gear from their locker.")
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						
 						saveWeaponsOnDuty(thePlayer)
@@ -469,7 +471,7 @@ function policeduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						
 						saveWeaponsOnDuty(thePlayer)
@@ -569,7 +571,7 @@ function detectiveduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "takes their detective gear from their locker.")
 					
 					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+						mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 					end
 					
 					saveWeaponsOnDuty(thePlayer)
@@ -664,7 +666,7 @@ function cadetduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their cadet gear from their locker.")
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						
 						saveWeaponsOnDuty(thePlayer)
@@ -765,7 +767,7 @@ function fbiduty(thePlayer, commandName)
 						exports.global:sendLocalMeAction(thePlayer, "takes their FBI gear from their locker.")
 						
 						if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-							mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+							mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 						end
 						saveWeaponsOnDuty(thePlayer)
 						
@@ -806,7 +808,7 @@ end
 --addCommandHandler("fbi", fbiduty, false, false)
 
 function saveSkin(thePlayer)
-	mysql_free_result( mysql_query( handler, "UPDATE characters SET skin = " .. getElementModel( thePlayer ) .. ", duty = " .. ( getElementData( thePlayer, "duty" ) or 0 ) .. " WHERE id = " .. getElementData( thePlayer, "dbid" ) ) )
+	mysql:query_free( "UPDATE characters SET skin = " .. getElementModel( thePlayer ) .. ", duty = " .. ( getElementData( thePlayer, "duty" ) or 0 ) .. " WHERE id = " .. getElementData( thePlayer, "dbid" ) )
 end
 
 addCommandHandler( "authswat",
@@ -817,9 +819,7 @@ addCommandHandler( "authswat",
 			local teamID = tonumber(getElementData(theTeam, "id"))
 		
 			if teamID == 1 then
-				local result = mysql_query(handler, "SELECT faction_rank FROM characters WHERE id=" .. getElementData(thePlayer, "dbid") .. " LIMIT 1")
-				local factionRank = tonumber(mysql_result(result, 1, 1))
-				mysql_free_result(result)
+				local factionRank = getElementData(thePlayer, "factionrank") or 0
 				
 				if factionRank >= 8 then
 					if isTimer( authSwat ) then
@@ -877,7 +877,7 @@ function sacfduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 					
 					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+						mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 					end
 					
 					saveWeaponsOnDuty(thePlayer)
@@ -926,7 +926,7 @@ function sacfduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "takes their gear from their locker.")
 					
 					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+						mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") )
 					end
 					
 					saveWeaponsOnDuty(thePlayer)
@@ -977,7 +977,7 @@ function courtduty(thePlayer, commandName)
 					exports.global:sendLocalMeAction(thePlayer, "takes their equipment from a box.")
 					
 					if exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "casualskin", getPedSkin(thePlayer), false) then
-						mysql_free_result( mysql_query( handler, "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid") ) )
+						mysql:query_free( "UPDATE characters SET casualskin = " .. getPedSkin(thePlayer) .. " WHERE id = " .. getElementData(thePlayer, "dbid" ) )
 					end
 					
 					saveWeaponsOnDuty(thePlayer)
