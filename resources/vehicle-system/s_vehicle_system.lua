@@ -67,7 +67,7 @@ end
 function createPermVehicle(thePlayer, commandName, ...)
 	if (exports.global:isPlayerLeadAdmin(thePlayer)) then
 		local args = {...}
-		if (#args < 6) then
+		if (#args < 7) then
 			outputChatBox("SYNTAX: /" .. commandName .. " [id/name] [color1] [color2] [Owner] [Faction Vehicle (1/0)] [Cost] [Tinted Windows] ", thePlayer, 255, 194, 14)
 			outputChatBox("NOTE: If it is a faction vehicle, Username is the owner of the faction.", thePlayer, 255, 194, 14)
 			outputChatBox("NOTE: If it is a faction vehicle, The cost is taken from the faction fund, rather than the player.", thePlayer, 255, 194, 14)
