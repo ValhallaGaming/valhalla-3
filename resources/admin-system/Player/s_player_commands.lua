@@ -581,22 +581,15 @@ addCommandHandler("takeitem", takePlayerItem, false, false)
 -- /SETHP
 function setPlayerHealth(thePlayer, commandName, targetPlayer, health)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
-		if not (health) or not (targetPlayer) then
+		if not tonumber(health) or not (targetPlayer) then
 			outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID] [Health]", thePlayer, 255, 194, 14)
 		else
 			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, targetPlayer)
 			
 			if targetPlayer then
-				local logged = getElementData(targetPlayer, "loggedin")
-				local hp = nil
-				
-				if (tostring(type(tonumber(health))) == "number") then
-					hp = setElementHealth(targetPlayer, tonumber(health))
-				end
-				
-				if (logged==0) then
-					outputChatBox("Player is not logged in.", thePlayer, 255, 0, 0)
-				elseif not (hp) then
+				if tonumber( health ) < getElementHealth( targetPlayer ) and getElementData( thePlayer, "adminlevel" ) < getElementData( targetPlayer, "adminlevel" ) then
+					outputChatBox("Nah.", thePlayer, 255, 0, 0)
+				if not setElementHealth(targetPlayer, tonumber(health)) then
 					outputChatBox("Invalid health value.", thePlayer, 255, 0, 0)
 				else
 					outputChatBox("Player " .. targetPlayerName .. " now has " .. health .. " Health.", thePlayer, 0, 255, 0)
