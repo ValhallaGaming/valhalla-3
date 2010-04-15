@@ -2375,7 +2375,7 @@ function findAltChars(thePlayer, commandName, ...)
 			outputChatBox("SYNTAX: /" .. commandName .. " [Partial Player Nick]", thePlayer, 255, 194, 14)
 		else
 			local targetPlayerName = table.concat({...}, "_")
-			local targetPlayer = exports.global:findPlayerByPartialNick(thePlayer, targetPlayerName)
+			local targetPlayer = targetPlayerName == "*" and thePlayer or exports.global:findPlayerByPartialNick(nil, targetPlayerName)
 			
 			if not targetPlayer or getElementData( targetPlayer, "loggedin" ) ~= 1 then
 				-- select by character name
