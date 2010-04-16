@@ -96,6 +96,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/fuelveh", "/fuelveh [player]", "refills a players vehicle" },
 					{ "/fuelvehs", "/fuelvehs", "refills all vehicles" },
 					{ "/setcolor", "/setcolor [player] [color 1] [color 2]", "changes the players vehicle colors" },
+					{ "/getcolor", "/getcolor [car]", "returns the colors of a vehicle" },
 
 					-- interior/*
 					{ "/getpos", "/getpos", "outputs your current position, interior and dimension" },

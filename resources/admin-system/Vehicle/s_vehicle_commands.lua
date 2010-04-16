@@ -861,6 +861,28 @@ function setPlayerVehicleColor(thePlayer, commandName, target, col1, col2)
 	end
 end
 addCommandHandler("setcolor", setPlayerVehicleColor, false, false)
+-----------------------------[GET COLOR]---------------------------------
+function getAVehicleColor(thePlayer, commandName, carid)
+	if (exports.global:isPlayerAdmin(thePlayer)) then
+		if not (carid) then
+			outputChatBox("SYNTAX: /" .. commandName .. " [Car ID]", thePlayer, 255, 194, 14)
+		else
+			local acar = nil
+			for i,c in ipairs(getElementsByType("vehicle")) do
+				if (getElementData(c, "dbid") == tonumber(carid)) then
+					acar = c
+				end
+			end
+			if acar then
+				local c1, c2 = getVehicleColor(acar)
+				outputChatBox("Vehicle's colors are " .. tonumber(c1) .. " and " .. tonumber(c2) .. ".", thePlayer)
+			else
+				outputChatBox("Invalid Car ID.", thePlayer, 255, 194, 14)
+			end
+		end
+	end
+end
+addCommandHandler("getcolor", getAVehicleColor, false, false)
 
 function deleteVehicle(thePlayer, commandName, id)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
