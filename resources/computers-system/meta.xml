@@ -193,11 +193,10 @@
 
 	<!-- B -->
 	<script src="websites/bankofsa.lua" type="client"/>
-	<!--
 	<script src="websites/beststowing.lua" type="client"/>
 	<file src="websites/images/towtruck.png" />
 	<file src="websites/images/btr-logo.png" />
-	-->
+	<file src="websites/images/btr.png" />
 	<script src="websites/bibles.lua" type="client"/>
 	
 	<!-- G -->
