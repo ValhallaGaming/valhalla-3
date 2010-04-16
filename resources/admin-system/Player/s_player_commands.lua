@@ -909,7 +909,7 @@ function reconPlayer(thePlayer, commandName, targetPlayer)
 				else
 					setElementAlpha(thePlayer, 0)
 					
-					if not getElementData(thePlayer, "reconx") and not getElementData(thePlayer, "recony") then
+					if ( not getElementData(thePlayer, "reconx") or getElementData(thePlayer, "reconx") == true ) and not getElementData(thePlayer, "recony") then
 						local x, y, z = getElementPosition(thePlayer)
 						local rot = getPedRotation(thePlayer)
 						local dimension = getElementDimension(thePlayer)
