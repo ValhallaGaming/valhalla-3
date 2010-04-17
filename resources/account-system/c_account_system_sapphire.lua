@@ -853,7 +853,7 @@ function moveDown()
 		if ( math.ceil( t[#t].ty ) > math.ceil(initY + yoffset + 40) ) then -- can move down
 			lastItemAlpha = 1.0
 			for i = 1, #t do
-				if ( round(t[i].ty, -1) == round(initY + xoffset, -1) ) then -- its selected
+				if ( round(t[i].ty, -1) == round(initY + yoffset + 40, -1) ) then -- its selected
 					t[i].ty = t[i].ty - 2*yoffset
 					
 					if currentItem == charactersID and not isLoggedIn() then
@@ -896,7 +896,7 @@ function moveUp()
 			local selIndex = nil
 			for k = 1, #t do
 				local i = #t - (k - 1)
-				if ( round(t[i].ty, -1) == round(initY + xoffset, -1) ) then -- its selected
+				if ( round(t[i].ty, -1) == round(initY + yoffset + 40, -1) ) then -- its selected
 					t[i].ty = t[i].ty + yoffset
 					selIndex = i - 1
 					
