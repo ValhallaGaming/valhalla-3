@@ -2143,7 +2143,7 @@ function removeReconning()
 			local cameraTarget = getCameraTarget(value)
 			if (cameraTarget) then
 				if (cameraTarget==source) then
-					executeCommandHandler("recon", source)
+					reconPlayer(value)
 				end
 			end
 		end
