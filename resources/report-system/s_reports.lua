@@ -70,7 +70,7 @@ function showReports(thePlayer)
 end
 addCommandHandler("reports", showReports, false, false)
 
-function reportInfo(thePlayer, commandName, id)	
+function reportInfo(thePlayer, commandName, id)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
 		if not (id) then
 			outputChatBox("SYNTAX: " .. commandName .. " [ID]", thePlayer, 255, 194, 15)
@@ -145,7 +145,7 @@ function playerQuit()
 		update = true
 	end
 	
-	-- check for reports assigned to him, unassigned if neccessary	
+	-- check for reports assigned to him, unassigned if neccessary
 	for i = 1, 128 do -- Support 128 reports at any one time, since each player can only have one report
 		if reports[i] then
 			if reports[i][5] == source then

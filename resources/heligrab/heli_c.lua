@@ -86,7 +86,7 @@ helicopter_offsets = {
 					facing = 0,
 					legs = "down",
 					limit = 8
-					}		
+					}
 }
 
 root = getRootElement()
@@ -132,7 +132,7 @@ addEventHandler("onClientResourceStart",getResourceRootElement(getThisResource()
 		if isElementStreamedIn(v) then
 			if getVehicleType(v)=="Helicopter" then
 				table.insert(vehicles,v)
-			end		
+			end
 		end
 	end
 
@@ -158,7 +158,7 @@ addEventHandler("onClientResourceStart",getResourceRootElement(getThisResource()
 				if collision and element == local_player then collision = false end
 				
 				-- the grab point is too close to the ground (or an element) and we dont want people hanging onto grounded helicopters
-				if collision then		
+				if collision then
 					outputChatBox("That helicopter has barely left the ground yet!")
 					return
 				end
@@ -173,7 +173,7 @@ addEventHandler("onClientResourceStart",getResourceRootElement(getThisResource()
 						end
 					end
 					
-					if count >= helicopter_offsets[target.vehiclename].limit then 
+					if count >= helicopter_offsets[target.vehiclename].limit then
 						outputChatBox("That helicopter can't take any more weight!")
 						return
 					end
@@ -223,9 +223,9 @@ addEventHandler("onClientResourceStart",getResourceRootElement(getThisResource()
 						end
 					end
 					
-					if count >= helicopter_offsets[target.vehiclename].limit then 
+					if count >= helicopter_offsets[target.vehiclename].limit then
 						return
-					end	
+					end
 				end
 				
 				
@@ -249,29 +249,28 @@ function GrabHeli(heli,side,line_percent)
 	target.side = side
 	target.line_percent = line_percent
 	target.vehiclename = getVehicleName(heli)
-		
+	
 	setElementData(source,"hanging",{side = side, heli = heli, line_percent = line_percent, legs_up = false})
-							
+	
 	-- not sure if these are entirely necessary
 	setElementVelocity(source,0,0,0)
-	setPedAnimation(source,nil,nil)				
-									
-				
+	setPedAnimation(source,nil,nil)
+	
 	local x = helicopter_offsets[target.vehiclename].x
 	if side and side == "left" then x = -x end
-								
-	local diff = math.abs(helicopter_offsets[target.vehiclename].front - helicopter_offsets[target.vehiclename].back)		
-
+	
+	local diff = math.abs(helicopter_offsets[target.vehiclename].front - helicopter_offsets[target.vehiclename].back)
+	
 	target.offsets = {}
 	target.offsets.x = x
 	target.offsets.y = helicopter_offsets[target.vehiclename].back + (diff*(math.abs(line_percent-1)))
 	target.offsets.z = helicopter_offsets[target.vehiclename].z
-				
+	
 	triggerServerEvent("PlayerGrabVehicle",source,heli)
 	
 	removed = false
 	-- originally this was done on render, however 50ms is sufficient 
-	target.timer = setTimer(UpdateHangingEffect,50,0)				
+	target.timer = setTimer(UpdateHangingEffect,50,0)
 end
 addEvent("MakePlayerGrabHeli",true)
 addEventHandler("MakePlayerGrabHeli",root,GrabHeli)
@@ -280,16 +279,16 @@ addEventHandler("MakePlayerGrabHeli",root,GrabHeli)
 
 addEventHandler("onClientResourceStop",getResourceRootElement(getThisResource()),function()
 	detachElements(local_player,target.vehicle)
-	setPedAnimation(local_player,nil)	
+	setPedAnimation(local_player,nil)
 	setElementData(local_player,"hanging",nil)
-		
+	
 	if target.timer then
 		killTimer(target.timer)
 	end
 	target.timer = nil
-
+	
 	toggleControl("enter_exit",true)
-	toggleControl("enter_passenger",true)	
+	toggleControl("enter_passenger",true)
 	removed = false
 end)
 
@@ -297,7 +296,7 @@ end)
 -- check distance from the ground for legs/auto drops/collisions
 -- local player
 function UpdateHangingEffect()
-	if getElementData(local_player,"hanging") then		
+	if getElementData(local_player,"hanging") then
 		local player_hanging = getElementData(local_player,"hanging")
 		
 		-- uh oh, we are hanging but also inside a vehicle, can happen with the warp code used to put players into vehicles that sit on water (seasparrow,leviathan) as onClientEnterVehicle isnt triggered in this case (if your enter_passenger key is also your grab key)
@@ -318,15 +317,15 @@ function UpdateHangingEffect()
 		
 		target.offsets.drop_x = target.offsets.x * matrix[1][1] + target.offsets.y * matrix[2][1] + target.offsets.z-feet_up_distance * matrix[3][1] + matrix[4][1]
 		target.offsets.drop_y = target.offsets.x * matrix[1][2] + target.offsets.y * matrix[2][2] + target.offsets.z-feet_up_distance * matrix[3][2] + matrix[4][2]
-		target.offsets.drop_z = target.offsets.x * matrix[1][3] + target.offsets.y * matrix[2][3] + target.offsets.z-feet_up_distance * matrix[3][3] + matrix[4][3]	
+		target.offsets.drop_z = target.offsets.x * matrix[1][3] + target.offsets.y * matrix[2][3] + target.offsets.z-feet_up_distance * matrix[3][3] + matrix[4][3]
 		
 		local grab_x = target.offsets.x * matrix[1][1] + target.offsets.y * matrix[2][1] + target.offsets.z * matrix[3][1] + matrix[4][1]
 		local grab_y = target.offsets.x * matrix[1][2] + target.offsets.y * matrix[2][2] + target.offsets.z * matrix[3][2] + matrix[4][2]
-		local grab_z = target.offsets.x * matrix[1][3] + target.offsets.y * matrix[2][3] + target.offsets.z * matrix[3][3] + matrix[4][3]	
+		local grab_z = target.offsets.x * matrix[1][3] + target.offsets.y * matrix[2][3] + target.offsets.z * matrix[3][3] + matrix[4][3]
 		
 		local collision,col_x,col_y,col_z,col_element = processLineOfSight(grab_x,grab_y,grab_z,target.offsets.drop_x,target.offsets.drop_y,target.offsets.drop_z,true,true,false,true,false,true,false,false,local_player)
 		
-		-- if the collision that was found is the helicopter itself (eg: when hanging on a cargobob) then ignore it		
+		-- if the collision that was found is the helicopter itself (eg: when hanging on a cargobob) then ignore it.
 		if collision and col_element == target.vehicle then
 			collision = false
 		end
@@ -344,7 +343,7 @@ function UpdateHangingEffect()
 				-- lift up the legs
 				if anim ~= "FIN_LegsUp_Loop" and player_hanging.legs_up == false then
 					setElementData(local_player,"hanging",{side = target.side, heli = target.vehicle, line_percent = target.line_percent, legs_up = true})
-				end		
+				end
 				return
 			end
 		else
@@ -359,7 +358,7 @@ function UpdateHangingEffect()
 					setElementData(local_player,"hanging",{side = target.side, heli = target.vehicle, line_percent = target.line_percent, legs_up = true})
 				end
 						
-			end		
+			end
 		end
 	end
 end
@@ -380,7 +379,7 @@ function DropPlayer(reason,vehicle,force)
 						triggerServerEvent("RemoveHangingPedFromVehicle",local_player)
 					end
 				end,50,10)
-			end				
+			end
 			
 			setElementData(source,"hanging",nil)
 			
@@ -390,8 +389,8 @@ function DropPlayer(reason,vehicle,force)
 			target.timer = nil
 
 			toggleControl("enter_exit",true)
-			toggleControl("enter_passenger",true)	
-			removed = false		
+			toggleControl("enter_passenger",true)
+			removed = false
 		end
 		
 		if vehicle then
@@ -417,7 +416,7 @@ end)
 
 addEventHandler("onClientRender",root,function()
 	-- not hanging, track helis for local player
-	if not getElementData(local_player,"hanging") then 
+	if not getElementData(local_player,"hanging") then
 		for _,heli in ipairs(vehicles) do
 			if heli and isElement(heli) then
 				if isElementOnScreen(heli) then
@@ -441,27 +440,26 @@ addEventHandler("onClientRender",root,function()
 						right.front_x = offset.x * matrix[1][1] + offset.front * matrix[2][1] + offset.z * matrix[3][1] + matrix[4][1]
 						right.front_y = offset.x * matrix[1][2] + offset.front * matrix[2][2] + offset.z * matrix[3][2] + matrix[4][2]
 						right.front_z = offset.x * matrix[1][3] + offset.front * matrix[2][3] + offset.z * matrix[3][3] + matrix[4][3]
-												
+						
 						right.back_x = offset.x * matrix[1][1] + offset.back * matrix[2][1] + offset.z * matrix[3][1] + matrix[4][1]
 						right.back_y = offset.x * matrix[1][2] + offset.back * matrix[2][2] + offset.z * matrix[3][2] + matrix[4][2]
 						right.back_z = offset.x * matrix[1][3] + offset.back * matrix[2][3] + offset.z * matrix[3][3] + matrix[4][3]
-
+						
 						local left = {}
 						left.front_x = -offset.x * matrix[1][1] + offset.front * matrix[2][1] + offset.z * matrix[3][1] + matrix[4][1]
 						left.front_y = -offset.x * matrix[1][2] + offset.front * matrix[2][2] + offset.z * matrix[3][2] + matrix[4][2]
 						left.front_z = -offset.x * matrix[1][3] + offset.front * matrix[2][3] + offset.z * matrix[3][3] + matrix[4][3]
-												
+						
 						left.back_x = -offset.x * matrix[1][1] + offset.back * matrix[2][1] + offset.z * matrix[3][1] + matrix[4][1]
 						left.back_y = -offset.x * matrix[1][2] + offset.back * matrix[2][2] + offset.z * matrix[3][2] + matrix[4][2]
-						left.back_z = -offset.x * matrix[1][3] + offset.back * matrix[2][3] + offset.z * matrix[3][3] + matrix[4][3]							
-
-																				
+						left.back_z = -offset.x * matrix[1][3] + offset.back * matrix[2][3] + offset.z * matrix[3][3] + matrix[4][3]
+						
 						local right_hand_x,right_hand_y,right_hand_z = getPedBonePosition(local_player,26)
 						-- should really check both hands against each side, but its a barely noticable loss
 						right.point,right.line_percent,right.dist = GetPointIntersectOnLine(right_hand_x,right_hand_y,right_hand_z,right.front_x,right.front_y,right.front_z,right.back_x,right.back_y,right.back_z)
 						left.point,left.line_percent,left.dist = GetPointIntersectOnLine(left_hand_x,left_hand_y,left_hand_z,left.front_x,left.front_y,left.front_z,left.back_x,left.back_y,left.back_z)
-												
-												
+						
+						
 						-- if the right side is closer (or they are both equal distance, in which case default to right)
 						if right.dist <= left.dist then
 							-- if this heli and this side are already the targetted heli/side, update the current info
@@ -470,7 +468,7 @@ addEventHandler("onClientRender",root,function()
 								target.line_percent = right.line_percent
 								target.point = right.point
 							end
-												
+							
 							-- if the distance to the right side of this helicopter is less than the distance to the currently targeted helicopter (or they are equal, in which case default to this new one)
 							if right.dist < target.distance then
 								target.vehicle = heli
@@ -479,13 +477,13 @@ addEventHandler("onClientRender",root,function()
 								target.point = right.point
 								target.line_percent = right.line_percent
 							end
-						else	
+						else
 							if target.vehicle == heli and target.side == "left" then
 								target.distance = left.dist
 								target.line_percent = left.line_percent
 								target.point = left.point
 							end
-
+							
 							if left.dist < target.distance then
 								target.vehicle = heli
 								target.distance = left.dist	
@@ -493,7 +491,7 @@ addEventHandler("onClientRender",root,function()
 								target.point = left.point
 								target.line_percent = left.line_percent
 							end
-						end						
+						end
 						
 						if debug_data then
 							dxDrawText(string.format("tracking %d vehicles",#vehicles),5,400,50,50,tocolor(255,50,0),1,"default-bold")
@@ -502,11 +500,11 @@ addEventHandler("onClientRender",root,function()
 							else
 								dxDrawText(string.format("target: nil"),5,415,50,50,tocolor(255,50,0),1,"default-bold")
 							end
-							dxDrawText(string.format("target dist: %.4f",target.distance),5,430,50,50,tocolor(255,50,0),1,"default-bold")	
-							dxDrawText(string.format("target side: %s",target.side),5,445,50,50,tocolor(255,50,0),1,"default-bold")	
-							dxDrawText(string.format("target t: %.4f",target.line_percent),5,460,50,50,tocolor(255,50,0),1,"default-bold")	
-							dxDrawText(string.format("right dist: %.4f",right.dist),5,475,50,50,tocolor(255,50,0),1,"default-bold")	
-							dxDrawText(string.format("left dist: %.4f",left.dist),5,490,50,50,tocolor(255,50,0),1,"default-bold")	
+							dxDrawText(string.format("target dist: %.4f",target.distance),5,430,50,50,tocolor(255,50,0),1,"default-bold")
+							dxDrawText(string.format("target side: %s",target.side),5,445,50,50,tocolor(255,50,0),1,"default-bold")
+							dxDrawText(string.format("target t: %.4f",target.line_percent),5,460,50,50,tocolor(255,50,0),1,"default-bold")
+							dxDrawText(string.format("right dist: %.4f",right.dist),5,475,50,50,tocolor(255,50,0),1,"default-bold")
+							dxDrawText(string.format("left dist: %.4f",left.dist),5,490,50,50,tocolor(255,50,0),1,"default-bold")
 						end
 					end
 				end
@@ -518,17 +516,17 @@ addEventHandler("onClientRender",root,function()
 	for _,p in ipairs(getElementsByType("player")) do
 		if isElement(p) and isElementStreamedIn(p) then
 			local player_hanging = getElementData(p,"hanging") 
-			if player_hanging then			
+			if player_hanging then
 				-- attach to heli
 				if not isElementAttached(p) then
 					local x = helicopter_offsets[getVehicleName(player_hanging.heli)].x
 					if player_hanging.side and player_hanging.side == "left" then x = -x end
-										
-					local diff = math.abs(helicopter_offsets[getVehicleName(player_hanging.heli)].front - helicopter_offsets[getVehicleName(player_hanging.heli)].back)		
+					
+					local diff = math.abs(helicopter_offsets[getVehicleName(player_hanging.heli)].front - helicopter_offsets[getVehicleName(player_hanging.heli)].back)
 				
-					attachElements(p,player_hanging.heli,x,helicopter_offsets[getVehicleName(player_hanging.heli)].back + (diff*(math.abs(player_hanging.line_percent-1))),helicopter_offsets[getVehicleName(player_hanging.heli)].z)	
+					attachElements(p,player_hanging.heli,x,helicopter_offsets[getVehicleName(player_hanging.heli)].back + (diff*(math.abs(player_hanging.line_percent-1))),helicopter_offsets[getVehicleName(player_hanging.heli)].z)
 				end
-			
+				
 				-- set the hanging animation, check for leg up/down changes
 				local _,anim = getPedAnimation(p)
 				if anim == "FIN_Hang_Loop" then
@@ -538,7 +536,7 @@ addEventHandler("onClientRender",root,function()
 				elseif anim == "FIN_LegsUp_Loop" then
 					if player_hanging.legs_up == false then
 						setPedAnimation(p,"FINALE","FIN_Hang_Loop",-1,true,false,false)
-					end			
+					end
 			--	elseif anim ~= "FIN_Hang_Loop" and anim ~= "FIN_LegsUp_Loop" then
 				else
 					if player_hanging.legs_up then
@@ -546,22 +544,22 @@ addEventHandler("onClientRender",root,function()
 					else
 						setPedAnimation(p,"FINALE","FIN_Hang_Loop",-1,true,false,false)
 					end
-				end		
-
+				end
+				
 				-- set hanging rotation
 				local _,_,rz = getElementRotation(player_hanging.heli)
 				local zrot = 90
 				if player_hanging.side then
 					if player_hanging.side == "left" then zrot = -90 elseif player_hanging.side == "right" then zrot = 90 end
 				end
-				setPedRotation(p,rz+zrot+helicopter_offsets[getVehicleName(player_hanging.heli)].facing)			
+				setPedRotation(p,rz+zrot+helicopter_offsets[getVehicleName(player_hanging.heli)].facing)
 			end
 		end
 	end
 end)
 
 
-function GetPointIntersectOnLine(px,py,pz,x1,y1,z1,x2,y2,z2)	
+function GetPointIntersectOnLine(px,py,pz,x1,y1,z1,x2,y2,z2)
 	local line_direction = {x2-x1,y2-y1,z2-z1}
 	
 	local t = Dot(line_direction,{px-x1,py-y1,pz-z1}) / Dot(line_direction,line_direction)
@@ -586,7 +584,7 @@ addEventHandler("onClientElementStreamIn",root,function()
 		if getVehicleType(source)=="Helicopter" then
 			table.insert(vehicles,source)
 		end
---	elseif getElementType(source)=="player" then	
+--	elseif getElementType(source)=="player" then
 	end
 end)
 
@@ -624,7 +622,7 @@ addEventHandler("onClientVehicleDestroy",root,function(vehicle)
 			end
 			break
 		end
-	end	
+	end
 end)
 
 
@@ -632,10 +630,10 @@ function onClientVehicleStartEnter(player,seat)
 --	if player == local_player then outputChatBox("vehicle start enter") end
 	if player == local_player and getElementData(player,"hanging") then
 --		outputChatBox("vehicle start enter cancelled")
-		cancelEvent()		
+		cancelEvent()
 	end
 end
-addEventHandler("onClientVehicleStartEnter",root,onClientVehicleStartEnter)	
+addEventHandler("onClientVehicleStartEnter",root,onClientVehicleStartEnter)
 
 
 function onClientPlayerWasted()
@@ -647,4 +645,4 @@ function onClientPlayerWasted()
 		end
 	end
 end
-addEventHandler("onClientPlayerWasted",root,onClientPlayerWasted)	
+addEventHandler("onClientPlayerWasted",root,onClientPlayerWasted)

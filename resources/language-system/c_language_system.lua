@@ -32,7 +32,7 @@ function renderText()
 	
 	if (alpha<0) then alpha = 0 end
 	
-	if (count>50) then 
+	if (count>50) then
 		removeEventHandler("onClientRender", getRootElement(), renderText)
 		addedEvent = false
 		langInc = 0

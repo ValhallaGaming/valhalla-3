@@ -50,7 +50,7 @@ function render()
 				
 				local dist = getDistanceBetweenPoints3D(x, y, z, px, py, pz)
 				if isElementOnScreen(value) and not getElementData(value, "reconx") and not getElementData(value, "freecam:state") then
-					if (dist>25) then 
+					if (dist>25) then
 						chatters[value] = nil
 						return
 					end

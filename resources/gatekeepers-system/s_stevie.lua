@@ -13,7 +13,7 @@ function timeCheck(res) -- When the resource starts check what time it is. If th
 		local hoursLeft = 18 - hour
 		local spawnTime = (hoursLeft*60) + minutesLeft
 		stevieSpawnTimer = setTimer ( createStevie, spawnTime*60000, 1 ) -- spawn stevie at 1900
-		outputDebugString("Stevie will spawn in "..spawnTime.." minutes.")			
+		outputDebugString("Stevie will spawn in "..spawnTime.." minutes.")
 	end
 end
 addEventHandler("onResourceStart", getResourceRootElement(), timeCheck)
@@ -113,7 +113,7 @@ function statement3_S()
 	local name = string.gsub(getPlayerName(source), "_", " ")
 	exports.global:sendLocalText(source, name .. " says: I'm a vegetarian. The thought of those poor animals suffering for you to stuff your face makes me sick.", 255, 255, 255, 5)
 	exports.global:sendLocalText(source, "Steven Pullman says: Hey f*** you, pal. You don't like it, go save a whale or some shit.", 255, 255, 255, 5)
-end	
+end
 addEvent( "statement3ServerEvent", true )
 addEventHandler( "statement3ServerEvent", getRootElement(), statement3_S )
 
@@ -141,7 +141,7 @@ function statement5_S()
 	exports.global:sendLocalMeAction( source,"leaves Stevie's hand lingering in the air.")
 	-- Output the text from the last option to all player in radius
 	exports.global:sendLocalText(source, "Steven Pullman says: I was just being polite but if you want to be an ass about it how about you leave me to eat in peace.", 255, 255, 255, 5)
-end	
+end
 addEvent( "statement5ServerEvent", true )
 addEventHandler( "statement5ServerEvent", getRootElement(), statement5_S )
 
@@ -386,7 +386,7 @@ function acceptDeal_S( dealNumber )
 		exports['anticheat-system']:changeProtectedElementDataEx(stevieCol, "dealNumber", dealNumber, false)
 		exports['anticheat-system']:changeProtectedElementDataEx(source, "stevie.money", cost, false)
 	
-		addEventHandler("onColShapeHit", stevieCol, giveGoods)		
+		addEventHandler("onColShapeHit", stevieCol, giveGoods)
 		endCall() -- end the call.
 	end
 end
@@ -538,7 +538,7 @@ end
 
 function stopPlayerStevieItems(thePlayer)
 	outputChatBox("The vehicle is full.", thePlayer, 255, 0, 0)
-	exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." finished their loadingrun" , 25)	
+	exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." finished their loadingrun" , 25)
 	destroyElement(stevieMarker)
 	stevieMarker = nil
 end

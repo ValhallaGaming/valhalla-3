@@ -38,7 +38,7 @@ function createComputerGUI()
 		chatButton = guiCreateButton ( 0.03 , 0.96 , 0.14 , 0.03 , "Toggle Input" , true , desktopImage )
 		addEventHandler("onClientGUIClick", chatButton ,  toggleChatboxComputer)
 		showCursor(true)
-		guiSetInputEnabled(true)		
+		guiSetInputEnabled(true)
 	end
 end
 --addCommandHandler("computer",createComputerGUI)
@@ -169,7 +169,7 @@ function closeComputerWindow()
 	wComputer,desktopImage,internetButton, emailButton, shutdownButton, chatButton = nil
 	
 	guiSetInputEnabled(false)
-	showCursor(false)	
+	showCursor(false)
 	
 end
 addCommandHandler("ctl+alt+del",closeComputerWindow) -- Emergency close command.
@@ -201,9 +201,9 @@ function openInternetWindow()
 		addEventHandler("onClientGUIClick",go_button,function()
 			local new_page = guiGetText(address_bar)
 			get_page(new_page)
-		end,false)		
+		end,false)
 		internet_pane = guiCreateScrollPane(2,85,678,397,false,wInternet)
-		guiScrollPaneSetScrollBars(internet_pane, false, true)			
+		guiScrollPaneSetScrollBars(internet_pane, false, true)
 		shadow_top = guiCreateStaticImage(2,84,676,1,"websites/colours/13.png",false,wInternet)
 		shadow_left = guiCreateStaticImage(2,85,1,397,"websites/colours/13.png",false,wInternet)
 		shadow_bottom = guiCreateStaticImage(4,482,676,1,"websites/colours/1.png",false,wInternet)
@@ -369,7 +369,7 @@ function openEmailWindow()
 					triggerServerEvent("registerEmail",getLocalPlayer(),full_username,password)
 				elseif (guiRadioButtonGetSelected(address_2)==true) then
 					full_username = tostring(username.. "@whiz.sa")
-					triggerServerEvent("registerEmail",getLocalPlayer(),full_username,password)	
+					triggerServerEvent("registerEmail",getLocalPlayer(),full_username,password)
 				elseif (guiRadioButtonGetSelected(address_f)==true) then
 					
 					if (teamName=="Los Santos Police Department") then
@@ -389,7 +389,7 @@ function openEmailWindow()
 					end
 					triggerServerEvent("leaderCheck",getLocalPlayer(),full_username,password)
 				end
-			end			
+			end
 		end,false)
 	else
 		guiBringToFront(wEmail)
@@ -579,7 +579,7 @@ function show_inbox(inbox_table, accountName)
 		guiGridListClear(inbox_grid)
 		destroyElement(inbox_grid)
 		inbox_grid = nil
-	end	
+	end
 	activeMail = 1
 	-- Create the grid list of received messages
 	inbox_grid = guiCreateGridList (0.01,0.02,0.98,0.36,true,inbox_tab)
@@ -595,7 +595,7 @@ function show_inbox(inbox_table, accountName)
 			inbox_row = guiGridListAddRow(inbox_grid)
 			guiGridListSetItemText(inbox_grid, inbox_row, inbox_grid_date, i_message_date, false, false) -- Date Sent
 			guiGridListSetItemText(inbox_grid, inbox_row, inbox_grid_sender, i_message_sender, false, false) -- Sender
-			guiGridListSetItemText(inbox_grid, inbox_row, inbox_grid_subject, i_message_subject, false, false) -- Subject	
+			guiGridListSetItemText(inbox_grid, inbox_row, inbox_grid_subject, i_message_subject, false, false) -- Subject
 		end
 		guiGridListSetSelectedItem(inbox_grid,0,1)
 	end
@@ -658,7 +658,7 @@ function show_inbox(inbox_table, accountName)
 		inbox_reply_button = guiCreateButton(0.6,0.9,0.2,0.08,"Reply",true,inbox_tab)
 		addEventHandler("onClientGUIClick",inbox_reply_button,function()
 			local msg = inbox_table[activeMail]
-			if msg and msg[2] ~= "" then	
+			if msg and msg[2] ~= "" then
 				guiSetText(new_message_to_input, msg[3])
 				
 				if msg[4]:find( "Re: " ) ~= 1 then
@@ -702,7 +702,7 @@ function show_outbox(outbox_table,accountName)
 			local outbox_row = guiGridListAddRow(outbox_grid)
 			guiGridListSetItemText(outbox_grid, outbox_row, outbox_grid_date, o_message_date, false, false) -- Date Sent
 			guiGridListSetItemText(outbox_grid, outbox_row, outbox_grid_sender, o_message_sender, false, false) -- Sender
-			guiGridListSetItemText(outbox_grid, outbox_row, outbox_grid_subject, o_message_subject, false, false) -- Subject	
+			guiGridListSetItemText(outbox_grid, outbox_row, outbox_grid_subject, o_message_subject, false, false) -- Subject
 		end
 		guiGridListSetSelectedItem(outbox_grid,0,1)
 	end

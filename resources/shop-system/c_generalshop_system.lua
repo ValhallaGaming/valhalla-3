@@ -128,7 +128,7 @@ function showGeneralshopUI(shop_type, race, gender)
 							if((row == nil) and (row_temp)) then
 								row = row_temp
 								column = column_temp
-													
+								
 								local skin = tonumber(availableskins[row+1] )
 								
 								if(skin<10) then
@@ -140,7 +140,7 @@ function showGeneralshopUI(shop_type, race, gender)
 								end
 								
 								iClothesPreview = guiCreateStaticImage ( 320, 20, 100, 100, ":account-system/img/" .. skin..".png" , false , gGShopItemTypeGrid[1], accountRes)
-							end		
+							end
 						end
 					end
 				end
@@ -353,7 +353,7 @@ function getItemsForSale(shop_type, race, gender)
 	-- alcohol shop
 	elseif(shop_type == 9) then
 		item = {
-			{"Ziebrand Beer","The finest beer, imported from Holland.", "10", 58, 1, 1, false, 2},		
+			{"Ziebrand Beer","The finest beer, imported from Holland.", "10", 58, 1, 1, false, 2},
 			{ "Bastradov Vodka", "For your best friends - Bastradov Vodka.", "25", 62, 1, 1, false, 5},
 			{ "Scottish Whiskey", "The Best Scottish Whiskey, now exclusively made from Haggis.", "15", 63, 1, 1, false, 4 },
 			{"Softdrink", "A cold can of Sprunk.", "3", 9, 1, 1, false,1}

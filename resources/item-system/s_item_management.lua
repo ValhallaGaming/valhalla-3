@@ -2,7 +2,7 @@ mysql = exports.mysql
 
 -- ////////////////////////////////////
 -- //			MYSQL				 //
--- ////////////////////////////////////		
+-- ////////////////////////////////////
 sqlUsername = exports.mysql:getMySQLUsername()
 sqlPassword = exports.mysql:getMySQLPassword()
 sqlDB = exports.mysql:getMySQLDBName()

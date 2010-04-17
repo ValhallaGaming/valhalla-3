@@ -44,7 +44,7 @@ addEventHandler("onClientElementStreamIn", getRootElement(), streamIn)
 
 function isPlayerMoving(player)
 	return (not isPedInVehicle(player) and (getPedControlState(player, "forwards") or getPedControlState(player, "backwards") or getPedControlState(player, "left") or getPedControlState(player, "right") or getPedControlState(player, "accelerate") or getPedControlState(player, "brake_reverse") or getPedControlState(player, "enter_exit") or getPedControlState(player, "enter_passenger")))
-end	
+end
 
 local lastrot = nil
 

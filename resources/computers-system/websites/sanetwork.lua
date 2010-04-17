@@ -577,7 +577,7 @@ The train came to rest at the railroad bridge next to the basketball courts in E
 		addEventHandler("onClientGUIClick",top_link_4,function()
 				local url = tostring("www.lsiflight.sa")
 				get_page(url)
-			end,false)			
+			end,false)
 			
 	------------
 	-- Footer --
@@ -760,7 +760,7 @@ I was able to snag one photo of the man, identified as Hans Vanderburg, as he ju
 		addEventHandler("onClientGUIClick",top_link_4,function()
 				local url = tostring("www.lsiflight.sa")
 				get_page(url)
-			end,false)			
+			end,false)
 			
 	------------
 	-- Footer --

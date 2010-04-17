@@ -19,7 +19,7 @@ function adminhelp (sourcePlayer, commandName)
 				guiGridListAddColumn (lists[level], "Explanation", 1.3)
 			end
 			local tlBackButton = guiCreateButton(0.8, 0.05, 0.2, 0.07, "Close", true, myadminWindow) -- close button
-
+			
 			local commands =
 			{
 				-- level 1: Trial Admin
@@ -97,7 +97,7 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/fuelvehs", "/fuelvehs", "refills all vehicles" },
 					{ "/setcolor", "/setcolor [player] [color 1] [color 2]", "changes the players vehicle colors" },
 					{ "/getcolor", "/getcolor [car]", "returns the colors of a vehicle" },
-
+					
 					-- interior/*
 					{ "/getpos", "/getpos", "outputs your current position, interior and dimension" },
 					{ "/x", "/x [value]", "increases your x-coordinate by the given value" },
@@ -121,14 +121,14 @@ function adminhelp (sourcePlayer, commandName)
 					{ "/setfaction", "/setfaction [id] [factionid]", "puts an player into a faction" },
 					{ "/delfaction", "/delfaction [id]", "deletes a faction" },
 					{ "/showfactions", "/showfactions", "shows a list with factions" },
-
+					
 					{ "/resetbackup", "/resetbackup", "Resets PD's backup system" },
 					{ "/resetassist", "/resetassist", "Resets ES's assist system" },
 					{ "/resettowbackup", "/resettowbackup", "Resets towing backup system" },
 					{ "/aremovespikes", "/aremovespikes", "Removes all the PD spikes" },
 					{ "/clearnearbytag", "/clearnearbytag", "Clears nearby tag" },
-		
-					{ "/changelock", "/changelock", "changes the lock from the vehicle/interior" },		
+					
+					{ "/changelock", "/changelock", "changes the lock from the vehicle/interior" },
 					{ "/restartgatekeepers", "/restartgatekeepers", "restarts the gatekeepers resource" }
 				},
 				-- level 2: Admin
@@ -265,7 +265,7 @@ function adminhelp (sourcePlayer, commandName)
 					end
 				end
 			end, false)
-
+			
 			guiBringToFront (tlBackButton)
 			guiSetVisible (myadminWindow, true)
 		else

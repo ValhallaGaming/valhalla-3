@@ -32,6 +32,6 @@ function makeKey(thePlayer, commandName, keyType, keyID)
 				end
 			end
 		end
-	end	
+	end
 end
 addCommandHandler("copykey", makeKey, false, false)

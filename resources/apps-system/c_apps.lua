@@ -2,7 +2,7 @@ local appsbutton = nil
 local localPlayer = getLocalPlayer( )
 
 local function updateButton( )
-	if getResourceFromName ( 'global' ) then 
+	if getResourceFromName ( 'global' ) then
 		if exports.global:isPlayerAdmin( localPlayer ) and getElementData( localPlayer, "adminduty" ) == 1 then
 			local apps = getElementData( getResourceRootElement( ), "openapps" )
 			if apps and apps > 0 then

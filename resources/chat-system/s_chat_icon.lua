@@ -14,7 +14,7 @@ function sendChatIconShown()
 			--outputDebugString(tostring(chaticonsHidden[source]))
 		--end
 			
-		if ( getDistanceBetweenPoints3D(px, py, pz, vx, vy, vz) <= 25 ) and not (value==source) and chaticonsHidden[value]==nil  then -- only send if they can see it and have chaticons enabled
+		if ( getDistanceBetweenPoints3D(px, py, pz, vx, vy, vz) <= 25 ) and not (value==source) and chaticonsHidden[value]==nil then -- only send if they can see it and have chaticons enabled
 			triggerClientEvent(value, "addChatter", source)
 		end
 	end

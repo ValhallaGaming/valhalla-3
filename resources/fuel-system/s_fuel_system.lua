@@ -442,7 +442,7 @@ function delFuelPoint(thePlayer, commandName)
 			if (shapeType) then
 				if (shapeType=="fuel") then
 					local id = getElementData(colShape, "dbid")
-					local result = mysql:query_free("DELETE FROM fuelstations WHERE id='" .. mysql:escape_string(id) .. "'")				
+					local result = mysql:query_free("DELETE FROM fuelstations WHERE id='" .. mysql:escape_string(id) .. "'")
 					outputChatBox("Fuel station #" .. id .. " deleted.", thePlayer)
 					exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " deleted fuel station #" .. id .. ".")
 					destroyElement(colShape)

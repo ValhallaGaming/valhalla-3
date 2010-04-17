@@ -141,7 +141,7 @@ function checkLeavePickup( thePlayer, thePickup )
 	end
 end
 
-function func (player, f, down, player, pickup) enterElevator(player, pickup) end 
+function func (player, f, down, player, pickup) enterElevator(player, pickup) end
 
 function bindKeys(player, pickup)
 	if (isElement(player)) then
@@ -177,7 +177,7 @@ function isInteriorLocked(dimension)
 	local result = mysql:query_fetch_assoc("SELECT type, locked FROM `interiors` WHERE id = " .. mysql:escape_string(dimension))
 	local locked = false
 	if result then
-		if tonumber(result["rype"]) ~= 2 and tonumber(result["locked"]) == 1 then 
+		if tonumber(result["rype"]) ~= 2 and tonumber(result["locked"]) == 1 then
 			locked = true
 		end
 	end
@@ -247,7 +247,7 @@ function enterElevator(player, pickup)
 					else
 						local ownerid = getElementData( thePickup, "owner" )
 						local query = mysql:query_free("UPDATE characters SET bankmoney = bankmoney + " .. mysql:escape_string(fee) .. " WHERE id = " .. mysql:escape_string(ownerid) )
-						if query then							
+						if query then
 							for k, v in pairs( getElementsByType( "player" ) ) do
 								if isElement( v ) then
 									if getElementData( v, "dbid" ) == ownerid then

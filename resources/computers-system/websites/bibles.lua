@@ -90,7 +90,7 @@ function www_bibles_sa()
 	else
 		guiSetSize(bg,460,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, true)
-	end	
+	end
 end
 
 

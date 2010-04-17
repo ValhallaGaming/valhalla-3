@@ -50,7 +50,7 @@ function www_sadesigns_sa()
 	local news_box = guiCreateStaticImage(445,230,160,25,"websites/colours/117.png",false,bg)
 	local news_box_text_area = guiCreateStaticImage(445,255,160,115,"websites/colours/112.png",false,bg)
 	local news_box_text = guiCreateLabel(450,235,100,40,"Contact details",false,bg)
-	guiSetFont(news_box_text, "default-bold-small")	
+	guiSetFont(news_box_text, "default-bold-small")
 	
 	--[[
 	Content block text [MAIN_BOX]
@@ -73,14 +73,14 @@ function www_sadesigns_sa()
 	Content block text [ADD_BOX]
 	--]]
 	local tbtext = guiCreateLabel(450,105,300,250,"> No links",false,bg)
-	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)	
+	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)
 	
 	--[[
 	Content block text [NEWS_BOX]
 	--]]
 	local ctext = guiCreateLabel(450,260,250,250,	"Number: #18415\
 													Email: Kyle_Nash@whiz.sa\
-													Address: 1 St George Street",false,bg)	
+													Address: 1 St George Street",false,bg)
 	
 	
 	addEventHandler("onClientGUIClick",linkhp,function() -- The following code tells the script what to do when someone clicks on the link we just made. You need to replace "link" with the name of the element that you want to act as a link.
@@ -159,7 +159,7 @@ function www_sadesigns_sa_prices()
 	local news_box = guiCreateStaticImage(445,230,160,25,"websites/colours/117.png",false,bg)
 	local news_box_text_area = guiCreateStaticImage(445,255,160,115,"websites/colours/112.png",false,bg)
 	local news_box_text = guiCreateLabel(450,235,100,40,"Contact details",false,bg)
-	guiSetFont(news_box_text, "default-bold-small")	
+	guiSetFont(news_box_text, "default-bold-small")
 	
 	--[[
 	Content block text [MAIN_BOX]
@@ -181,14 +181,14 @@ function www_sadesigns_sa_prices()
 	Content block text [ADD_BOX]
 	--]]
 	local tbtext = guiCreateLabel(450,105,300,250,"> No links",false,bg)
-	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)	
+	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)
 	
 	--[[
 	Content block text [NEWS_BOX]
 	--]]
 	local ctext = guiCreateLabel(450,260,250,250,	"Number: #18415\
 													Email: Kyle_Nash@whiz.sa\
-													Address: 1 St George Street",false,bg)	
+													Address: 1 St George Street",false,bg)
 	
 	
 	addEventHandler("onClientGUIClick",linkhp,function() -- The following code tells the script what to do when someone clicks on the link we just made. You need to replace "link" with the name of the element that you want to act as a link.
@@ -267,7 +267,7 @@ function www_sadesigns_sa_portfolio()
 	local news_box = guiCreateStaticImage(445,230,160,25,"websites/colours/117.png",false,bg)
 	local news_box_text_area = guiCreateStaticImage(445,255,160,115,"websites/colours/112.png",false,bg)
 	local news_box_text = guiCreateLabel(450,235,100,40,"Contact details",false,bg)
-	guiSetFont(news_box_text, "default-bold-small")	
+	guiSetFont(news_box_text, "default-bold-small")
 	
 	--[[
 	Content block text [MAIN_BOX]
@@ -282,14 +282,14 @@ function www_sadesigns_sa_portfolio()
 	Content block text [ADD_BOX]
 	--]]
 	local tbtext = guiCreateLabel(450,105,300,250,"> No links",false,bg)
-	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)	
+	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)
 	
 	--[[
 	Content block text [NEWS_BOX]
 	--]]
 	local ctext = guiCreateLabel(450,260,250,250,	"Number: #18415\
 													Email: Kyle_Nash@whiz.sa\
-													Address: 1 St George Street",false,bg)	
+													Address: 1 St George Street",false,bg)
 	
 	
 	addEventHandler("onClientGUIClick",linkhp,function() -- The following code tells the script what to do when someone clicks on the link we just made. You need to replace "link" with the name of the element that you want to act as a link.
@@ -368,7 +368,7 @@ function www_sadesigns_sa_sponsers()
 	local news_box = guiCreateStaticImage(445,230,160,25,"websites/colours/117.png",false,bg)
 	local news_box_text_area = guiCreateStaticImage(445,255,160,115,"websites/colours/112.png",false,bg)
 	local news_box_text = guiCreateLabel(450,235,100,40,"Contact details",false,bg)
-	guiSetFont(news_box_text, "default-bold-small")	
+	guiSetFont(news_box_text, "default-bold-small")
 	
 	--[[
 	Content block text [MAIN_BOX]
@@ -379,14 +379,14 @@ function www_sadesigns_sa_sponsers()
 	Content block text [ADD_BOX]
 	--]]
 	local tbtext = guiCreateLabel(450,105,300,250,"> No links",false,bg)
-	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)	
+	--local tbtext2 = guiCreateLabel(295,125,300,250,"> Test link 2",false,bg)
 	
 	--[[
 	Content block text [NEWS_BOX]
 	--]]
 	local ctext = guiCreateLabel(450,260,250,250,	"Number: #18415\
 													Email: Kyle_Nash@whiz.sa\
-													Address: 1 St George Street",false,bg)	
+													Address: 1 St George Street",false,bg)
 	
 	
 	addEventHandler("onClientGUIClick",linkhp,function() -- The following code tells the script what to do when someone clicks on the link we just made. You need to replace "link" with the name of the element that you want to act as a link.

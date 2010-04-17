@@ -1,6 +1,6 @@
 help={
 	-- 1.	Welcome (accounts-system; 1st character give achievement)
-	"welcome.xml",	
+	"welcome.xml",
 	-- 2.	Vehicles (s_tootips)
 	"vehicles.xml",
 	-- 3	Weapons (c_tootips)
@@ -12,7 +12,7 @@ help={
 	-- 6	NPCs (c_tootips)
 	"npcs.xml",
 	-- 7	Jobs (c_jobs; showEmploymentWindow)
-	"jobs.xml",	
+	"jobs.xml",
 	-- 8	Languages (lang system; apply lang)
 	"languages.xml",
 	-- 9	Factions
@@ -56,7 +56,7 @@ local function updateIconAlpha( )
 		
 		guiSetAlpha(help_icon, alpha)
 		guiSetAlpha(icon_label_shadow, alpha)
-		guiSetAlpha(icon_label, alpha)	
+		guiSetAlpha(icon_label, alpha)
 	end
 end
 

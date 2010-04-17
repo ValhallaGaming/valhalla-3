@@ -435,7 +435,7 @@ function checkSupplies(thePlayer)
 		
 		if (tonumber(owner)==getElementData(thePlayer, "dbid") or exports.global:hasItem(thePlayer, 4, dbid) or exports.global:hasItem(thePlayer, 5, dbid)) and (inttype==1) then
 			local query = mysql:query_fetch_assoc("SELECT supplies FROM interiors WHERE id='" .. mysql:escape_string(dbid) .. "' LIMIT 1")
-			local supplies = query["supplies"]	
+			local supplies = query["supplies"]
 			outputChatBox("This business has " .. supplies .. " supplies.", thePlayer, 255, 194, 14)
 		else
 			outputChatBox("You are not in a business or do you do own the business.", thePlayer, 255, 0, 0)

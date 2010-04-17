@@ -72,7 +72,7 @@ function changeTyre( veh, wheelNumber )
 				setVehicleWheelStates ( veh, wheel1, 0, wheel2, wheel4 )
 			elseif (wheelNumber==4) then -- back right
 				outputDebugString("Tyre 4 changed.")
-				setVehicleWheelStates ( veh, wheel1, wheel2, wheel3, 0 )			
+				setVehicleWheelStates ( veh, wheel1, wheel2, wheel3, 0 )
 			end
 			exports.global:sendLocalMeAction(source, "replaces the vehicle's tyre.")
 		end
@@ -143,7 +143,7 @@ function changeVehicleColour(veh, col1, col2, col3, col4)
 		end
 		if not exports.global:takeMoney(source, mechcost) then
 			outputChatBox("You can't afford to repaint this vehicle.", source, 255, 0, 0)
-		else			
+		else
 			exCol1, exCol2, exCol3, exCol4 = getVehicleColor ( veh )
 			
 			if not col1 then col1 = exCol1 end

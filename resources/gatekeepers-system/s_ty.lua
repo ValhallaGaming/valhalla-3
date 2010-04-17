@@ -26,7 +26,7 @@ function startTy(thePlayer, matchingDimension )
 end
 addEventHandler("onColShapeHit", tyColSphere, startTy )
 
-function tyIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.	
+function tyIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.
 	-- Give the player the "Find Ty" achievement.
 	exports.global:sendLocalMeAction(source,"knocks on the door")
 	

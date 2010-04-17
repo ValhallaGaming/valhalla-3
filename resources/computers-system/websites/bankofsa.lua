@@ -5,7 +5,7 @@ function www_bankofsa_sa()
 	local page_length = 500
 	
 	guiSetText(internet_address_label, "Credit & Commerce Bank of San Andreas - Waterwolf")
-	guiSetText(address_bar,"www.bankofsa.sa")	
+	guiSetText(address_bar,"www.bankofsa.sa")
 	
 	bg = guiCreateStaticImage(0,0,660,page_length,"websites/colours/14.png",false,internet_pane)
 	
@@ -14,7 +14,7 @@ function www_bankofsa_sa()
 	
 	local link_1 = guiCreateLabel(123,107,33,14,"Offers",false,bg)
 	guiSetFont(link_1,"default-small")
-	guiLabelSetColor(link_1,0,51,153)	
+	guiLabelSetColor(link_1,0,51,153)
 	
 	local link_2 = guiCreateLabel(191,107,80,14,"Current Accounts",false,bg)
 	guiSetFont(link_2,"default-small")

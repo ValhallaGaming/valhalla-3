@@ -8,7 +8,7 @@ function www_lsiflight_sa()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Los Santos International Flight School") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.lsiflight.sa") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.lsiflight.sa") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
 	----------------------------
@@ -78,7 +78,7 @@ function www_lsiflight_sa()
 	-- Content --
 	-------------
 	--local side_text = guiCreateLabel(10, 110, 105, 120, "", false, bg)
-	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)	
+	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(111,67,600,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(112,66,600,25,"websites/colours/0.png",false,bg)
@@ -96,7 +96,7 @@ function www_lsiflight_sa()
 	else
 		guiSetSize(bg,678,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 end
 
 --[PILOT APPLICATIONS]
@@ -106,7 +106,7 @@ function www_lsiflight_sa_pilota()
 	---------------------
 	local page_length = 800
 	guiSetText(internet_address_label, "Los Santos International Flight School") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.lsiflight.sa/pilota") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.lsiflight.sa/pilota") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
 	----------------------------
@@ -176,7 +176,7 @@ function www_lsiflight_sa_pilota()
 	-- Content --
 	-------------
 	--local side_text = guiCreateLabel(10, 110, 105, 120, "", false, bg)
-	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)	
+	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(111,67,600,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(112,66,600,25,"websites/colours/0.png",false,bg)
@@ -215,7 +215,7 @@ What are your IC and OOC reason for wanting this Pilots License.))\
 	else
 		guiSetSize(bg,678,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 end
 
 --[JOB APPLICATIONS]
@@ -225,7 +225,7 @@ function www_lsiflight_sa_careera()
 	---------------------
 	local page_length = 700
 	guiSetText(internet_address_label, "Los Santos International Flight School") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.lsiflight.sa/careera") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.lsiflight.sa/careera") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
 	----------------------------
@@ -295,7 +295,7 @@ function www_lsiflight_sa_careera()
 	-- Content --
 	-------------
 	--local side_text = guiCreateLabel(10, 110, 105, 120, "", false, bg)
-	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)	
+	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(111,67,600,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(112,66,600,25,"websites/colours/0.png",false,bg)
@@ -335,7 +335,7 @@ Please email your application to 'apps@lsiflight.sa' [subject: Job Application] 
 	else
 		guiSetSize(bg,678,700,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 end
 
 --[CONTACT US]
@@ -345,7 +345,7 @@ function www_lsiflight_sa_contact()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Los Santos International Flight School") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.lsiflight.sa/contact") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.lsiflight.sa/contact") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
 	----------------------------
@@ -415,7 +415,7 @@ function www_lsiflight_sa_contact()
 	-- Content --
 	-------------
 	--local side_text = guiCreateLabel(10, 110, 105, 120, "", false, bg)
-	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)	
+	local side_text = guiCreateStaticImage(10,110,100,250,"websites/images/lsifsi.png",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(111,67,600,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(112,66,600,25,"websites/colours/0.png",false,bg)
@@ -443,5 +443,5 @@ function www_lsiflight_sa_contact()
 	else
 		guiSetSize(bg,678,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 end

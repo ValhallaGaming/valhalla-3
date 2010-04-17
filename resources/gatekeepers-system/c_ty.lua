@@ -229,7 +229,7 @@ function tyFriendStatement2 ()
 		if(button == "left" and state == "up") then
 			
 			triggerServerEvent( "tyGiveItem", getLocalPlayer(), 2)
-			guiSetText(tyText, "You want anything else?")			
+			guiSetText(tyText, "You want anything else?")
 			
 		end
 	end, false)

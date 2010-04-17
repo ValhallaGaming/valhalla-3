@@ -96,7 +96,7 @@ function get_outbox(accountName)
 		local continue = true
 		while continue do
 			local row = mysql:fetch_assoc(result)
-			if not row then break end			
+			if not row then break end
 			outbox_table[key] = { }
 			outbox_table[key][1] = row["id"]
 			outbox_table[key][2] = row["newdate"]

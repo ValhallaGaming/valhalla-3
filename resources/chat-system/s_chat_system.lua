@@ -251,7 +251,7 @@ function radio(source, radioID, message)
 										local message2 = call(getResourceFromName("language-system"), "applyLanguage", source, v, message, language)
 										outputChatBox("[" .. languagename .. "] " .. getPlayerName(value) .. "'s Radio: " .. trunklateText( v, message2 ), v, 255, 255, 255)
 									end
-								end							
+								end
 							end
 						end
 					end
@@ -325,7 +325,7 @@ function govAnnouncement(thePlayer, commandName, ...)
 		local teamID = tonumber(getElementData(theTeam, "id"))
 	
 		if (teamID==1 or teamID==2 --[[or teamID==3]] or teamID==35) then
-			local message = table.concat({...}, " ")			
+			local message = table.concat({...}, " ")
 			local factionRank = tonumber(getElementData(thePlayer,"factionrank"))
 			
 			if (factionRank<8) then
@@ -424,7 +424,7 @@ function globalOOC(thePlayer, commandName, ...)
 				outputChatBox("OOC Chat is currently disabled.", thePlayer, 255, 0, 0)
 			elseif (muted==1) then
 				outputChatBox("You are currenty muted from the OOC Chat.", thePlayer, 255, 0, 0)
-			else	
+			else
 				local players = exports.pool:getPoolElementsByType("player")
 				local playerName = getPlayerName(thePlayer)
 				local playerID = getElementData(thePlayer, "playerid")
@@ -777,7 +777,7 @@ function setRadioChannel(thePlayer, commandName, slot, channel)
 			for k, v in ipairs( items ) do
 				if v[1] == 6 then
 					count = count + 1
-					if count == slot then	
+					if count == slot then
 						if v[2] > 0 then
 							if channel > 0 and channel < 1000000000 then
 								if exports['item-system']:updateItemValue(thePlayer, k, channel) then
@@ -1519,7 +1519,7 @@ addCommandHandler("endinterview", endInterview, false, false)
 function interviewChat(thePlayer, commandName, ...)
 	local logged = getElementData(thePlayer, "loggedin")
 	if (logged==1) then
-		if(getElementData(thePlayer, "interview"))then			
+		if(getElementData(thePlayer, "interview"))then
 			if not(...)then
 				outputChatBox("SYNTAX: /" .. commandName .. "[Message]", thePlayer, 255, 194, 14)
 			else
@@ -1602,7 +1602,7 @@ function newsHotline(thePlayer, commandName, ...)
 					end
 					outputChatBox("SMS From: News Desk - '".. message.."' Ph:".. playerNumber .." (("..getPlayerName(thePlayer) .."))", value)
 				end
-			end			
+			end
 		end
 	end
 end

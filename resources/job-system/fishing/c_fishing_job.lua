@@ -19,7 +19,7 @@ function castLine(oldcatch)
 			if not (getVehicleType(element)=="Boat") then
 				outputChatBox("You must be on a boat to fish.", 255, 0, 0)
 			else
-				local x, y, z = getElementPosition(getLocalPlayer())	
+				local x, y, z = getElementPosition(getLocalPlayer())
 				if ((y < 3000) and ( y > -3000)) and ((x > -3000) and (x < 3000)) then -- Are they out at sea.
 					outputChatBox("You must be out on the sea to fish.", 255, 0, 0)
 				else
@@ -32,7 +32,7 @@ function castLine(oldcatch)
 						else
 							local biteTimer = math.random(30000,300000) -- 30 seconds to 5 minutes for a bite.
 							catchTimer = setTimer( fishOnLine, biteTimer, 1 ) -- A fish will bite within 1 and 5 minutes.
-							triggerServerEvent("castOutput", getLocalPlayer())	
+							triggerServerEvent("castOutput", getLocalPlayer())
 							if not (fishingBlip) then -- If the /sellfish marker isnt already being shown...
 								fishingBlip = createBlip(375.96875, -2054.8271484375, 7, 0, 2, 255, 0, 255, 255 )
 								fishingMarker = createMarker(375.96875, -2054.8271484375, 7, "cylinder", 2, 255, 0, 255, 150 )

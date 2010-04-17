@@ -98,7 +98,7 @@ function displayTruckerJob(notext)
 		jobstate = 1
 		blip = createBlip(-69.087890625, -1111.1103515625, 0.64266717433929, 51, 2, 255, 127, 255)
 		
-		if not notext then		
+		if not notext then
 			outputChatBox("#FF9933Approach the #CCCCCCblip#FF9933 on your radar and enter the van to start your job.", 255, 194, 15, true)
 		end
 	end
@@ -124,7 +124,7 @@ function startTruckerJob(routeid)
 				rand = routeid
 			else
 				
-			end	
+			end
 			route = routes[rand]
 			local x, y, z = route[1], route[2], route[3]
 			blip = createBlip(x, y, z, 0, 2, 255, 200, 0)
@@ -134,7 +134,7 @@ function startTruckerJob(routeid)
 			jobstate = 2
 			oldroute = rand
 			if (routeid == -1) then
-				triggerServerEvent("updateNextCheckpoint", localPlayer, vehicle, rand)	
+				triggerServerEvent("updateNextCheckpoint", localPlayer, vehicle, rand)
 			end
 		else
 			outputChatBox("You must be in the van to start this job.", 255, 0, 0)
@@ -194,7 +194,7 @@ function nextDeliveryCheckpoint()
 				pay = 0
 			end
 			spawnFinishMarkerTruckJob()
-			triggerServerEvent("saveDeliveryProgress", localPlayer, vehicle, pay)	
+			triggerServerEvent("saveDeliveryProgress", localPlayer, vehicle, pay)
 			
 		else
 			outputChatBox("#FF9933You must be in a van to complete deliverys.", 255, 0, 0, true ) -- Wrong car type.
@@ -229,7 +229,7 @@ function loadNewCheckpointTruckJob()
 	blip = createBlip(x, y, z, 0, 2, 255, 200, 0)
 	marker = createMarker(x, y, z, "checkpoint", 4, 255, 200, 0, 150)
 	addEventHandler("onClientMarkerHit", marker, waitAtDelivery)
-	triggerServerEvent("updateNextCheckpoint", localPlayer, vehicle, rand)	
+	triggerServerEvent("updateNextCheckpoint", localPlayer, vehicle, rand)
 end
 
 addEvent("loadNewCheckpointTruckJob", true)

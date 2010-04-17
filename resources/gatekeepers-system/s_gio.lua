@@ -11,7 +11,7 @@ function timeCheck(res)
 		local hoursLeft = 18 - hour
 		local spawnTime = (hoursLeft*60) + minutesLeft
 		gioSpawnTimer = setTimer ( createGio, spawnTime*60000, 1 )
-		outputDebugString("Giovanni will spawn in "..spawnTime.." minutes.")			
+		outputDebugString("Giovanni will spawn in "..spawnTime.." minutes.")
 	end
 end
 addEventHandler("onResourceStart", getResourceRootElement(), timeCheck)
@@ -104,7 +104,7 @@ function showGioConvo(stage)
 
 			setTimer(resetGioConvoStateDelayed, 600000, 1)
 		elseif (stage == 5) then
-			exports.global:sendLocalText(source, "Giovanna Remini says: You heard that? It's getting hot around here, I gotta go man. Peace!", 255, 255, 255, 5)			
+			exports.global:sendLocalText(source, "Giovanna Remini says: You heard that? It's getting hot around here, I gotta go man. Peace!", 255, 255, 255, 5)
 		end
 	end
 end

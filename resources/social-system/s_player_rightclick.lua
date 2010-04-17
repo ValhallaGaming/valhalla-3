@@ -33,7 +33,7 @@ function addFriend(player)
 	if (count >=23) then
 		outputChatBox("Your friends list is currently full.", source, 255, 0, 0)
 	else
-		local friends = getElementData(source, "friends")	
+		local friends = getElementData(source, "friends")
 		if friends then
 			if (friends[ targetID ] == true) then
 				outputChatBox("This person is already on your friends list.", source, 255, 0, 0)

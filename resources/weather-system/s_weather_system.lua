@@ -48,9 +48,9 @@ function changeWeatherType()
 		
 		if(rand < 9) then -- 80% chance of it staying clear
 			weather = "clear"
-		else	
+		else
 			weather = "cloudy"
-		end	
+		end
 	
 	elseif(nextWeather == "hot") then
 	
@@ -70,7 +70,7 @@ function changeWeatherType()
 			weather = "clear" 
 		else					-- 10% chance of rain
 			weather = "rain"
-		end	
+		end
 		
 	elseif(nextWeather == "rain") then
 		
@@ -80,7 +80,7 @@ function changeWeatherType()
 			weather = "cloudy" 
 		else					-- 10% chance of cloud
 			weather = "fog"
-		end	
+		end
 	
 	elseif(nextWeather == "fog" )then
 	
@@ -90,29 +90,29 @@ function changeWeatherType()
 			weather = "cloudy" 
 		else					-- 10% chance of rain
 			weather = "rain"
-		end	
+		end
 	
 	end
 	
 	local realtime = getRealTime() -- Get the current time since the weather will depend on the time of day
-				
+	
 	local latertime = realtime.hour
 	
-		-- Now we have what we want the next weather type to be, but we need to check that this fits in with the time of day.
-		if(latertime > 17 or latertime < 9) then  -- if it is night time, and the weater is hot, set it to clear
-			if(weather == "hot") then
-				weather= "clear"
-			end
+	-- Now we have what we want the next weather type to be, but we need to check that this fits in with the time of day.
+	if(latertime > 17 or latertime < 9) then  -- if it is night time, and the weater is hot, set it to clear
+		if(weather == "hot") then
+			weather= "clear"
 		end
-
-		
-		-- We don't want it to be foggy during the day
-		if(latertime > 7 and latertime < 20) then
-			if(weather == "fog") then
-				weather = "cloudy"
-			end
-		end		
-						
+	end
+	
+	
+	-- We don't want it to be foggy during the day
+	if(latertime > 7 and latertime < 20) then
+		if(weather == "fog") then
+			weather = "cloudy"
+		end
+	end
+	
 	delay2 = math.random(-30, 30)
 end
 addEvent ( "onChangeWeatherType", true )
@@ -132,7 +132,7 @@ function changeNextWeatherType()
 			nextWeather = "clear"
 		else	
 			nextWeather = "cloudy"
-		end	
+		end
 	
 	elseif(laterWeather == "hot") then
 	
@@ -142,7 +142,7 @@ function changeNextWeatherType()
 			nextWeather = "clear" 
 		else					-- 10% chance of cloud
 			nextWeather = "cloudy"
-		end	
+		end
 	
 	elseif(laterWeather == "cloudy") then
 		
@@ -152,7 +152,7 @@ function changeNextWeatherType()
 			nextWeather = "clear" 
 		else					-- 10% chance of rain
 			nextWeather = "rain"
-		end	
+		end
 		
 	elseif(laterWeather == "rain") then
 		
@@ -162,7 +162,7 @@ function changeNextWeatherType()
 			nextWeather = "cloudy" 
 		else					-- 10% chance of cloud
 			nextWeather = "fog"
-		end	
+		end
 	
 	elseif(laterWeather == "fog" )then
 	
@@ -172,7 +172,7 @@ function changeNextWeatherType()
 			nextWeather = "cloudy" 
 		else					-- 10% chance of rain
 			nextWeather = "rain"
-		end	
+		end
 	
 	end
 	
@@ -180,20 +180,20 @@ function changeNextWeatherType()
 				
 	local latertime = realtime.hour + 2
 	
-		-- Now we have what we want the next weather type to be, but we need to check that this fits in with the time of day.
-		if(latertime > 17 or latertime < 9) then  -- if it is night time, and the weater is hot, set it to clear
-			if(nextWeather == "hot") then
-				nextWeather= "clear"
-			end
+	-- Now we have what we want the next weather type to be, but we need to check that this fits in with the time of day.
+	if(latertime > 17 or latertime < 9) then  -- if it is night time, and the weater is hot, set it to clear
+		if(nextWeather == "hot") then
+			nextWeather= "clear"
 		end
-
+	end
+	
 		
-		-- We don't want it to be foggy during the day
-		if(latertime > 7 and latertime < 20) then
-			if(nextWeather == "fog") then
-				nextWeather = "cloudy"
-			end
-		end		
+	-- We don't want it to be foggy during the day
+	if(latertime > 7 and latertime < 20) then
+		if(nextWeather == "fog") then
+			nextWeather = "cloudy"
+		end
+	end
 end
 addEvent ( "onChangeNextWeatherType", true )
 addEventHandler ( "onChangeNextWeatherType", getRootElement(), changeNextWeatherType )

@@ -159,7 +159,7 @@ g_bus_routes =
 			{2720.1142,-1343.4140,46.0086,false,0}, -- Line B - Checkpoint
 			{2720.3349,-1483.5966,30.2812,true,16}, -- Line B - BT&R
 			{2679.4746,-1456.6191,30.3829,false,0}, -- Line B - Checkpoint
-			{2580.1777,-1441.6611,34.7777,false,0}, -- Line B - Checkpoint			
+			{2580.1777,-1441.6611,34.7777,false,0}, -- Line B - Checkpoint
 			{2393.9287,-1418.9638,23.8359,false,0}, -- Line B - Checkpoint
 			{2339.9394,-1431.5703,23.8281,false,0}, -- Line B - Checkpoint
 			{2339.8457,-1608.7333,21.4545,false,0}, -- Line B - Checkpoint

@@ -233,7 +233,7 @@ for key, value in pairs( sites ) do
 			y = 79
 			for i = 1, 9 do
 				guiSetEnabled( guiCreateStaticImage( x + i, y, 1, i, "websites/colours/" .. colors.title_background2 .. ".png", false, bg ), false )
-			end			
+			end
 			-- content area
 			value()
 			

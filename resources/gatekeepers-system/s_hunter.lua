@@ -19,7 +19,7 @@ exports['anticheat-system']:changeProtectedElementDataEx (hunter, "activeConvo",
 exports['anticheat-system']:changeProtectedElementDataEx(hunter, "name", "Hunter")
 exports['anticheat-system']:changeProtectedElementDataEx(hunter, "talk", true)
 
-function hunterIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.	
+function hunterIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.
 	-- Give the player the "Find Hunter" achievement.
 		
 	if(getElementData(hunter, "activeConvo")==1)then

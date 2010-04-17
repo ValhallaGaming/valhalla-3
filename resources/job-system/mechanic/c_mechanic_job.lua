@@ -291,7 +291,7 @@ function paintWindow()
 					triggerServerEvent( "repaintVehicle", getLocalPlayer(), currentVehicle, col1, col2, col3, col4)
 					
 					closeMechanicWindow()
-				end				
+				end
 			end
 		end, false)
 		
@@ -316,7 +316,7 @@ function paintWindow()
 				destroyElement(colourChart)
 				destroyElement(bPaintClose)
 				destroyElement(wPaint)
-				wPaint, iColour1, iColour2, iColour3, iColour4, lcol1, lcol2, lcol3, lcol4, colourChart, bPaintClose = nil				
+				wPaint, iColour1, iColour2, iColour3, iColour4, lcol1, lcol2, lcol3, lcol4, colourChart, bPaintClose = nil
 				triggerServerEvent( "colorEndPreview", getLocalPlayer(), currentVehicle)
 				guiSetInputEnabled(false)
 			end
@@ -710,7 +710,7 @@ function upgradeWindow()
 					triggerServerEvent( "changeVehicleUpgrade", getLocalPlayer(), currentVehicle, tonumber(guiGridListGetItemData(gUpgrades, row, 1)), guiGridListGetItemText(gUpgrades, row, 1), tonumber(guiGridListGetItemData(gUpgrades, row, 2)))
 				end
 			end
-		end)		
+		end)
 		-- Close
 		bUpgradesClose = guiCreateButton( 0.05, 0.9, 0.9, 0.1, "Close", true, wUpgrades )
 		addEventHandler( "onClientGUIClick", bUpgradesClose, function(button, state)
@@ -786,7 +786,7 @@ function closeMechanicWindow()
 		destroyElement(bUpgradesClose)
 		destroyElement(gUpgrades)
 		destroyElement(wUpgrades)
-		wUpgrades, gUpgrades, bUpgradesClose = nil	
+		wUpgrades, gUpgrades, bUpgradesClose = nil
 		
 		if oldUpgradeSlot then
 			triggerServerEvent( "upgradeEndPreview", getLocalPlayer(), currentVehicle, oldUpgradeSlot)

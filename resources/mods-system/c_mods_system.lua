@@ -16,7 +16,7 @@ function applyMods()
 	-- corner seats
 	engineImportTXD(pigpen2, 14837)
 	-- main interior structure
-	engineImportTXD(pigpen2, 14838)	
+	engineImportTXD(pigpen2, 14838)
 	
 	------------------------
 	-- bus Stop --

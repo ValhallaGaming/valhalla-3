@@ -10,7 +10,7 @@ settings = {}
 --This function simply sets up the driveby upon vehicle entry
 local function setupDriveby( player, seat )
 	--If his seat is 0, store the fact that he's a driver
-	if seat == 0 then 
+	if seat == 0 then
 		driver = true
 	else
 		driver = false
@@ -205,7 +205,7 @@ addCommandHandler ( "Previous driveby weapon", switchDrivebyWeapon )
 local limiterTimer
 function limitDrivebySpeed ( weaponID )
 	local speed = settings.shotdelay[tostring(weaponID)]
-	if not speed then 
+	if not speed then
 		if not isControlEnabled ( "vehicle_fire" ) then 
 			toggleControl ( "vehicle_fire", true )
 		end

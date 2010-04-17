@@ -199,7 +199,7 @@ addEventHandler("onUpdateSuspectWarrantDetails", getRootElement(), addUpdateSusp
 function saveCrime(details)
 	if(string.len(details[12]) > 350) then
 		outputChatBox("Too much information passed, unable to save crime - please add again.", client, 255, 0 ,0, true)
-	else	
+	else
 		-- insert the crimes
 		mysql:query_free("INSERT INTO suspectCrime SET suspect_name='" .. mysql:escape_string(details[1]) .. "', time='" .. mysql:escape_string(details[2]) .. "', date='" .. mysql:escape_string(details[3]) .. "', officers='" .. mysql:escape_string(details[4]) .. "', ticket='" .. mysql:escape_string(details[5]) .. "', arrest='" .. mysql:escape_string(details[6]) .. "', fine='" .. mysql:escape_string(details[7]) .. "', ticket_price='" .. mysql:escape_string(details[8]) .. "', arrest_price='" .. mysql:escape_string(details[9]) .. "', fine_price='" .. mysql:escape_string(details[10]) .. "', illegal_items='" .. mysql:escape_string(details[11]) .. "', details='" .. mysql:escape_string(details[12]) .. "', done_by='" .. mysql:escape_string(details[13]) .. "'")
 
@@ -239,7 +239,7 @@ function getSuspectCrime(name)
 				tableresult[tablecount][14] = row["done_by"]
 				
 				tablecount = tablecount + 1
-			end		
+			end
 			triggerClientEvent("onClientSaveSuspectCrimes", client, tableresult)
 		else
 			triggerClientEvent("onClientSaveSuspectCrimes", client, nil)

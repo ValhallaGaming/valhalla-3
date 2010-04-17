@@ -8,7 +8,7 @@ exports['anticheat-system']:changeProtectedElementDataEx(rook, "name", "Rook")
 exports['anticheat-system']:changeProtectedElementDataEx(rook, "talk", true)
 exports['anticheat-system']:changeProtectedElementDataEx(rook, "rotation", getPedRotation(rook), false)
 
-function rookIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.	
+function rookIntro () -- When player enters the colSphere create GUI with intro output to all local players as local chat.
 	-- Give the player the "Find Hunter" achievement.
 	if(getElementData( rook, "activeConvo" )==1)then
 		outputChatBox("Rook doesn't want to talk to you.", source, 255, 0, 0)
@@ -24,8 +24,8 @@ function rookIntro () -- When player enters the colSphere create GUI with intro 
 			exports.global:sendLocalText(source, "Rook says: Keep on walkin'. Grown men tryin' to talk around here.", 255, 255, 255, 10)
 		else
 			if(rooksFriend==1)then -- If they are already a friend.
-				exports.global:sendLocalText(source, "Rook says: Whats good, my nigga?  You gettin' that paper now, right?", 255, 255, 255, 10)	
-			else -- If they are not a frient.		
+				exports.global:sendLocalText(source, "Rook says: Whats good, my nigga?  You gettin' that paper now, right?", 255, 255, 255, 10)
+			else -- If they are not a friend.
 				triggerClientEvent( source, "rookIntroEvent", getRootElement()) -- Trigger Client side function to create GUI.
 				exports.global:sendLocalText(source, "Rook says: What up, Homie? You lookin' to make some real green?", 255, 255, 255, 10)
 				exports['anticheat-system']:changeProtectedElementDataEx (rook, "activeConvo", 1) -- set the NPCs conversation state to active so no one else can begin to talk to him.

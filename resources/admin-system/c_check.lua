@@ -116,7 +116,7 @@ addEventHandler( "onClientRender", getRootElement(),
 			guiSetText ( Label[6], "Skin: " .. getElementModel( player ) )
 			
 			local weapon = getPedWeapon( player )
-			if weapon then 
+			if weapon then
 				weapon = getWeaponNameFromID( weapon )
 			else
 				weapon = "N/A"

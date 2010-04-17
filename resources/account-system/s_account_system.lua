@@ -85,7 +85,7 @@ function spawnCharacter(charname, version)
 	
 	local data = mysql:query_fetch_assoc("SELECT * FROM characters WHERE charactername='" .. safecharname .. "' AND account='" .. safeid .. "'")
 	
-	if (data) then	
+	if (data) then
 		local id = tonumber(data["id"])
 		local x = tonumber(data["x"])
 		local y = tonumber(data["y"])
@@ -1113,7 +1113,7 @@ function createCharacter(name, gender, skincolour, weight, height, fatness, musc
 			exports.global:giveItem( source, 18, 1 )
 			exports['anticheat-system']:changeProtectedElementDataEx(source, "dbid")
 			
-			-- CELL PHONE			
+			-- CELL PHONE
 			local cellnumber = id+15000
 			local update = mysql:query_free("UPDATE characters SET cellnumber='" .. mysql:escape_string(cellnumber) .. "' WHERE charactername='" .. safecharname .. "'")
 			
@@ -1209,7 +1209,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 		if not username then
 			local theTimer = getElementData(jailedPlayer, "pd.jailtimer")
 			if isTimer(theTimer) then
-				killTimer(theTimer)	
+				killTimer(theTimer)
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
 			return

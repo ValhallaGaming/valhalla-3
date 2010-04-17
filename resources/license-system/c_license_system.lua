@@ -525,7 +525,7 @@ function startDrivingTest(element)
 			blip = createBlip(x1, y1 , z1, 0, 2, 255, 0, 255, 255)
 			marker = createMarker( x1, y1,z1 , "checkpoint", 4, 255, 0, 255, 150)
 				
-			addEventHandler("onClientMarkerHit", marker, UpdateCheckpoints)	
+			addEventHandler("onClientMarkerHit", marker, UpdateCheckpoints)
 				
 			outputChatBox("#FF9933You will need to complete the route without damaging the test car. Good luck and drive safe.", 255, 194, 14, true)
 		end

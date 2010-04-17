@@ -16,7 +16,7 @@ function startFishing(thePlayer)
 			end
 		end
 	end
-end	
+end
 addCommandHandler("fish", startFishing, false, false)
 addEvent("fish")
 addEventHandler("fish", getRootElement(), startFishing)

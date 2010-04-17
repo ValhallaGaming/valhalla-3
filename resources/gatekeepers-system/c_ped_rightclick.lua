@@ -64,7 +64,7 @@ function clickPed(button, state, absX, absY, wx, wy, wz, element)
 						else
 							outputChatBox("Error: Unknown ped.", 255, 0, 0)
 						end
-					end	
+					end
 				end, false)
 				
 				bClosePedMenu = guiCreateButton(0.05, 0.6, 0.87, 0.25, "Close Menu", true, wPedRightClick)

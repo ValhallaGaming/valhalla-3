@@ -17,7 +17,7 @@ function selectPlayer()
 	local theChosenOne = getRandomPlayer()
 	count = count+1
 
-	if (isElement(theChosenOne)) then	
+	if (isElement(theChosenOne)) then
 		local logged = getElementData(theChosenOne, "loggedin")
 		if not (logged) then
 			if (count<10) then
@@ -55,12 +55,12 @@ function selectPlayer()
 						selectPlayerTimer = setTimer(selectPlayer, 300000, 1)
 						count = 0
 					end
-				else				
+				else
 					count = 0
 					if(exports.global:hasItem(theChosenOne,2))then
 						exports.global:sendLocalMeAction(theChosenOne,"receives a text message.")
 						triggerClientEvent(theChosenOne, "createHunterMarkers", theChosenOne)
-					end	
+					end
 					local selectionTime = math.random(1200000,2400000) -- random time between 20 and 40 minutes
 					selectPlayerTimer = setTimer(selectPlayer, selectionTime, 1) -- start the selectPlayerTimer again for the next person.
 				end

@@ -811,7 +811,7 @@ function hugeSlapPlayer(thePlayer, commandName, targetPlayer)
 						local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 						exports.global:sendMessageToAdmins("AdmCmd: " .. tostring(adminTitle) .. " " .. getPlayerName(thePlayer) .. " huge-slapped " .. targetPlayerName .. ".")
 						exports.logs:logMessage("[/HUGESLAP] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." slapped ".. targetPlayerName , 4)
-						triggerEvent("removeTintName", targetPlayer)						
+						triggerEvent("removeTintName", targetPlayer)
 					end
 				end
 			end
@@ -1758,7 +1758,7 @@ function freezePlayer(thePlayer, commandName, target)
 					toggleAllControls(targetPlayer, false, true, false)
 					outputChatBox(" You have been frozen by an admin. Take care when following instructions.", targetPlayer)
 					outputChatBox(" You have frozen " ..targetPlayerName.. ".", thePlayer)
-				else	
+				else
 					toggleAllControls(targetPlayer, false, true, false)
 					setPedWeaponSlot(targetPlayer, 0)
 					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "freeze", 1)
@@ -1796,7 +1796,7 @@ function unfreezePlayer(thePlayer, commandName, target)
 					if (isElement(thePlayer)) then
 						outputChatBox(" You have unfrozen " ..targetPlayerName.. ".", thePlayer)
 					end
-				else	
+				else
 					toggleAllControls(targetPlayer, true, true, true)
 					
 					-- Disable weapon scrolling if restrained
@@ -2431,7 +2431,7 @@ local function showIPAlts(thePlayer, ip)
 				text = text .. " (Banned by " .. row["banned_by"] .. ")"
 			else
 				text = text .. " (Last login: " .. row["lastlogin"] .. ")"
-			end	
+			end
 			outputChatBox( text, thePlayer)
 		end
 		mysql:free_result( result )
@@ -2534,7 +2534,7 @@ function setLanguage(thePlayer, commandName, targetPlayerName, language, skill)
 			outputChatBox("SYNTAX: /" .. commandName .. " [Partial Player Nick] [Language] [Skill]", thePlayer, 255, 194, 14)
 		else
 			local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick( thePlayer, targetPlayerName )
-			if not targetPlayer then	
+			if not targetPlayer then
 			elseif getElementData( targetPlayer, "loggedin" ) ~= 1 then
 				outputChatBox( "Player is not logged in.", thePlayer, 255, 0, 0 )
 			else
@@ -2660,7 +2660,7 @@ function vehicleLimit(admin, command, player, limit)
 			outputChatBox("SYNTAX: /" .. command .. " [Player] [Limit]", admin, 255, 194, 14)
 		else
 			local tplayer, targetPlayerName = exports.global:findPlayerByPartialNick(admin, player)
-			if (tplayer) then			
+			if (tplayer) then
 				local query = mysql:query_fetch_assoc("SELECT maxvehicles FROM characters WHERE id = " .. mysql:escape_string(getElementData(tplayer, "dbid")))
 				if (query) then
 					local oldvl = query["maxvehicles"]
@@ -2674,7 +2674,7 @@ function vehicleLimit(admin, command, player, limit)
 							outputChatBox("You have set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit to " .. newl .. ".", admin, 255, 194, 14)
 							outputChatBox("Admin " .. getPlayerName(admin):gsub("_"," ") .. " has set your vehicle limit to " .. newl .. ".", tplayer, 255, 194, 14)
 							
-							exports.logs:logMessage("[SET VEHICLE LIMIT] " .. getPlayerName(admin):gsub("_"," ") .. " has set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit from " .. oldvl .. " to " .. newl .. ".", 4)							
+							exports.logs:logMessage("[SET VEHICLE LIMIT] " .. getPlayerName(admin):gsub("_"," ") .. " has set " .. targetPlayerName:gsub("_", " ") .. " vehicle limit from " .. oldvl .. " to " .. newl .. ".", 4)
 						else
 							outputChatBox("You can not set a level below 0", admin, 255, 194, 14)
 						end
@@ -2682,7 +2682,7 @@ function vehicleLimit(admin, command, player, limit)
 				end
 			else
 				outputChatBox("Something went wrong with picking the player.", admin)
-			end			
+			end
 		end
 	end
 end

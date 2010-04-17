@@ -45,7 +45,7 @@ end
 
 function getFreeResultPoolID()
 	local size = #resultPool
-	if (size == 0) then 
+	if (size == 0) then
 		return 1 
 	end
 	for index, query in ipairs(resultPool) do

@@ -47,7 +47,7 @@ function www_RandBsburialservice_sa() -- The function is named the same as your 
 	-------------
 	local mainText = guiCreateLabel(10,65,440,800,	"Welcome to Romero and Baker's Burial Service, we provide you with Excellent \
 	Burial Services!! \
-										            \
+													\
 													Romero and Bakers Burial Services are offering a part time job for you to \
 													serve the society and help the gone people in their last walk towards the \
 													world upon us \

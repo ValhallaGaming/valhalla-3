@@ -20,13 +20,13 @@ function loadOneTrafficCam(id)
 	local row = mysql:query_fetch_assoc("SELECT * FROM `speedcams` WHERE `id`='"..mysql:escape_string(id).."'")
 	if (row) then
 		local id = tonumber(row["id"])
-		local maxspeed = tonumber(row["maxspeed"])		
+		local maxspeed = tonumber(row["maxspeed"])
 		local interior = tonumber(row["interior"])
 		local dimension = tonumber(row["dimension"])
 		local x = tonumber(row["x"])
 		local y = tonumber(row["y"])
 		local z = tonumber(row["z"])-4
-		local radius = tonumber(row["radius"])	
+		local radius = tonumber(row["radius"])
 		
 		local enabled
 		local state = tonumber(row["enabled"])
@@ -131,7 +131,7 @@ function delTrafficCam(thePlayer, commandName)
 		
 		if (colShape) then
 			local id = getElementData(colShape, "speedcam:dbid")
-			local result = mysql:query_free("DELETE FROM `speedcams` WHERE `id`='" .. mysql:escape_string(id) .. "'")				
+			local result = mysql:query_free("DELETE FROM `speedcams` WHERE `id`='" .. mysql:escape_string(id) .. "'")
 			outputChatBox("Speedcam #" .. id .. " deleted.", thePlayer)
 			exports.irc:sendMessage("[ADMIN] " .. getPlayerName(thePlayer) .. " deleted speedcam #" .. id .. ".")
 			destroyElement(colShape)

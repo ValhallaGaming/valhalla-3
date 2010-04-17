@@ -196,11 +196,11 @@ function getScreenRadarPositionFromWorld (posX,posY)
 		local radarRadius = getRadarRadius()
 		local distance = getDistanceBetweenPoints2D ( x,y,posX,posY )
 		if (distance <= radarRadius) then
-			radius = (distance/radarRadius)*radius		
+			radius = (distance/radarRadius)*radius
 			local tx = radius * math.sin(blipRot) + abs.center_x
-			local ty = -radius * math.cos(blipRot) + abs.center_y	
+			local ty = -radius * math.cos(blipRot) + abs.center_y
 			--
-			return tx,ty	
+			return tx,ty
 		end
 		return false
 	else --Render to f11 map

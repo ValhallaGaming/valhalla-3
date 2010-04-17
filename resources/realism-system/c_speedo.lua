@@ -68,8 +68,8 @@ function drawFuel()
 			local width, height = guiGetScreenSize()
 			local x = width
 			local y = height
-				
-			dxDrawImage(x-265, y-165, 100, 100, "fueldisc.png", 0, 0, 0, tocolor(255, 255, 255, 200), false)	
+			
+			dxDrawImage(x-265, y-165, 100, 100, "fueldisc.png", 0, 0, 0, tocolor(255, 255, 255, 200), false)
 			movingx = x + math.sin(math.rad(-(fuel)-50)) * 50
 			movingy = y + math.cos(math.rad(-(fuel)-50)) * 50
 			dxDrawLine(x-215, y-115, movingx-210, movingy-115, tocolor(255, 0, 0, 255), 2, true)
@@ -97,7 +97,7 @@ function onVehicleEnter(thePlayer, seat)
 			if not (enginelessVehicle[id]) then
 				addEventHandler("onClientRender", getRootElement(), drawSpeedo)
 			end
-		end		
+		end
 	end
 end
 addEventHandler("onClientVehicleEnter", getRootElement(), onVehicleEnter)

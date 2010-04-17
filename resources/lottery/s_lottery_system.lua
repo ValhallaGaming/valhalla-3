@@ -13,7 +13,7 @@ function correctTime(res)
 			drawTime = (hoursLeft*60) + minutesLeft
 		end
 		drawTimer = setTimer ( drawLottery, drawTime*60000, 1 )
-		outputDebugString("Lottery will be drawn in "..drawTime.." minutes.")		
+		outputDebugString("Lottery will be drawn in "..drawTime.." minutes.")
 		drawTime = 0
 	end
 	

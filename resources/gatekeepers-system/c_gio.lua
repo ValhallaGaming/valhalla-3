@@ -83,7 +83,7 @@ function sGioS2()
 		if(button == "left" and state == "up") then
 			
 			triggerServerEvent( "gioGiveItem", getLocalPlayer(), 2)
-			guiSetText(gio_text, "You want anything else brother?")			
+			guiSetText(gio_text, "You want anything else brother?")
 			
 		end
 	end, false)

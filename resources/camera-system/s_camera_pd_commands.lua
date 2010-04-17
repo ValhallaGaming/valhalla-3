@@ -28,9 +28,9 @@ function toggleTrafficCam(thePlayer, commandName)
 				local genderm = "his"
 				if (gender == 1) then
 					genderm = "her"
-				end		
+				end
 			
-				exports.global:sendLocalText(thePlayer, " *"..getPlayerName(thePlayer):gsub("_", " ") .." taps a few keys on " .. genderm .. " mobile data computer.", 255, 51, 102)	
+				exports.global:sendLocalText(thePlayer, " *"..getPlayerName(thePlayer):gsub("_", " ") .." taps a few keys on " .. genderm .. " mobile data computer.", 255, 51, 102)
 				local result = toggleTrafficCam(resultColshape)
 				if (result == 0) then
 					outputChatBox("Error SPDCM03, please report at the mantis.", thePlayer, 255,0,0)

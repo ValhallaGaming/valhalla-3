@@ -110,7 +110,7 @@ function cleanRoad()
 						endmarker = createMarker(2836, 975, 9.75, "cylinder", 4, 0, 255, 0, 150)
 						endcolshape = createColCircle(2836, 975, 9.75, 4)
 						addEventHandler("onClientColShapeHit", endcolshape, endTruckJob, false)
-					end				
+					end
 					jobstate = 3
 				else
 					outputChatBox("#FF0066You are not at your #FF66CCdrop off point#FF0066.", 255, 0, 0, true)

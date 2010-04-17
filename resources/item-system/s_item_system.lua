@@ -177,7 +177,7 @@ function useItem(itemSlot, additional)
 			if fittingskins[gender] and fittingskins[gender][race] and fittingskins[gender][race][skin] then
 				local vehicle, veholdstate = getPedOccupiedVehicle ( source ), nil
 				if vehicle then
-					veholdstate = getVehicleEngineState ( vehicle )		
+					veholdstate = getVehicleEngineState ( vehicle )
 				end
 				setElementModel(source, skin)
 				mysql_free_result( mysql_query( handler, "UPDATE characters SET skin = " .. skin .. " WHERE id = " .. getElementData( source, "dbid" ) ) )
@@ -584,7 +584,7 @@ function useItem(itemSlot, additional)
 			if ( getElementData( source, badges[itemID][1] ) == 1 ) then
 				exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
 				exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2] )
-			else	
+			else
 				for key, badge in pairs ( badges ) do
 					if key ~= itemID then
 						if ( getElementData ( source, badge[1] ) == 1 ) then
@@ -596,7 +596,7 @@ function useItem(itemSlot, additional)
 				exports['anticheat-system']:changeProtectedElementDataEx( source, badges[itemID][1], 1, false )
 				exports.global:sendLocalMeAction( source, "puts on " .. badges[itemID][2] )
 			end
-			exports.global:updateNametagColor(source)	
+			exports.global:updateNametagColor(source)
 		else
 			outputChatBox("Error 800001 - Report on http://bugs.valhallagaming.net", source, 255, 0, 0)
 		end
@@ -695,7 +695,7 @@ function destroyItem(itemID)
 			elseif ( tonumber(itemID)==64 and not hasItem ( source, 64 ) ) or ( tonumber(itemID)==65 and not hasItem ( source, 65 ) ) or ( tonumber(itemID)==86 and not hasItem ( source, 86 ) ) or ( tonumber(itemID)==87 and not hasItem ( source, 87 ) ) then
 				if ( getElementData( source, badges[tonumber(itemID)][1] ) == 1 ) then
 					exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2])
-				end	
+				end
 				exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
 				exports.global:updateNametagColor(source)
 			elseif tonumber(itemID) == 76 and not exports.global:hasItem(source, 76) then
@@ -820,7 +820,7 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 				elseif ( tonumber(itemID)==64 and not hasItem ( source, 64 ) ) or ( tonumber(itemID)==65 and not hasItem ( source, 65 ) ) or ( tonumber(itemID)==86 and not hasItem ( source, 86 ) ) or ( tonumber(itemID)==87 and not hasItem ( source, 87 ) ) then
 					if ( getElementData( source, badges[tonumber(itemID)][1] ) == 1 ) then
 						exports.global:sendLocalMeAction(source, "removes " .. badges[itemID][2])
-					end	
+					end
 					exports['anticheat-system']:changeProtectedElementDataEx(source, badges[itemID][1])
 					exports.global:updateNametagColor(source)
 				elseif tonumber(itemID)== 76 and not exports.global:hasItem(source, 76) then
@@ -1005,7 +1005,7 @@ function pickupItem(object, leftammo)
 	local x, y, z = getElementPosition(source)
 	local ox, oy, oz = getElementPosition(object)
 	
-	if (getDistanceBetweenPoints3D(x, y, z, ox, oy, oz)<10) then	
+	if (getDistanceBetweenPoints3D(x, y, z, ox, oy, oz)<10) then
 		
 		-- Inventory Tooltip
 		if (getResourceFromName("tooltips-system"))then
@@ -1201,7 +1201,7 @@ function givePlayerBadge(thePlayer, commandName, targetPlayer, ... )
 		
 		if not (tonumber(leader)==1) then -- If the player is not the leader
 			outputChatBox("You must be a faction leader to issue badges.", thePlayer, 255, 0, 0) -- If they aren't leader they can't give out badges.
-		else	
+		else
 			if not (targetPlayer) or ( not (badgeNumber) and teamName~="San Andreas Network" ) or ( not (badgeNumber) and teamName~="Best's Towing and Recovery") then
 					outputChatBox("SYNTAX: /" .. commandName .. " [Player Partial Nick / ID] [Badge Number]", thePlayer, 255, 194, 14)
 			else
@@ -1230,7 +1230,7 @@ function givePlayerBadge(thePlayer, commandName, targetPlayer, ... )
 							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Los Santos Government badge with number "..badgeNumber..".")
 						elseif (teamName=="Best's Towing and Recovery") then
 							exports.global:giveItem(targetPlayer, 82, getPlayerName(targetPlayer):gsub("_", " "))
-							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Best's Towing and Recovery ID.")						
+							exports.global:sendLocalMeAction(thePlayer, "issues "..targetPlayerName.." a Best's Towing and Recovery ID.")
 						end
 					end
 				end

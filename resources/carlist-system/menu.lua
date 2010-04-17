@@ -97,13 +97,13 @@ function Close( )
 	guiSetVisible(TabPanel[2], false)
 	guiSetInputEnabled(false)
 	showCursor ( false )
-end 
+end
 
 function SUV( )
 	xml = getResourceConfig("SUV.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-end 
+end
 
 function TwoDoor( )
 	xml = getResourceConfig("twodoor.xml")
@@ -121,13 +121,13 @@ function Muscle( )
 	xml = getResourceConfig("muscle.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-end 
+end
 
 function Street( )
 	xml = getResourceConfig("street.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-end 
+end
 
 function HighPer( )
 	xml = getResourceConfig("highper.xml")
@@ -139,7 +139,7 @@ function Heavy( )
 	xml = getResourceConfig("heavy.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-end 
+end
 
 function Light( )
 	xml = getResourceConfig("light.xml")
@@ -187,7 +187,7 @@ function Boat( )
 	xml = getResourceConfig("boat.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-end 
+end
 
 function Trailer( )
 	xml = getResourceConfig("trailer.xml")

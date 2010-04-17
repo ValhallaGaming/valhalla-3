@@ -380,7 +380,7 @@ local function drawRowBounded ( id, name, ping, colors, font, top )
 				dxDrawText ( ping, left, top, right, bottom,
 							 colors[3], 1, font, "left", "top",
 							 true, false, SCOREBOARD_POSTGUI )
-			end	
+			end
 		end
 	end
 end

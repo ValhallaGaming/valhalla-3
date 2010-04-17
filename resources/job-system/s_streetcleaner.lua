@@ -168,7 +168,7 @@ function startCleaningMission(thePlayer)
 		attachElements ( marker2, blip2 )
 		exports['anticheat-system']:changeProtectedElementDataEx(colsphere, "attatched", marker2)
 		
-		addEventHandler("onColShapeHit", colsphere, UpdateCheckpoints)	
+		addEventHandler("onColShapeHit", colsphere, UpdateCheckpoints)
 		
 		outputChatBox("Drive around Los Santos on your cleaning path, sweeping the streets. ((Drive through the checkpoints))", thePlayer, 255, 194, 14)
 	end

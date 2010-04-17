@@ -24,7 +24,7 @@ function toggleMP3(key, state)
 	elseif not (isPedInVehicle(getLocalPlayer())) then
 		currMP3 = 0
 		setRadioChannel(currMP3)
-	end		
+	end
 end
 bindKey("-", "down", toggleMP3)
 bindKey("=", "down", toggleMP3)

@@ -71,7 +71,7 @@ function quickClose()
 	triggerServerEvent( "quickCloseServerEvent", getLocalPlayer() ) -- Trigger Server Event to output previous option
 
 	-- Destroy elements
-	destroyStevieGUI()	
+	destroyStevieGUI()
 end
 
 -- Statement 2
@@ -322,11 +322,11 @@ function cdeclineSteviePhoneDeal()
 	if(pwStevie)then
 		destroyElement ( pwStevie )
 		pwStevie = nil
-	end	
+	end
 	
 	showCursor(false)
 	
-	triggerServerEvent( "declineSteviePhoneDeal", getLocalPlayer() )	
+	triggerServerEvent( "declineSteviePhoneDeal", getLocalPlayer() )
 	
 end
 

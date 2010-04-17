@@ -9,7 +9,7 @@ function PlacingSpikes(sourcePlayer, command)
 	local teamType = getElementData(theTeam, "type")
 	
 	if (teamType==2) then
-		local x1,y1,z1 = getElementPosition(sourcePlayer)		
+		local x1,y1,z1 = getElementPosition(sourcePlayer)
 		local rotz = getPedRotation(sourcePlayer)
 			if(TotalSpikes == nil or TotalSpikes < SpikeLimit) then
 			if(TotalSpikes == nil) then
@@ -42,7 +42,7 @@ function ThrowSpikes(sourcePlayer, command)
 	local teamType = getElementData(theTeam, "type")
 	
 	if (teamType==2) then
-		local x1,y1,z1 = getElementPosition(sourcePlayer)		
+		local x1,y1,z1 = getElementPosition(sourcePlayer)
 		local rotz = getPedRotation(sourcePlayer)
 			if(TotalSpikes == nil or TotalSpikes < SpikeLimit) then
 			if(TotalSpikes == nil) then

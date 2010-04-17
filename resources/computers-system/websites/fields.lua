@@ -12,7 +12,7 @@ function www_fields_sa()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Fields Incorporated") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.fields.sa") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.fields.sa") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
@@ -89,14 +89,14 @@ function www_fields_sa()
 												Fields Complex\
 												St Lawerence\
 												Los Santos\
-												San Andreas",false,bg)	
+												San Andreas",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(107,67,353,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(108,66,353,25,"websites/colours/7.png",false,bg)
 	local header_1_ul = guiCreateStaticImage(108,66,353,1,"websites/colours/1.png",false,bg)
 	local header_1 = guiCreateLabel(131,70,200,16,"About Fields Incorporated",false,bg)
 	local para1 = guiCreateLabel(128,94,329,70,"At Fields incorporated, we take on each business plan as a possible investment, Just because you may have contacted Fields incorporated it does not mean we will buy your company. ",false,bg) 
-	guiLabelSetHorizontalAlign(para1,"left",true)	
+	guiLabelSetHorizontalAlign(para1,"left",true)
 	
 	-- Header 2
 	local header_2_bg_shadow = guiCreateStaticImage(107,167,353,25,"websites/colours/13.png",false,bg)
@@ -104,7 +104,7 @@ function www_fields_sa()
 	local header_2_ul = guiCreateStaticImage(108,166,353,1,"websites/colours/1.png",false,bg)
 	local header_2 = guiCreateLabel(131,170,200,16,"Ways to Contact us",false,bg)
 	local para2 = guiCreateLabel(128,194,329,70,"The best way to contact Fields Incorporated will be by email, please leave you contact details and if we are intrested in your business plan we will be in touch",false,bg) 
-	guiLabelSetHorizontalAlign(para2,"left",true)	
+	guiLabelSetHorizontalAlign(para2,"left",true)
 	
 	----------------------------------------------- End of webpage -- Do not edit below this line. -----------------------------------------------
 	
@@ -113,7 +113,7 @@ function www_fields_sa()
 	else
 		guiSetSize(bg,460,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 	
 end
 
@@ -124,7 +124,7 @@ function www_fields_sa_sexshop()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Fields Incorporated") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.fields.sa/sexshop") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.fields.sa/sexshop") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
@@ -201,14 +201,14 @@ function www_fields_sa_sexshop()
 												Fields Complex\
 												St Lawerence\
 												Los Santos\
-												San Andreas",false,bg)	
+												San Andreas",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(107,67,353,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(108,66,353,25,"websites/colours/7.png",false,bg)
 	local header_1_ul = guiCreateStaticImage(108,66,353,1,"websites/colours/1.png",false,bg)
 	local header_1 = guiCreateLabel(131,70,200,16,"About Fields Fields Sexshop",false,bg)
 	local para1 = guiCreateLabel(128,94,329,70,"We offer great value adult toys for you and your partners.",false,bg) 
-	guiLabelSetHorizontalAlign(para1,"left",true)	
+	guiLabelSetHorizontalAlign(para1,"left",true)
 	
 	-- Header 2
 	local header_2_bg_shadow = guiCreateStaticImage(107,167,353,25,"websites/colours/13.png",false,bg)
@@ -224,7 +224,7 @@ function www_fields_sa_sexshop()
 	local header_3_ul = guiCreateStaticImage(108,266,353,1,"websites/colours/1.png",false,bg)
 	local header_3 = guiCreateLabel(131,270,200,16,"Where are we?",false,bg)
 	local para3 = guiCreateLabel(128,294,329,70,"Fields Sexshop is currently located at Jefferson Shopping center, it offers free off street parking and complete descretion",false,bg) 
-	guiLabelSetHorizontalAlign(para3,"left",true)		
+	guiLabelSetHorizontalAlign(para3,"left",true)
 	
 	----------------------------------------------- End of webpage -- Do not edit below this line. -----------------------------------------------
 	
@@ -245,7 +245,7 @@ function www_fields_sa_fieldslapdanceclub()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Fields Incorporated") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.fields.sa/fieldslapdanceclub") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.fields.sa/fieldslapdanceclub") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	----------------------------
@@ -321,14 +321,14 @@ function www_fields_sa_fieldslapdanceclub()
 												Fields Complex\
 												St Lawerence\
 												Los Santos\
-												San Andreas",false,bg)	
+												San Andreas",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(107,67,353,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(108,66,353,25,"websites/colours/7.png",false,bg)
 	local header_1_ul = guiCreateStaticImage(108,66,353,1,"websites/colours/1.png",false,bg)
 	local header_1 = guiCreateLabel(131,70,200,16,"About Fields Fields Lapdance Club",false,bg)
 	local para1 = guiCreateLabel(128,94,329,70,"We offer great value adult entertainment, we offer the fineist girls who have to pass auditions before being allowed to work in our club, our girls will be avalible for you to have a private session with our girls in our completly private VIP area, where you will have the the best lapdance of your life.",false,bg) 
-	guiLabelSetHorizontalAlign(para1,"left",true)	
+	guiLabelSetHorizontalAlign(para1,"left",true)
 	
 	-- Header 2
 	local header_2_bg_shadow = guiCreateStaticImage(107,167,353,25,"websites/colours/13.png",false,bg)
@@ -344,7 +344,7 @@ function www_fields_sa_fieldslapdanceclub()
 	local header_3_ul = guiCreateStaticImage(108,266,353,1,"websites/colours/1.png",false,bg)
 	local header_3 = guiCreateLabel(131,270,200,16,"Where are we?",false,bg)
 	local para3 = guiCreateLabel(128,294,329,70,"We are curently Located Next to Fire Department Near St Lawerence",false,bg) 
-	guiLabelSetHorizontalAlign(para3,"left",true)		
+	guiLabelSetHorizontalAlign(para3,"left",true)
 	
 	----------------------------------------------- End of webpage -- Do not edit below this line. -----------------------------------------------
 	
@@ -365,7 +365,7 @@ function www_fields_sa_fieldselectricals()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "Fields Incorporated") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.fields.sa/fieldselectricals") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.fields.sa/fieldselectricals") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
@@ -442,14 +442,14 @@ function www_fields_sa_fieldselectricals()
 												Fields Complex\
 												St Lawerence\
 												Los Santos\
-												San Andreas",false,bg)	
+												San Andreas",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(107,67,353,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(108,66,353,25,"websites/colours/7.png",false,bg)
 	local header_1_ul = guiCreateStaticImage(108,66,353,1,"websites/colours/1.png",false,bg)
 	local header_1 = guiCreateLabel(131,70,200,16,"About Fields Electricals Outlets",false,bg)
 	local para1 = guiCreateLabel(128,94,329,70,"At Fields Electricals Outlets, We strive on family values, we like to offer the best custer service just like the old days with a modern twist.  All Our staff are fully trained to answer your any questions you may have",false,bg) 
-	guiLabelSetHorizontalAlign(para1,"left",true)	
+	guiLabelSetHorizontalAlign(para1,"left",true)
 	
 	-- Header 2
 	local header_2_bg_shadow = guiCreateStaticImage(107,167,353,25,"websites/colours/13.png",false,bg)
@@ -465,7 +465,7 @@ function www_fields_sa_fieldselectricals()
 	local header_3_ul = guiCreateStaticImage(108,266,353,1,"websites/colours/1.png",false,bg)
 	local header_3 = guiCreateLabel(131,270,200,16,"Where are we?",false,bg)
 	local para3 = guiCreateLabel(128,294,329,70,"We currently have 3 stores situated over Los Santos, we have branches at Unity, Market and West Broadway ",false,bg) 
-	guiLabelSetHorizontalAlign(para3,"left",true)		
+	guiLabelSetHorizontalAlign(para3,"left",true)
 	
 	----------------------------------------------- End of webpage -- Do not edit below this line. -----------------------------------------------
 	

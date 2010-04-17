@@ -206,7 +206,7 @@ help_menu =
 					bottom = true,
 					text = "After you type /startbus, you notice a lot of blips on your map. Yellow and red. What your objective is to do is to go through the yellow markers, and stop at the red ones.\n\nRed = Stop | Yellow = Route\n\nJust continue doing that and you'll get paid."
 				},
-			},	
+			},
 		},
 		{
 			name = "City Maintenance",

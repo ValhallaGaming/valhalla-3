@@ -59,7 +59,7 @@ function glue()
 						closest = v
 					end
 				end
-			end 
+			end
 
 			if cdist > 5 or cdist == nil then
 				return false
@@ -72,7 +72,7 @@ function glue()
 			else 
 				attachMe = myVehicle
 				attachedTo = closest
-			end	
+			end
 			
 			local px, py, pz = getElementPosition(attachedTo)
 			local vx, vy, vz = getElementPosition(attachMe)
@@ -100,7 +100,7 @@ function glue()
 			
 			local rotX = rotpX - rotvX
 			local rotY = rotpY - rotvY
-			local rotZ = rotpZ - rotvZ		
+			local rotZ = rotpZ - rotvZ
 			
 				
 			triggerServerEvent("glueVehicle", attachMe, attachedTo, x*-1, y*-1, z*-1, rotX, rotY, rotZ)

@@ -13,10 +13,10 @@ local open = false
 local which = 0
 
 -- Gate code
-function usePDSideGarageGate(thePlayer)	
+function usePDSideGarageGate(thePlayer)
 	local x, y, z = getElementPosition(thePlayer)
 	local distance1 = getDistanceBetweenPoints3D(1544.6875, -1630.785546875, 13.1828125, x, y, z)
-	local distance2 = getDistanceBetweenPoints3D(617.0810546875, -1510.084765625, 14.801913604736, x, y, z)		
+	local distance2 = getDistanceBetweenPoints3D(617.0810546875, -1510.084765625, 14.801913604736, x, y, z)
 
 	if (distance1<=10) and (open==false) then
 		if (exports.global:hasItem(thePlayer, 64) or exports.global:hasItem(thePlayer, 82)) then
@@ -45,7 +45,7 @@ function closePDSideGarageGate(thePlayer)
 		moveObject(objGateh1, 1000, 1544.6875, -1630.785546875, 13.1828125, 0, 90, 0)
 	elseif (which==2) then
 		which = 0
-		moveObject(objGateh2, 1000, 617.0810546875, -1510.084765625, 14.801913604736, 0, 90, 0)	
+		moveObject(objGateh2, 1000, 617.0810546875, -1510.084765625, 14.801913604736, 0, 90, 0)
 	end
 end
 

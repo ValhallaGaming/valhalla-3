@@ -940,7 +940,7 @@ function deleteThisVehicle(thePlayer, commandName)
 			outputChatBox("You do not have the permission to delete permanent vehicles.", thePlayer, 255, 0, 0)
 			return
 		end
-	end						
+	end
 end
 addCommandHandler("delthisveh", deleteThisVehicle, false, false)
 

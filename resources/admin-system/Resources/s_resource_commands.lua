@@ -84,7 +84,7 @@ function restartGateKeepers(thePlayer, commandName)
 				restartResource(theResource)
 				outputChatBox("Gatekeepers were restarted.", thePlayer, 0, 255, 0)
 				exports.global:sendMessageToAdmins("AdmScript: " .. getPlayerName(thePlayer) .. " restarted the gatekeepers.")
-				exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." restarted the gatekeepers." , 25)	
+				exports.logs:logMessage("[STEVIE] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." restarted the gatekeepers." , 25)
 			elseif getResourceState(theResource) == "loaded" then
 				startResource(theResource)
 				outputChatBox("Gatekeepers were started", thePlayer, 0, 255, 0)

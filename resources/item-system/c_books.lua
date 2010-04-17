@@ -25,7 +25,7 @@ function createBook( bookName, bookTitle )
 		guiSetVisible(buttonPrev, false)
 
 		buttonClose = guiCreateButton( 0.85, 0.45, 0.14, 0.05, "Close", true, wBook)
-		addEventHandler( "onClientGUIClick", buttonClose, closeButtonClick, false )	
+		addEventHandler( "onClientGUIClick", buttonClose, closeButtonClick, false )
 		
 		buttonNext = guiCreateButton( 0.85, 0.65, 0.14, 0.05, "Next", true, wBook)
 		addEventHandler( "onClientGUIClick", buttonNext, nextButtonClick, false )

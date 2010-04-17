@@ -498,7 +498,7 @@ function loadOneVehicle(id, hasCoroutine)
 				setVehicleEngineState(veh, row.engine == 1)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "engine", row.engine, false)
 				exports['anticheat-system']:changeProtectedElementDataEx(veh, "enginebroke", 0, false)
-			end		
+			end
 			setVehicleFuelTankExplodable(veh, false)
 			
 			-- handbrake
@@ -614,7 +614,7 @@ end
 addEventHandler("onVehicleEnter", getRootElement(), setEngineStatusOnEnter)
 
 function vehicleExit(thePlayer, seat)
-	if (isElement(thePlayer)) then 
+	if (isElement(thePlayer)) then
 		toggleControl(thePlayer, 'brake_reverse', true)
 		-- For oldcar
 		local vehid = getElementData(source, "dbid")
@@ -1493,7 +1493,7 @@ addCommandHandler("detach", detachVehicle)
 ----------------------[Tinted Windows]--------------------------------------
 local nametag = "Unknown Person (Tint)"
 function startTint(player)
-	if getElementData( source, "tinted" ) then 
+	if getElementData( source, "tinted" ) then
 		if getPlayerNametagText( player ) ~= nametag then
 			setPlayerNametagText(player, nametag)
 		end

@@ -12,7 +12,7 @@ function www_lses_gov()
 	---------------------
 	local page_length = 390 
 	guiSetText(internet_address_label, "LSES Website") -- This text is displayed at the top of the browser window when the page is opened. It is the same as the <title> tag used in the meta of a real webpage.
-	guiSetText(address_bar,"www.LSES.gov") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.	
+	guiSetText(address_bar,"www.LSES.gov") -- The url of the page. This should be the same as the function name but with the original "."s and "/". Example www.google.com.
 	
 	---------------------------------------------- Start of webpage design ----------------------------------------------
 	
@@ -88,7 +88,7 @@ function www_lses_gov()
 												Since 29/01/2010\
 												\
 												Occupations:\
-												EMT and FD	",false,bg)	
+												EMT and FD	",false,bg)
 	-- Header 1
 	local header_1_bg_shadow = guiCreateStaticImage(107,67,353,25,"websites/colours/13.png",false,bg)
 	local header_1_bg = guiCreateStaticImage(108,66,353,25,"websites/colours/3.png",false,bg)
@@ -120,7 +120,7 @@ function www_lses_gov()
 	else
 		guiSetSize(bg,460,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 	
 end
 

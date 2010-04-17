@@ -393,7 +393,7 @@ function createMdcWindow(suspectName)
 				if not(guiGetVisible(guiAddCrimeWindow) or guiGetVisible(guiDetailsWindow) or guiGetVisible(guiDeleteCrimeWindow) or guiGetVisible(guiWarrantWindow) ) then
 					if(suspectName) then
 						if(suspectDetails[2]) then
-							viewWarrantShow()				
+							viewWarrantShow()
 						else
 							guiSetText(guiMdcMemo, "~~~ Cannot show warant details for "..suspectName.." since they do not have a database record. ~~~\
 							\
@@ -415,7 +415,7 @@ function createMdcWindow(suspectName)
 				if not(guiGetVisible(guiAddCrimeWindow) or guiGetVisible(guiDetailsWindow) or guiGetVisible(guiDeleteCrimeWindow) or guiGetVisible(guiWarrantWindow) ) then
 					if(suspectName) then
 						if(suspectDetails[2]) then
-							addCrimeShow()			
+							addCrimeShow()
 						else
 							guiSetText(guiMdcMemo, "~~~ Cannot add crime to "..suspectName.."'s record since it does not exist. ~~~\
 							\
@@ -439,17 +439,17 @@ function createMdcWindow(suspectName)
 			if(button == "left") then
 			
 				if(triggerServerEvent("onGetAllSuspects", getLocalPlayer(), details ) ) then
-											
+					
 					if (guiPhotoImage) then
 						destroyElement(guiPhotoImage)
 					end
-						
+					
 					guiSetInputEnabled(false)
-
+					
 					guiSetText(guiMdcMemo, "~~~ Searching for all of the suspects on the database ~~~\
 					\
-					Please allow 5 seconds for this to process.")	
-								
+					Please allow 5 seconds for this to process.")
+					
 					setTimer(function()
 						guiSetText(guiMdcMemo, getAllSuspectsText())
 						guiSetInputEnabled(true)
@@ -701,18 +701,18 @@ function createDetailsWindow(details)
 	
 	guiDetailsCellLabel =  guiCreateLabel ( 0.05 , 0.37 , 0.4 , 0.05 , "Cellphone number:", true,  guiDetailsWindow )
 	guiDetailsCellEditBox = guiCreateEdit ( 0.4  ,0.37 , 0.5 , 0.05 , "" , true , guiDetailsWindow)
-	guiEditSetMaxLength (guiDetailsCellEditBox, 20 )	
+	guiEditSetMaxLength (guiDetailsCellEditBox, 20 )
 	
 	guiDetailsOccupationLabel =  guiCreateLabel ( 0.05 , 0.44 , 0.4 , 0.05 , "Occupation:", true,  guiDetailsWindow )
 	guiDetailsOccupationEditBox = guiCreateEdit ( 0.3  ,0.44 , 0.6 , 0.05 , "" , true , guiDetailsWindow)
-	guiEditSetMaxLength (guiDetailsOccupationEditBox, 20 )		
+	guiEditSetMaxLength (guiDetailsOccupationEditBox, 20 )
 	
 	guiDetailsAddressLabel =  guiCreateLabel ( 0.05 , 0.5 , 0.4 , 0.05 , "Address:", true,  guiDetailsWindow )
 	guiDetailsAddressMemo = guiCreateMemo ( 0.05 , 0.54, 0.85 , 0.15 , "",true ,  guiDetailsWindow )
 	
 	guiDetailsOtherLabel =  guiCreateLabel ( 0.05 , 0.7 , 0.4 , 0.05 , "Other details:", true,  guiDetailsWindow )
 	guiDetailsOtherMemo = guiCreateMemo ( 0.05 , 0.75, 0.85 , 0.1 , "Clothes, facial features, etc.",true ,  guiDetailsWindow )
-		
+	
 	guiAddBackButton = guiCreateButton ( 0.6 , 0.92 , 0.2 , 0.05 , "Back" , true , guiDetailsWindow )
 	
 	if(details == nil) then
@@ -1039,8 +1039,8 @@ function createAccountWindow()
 	guiEditSetMasked ( guiAccountNewPassEdit, true )
 	
 	guiEditSetMaxLength (guiAccountExistingPassEdit, 20 )
-	guiEditSetMaxLength (guiAccountNewPassEdit, 20 )	
-	guiEditSetMaxLength (guiAccountUserEdit, 20 )	
+	guiEditSetMaxLength (guiAccountNewPassEdit, 20 )
+	guiEditSetMaxLength (guiAccountUserEdit, 20 )
 
 	-- if user is in high command, give them create, remove, update and back buttons
 	if(user[3] == "1") then
@@ -1076,7 +1076,7 @@ function createAccountWindow()
 		
 			local NewUser = user[1]
 			local NewPass = guiGetText(guiAccountNewPassEdit)
-			local OldPass = guiGetText(guiAccountExistingPassEdit )	
+			local OldPass = guiGetText(guiAccountExistingPassEdit )
 			
 			if(NewPass == "") then NewPass = OldPass end 
 			
@@ -1085,29 +1085,27 @@ function createAccountWindow()
 			else
 				HighCommand = "0"
 			end
-
+			
 			if(user[3] == "1") then
 				HighCommand = "1"
 			end
 			
 			local details = {NewUser, NewPass, HighCommand}
-
-			guiSetVisible(guiAccountWindow, false)			
+			
+			guiSetVisible(guiAccountWindow, false)
 			
 			if(checkPassword(OldPass)) then
 				-- if added to the database sucessfully
 				if(triggerServerEvent("onUpdateAccount", getLocalPlayer(), details ) ) then
-									
 					if (guiPhotoImage) then
 						destroyElement(guiPhotoImage)
 					end
-				
+					
 					guiSetInputEnabled(false)
 					guiSetText(guiMdcMemo, " ~~~ Updating "..NewUser.."''s account. ~~~ \
 					\
 					\This may take up to 5 seconds to process - Please Wait.")
-				
-						
+					
 					setTimer(function()
 						-- delete the window, then create a new one
 						hideMdc("left", "up")
@@ -1123,7 +1121,7 @@ function createAccountWindow()
 				guiSetText(guiMdcMemo, "Unable to update the account information\
 				\
 				 The existing password you gave does not match the current password for your account.")
-	
+				
 			end
 			
 			guiSetVisible(guiAccountWindow, false)
@@ -1140,7 +1138,7 @@ function createAccountWindow()
 		
 			local NewUser = guiGetText(guiAccountUserEdit )
 			local NewPass = guiGetText(guiAccountNewPassEdit)
-			local OldPass = guiGetText(guiAccountExistingPassEdit )	
+			local OldPass = guiGetText(guiAccountExistingPassEdit )
 			
 			if(NewPass == "") then NewPass = NewUser end 
 			
@@ -1151,15 +1149,14 @@ function createAccountWindow()
 			end
 			
 			local details = {NewUser, NewPass, HighCommand}
-
-			guiSetVisible(guiAccountWindow, false)			
+			
+			guiSetVisible(guiAccountWindow, false)
 			
 			-- if the existing password is the same
 			if(checkPassword(OldPass)) then
 			
 				-- if added to the database sucessfully
 				if(triggerServerEvent("onCreateAccount", getLocalPlayer(), details ) ) then
-									
 					if (guiPhotoImage) then
 						destroyElement(guiPhotoImage)
 					end
@@ -1168,8 +1165,8 @@ function createAccountWindow()
 					guiSetText(guiMdcMemo, " ~~~ Creating "..NewUser.."''s account if it does not already exist. ~~~ \
 					\
 					\This may take up to 5 seconds to process - Please Wait.")
-				
-						
+					
+					
 					setTimer(function()
 						-- delete the window, then create a new one
 						hideMdc("left", "up")
@@ -1182,7 +1179,7 @@ function createAccountWindow()
 				guiSetText(guiMdcMemo, "Unable to add new account to the database.\
 				\
 				 The existing password you gave does not match the current password for your account.")
-	
+				
 			end
 			
 			guiSetVisible(guiAccountWindow, false)
@@ -1195,18 +1192,17 @@ function createAccountWindow()
 		if(button == "left") then
 		
 			local NewUser = guiGetText(guiAccountUserEdit )
-			local OldPass = guiGetText(guiAccountExistingPassEdit )	
-									
+			local OldPass = guiGetText(guiAccountExistingPassEdit )
+			
 			local details = {NewUser}
-
-			guiSetVisible(guiAccountWindow, false)			
+			
+			guiSetVisible(guiAccountWindow, false)
 			
 			-- if the existing password is the same
 			if(checkPassword(OldPass)) then
 				if not (user[1] == NewUser) then
 					-- if added to the database sucessfully
 					if(triggerServerEvent("onRemoveAccount", getLocalPlayer(), details ) ) then
-										
 						if (guiPhotoImage) then
 							destroyElement(guiPhotoImage)
 						end
@@ -1215,8 +1211,8 @@ function createAccountWindow()
 						guiSetText(guiMdcMemo, " ~~~ Deleting "..NewUser.."''s account if it exist. ~~~ \
 						\
 						\This may take up to 5 seconds to process - Please Wait.")
-					
-							
+						
+						
 						setTimer(function()
 							-- delete the window, then create a new one
 							hideMdc("left", "up")
@@ -1234,7 +1230,7 @@ function createAccountWindow()
 				guiSetText(guiMdcMemo, "Unable to add remove account from the database.\
 				\
 				 The existing password you gave does not match the current password for your account.")
-	
+				
 			end
 			
 			guiSetVisible(guiAccountWindow, false)
@@ -1247,7 +1243,7 @@ function createAccountWindow()
 		if(button == "left") then
 		
 			-- hide the window
-			guiSetVisible(guiAccountWindow, false)			
+			guiSetVisible(guiAccountWindow, false)
 			
 
 			-- trigger server to send the client all of the accounts
@@ -1413,7 +1409,7 @@ function addSuspectShow(button, state)
 					-- allow the user to input stuff
 					guiSetInputEnabled(true)
 				end
-			end		
+			end
 	end
 end
 
@@ -1647,7 +1643,7 @@ end
 
 
 function viewSuspectShow()
-	if not (guiGetVisible(guiDetailsWindow)) then		
+	if not (guiGetVisible(guiDetailsWindow)) then
 		-- create the details window, withouth a suspect name
 		createDetailsWindow(suspectDetails)
 		guiSetVisible(guiDetailsWindow, true)
@@ -1794,8 +1790,8 @@ addEventHandler( "onClientResourceStop", getResourceRootElement( getThisResource
 	guiPasswordEdit = guiCreateEdit(0.05, 0.55, 0.9, 0.2, "", true, guiLogIn)
 	guiEditSetMasked ( guiPasswordEdit , true )
 	
-	guiEditSetMaxLength (guiPasswordEdit, 20 )	
-	guiEditSetMaxLength (guiUserNameEdit, 20 )	
+	guiEditSetMaxLength (guiPasswordEdit, 20 )
+	guiEditSetMaxLength (guiUserNameEdit, 20 )
 	
 	guiLogInSubmitButton = guiCreateButton(0.15, 0.8, 0.3, 0.2, "Log In", true, guiLogIn)
 	guiLogInBackButton = guiCreateButton(0.55, 0.8, 0.3, 0.2, "Close", true, guiLogIn)

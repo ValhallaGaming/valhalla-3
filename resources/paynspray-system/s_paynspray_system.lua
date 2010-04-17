@@ -11,7 +11,7 @@ function createSpray(thePlayer, commandName)
 		
 		local id = mysql:query_insert_free("INSERT INTO paynspray SET x='"  .. mysql:escape_string(x) .. "', y='" .. mysql:escape_string(y) .. "', z='" .. mysql:escape_string(z) .. "', interior='" .. mysql:escape_string(interior) .. "', dimension='" .. mysql:escape_string(dimension) .. "'")
 		
-		if (id) then		
+		if (id) then
 			local shape = createColSphere(x, y, z, 5)
 			exports.pool:allocateElement(shape)
 			setElementInterior(shape, interior)

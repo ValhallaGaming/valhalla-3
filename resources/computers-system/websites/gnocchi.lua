@@ -112,7 +112,7 @@ function gnocchi_showpage()
 	guiLabelSetHorizontalAlign(page_title, "left")
 		
 	guiSetFont(page_text, "clear-normal")
-	guiLabelSetHorizontalAlign(page_text, "left")	
+	guiLabelSetHorizontalAlign(page_text, "left")
 	
 	if(page_length>=397)then
 		guiScrollPaneSetScrollBars(bg,false,true)

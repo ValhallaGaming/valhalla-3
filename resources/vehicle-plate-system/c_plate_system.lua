@@ -18,13 +18,13 @@ function cBeginGUI()
 	local width, height = 100, 50
 	local scrWidth, scrHeight = guiGetScreenSize()
 	local x = scrWidth/2 - (width/2)
-	local y = scrHeight/2 - (height/2)		
+	local y = scrHeight/2 - (height/2)
 
 	greetingWindow = guiCreateWindow(x, y, width, height, "Are You?", false)
 	
 	local width2, height2 = 10, 10
 	local x = scrWidth/2 - (width2/2)
-	local y = scrHeight/2 - (height2/2)	
+	local y = scrHeight/2 - (height2/2)
 	
 	--Buttons
 	yes = guiCreateButton(0.10, 0.50, 0.30, 0.50, "Yes", true, greetingWindow)
@@ -48,7 +48,7 @@ function PlateWindow()
 			destroyElement(greetingWindow)
 			local lplayer = getLocalPlayer()
 			
-			triggerServerEvent("platePedTalk", lplayer, 3)	
+			triggerServerEvent("platePedTalk", lplayer, 3)
 			
 			local width, height = 300, 400
 			local scrWidth, scrHeight = guiGetScreenSize()
@@ -154,7 +154,7 @@ function checkPlateBox()
 end
 
 function getPlateNText()
-	if (source==submitNP) and (newplates) then	
+	if (source==submitNP) and (newplates) then
 		local data = guiGetText(newplates)
 		local vehid = tonumber(svnum)
 		triggerServerEvent("sNewPlates", getLocalPlayer(), data, vehid)

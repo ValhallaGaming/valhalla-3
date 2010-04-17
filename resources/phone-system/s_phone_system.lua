@@ -583,7 +583,7 @@ function talkPhone(thePlayer, commandName, ...)
 							end
 						elseif (tonumber(target)==8294) then -- TAXI
 							if (callprogress==1) then
-								local founddriver = false								
+								local founddriver = false
 								
 								for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
 									local job = getElementData(value, "job")

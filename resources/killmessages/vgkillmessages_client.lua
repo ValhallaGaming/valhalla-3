@@ -6,7 +6,7 @@ end
 addEventHandler ("onClientPlayerKillMessage",getRootElement(),onClientPlayerKillMessage)
 
 function outputKillMessage ( source, wr,wg,wb,killer,kr,kg,kb,weapon,width,resource )
-	if not iconWidths[weapon] then 
+	if not iconWidths[weapon] then
 		if type(weapon) ~= "string" then
 			weapon = 999 
 		end
@@ -21,7 +21,7 @@ function outputKillMessage ( source, wr,wg,wb,killer,kr,kg,kb,weapon,width,resou
 	if not tonumber(kb) then kb = 255 end
 	if ( source ) then
 		if isElement ( source ) then
-			if getElementType ( source ) == "player" then 
+			if getElementType ( source ) == "player" then
 				wastedName = getPlayerName ( source )
 			else 
 			outputDebugString ( "outputKillMessage - Invalid 'wasted' player specified",0,0,0,100)

@@ -17,7 +17,7 @@ function error_404()
 	else
 		guiSetSize(bg,660,397,false)
 		guiScrollPaneSetScrollBars(internet_pane, false, false)
-	end	
+	end
 	
 end
 

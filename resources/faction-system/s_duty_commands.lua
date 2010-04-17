@@ -169,7 +169,7 @@ function lvesExamine(thePlayer, commandName, targetPartialNick)
 end
 addCommandHandler("examine", lvesExamine, false, false)
 
-function lvesduty(thePlayer, commandName)	
+function lvesduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -222,7 +222,7 @@ end
 addCommandHandler("duty", lvesduty, false, false)
 
 -- gov duty
-function govduty(thePlayer, commandName)	
+function govduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -272,7 +272,7 @@ end
 addCommandHandler("duty", govduty, false, false)
 
 -- ES FD
-function lvfdduty(thePlayer, commandName)	
+function lvfdduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -344,7 +344,7 @@ function pdarmor(thePlayer, commandName)
 end
 addCommandHandler("armor", pdarmor)
 
-function swatduty(thePlayer, commandName)	
+function swatduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -442,7 +442,7 @@ function swatduty(thePlayer, commandName)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					saveSkin(thePlayer)						
+					saveSkin(thePlayer)
 				end
 			end
 		end
@@ -450,7 +450,7 @@ function swatduty(thePlayer, commandName)
 end
 addCommandHandler("swat", swatduty, false, false)
 
-function policeduty(thePlayer, commandName)	
+function policeduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -545,7 +545,7 @@ function policeduty(thePlayer, commandName)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					saveSkin(thePlayer)						
+					saveSkin(thePlayer)
 				end
 			end
 		end
@@ -553,7 +553,7 @@ function policeduty(thePlayer, commandName)
 end
 addCommandHandler("duty", policeduty, false, false)
 
-function detectiveduty(thePlayer, commandName)	
+function detectiveduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if (logged==1) then
@@ -637,7 +637,7 @@ function detectiveduty(thePlayer, commandName)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					saveSkin(thePlayer)	
+					saveSkin(thePlayer)
 				end
 			end
 		end
@@ -645,7 +645,7 @@ function detectiveduty(thePlayer, commandName)
 end
 addCommandHandler("dduty", detectiveduty, false, false)
 
-function cadetduty(thePlayer, commandName)	
+function cadetduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if (logged==1) then
@@ -738,7 +738,7 @@ function cadetduty(thePlayer, commandName)
 					
 					local casualskin = getElementData(thePlayer, "casualskin")
 					setElementModel(thePlayer, casualskin)
-					saveSkin(thePlayer)						
+					saveSkin(thePlayer)
 				end
 			end
 		end
@@ -746,7 +746,7 @@ function cadetduty(thePlayer, commandName)
 end
 addCommandHandler("cadet", cadetduty, false, false)
 
-function fbiduty(thePlayer, commandName)	
+function fbiduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 
 	if (logged==1) then
@@ -862,7 +862,7 @@ addCommandHandler("duty", duty)
 
 
 -- SACF /duty
-function sacfduty(thePlayer, commandName)	
+function sacfduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if (logged==1) then
@@ -911,7 +911,7 @@ end
 addCommandHandler("duty", sacfduty, false, false)
 
 --SACF /cert
-function sacfduty(thePlayer, commandName)	
+function sacfduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if (logged==1) then
@@ -962,7 +962,7 @@ end
 addCommandHandler("cert", sacfduty, false, false)
 
 -- Court US Marshalls /duty command
-function courtduty(thePlayer, commandName)	
+function courtduty(thePlayer, commandName)
 	local logged = getElementData(thePlayer, "loggedin")
 	
 	if (logged==1) then

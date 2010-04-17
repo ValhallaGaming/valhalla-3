@@ -10,7 +10,7 @@ end
 addEvent("updateMOTD", true)
 addEventHandler("updateMOTD", getRootElement(), saveMOTD)
 
-function hasBeta()	
+function hasBeta()
 	local xmlRoot = xmlLoadFile( "sapphirebeta.xml" )
 	if (xmlRoot) then
 		local betaNode = xmlFindChild(xmlRoot, "beta", 0)
@@ -130,7 +130,7 @@ function checkTOS()
 		
 		if (tosNode) then
 			local tversion = xmlNodeGetValue(tosNode)
-			if (tversion) and (tversion~="") then				
+			if (tversion) and (tversion~="") then
 				if (tonumber(tversion)~=tosversion) then
 					xmlRoot = nil
 				end
@@ -1307,7 +1307,7 @@ function drawCharacters()
 				characterMenu[i].cy = characterMenu[i].cy + 10
 			end
 			
-			local gender = characterMenu[i].gender == 0 and "Male" or "Female"			
+			local gender = characterMenu[i].gender == 0 and "Male" or "Female"
 			local agestring = age .. " year old " .. gender .. "."
 			
 			local factionstring = faction
@@ -1379,7 +1379,7 @@ function decreaseAlpha()
 		showPlayerHudComponent("weapon", true)
 		showPlayerHudComponent("ammo", true)
 		showPlayerHudComponent("vehicle_name", false)
-		showPlayerHudComponent("money", true)		
+		showPlayerHudComponent("money", true)
 		showPlayerHudComponent("health", true)
 		showPlayerHudComponent("armour", true)
 		showPlayerHudComponent("breath", true)
@@ -1420,7 +1420,7 @@ function showXMB()
 	showPlayerHudComponent("weapon", false)
 	showPlayerHudComponent("ammo", false)
 	showPlayerHudComponent("vehicle_name", false)
-	showPlayerHudComponent("money", false)		
+	showPlayerHudComponent("money", false)
 	showPlayerHudComponent("health", false)
 	showPlayerHudComponent("armour", false)
 	showPlayerHudComponent("breath", false)

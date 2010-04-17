@@ -5,7 +5,7 @@ setTimer(
 			if getElementDimension( value ) < 65000 then
 				setPedVoice( value, "PED_TYPE_DISABLED" )
 			end
-		end		
+		end
 	end,
 	1000,
 	0

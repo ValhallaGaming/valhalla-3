@@ -1,4 +1,4 @@
-function hasBeta()	
+function hasBeta()
 	local xmlRoot = xmlLoadFile( "sapphirebeta.xml" )
 	if (xmlRoot) then
 		local betaNode = xmlFindChild(xmlRoot, "beta", 0)
@@ -84,7 +84,7 @@ function checkTOS()
 		
 		if (tosNode) then
 			local tversion = xmlNodeGetValue(tosNode)
-			if (tversion) and (tversion~="") then				
+			if (tversion) and (tversion~="") then
 				if (tonumber(tversion)~=tosversion) then
 					xmlRoot = nil
 				end
@@ -1202,7 +1202,7 @@ function dcselectedCharacter(button, state)
 					showPlayerHudComponent("weapon", true)
 					showPlayerHudComponent("ammo", true)
 					showPlayerHudComponent("vehicle_name", false)
-					showPlayerHudComponent("money", true)		
+					showPlayerHudComponent("money", true)
 					showPlayerHudComponent("health", true)
 					showPlayerHudComponent("armour", true)
 					showPlayerHudComponent("breath", true)

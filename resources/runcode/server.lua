@@ -1,4 +1,4 @@
-mysql = exports.mysql	
+mysql = exports.mysql
 local rootElement = getRootElement()
 
 function runString (commandstring, outputTo, source)

@@ -14,7 +14,7 @@ function unsitInHelicopter(vehicle)
 			for key, value in ipairs(helicopters) do
 				local players = getElementData(value, "players")
 				
-				if (players) then				
+				if (players) then
 					local removed = false
 					for key, value in ipairs(players) do
 						if (value==source) then

@@ -3,7 +3,7 @@ function beanbagFired(x, y, z, target)
 	local distance = getDistanceBetweenPoints3D(x, y, z, px, py, pz)
 
 	if (distance<35) then
-		if (isElement(target) and getElementType(target)=="player") then			
+		if (isElement(target) and getElementType(target)=="player") then
 			exports['anticheat-system']:changeProtectedElementDataEx(target, "tazed", 1, false)
 			toggleAllControls(target, false, true, false)
 			exports.global:applyAnimation(target, "ped", "FLOOR_hit_f", -1, false, false, true)

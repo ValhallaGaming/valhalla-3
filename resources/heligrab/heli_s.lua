@@ -34,7 +34,7 @@ function SetPlayerGrabbedHeli(player,state,heli,side_,line_percent_)
 			local player_hanging = getElementData(player,"hanging")
 			if player_hanging then
 				triggerEvent("PlayerDropFromHeli",player,player_hanging.heli,"requested")
-			end		
+			end
 		end
 	end
 end
@@ -76,7 +76,7 @@ function SetCameraToHeliPilot(player,heli)
 --		outputChatBox("Set camera to heli")
 	else
 --		outputChatBox("could not set camera to pilot ("..tostring(heli_driver)..")")
-	end	
+	end
 end
 
 
@@ -120,7 +120,7 @@ addEventHandler("onResourceStop",getResourceRootElement(getThisResource()),funct
 		if player_hanging then
 			triggerEvent("PlayerDropFromHeli",v,player_hanging.heli,"stopped resource")
 		end
-	end	
+	end
 end)
 
 

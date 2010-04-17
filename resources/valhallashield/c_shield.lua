@@ -101,11 +101,11 @@ function drawValhallaShield()
 		if not ( isTimer(timer) ) then
 			timer = setTimer(hideValhallaShield, 3000, 1)
 		end
-	elseif ( VSstate == 2 ) then 
+	elseif ( VSstate == 2 ) then
 		rotation = 0
 		imageName = "gui/shield/shield_ok.png"
 		text = "Client Verification OK"
-	elseif ( VSstate == 3 ) then 
+	elseif ( VSstate == 3 ) then
 		rotation = 0
 		imageName = "gui/shield/shield_question.png"
 		text = "Could Not Verify At This Time"
@@ -113,11 +113,11 @@ function drawValhallaShield()
 		if not ( isTimer(timer) ) then
 			timer = setTimer(hideValhallaShield, 3000, 1)
 		end
-	elseif ( VSstate == 4 ) then 
+	elseif ( VSstate == 4 ) then
 		rotation = 0
 		imageName = "gui/shield/shield_question.png"
 		text = "Could Not Verify At This Time"
-	end	
+	end
 
 	local x = xoffset*0.06
 	local y = (height - yoffset * 0.3)

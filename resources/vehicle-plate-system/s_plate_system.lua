@@ -12,7 +12,7 @@ function pedTalk(state)
 	elseif (state == 4) then
 		exports.global:sendLocalText(source, "Gabrielle McCoy says: No? Well I hope you change your mind later. Have a nice day!", nil, nil, nil, 10)
 	elseif (state == 5) then
-		exports.global:sendLocalText(source, " *Gabrielle McCoy begins inputting the information into her computer.", 255, 51, 102)	
+		exports.global:sendLocalText(source, " *Gabrielle McCoy begins inputting the information into her computer.", 255, 51, 102)
 		exports.global:sendLocalText(source, "Gabrielle McCoy says: Alright, you should be good to go. Have a nice day!", nil, nil, nil, 10)
 	elseif (state == 6) then
 		exports.global:sendLocalText(source, "Gabrielle McCoy says: Hmmm. According to our records, that is already a registered license plate.", nil, nil, nil, 10)
@@ -39,7 +39,7 @@ function setNewInfo(data, car)
 							exports['vehicle-system']:reloadVehicle(tonumber(car))
 							triggerEvent("platePedTalk", source, 5)
 						else
-							triggerEvent("platePedTalk", source, 2)						
+							triggerEvent("platePedTalk", source, 2)
 						end
 					else
 						outputChatBox("ERROR VPS0-001. Please report on the mantis.", source, 255,0,0)

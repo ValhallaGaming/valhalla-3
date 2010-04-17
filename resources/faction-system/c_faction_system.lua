@@ -683,10 +683,10 @@ function cPayDay(faction, pay, profit, interest, donatormoney, tax, incomeTax, v
 	if not (faction) then
 		if (pay + tax > 0) then
 			outputChatBox("    State Benefits: #00FF00" .. pay+tax .. "$", 255, 194, 14, true)
-		end		
+		end
 	else
 		if (pay + tax > 0) then
-			outputChatBox("    Wage Paid: #00FF00" .. pay+tax .. "$", 255, 194, 14, true)		
+			outputChatBox("    Wage Paid: #00FF00" .. pay+tax .. "$", 255, 194, 14, true)
 		end
 	end
 	

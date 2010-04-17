@@ -48,7 +48,7 @@ function checkSpeed(theVehicle, thePlayer, colshape, maxSpeed)
 end
 
 
---Color Names	
+--Color Names
 local colors = {
 	"white", "blue", "red", "dark green", "purple",
 	"yellow", "blue", "gray", "blue", "silver",

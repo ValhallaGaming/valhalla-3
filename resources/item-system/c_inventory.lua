@@ -349,7 +349,7 @@ addEventHandler( "onClientRender", getRootElement( ),
 				local itemName = getItemName( itemID, itemValue )
 				
 				local itemValue = getItemValue( itemID, itemValue )
-				if itemValue and #tostring( itemValue ) > 0 and itemValue ~= 1 then 
+				if itemValue and #tostring( itemValue ) > 0 and itemValue ~= 1 then
 					itemName = itemName .. " (" .. itemValue .. ")"
 				end
 				

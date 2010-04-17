@@ -291,7 +291,7 @@ function spawnCharacter(charname, version)
 		setPedGravity(source, 0)
 		
 		-- Load the character info
-		spawnPlayer(source, x, y, z, rot, skin)	
+		spawnPlayer(source, x, y, z, rot, skin)
 		setElementHealth(source, health)
 		setPedArmor(source, armor)
 		
@@ -494,7 +494,7 @@ function spawnCharacter(charname, version)
 					local inttype = getElementData(value, "inttype")
 					local owner = tonumber(getElementData(value, "owner"))
 
-					if owner == tonumber(id) then 
+					if owner == tonumber(id) then
 						local x, y = getElementPosition(value)
 						if (inttype ~= 2) then
 							if inttype == 3 then inttype = 0 end
@@ -1025,7 +1025,7 @@ function requestAchievements(player)
 		end
 
 	end
-	mysql:free_result(aresult)	
+	mysql:free_result(aresult)
 	triggerClientEvent(player, "returnAchievements", player, achievements)
 	
 	if ( hasBeta[player] ) then
@@ -1277,7 +1277,7 @@ function timerPDUnjailPlayer(jailedPlayer)
 		if not username then
 			local theTimer = getElementData(jailedPlayer, "pd.jailtimer")
 			if isTimer(theTimer) then
-				killTimer(theTimer)	
+				killTimer(theTimer)
 			end
 			exports['anticheat-system']:changeProtectedElementDataEx(jailedPlayer, "pd.jailtimer")
 			return

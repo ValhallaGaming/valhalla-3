@@ -40,7 +40,7 @@ function givePlayerAchievement(thePlayer, id)
 		
 			local result = mysql:query_free("INSERT INTO achievements SET account='" .. mysql:escape_string(gameaccountID) .. "', achievementid='" .. mysql:escape_string(id) .. "', date='" .. mysql:escape_string(date) .. "'")
 		
-			if result then	
+			if result then
 				triggerClientEvent(thePlayer, "onPlayerGetAchievement", thePlayer, id)
 				return true
 			else

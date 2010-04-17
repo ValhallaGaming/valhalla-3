@@ -80,7 +80,7 @@ function loadAllFactions(res)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionMenu", 0)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", result.faction_id)
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", result.faction_rank)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", result.faction_leader, false)				
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", result.faction_leader, false)
 				
 				setPlayerTeam(thePlayer, exports.pool:getElement("team", result.faction_id) or citteam)
 			end
@@ -938,7 +938,7 @@ function payWage(player, pay, faction, tax)
 			pay = 0
 		end
 	else
-		if pay >= 0 then	
+		if pay >= 0 then
 			local teamid = getElementData(player, "faction")
 			if teamid <= 0 then
 				teamid = 0

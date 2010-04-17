@@ -56,7 +56,7 @@ local function getVehiclePrice(theVehicle)
 				return math.ceil(tonumber( value[2] or 0 + ( vehiclecount[ model ] * 600 )) / 300) * 100 -- 1/3 of the price, round to $100
 				--return value[2] -- 100%
 			end
-		end	
+		end
 	end
 	return 0
 end
@@ -84,7 +84,7 @@ local function showMoreInformation(thePlayer, matching)
 						setElementData(theVehicle, "crushing", price, false)
 					end
 					outputChatBox("(( Drive the " .. getVehicleName(theVehicle) .. " up the ramp to crush it. ))", thePlayer, 255, 194, 14)
-					outputChatBox("(( This will permanently delete your vehicle. ))", thePlayer, 255, 194, 14)					
+					outputChatBox("(( This will permanently delete your vehicle. ))", thePlayer, 255, 194, 14)
 				end
 			else
 				outputChatBox("Got the Registration for that? Sorry, Bro', can't touch it then.", thePlayer, 255, 0, 0)

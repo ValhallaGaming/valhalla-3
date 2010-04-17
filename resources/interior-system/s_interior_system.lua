@@ -8,7 +8,7 @@ mysql = exports.mysql
 
 -- ////////////////////////////////////
 -- //			MYSQL				 //
--- ////////////////////////////////////		
+-- ////////////////////////////////////
 sqlUsername = exports.mysql:getMySQLUsername()
 sqlPassword = exports.mysql:getMySQLPassword()
 sqlDB = exports.mysql:getMySQLDBName()
@@ -132,7 +132,7 @@ function updateInteriorEntrance(thePlayer, commandName, intID)
 	if (exports.global:isPlayerLeadAdmin(thePlayer)) then
 		local intID = tonumber(intID)
 		if not (intID) then
-			outputChatBox( "SYNTAX: /" .. commandName .. " [Interior ID]", thePlayer, 255, 194, 14 )		
+			outputChatBox( "SYNTAX: /" .. commandName .. " [Interior ID]", thePlayer, 255, 194, 14 )
 		else
 			local dbid, entrance, exit = findProperty(thePlayer, intID)
 			if entrance then
@@ -577,7 +577,7 @@ function setIntPickupElementData(intpickup, id, rot, locked, owner, inttype, int
 end
 
 -- Bind Keys required
-function func (player, f, down, player, pickup) enterInterior(player, pickup) end 
+function func (player, f, down, player, pickup) enterInterior(player, pickup) end
 
 function bindKeys(player, pickup)
 	if (isElement(player)) then
@@ -748,7 +748,7 @@ function enterInterior( thePlayer, thePickup )
 				local cost = getElementData(thePickup, "cost")
 				
 				-- if the interior is unlocked
-				if locked == 0 then 
+				if locked == 0 then
 					setPlayerInsideInterior(thePickup, thePlayer)
 				elseif locked == 1 and owner == -1 then
 					if inttype == 0 then -- unowned house
@@ -999,7 +999,7 @@ addEventHandler( "lockUnlockHouse", getRootElement(),
 			end
 		else
 			cancelEvent( )
-		end	
+		end
 	end
 )
 
@@ -1030,7 +1030,7 @@ addEventHandler( "lockUnlockHouseID", getRootElement(),
 			end
 		else
 			cancelEvent( )
-		end	
+		end
 	end
 )
 
