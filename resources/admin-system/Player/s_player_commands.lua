@@ -2200,11 +2200,13 @@ function toggleInvisibility(thePlayer)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", false)
 			outputChatBox("You are now visible.", thePlayer, 255, 0, 0)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "invisible", false)
-		else
+		elseif (enabled == false or enabled == nil) then
 			setElementAlpha(thePlayer, 0)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", true)
 			outputChatBox("You are now invisible.", thePlayer, 0, 255, 0)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "invisible", true)
+		else
+			outputChatBox("Please disable recon first.", thePlayer, 255, 0, 0)
 		end
 	end
 end
@@ -2220,10 +2222,12 @@ function toggleMyNametag(thePlayer)
 			setPlayerNametagShowing(thePlayer, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", false)
 			outputChatBox("Your nametag is now visible.", thePlayer, 255, 0, 0)
-		else
+		elseif (visible == false or visible == nil) then
 			setPlayerNametagShowing(thePlayer, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", true)
 			outputChatBox("Your nametag is now hidden.", thePlayer, 0, 255, 0)
+		else
+			outputChatBox("Please disable recon first.", thePlayer, 255, 0, 0)
 		end
 	end
 end
