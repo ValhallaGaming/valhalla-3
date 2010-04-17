@@ -1818,98 +1818,51 @@ function unfreezePlayer(thePlayer, commandName, target)
 end
 addCommandHandler("unfreeze", unfreezePlayer, false, false)
 
-------------- [Mark and /gotomark ] commands
-
-function markPosition(thePlayer, command)
-	
-	local logged = getElementData ( thePlayer, "loggedin" )
-	if ( logged == 1) then
-		if (exports.global:isPlayerAdmin(thePlayer)) then
-		
-			local x, y, z = getElementPosition(thePlayer)
-			local interior = getElementInterior(thePlayer)
-			local dimension= getElementDimension(thePlayer)
-			
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.x", x, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.y", y, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.z", z, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.interior", interior, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.dimension", dimension, false)
-			
-			outputChatBox("Mark set sucessfull.", thePlayer, 0, 255, 0, true)
-			triggerClientEvent( thePlayer, "saveTempMark", thePlayer, x, y, z, interior, dimension )
-		end
-	end
-end
-addCommandHandler ( "mark", markPosition , false, false)
-
-addEvent( "loadTempMark", true )
-addEventHandler( "loadTempMark", getRootElement( ),
-	function( x, y, z, interior, dimension )
+------------- [gotoMark]
+addEvent( "gotoMark", true )
+addEventHandler( "gotoMark", getRootElement( ),
+	function( x, y, z, interior, dimension, name )
 		if type( x ) == "number" and type( y ) == "number" and type( z ) == "number" and type( interior ) == "number" and type( dimension ) == "number" then
-			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.x", x, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.y", y, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.z", z, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.interior", interior, false)
-			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.dimension", dimension, false)
-		end
-	end
-)
-
-
-function gotoMark(thePlayer, command)
-
-	local logged = getElementData ( thePlayer, "loggedin" )
-	if ( logged == 1) then
-		if (exports.global:isPlayerAdmin(thePlayer)) then
-		
-			if(getElementData(thePlayer, "tempMark.x") )then
-			
-				fadeCamera ( thePlayer, false, 1,0,0,0 )
+			if getElementData ( client, "loggedin" ) == 1 and exports.global:isPlayerAdmin(client) then
+				fadeCamera ( client, false, 1,0,0,0 )
 				
-				setTimer(function()
+				setTimer(function(client)
 				
 					local vehicle = nil
 					local seat = nil
 				
-					if(isPedInVehicle ( thePlayer )) then
-						 vehicle =  getPedOccupiedVehicle ( thePlayer )
-						seat = getPedOccupiedVehicleSeat ( thePlayer )
+					if(isPedInVehicle ( client )) then
+						 vehicle =  getPedOccupiedVehicle ( client )
+						seat = getPedOccupiedVehicleSeat ( client )
 					end
 					
 					if(vehicle and (seat ~= 0)) then
-						removePedFromVehicle (thePlayer )
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
-						setElementPosition(thePlayer, tonumber(getElementData(thePlayer, "tempMark.x")),tonumber(getElementData(thePlayer, "tempMark.y")),tonumber(getElementData(thePlayer, "tempMark.z")))
-						setElementInterior(thePlayer, getElementData(thePlayer, "tempMark.interior"))
-						setElementDimension(thePlayer, getElementData(thePlayer, "tempMark.dimension"))
+						removePedFromVehicle (client )
+						exports['anticheat-system']:changeProtectedElementDataEx(client, "realinvehicle", 0, false)
+						setElementPosition(client, x, y, z)
+						setElementInterior(client, interior)
+						setElementDimension(client, dimension)
 					elseif(vehicle and seat == 0) then
-						removePedFromVehicle (thePlayer )
-						exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "realinvehicle", 0, false)
-						setElementPosition(vehicle, tonumber(getElementData(thePlayer, "tempMark.x")),tonumber(getElementData(thePlayer, "tempMark.y")),tonumber(getElementData(thePlayer, "tempMark.z")))
-						setElementInterior(vehicle, getElementData(thePlayer, "tempMark.interior"))
-						setElementDimension(vehicle, getElementData(thePlayer, "tempMark.dimension"))
-						warpPedIntoVehicle ( thePlayer, vehicle, 0)
+						removePedFromVehicle (client )
+						exports['anticheat-system']:changeProtectedElementDataEx(client, "realinvehicle", 0, false)
+						setElementPosition(vehicle, x, y, z)
+						setElementInterior(vehicle, interior)
+						setElementDimension(vehicle, dimension)
+						warpPedIntoVehicle ( client, vehicle, 0)
 					else
-						setElementPosition(thePlayer, tonumber(getElementData(thePlayer, "tempMark.x")),tonumber(getElementData(thePlayer, "tempMark.y")),tonumber(getElementData(thePlayer, "tempMark.z")))
-						setElementInterior(thePlayer, getElementData(thePlayer, "tempMark.interior"))
-						setElementDimension(thePlayer, getElementData(thePlayer, "tempMark.dimension"))
+						setElementPosition(client, x, y, z)
+						setElementInterior(client, interior)
+						setElementDimension(client, dimension)
 					end
 					
-
-					
-					setTimer(fadeCamera, 1000, 1, thePlayer, true, 1)
-				end, 1000, 1)
+					outputChatBox( "Teleported to Mark" .. ( name and " '" .. name .. "'" or "" ) .. ".", client, 0, 255, 0 )
+					setTimer(fadeCamera, 1000, 1, client, true, 1)
+				end, 1000, 1, client)
 			
-			else
-				outputChatBox( "You need to set a position with /mark first.", thePlayer, 255, 0,0, true )
 			end
 		end
 	end
-
-end
-addCommandHandler ( "gotomark", gotoMark , false, false)
-
+)
 ----------------------------[MAKE DONATOR]---------------------------------------
 function makePlayerDonator(thePlayer, commandName, target, level)
 	if (exports.global:isPlayerAdmin(thePlayer)) then
