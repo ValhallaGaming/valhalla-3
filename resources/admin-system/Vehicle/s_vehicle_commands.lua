@@ -9,7 +9,7 @@ addEvent("onVehicleDelete", false)
 function unflipCar(thePlayer, commandName)
 	if (exports.global:isPlayerAdmin(thePlayer) or getTeamName(getPlayerTeam(thePlayer)) == "Best's Towing and Recovery") then
 		if not (isPedInVehicle(thePlayer)) then
-			outputChatBox("You are not in  vehicle.", thePlayer, 255, 0, 0)
+			outputChatBox("You are not in vehicle.", thePlayer, 255, 0, 0)
 		else
 			local veh = getPedOccupiedVehicle(thePlayer)
 			local rx, ry, rz = getVehicleRotation(veh)
