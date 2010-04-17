@@ -26,7 +26,7 @@ function showEmploymentWindow()
 	wEmployment = guiCreateWindow(x, y, width, height, "Job Pinboard", false)
 	
 	jobList = guiCreateGridList(0.05, 0.05, 0.9, 0.8, true, wEmployment)
-    local column = guiGridListAddColumn(jobList, "Job Title", 0.9)
+	local column = guiGridListAddColumn(jobList, "Job Title", 0.9)
 
 	-- TRUCKER
 	local row = guiGridListAddRow(jobList)

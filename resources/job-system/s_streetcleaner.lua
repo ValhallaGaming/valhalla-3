@@ -126,11 +126,11 @@ function startCleaningMission(thePlayer)
 		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "oldy", 369.0305175781, false)
 		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "oldz", 10.8203125, false)
 		exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "engine", 1, false)
-        removePedFromVehicle(thePlayer)
+		removePedFromVehicle(thePlayer)
 		warpPedIntoVehicle(thePlayer, vehicle)
 		
 		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.marker", "1")
-        exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.vehicle", vehicle)
+		exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "cleaner.vehicle", vehicle)
 		
 		local int = math.random ( 1, 1 ) -- Number of checkpoint paths. (1 minimum , 3 max )
 		local x1,y1,z1 = nil
@@ -340,11 +340,11 @@ function FinishCheckpoints(thePlayer)
 end
 
 function quit()
-    local vehicle = getElementData(source, "cleaner.vehicle")
-    if vehicle then
-        destroyElement(vehicle)
-    end
-    exports['anticheat-system']:changeProtectedElementDataEx(source, "cleaner.vehicle")
+	local vehicle = getElementData(source, "cleaner.vehicle")
+	if vehicle then
+		destroyElement(vehicle)
+	end
+	exports['anticheat-system']:changeProtectedElementDataEx(source, "cleaner.vehicle")
 end
 
 addEventHandler("onPlayerQuit", getRootElement(), quit)

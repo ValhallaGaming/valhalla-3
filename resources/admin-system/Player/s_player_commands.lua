@@ -1588,12 +1588,12 @@ function gotoPlayer(thePlayer, commandName, target)
 					if (isPedInVehicle(thePlayer)) then
 						local veh = getPedOccupiedVehicle(thePlayer)
 						setVehicleTurnVelocity(veh, 0, 0, 0)
-                        setElementInterior(thePlayer, interior)
-                        setElementDimension(thePlayer, dimension)
-                        setElementInterior(veh, interior)
-                        setElementDimension(veh, dimension)
-                        setElementPosition(veh, x, y, z + 1)
-                        warpPedIntoVehicle ( thePlayer, veh ) 
+						setElementInterior(thePlayer, interior)
+						setElementDimension(thePlayer, dimension)
+						setElementInterior(veh, interior)
+						setElementDimension(veh, dimension)
+						setElementPosition(veh, x, y, z + 1)
+						warpPedIntoVehicle ( thePlayer, veh ) 
 						setTimer(setVehicleTurnVelocity, 50, 20, veh, 0, 0, 0)
 					else
 						setElementPosition(thePlayer, x, y, z)
@@ -2153,22 +2153,22 @@ addEventHandler("onPlayerQuit", getRootElement(), removeReconning)
 
 -- FREECAM
 function toggleFreecam(thePlayer)
-    if exports.global:isPlayerAdmin(thePlayer) then
-        local enabled = exports.freecam:isPlayerFreecamEnabled (thePlayer)
-        
-        if (enabled) then
-            exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx")
-            setElementAlpha(thePlayer, 255)
-            setPedFrozen(thePlayer, false)
-            exports.freecam:setPlayerFreecamDisabled (thePlayer)
-        else
+	if exports.global:isPlayerAdmin(thePlayer) then
+		local enabled = exports.freecam:isPlayerFreecamEnabled (thePlayer)
+		
+		if (enabled) then
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx")
+			setElementAlpha(thePlayer, 255)
+			setPedFrozen(thePlayer, false)
+			exports.freecam:setPlayerFreecamDisabled (thePlayer)
+		else
 			removePedFromVehicle(thePlayer)
-            exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", 0)
-            setElementAlpha(thePlayer, 0)
-            setPedFrozen(thePlayer, true)
-            exports.freecam:setPlayerFreecamEnabled (thePlayer)
-        end
-    end
+			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "reconx", 0)
+			setElementAlpha(thePlayer, 0)
+			setPedFrozen(thePlayer, true)
+			exports.freecam:setPlayerFreecamEnabled (thePlayer)
+		end
+	end
 end
 addCommandHandler("freecam", toggleFreecam)
 

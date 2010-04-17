@@ -135,12 +135,12 @@ end
 function renderWelcomeMessage()
 	local screenWidth, screenHeight = guiGetScreenSize()
 	dxDrawText("Welcome to Valhalla Gaming", 36, screenHeight-61, screenWidth, screenHeight, tocolor ( 0, 0, 0, 255 ), 1, "pricedown")
-    dxDrawText("Welcome to Valhalla Gaming", 34, screenHeight-63, screenWidth, screenHeight, tocolor ( 255, 255, 255, 255 ), 1, "pricedown")
+	dxDrawText("Welcome to Valhalla Gaming", 34, screenHeight-63, screenWidth, screenHeight, tocolor ( 255, 255, 255, 255 ), 1, "pricedown")
 	
 	local version = exports.global:getScriptVersion()
 	
 	dxDrawText("Version " .. version, screenWidth-170, screenHeight-61, screenWidth, screenHeight, tocolor ( 0, 0, 0, 255 ), 1, "pricedown")
-    dxDrawText("Version " .. version, screenWidth-168, screenHeight-63, screenWidth, screenHeight, tocolor ( 255, 255, 255, 255 ), 1, "pricedown")
+	dxDrawText("Version " .. version, screenWidth-168, screenHeight-63, screenWidth, screenHeight, tocolor ( 255, 255, 255, 255 ), 1, "pricedown")
 	
 	dxDrawLine(0, screenHeight-30, screenWidth, screenHeight-30, tocolor(255, 255, 255, 150), 2)
 end
@@ -1269,7 +1269,7 @@ function selectedCharacter(button, state)
 			for i, j in pairs(paneChars) do
 				local isthis = false
 				for k, v in pairs(paneChars[i]) do
-			        if (v==source) then
+					if (v==source) then
 						isthis = true
 						found = true
 						key = i

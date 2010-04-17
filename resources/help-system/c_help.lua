@@ -109,35 +109,35 @@ function Selection(opt)
 	guiSetVisible(Window[2], true)
 	
 	if(opt == 1) then
-		xml = getResourceConfig("1.xml")      
+		xml = getResourceConfig("1.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 2) then
-		xml = getResourceConfig("2.xml")      
+		xml = getResourceConfig("2.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 3) then
-		xml = getResourceConfig("3.xml")      
+		xml = getResourceConfig("3.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 4) then
-		xml = getResourceConfig("4.xml")      
+		xml = getResourceConfig("4.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 5) then
-		xml = getResourceConfig("5.xml")      
+		xml = getResourceConfig("5.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 6) then
-		xml = getResourceConfig("6.xml")      
+		xml = getResourceConfig("6.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 7) then
-		xml = getResourceConfig("7.xml")      
+		xml = getResourceConfig("7.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	elseif(opt == 8) then
-		xml = getResourceConfig("8.xml")      
+		xml = getResourceConfig("8.xml")
 		entry = xmlNodeGetValue(xml)  
 		guiSetText(Label[2], entry)
 	end

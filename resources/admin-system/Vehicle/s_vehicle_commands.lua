@@ -221,7 +221,7 @@ function getNearbyVehicles(thePlayer, commandName)
 		outputChatBox("Nearby Vehicles:", thePlayer, 255, 126, 0)
 		local count = 0
 		
-        for index, nearbyVehicle in ipairs( exports.global:getNearbyElements(thePlayer, "vehicle") ) do
+		for index, nearbyVehicle in ipairs( exports.global:getNearbyElements(thePlayer, "vehicle") ) do
 			local thisvehid = getElementData(nearbyVehicle, "dbid")
 			local vehicleID = getElementModel(nearbyVehicle)
 			local vehicleName = getVehicleNameFromModel(vehicleID)

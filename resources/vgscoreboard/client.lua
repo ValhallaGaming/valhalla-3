@@ -462,7 +462,7 @@ drawScoreboard = function ()
 	
 	-- Draw the headers
 	drawRowBounded ( "ID", "Player name", "Ping",
-				     { SCOREBOARD_HEADERS_COLOR, SCOREBOARD_HEADERS_COLOR, SCOREBOARD_HEADERS_COLOR },
+					 { SCOREBOARD_HEADERS_COLOR, SCOREBOARD_HEADERS_COLOR, SCOREBOARD_HEADERS_COLOR },
 					 "default-bold", top )
 	
 				 

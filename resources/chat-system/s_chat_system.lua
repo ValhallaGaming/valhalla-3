@@ -404,7 +404,7 @@ addCommandHandler("d", departmentradio, false, false)
 addCommandHandler("department", departmentradio, false, false)
 
 function blockChatMessage()
-    cancelEvent()
+	cancelEvent()
 end
 
 addEventHandler("onPlayerChat", getRootElement(), blockChatMessage)
@@ -1573,7 +1573,7 @@ function newsHotline(thePlayer, commandName, ...)
 								outputChatBox( "#EEEEEE" .. playerName .. " [Cellphone]: " .. message, nearbyPlayer, 255, 255, 255, true)
 							elseif dist < 8 then
 								outputChatBox( "#DDDDDD" .. playerName .. " [Cellphone]: " .. message, nearbyPlayer, 255, 255, 255, true)
-							elseif dist < 12 then          
+							elseif dist < 12 then
 								outputChatBox( "#CCCCCC" .. playerName .. " [Cellphone]: " .. message, nearbyPlayer, 255, 255, 255, true)
 							elseif dist < 16 then
 								outputChatBox( "#BBBBBB" .. playerName .. " [Cellphone]: " .. message, nearbyPlayer, 255, 255, 255, true)

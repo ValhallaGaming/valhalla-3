@@ -4,11 +4,11 @@
 function createWeatherGUI(weather)
 	
 	local X = 0.35
-        local Y = 0.35
-        local Width = 0.3
-        local Height = 0.3
+		local Y = 0.35
+		local Width = 0.3
+		local Height = 0.3
 	
-        guiWeather = guiCreateWindow(X, Y, Width, Height, "Weather Control Center", true)
+		guiWeather = guiCreateWindow(X, Y, Width, Height, "Weather Control Center", true)
 
 	if(weather == "cloudy") then
 		guiWeatherImage =   guiCreateStaticImage( 0.3 , 0.1, 0.4 , 0.4, "cloudy.png", true, guiWeather )
@@ -72,11 +72,11 @@ addEventHandler("onCreateWeatherControlGUI", getLocalPlayer(), showWeatherContro
 function createWeatherForecaseGUI(weather, nextWeather, laterWeather)
 	
 	local X = 0.35
-        local Y = 0.35
-        local Width = 0.3
-        local Height = 0.3
+		local Y = 0.35
+		local Width = 0.3
+		local Height = 0.3
 	
-        guiWeatherForecast = guiCreateWindow(X, Y, Width, Height, "Weather Forecast", true)
+		guiWeatherForecast = guiCreateWindow(X, Y, Width, Height, "Weather Forecast", true)
 	
 	guiWeatherForcecastTab = guiCreateTabPanel ( 0, 0.09, 1, 0.91 ,true,guiWeatherForecast )
 	

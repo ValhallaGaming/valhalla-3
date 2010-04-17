@@ -61,8 +61,8 @@ end
 function handleDisplay()
 	for i,v in ipairs(textsToDraw) do
 		local camPosXl, camPosYl, camPosZl = getPedBonePosition (v[1], 6)
-        local camPosXr, camPosYr, camPosZr = getPedBonePosition (v[1], 7)
-        local x,y,z = (camPosXl + camPosXr) / 2, (camPosYl + camPosYr) / 2, (camPosZl + camPosZr) / 2
+		local camPosXr, camPosYr, camPosZr = getPedBonePosition (v[1], 7)
+		local x,y,z = (camPosXl + camPosXr) / 2, (camPosYl + camPosYr) / 2, (camPosZl + camPosZr) / 2
 		--local posx,posy = getScreenFromWorldPosition(x,y,z+0.25)
 		local cx,cy,cz = getCameraMatrix()
 		local px,py,pz = getElementPosition(v[1])

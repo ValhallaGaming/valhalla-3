@@ -480,7 +480,7 @@ function showInventory(player, syncw, synca)
 		-- buttons
 		--[[if player == getLocalPlayer() then
 			bUseItem = guiCreateButton(0.05, 0.91, 0.2, 0.15, "Use Item", true, wItems)
-            addEventHandler("onClientGUIClick", bUseItem, useItem, false)
+			addEventHandler("onClientGUIClick", bUseItem, useItem, false)
 			guiSetEnabled(bUseItem, false)
 			
 			bDropItem = guiCreateButton(0.30, 0.91, 0.2, 0.15, "Drop Item", true, wItems)

@@ -5,7 +5,7 @@ function clientTagWall(weapon, ammo, ammoInClip, hitX, hitY, hitZ, hitElement)
 	if (weapon==41) then
 		local team = getPlayerTeam(getLocalPlayer())
 		local ftype = getElementData(team, "type")
-        local tag = getElementData(source, "tag")
+		local tag = getElementData(source, "tag")
 
 		if (ftype~=2) then
 			if not (hitElement) or (getElementType(hitElement)~="player") then -- Didn't attack someone

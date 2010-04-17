@@ -61,9 +61,9 @@ addEvent( "realism:smokingsync", true )
 addEventHandler( "realism:smokingsync", getRootElement(), syncCigarette, righthand )
 
 addEventHandler( "onClientResourceStart", getResourceRootElement(),
-    function ( startedRes )
+	function ( startedRes )
 		triggerServerEvent("realism:smoking.request", getLocalPlayer())
-    end
+	end
 );
 
 function createModel(player, modelid)

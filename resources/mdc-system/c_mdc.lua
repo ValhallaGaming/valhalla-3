@@ -1914,7 +1914,7 @@ addEventHandler("onCorrectLogInDetails", getLocalPlayer() ,   correctLogIn)
  
  -- function checks the password against the encripted password and returns true if success
  function checkPassword(Password)
-    
+	
 	local accountName = user[1]
 	
 	if (Password == user[2]) then

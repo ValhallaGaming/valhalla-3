@@ -61,9 +61,9 @@ end
 
 addEventHandler("onClientResourceStart", getResourceRootElement(getThisResource()),
 
-        function ()
-                CreateCarList()
-        end
+		function ()
+				CreateCarList()
+		end
 )
 
 
@@ -100,129 +100,97 @@ function Close( )
 end 
 
 function SUV( )
-
-	xml = getResourceConfig("SUV.xml")      
+	xml = getResourceConfig("SUV.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end 
 
 function TwoDoor( )
-
-	xml = getResourceConfig("twodoor.xml")      
+	xml = getResourceConfig("twodoor.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function FourDoor( )
-
-	xml = getResourceConfig("fourdoor.xml")      
+	xml = getResourceConfig("fourdoor.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Muscle( )
-
-	xml = getResourceConfig("muscle.xml")      
+	xml = getResourceConfig("muscle.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end 
 
 function Street( )
-
-	xml = getResourceConfig("street.xml")      
+	xml = getResourceConfig("street.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end 
 
 function HighPer( )
-
-	xml = getResourceConfig("highper.xml")      
+	xml = getResourceConfig("highper.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Heavy( )
-
-	xml = getResourceConfig("heavy.xml")      
+	xml = getResourceConfig("heavy.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end 
 
 function Light( )
-
-	xml = getResourceConfig("light.xml")      
+	xml = getResourceConfig("light.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Lowrider( )
-
-	xml = getResourceConfig("lowrider.xml")      
+	xml = getResourceConfig("lowrider.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Recreational( )
-
-	xml = getResourceConfig("recreational.xml")      
+	xml = getResourceConfig("recreational.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Bike( )
-
-	xml = getResourceConfig("bikes.xml")      
+	xml = getResourceConfig("bikes.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Civil( )
-
-	xml = getResourceConfig("civil.xml")      
+	xml = getResourceConfig("civil.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Commercial( )
-
-	xml = getResourceConfig("commercial.xml")      
+	xml = getResourceConfig("commercial.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Air( )
-
-	xml = getResourceConfig("air.xml")      
+	xml = getResourceConfig("air.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end
 
 function Boat( )
-
-	xml = getResourceConfig("boat.xml")      
+	xml = getResourceConfig("boat.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
 end 
 
 function Trailer( )
-
-	xml = getResourceConfig("trailer.xml")      
+	xml = getResourceConfig("trailer.xml")
 	cars = xmlNodeGetValue(xml)  
 	guiSetText ( Button[1], cars)
-
-end 
+end

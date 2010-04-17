@@ -746,7 +746,7 @@ function enterInterior( thePlayer, thePickup )
 				
 				local owner = getElementData(thePickup, "owner")
 				local cost = getElementData(thePickup, "cost")
-                
+				
 				-- if the interior is unlocked
 				if locked == 0 then 
 					setPlayerInsideInterior(thePickup, thePlayer)

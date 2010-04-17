@@ -2,15 +2,15 @@ local myadminWindow = nil
 
 function adminhelp (sourcePlayer, commandName)
 
-    local sourcePlayer = getLocalPlayer()
-    local adminLevel = getElementData(sourcePlayer, "adminlevel")
-    if (adminLevel > 0) then
-        if (myadminWindow == nil) then
-            guiSetInputEnabled(true)
+	local sourcePlayer = getLocalPlayer()
+	local adminLevel = getElementData(sourcePlayer, "adminlevel")
+	if (adminLevel > 0) then
+		if (myadminWindow == nil) then
+			guiSetInputEnabled(true)
 			local screenx, screeny = guiGetScreenSize()
-            myadminWindow = guiCreateWindow ((screenx-700)/2, (screeny-500)/2, 700, 500, "Index of admin commands v5", false)
-            local tabPanel = guiCreateTabPanel (0, 0.1, 1, 1, true, myadminWindow)
-            local lists = {}
+			myadminWindow = guiCreateWindow ((screenx-700)/2, (screeny-500)/2, 700, 500, "Index of admin commands v5", false)
+			local tabPanel = guiCreateTabPanel (0, 0.1, 1, 1, true, myadminWindow)
+			local lists = {}
 			for level = 1, 6 do 
 				local tab = guiCreateTab("Level " .. level, tabPanel)
 				lists[level] = guiCreateGridList(0.02, 0.02, 0.96, 0.96, true, tab) -- commands for level one admins 
@@ -18,7 +18,7 @@ function adminhelp (sourcePlayer, commandName)
 				guiGridListAddColumn (lists[level], "Syntax", 0.35)
 				guiGridListAddColumn (lists[level], "Explanation", 1.3)
 			end
-            local tlBackButton = guiCreateButton(0.8, 0.05, 0.2, 0.07, "Close", true, myadminWindow) -- close button
+			local tlBackButton = guiCreateButton(0.8, 0.05, 0.2, 0.07, "Close", true, myadminWindow) -- close button
 
 			local commands =
 			{
@@ -255,28 +255,28 @@ function adminhelp (sourcePlayer, commandName)
 				end
 			end
 			
-            addEventHandler ("onClientGUIClick", tlBackButton, function(button, state)
-                if (button == "left") then
-                    if (state == "up") then
-                        guiSetVisible(myadminWindow, false)
-                        showCursor (false)
-                        guiSetInputEnabled(false)
-                        myadminWindow = nil
-                    end
-                end
-            end, false)
+			addEventHandler ("onClientGUIClick", tlBackButton, function(button, state)
+				if (button == "left") then
+					if (state == "up") then
+						guiSetVisible(myadminWindow, false)
+						showCursor (false)
+						guiSetInputEnabled(false)
+						myadminWindow = nil
+					end
+				end
+			end, false)
 
-            guiBringToFront (tlBackButton)
+			guiBringToFront (tlBackButton)
 			guiSetVisible (myadminWindow, true)
-        else
-            local visible = guiGetVisible (myadminWindow)
-            if (visible == false) then
-                guiSetVisible( myadminWindow, true)
-                showCursor (true)
+		else
+			local visible = guiGetVisible (myadminWindow)
+			if (visible == false) then
+				guiSetVisible( myadminWindow, true)
+				showCursor (true)
 			else
 				showCursor(false)
 			end
-        end
-    end
+		end
+	end
 end
 addCommandHandler("ah", adminhelp)

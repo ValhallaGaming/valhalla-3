@@ -63,7 +63,7 @@ local tutorialText = {}
 					"bugs won't be tolerated in any way, and will result in a instant ban, so watch",
 					"out! ;)  If you see any exploits in the script, please report it to the admins ",
 					"straight away or externally onto our forums." }
-				      
+					  
 	tutorialText[7] = 		{"We encourage people from all over the world to play here, but ask that",
 					"you all stick to one language - English - so everyone knows whats going on,",
 					"even in OOC. If you want to talk in your native language to someone, please",
