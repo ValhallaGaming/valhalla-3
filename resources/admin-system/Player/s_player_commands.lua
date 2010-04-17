@@ -1838,9 +1838,6 @@ function markPosition(thePlayer, command)
 			
 			outputChatBox("Mark set sucessfull.", thePlayer, 0, 255, 0, true)
 			triggerClientEvent( thePlayer, "saveTempMark", thePlayer, x, y, z, interior, dimension )
-		
-		else
-			 outputChatBox( " You are not an admin and are not authorised to use that command.", thePlayer, 255, 0,0, true )
 		end
 	end
 end
@@ -1907,8 +1904,6 @@ function gotoMark(thePlayer, command)
 			else
 				outputChatBox( "You need to set a position with /mark first.", thePlayer, 255, 0,0, true )
 			end
-		else
-			 outputChatBox( " You are not an admin and are not authorised to use that command.", thePlayer, 255, 0,0, true )
 		end
 	end
 
