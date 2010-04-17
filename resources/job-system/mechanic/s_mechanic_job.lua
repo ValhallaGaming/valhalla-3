@@ -97,7 +97,7 @@ function changePaintjob( veh, paintjob )
 					setVehicleColor( veh, 1, 1, 1, 1 )
 				end
 				exports.global:sendLocalMeAction(source, "repaints the vehicle.")
-				exports['savevehicle-system']:saveVehicle(veh)
+				exports['savevehicle-system']:saveVehicleMods(veh)
 			else
 				outputChatBox("This car already has this paintjob.", source, 255, 0, 0)
 			end
@@ -125,7 +125,7 @@ function changeVehicleUpgrade( veh, upgrade, name, cost )
 			if addVehicleUpgrade( veh, upgrade ) then
 				exports.global:takeMoney(source, cost)
 				exports.global:sendLocalMeAction(source, "added " .. name .. " to the vehicle.")
-				exports['savevehicle-system']:saveVehicle(veh)
+				exports['savevehicle-system']:saveVehicleMods(veh)
 			else
 				outputChatBox("Failed to apply the car upgrade.", source, 255, 0, 0)
 			end
@@ -154,7 +154,7 @@ function changeVehicleColour(veh, col1, col2, col3, col4)
 			setVehicleColor ( veh, col1, col2, col3, col4 )
 			
 			exports.global:sendLocalMeAction(source, "repaints the vehicle.")
-			exports['savevehicle-system']:saveVehicle(veh)
+			exports['savevehicle-system']:saveVehicleMods(veh)
 		end
 	end
 end
