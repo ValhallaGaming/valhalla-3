@@ -328,6 +328,7 @@ function ckPlayer(thePlayer, commandName, targetPlayer)
 					showChat(targetPlayer, false)
 					outputChatBox("You have CK'ed ".. targetPlayerName ..".", thePlayer, 255, 194, 1, 14)
 					exports.logs:logMessage("[/CK] " .. getElementData(thePlayer, "gameaccountusername") .. "/".. getPlayerName(thePlayer) .." CK'ED ".. targetPlayerName , 4)
+					exports['anticheat-system']:changeProtectedElementDataEx(targetPlayer, "dbid", 0)
 				end
 			end
 		end
