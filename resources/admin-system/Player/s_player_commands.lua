@@ -590,7 +590,7 @@ function setPlayerHealth(thePlayer, commandName, targetPlayer, health)
 			if targetPlayer then
 				if tonumber( health ) < getElementHealth( targetPlayer ) and getElementData( thePlayer, "adminlevel" ) < getElementData( targetPlayer, "adminlevel" ) then
 					outputChatBox("Nah.", thePlayer, 255, 0, 0)
-				if not setElementHealth(targetPlayer, tonumber(health)) then
+				elseif not setElementHealth(targetPlayer, tonumber(health)) then
 					outputChatBox("Invalid health value.", thePlayer, 255, 0, 0)
 				else
 					outputChatBox("Player " .. targetPlayerName .. " now has " .. health .. " Health.", thePlayer, 0, 255, 0)
@@ -1835,7 +1835,7 @@ function markPosition(thePlayer, command)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.z", z, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.interior", interior, false)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.dimension", dimension, false)
-						
+			
 			outputChatBox("Mark set sucessfull.", thePlayer, 0, 255, 0, true)
 		
 		else

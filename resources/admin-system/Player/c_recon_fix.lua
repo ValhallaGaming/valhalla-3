@@ -6,7 +6,7 @@ local function requestFix( )
 	timer = nil
 end
 
-addEventHandler( "onClientRender",
+addEventHandler( "onClientRender", getRootElement( ),
 	function( )
 		local element = getElementAttachedTo( localPlayer )
 		if element then
