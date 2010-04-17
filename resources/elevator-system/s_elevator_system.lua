@@ -298,7 +298,7 @@ function enterElevator(player, pickup)
 					exports['anticheat-system']:changeProtectedElementDataEx(vehicle, "health")
 					
 					setVehicleFrozen(vehicle, true)
-					setTimer(setVehicleFrozen, 333, 1, vehicle, false)
+					setTimer(setVehicleFrozen, 1500, 1, vehicle, false)
 					
 					for i = 0, getVehicleMaxPassengers( vehicle ) do
 						local player = getVehicleOccupant( vehicle, i )
