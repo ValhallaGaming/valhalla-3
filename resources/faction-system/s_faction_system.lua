@@ -1071,7 +1071,7 @@ function payAllWages(timer)
 					local factionRank = getElementData(value, "factionrank")
 					local rankWageresult = mysql:query_fetch_assoc("SELECT wage_" .. factionRank .. " FROM factions WHERE id='" .. playerFaction .. "'")
 					local rankWage = tonumber( rankWageresult['wage_' .. factionRank] )
-					outputChatBox( tostring( rankWage ) )
+					
 					local taxes = 0
 					if not exports.global:takeMoney(theTeam, rankWage) then
 						rankWage = -1
