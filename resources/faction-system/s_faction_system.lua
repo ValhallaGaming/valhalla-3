@@ -78,9 +78,9 @@ function loadAllFactions(res)
 			local result = mysql:query_fetch_assoc("SELECT faction_id, faction_rank, faction_leader FROM characters WHERE charactername='" .. safeusername .. "' LIMIT 1")
 			if result then
 				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionMenu", 0)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", result.faction_id)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", result.faction_rank)
-				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", result.faction_leader, false)
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "faction", tonumber(result.faction_id))
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionrank", tonumber(result.faction_rank))
+				exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "factionleader", tonumber(result.faction_leader), false)
 				
 				setPlayerTeam(thePlayer, exports.pool:getElement("team", result.faction_id) or citteam)
 			end
