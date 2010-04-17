@@ -1837,6 +1837,7 @@ function markPosition(thePlayer, command)
 			exports['anticheat-system']:changeProtectedElementDataEx(thePlayer, "tempMark.dimension", dimension, false)
 			
 			outputChatBox("Mark set sucessfull.", thePlayer, 0, 255, 0, true)
+			triggerClientEvent( thePlayer, "saveTempMark", thePlayer, x, y, z, interior, dimension )
 		
 		else
 			 outputChatBox( " You are not an admin and are not authorised to use that command.", thePlayer, 255, 0,0, true )
@@ -1844,6 +1845,19 @@ function markPosition(thePlayer, command)
 	end
 end
 addCommandHandler ( "mark", markPosition , false, false)
+
+addEvent( "loadTempMark", true )
+addEventHandler( "loadTempMark", getRootElement( ),
+	function( x, y, z, interior, dimension )
+		if type( x ) == "number" and type( y ) == "number" and type( z ) == "number" and type( interior ) == "number" and type( dimension ) == "number" then
+			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.x", x, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.y", y, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.z", z, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.interior", interior, false)
+			exports['anticheat-system']:changeProtectedElementDataEx(client, "tempMark.dimension", dimension, false)
+		end
+	end
+)
 
 
 function gotoMark(thePlayer, command)
