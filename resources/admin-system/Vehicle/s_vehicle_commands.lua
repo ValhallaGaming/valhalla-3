@@ -44,7 +44,7 @@ end
 addCommandHandler("unlockcivcars", unlockAllCivilianCars, false, false)
 
 -- /veh
-local leadplus = { [425] = true, [520] = true, [447] = true, [432] = true, [444] = true, [556] = true, [557] = true, [441] = true, [464] = true, [501] = true, [465] = true, [564] = true }
+local leadplus = { [425] = true, [520] = true, [447] = true, [432] = true, [444] = true, [556] = true, [557] = true, [441] = true, [464] = true, [501] = true, [465] = true, [564] = true, [476] = true }
 function createTempVehicle(thePlayer, commandName, ...)
 	if (exports.global:isPlayerFullAdmin(thePlayer)) then
 		local args = {...}
