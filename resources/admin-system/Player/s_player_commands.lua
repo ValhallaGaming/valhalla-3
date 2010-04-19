@@ -2277,7 +2277,7 @@ addCommandHandler("resetcharacter", resetCharacter)
 
 -- FIND ALT CHARS
 local function showAlts(thePlayer, id)
-	result = mysql:query("SELECT charactername, cked, faction_id FROM characters WHERE account = '" .. mysql:escape_string(id) .. "'" )
+	result = mysql:query("SELECT charactername, cked, faction_id, lastlogin FROM characters WHERE account = '" .. mysql:escape_string(id) .. "'" )
 	if result then
 		local name = mysql:query_fetch_assoc("SELECT username, banned FROM accounts WHERE id = '" .. mysql:escape_string(id) .. "'" )
 		if name then
@@ -2311,6 +2311,10 @@ local function showAlts(thePlayer, id)
 				text = text .. " (Missing)"
 			elseif tonumber( row["cked"] ) == 2 then
 				text = text .. " (Buried)"
+			end
+			
+			if row['lastlogin'] ~= mysql_null() then
+				text = text .. " - " .. tostring( row['lastlogin'] )
 			end
 			
 			local faction = tonumber( row["faction_id"] ) or 0
