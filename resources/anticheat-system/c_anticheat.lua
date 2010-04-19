@@ -57,7 +57,7 @@ end
 function checkWeapons()
 	for i = 1, 47 do
 		if i ~= 40 then
-			local onslot = getSlotFromWeapon(i)
+			local onslot = i == 15 and 10 or getSlotFromWeapon(i)
 			if getPedWeapon(localPlayer, onslot) == i then
 				local ammo = getElementData(localPlayer, "ACweapon" .. i) or 0
 				if ammo < 0 then
