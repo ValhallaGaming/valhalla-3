@@ -735,7 +735,7 @@ function dropItem(itemID, x, y, z, ammo, keepammo)
 		
 		if itemID == 60 then
 			outputChatBox( "This Item can't be dropped.", source )
-		elseif itemID == 81 and dimension == 0 then
+		elseif ( itemID == 81 or itemID == 103 ) and dimension == 0 then
 			outputChatBox( "You need to drop this item in an interior.", source )
 		else
 			local insert = mysql_query(handler, "INSERT INTO worlditems SET itemid='" .. itemID .. "', itemvalue='" .. mysql_escape_string(handler, itemValue) .. "', creationdate = NOW(), x = " .. x .. ", y = " .. y .. ", z= " .. z .. ", dimension = " .. dimension .. ", interior = " .. interior .. ", rz = " .. rz2 .. ", creator=" .. getElementData(source, "dbid"))

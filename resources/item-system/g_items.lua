@@ -110,7 +110,8 @@ g_items = {
 	{ "Mixed Dinner Tray", "Lets play the guessing game.", 1, 2355, 205, 205, 0, 0.06 },
 	{ "Small Milk Carton", "Lumps included!", 1, 2856, 0, 0, 0, 0 },
 	{ "Small Juice Carton", "Thirsty?", 1, 2647, 0, 0, 0, 0.12 },
-	{ "Cabbage", "For those Vegi-Lovers.", 1, 1271, 0, 0, 0, 0.1 }
+	{ "Cabbage", "For those Vegi-Lovers.", 1, 1271, 0, 0, 0, 0.1 },
+	{ "Shelf", "A large shelf to store stuff on", 4, 3761, -0.15, 0, 85, 1.95 }
 	--Chairs = { 1663, 1671, 1720, 1721, 1810, 1811, 2079, 2120, 2121, 2125, 2777, 2788, 1369 }
 }
 

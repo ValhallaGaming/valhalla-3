@@ -57,7 +57,7 @@ local function moveToElement( element, slot, ammo, event )
 		return
 	end
 	
-	local name = getElementModel( element ) == 2147 and "Fridge" or ( getElementType( element ) == "vehicle" and "Vehicle" or ( getElementType( element ) == "player" and "Player" or "Safe" ) )
+	local name = getElementModel( element ) == 2147 and "Fridge" or getElementModel(source) == 3761 and "Shelf" or ( getElementType( element ) == "vehicle" and "Vehicle" or ( getElementType( element ) == "player" and "Player" or "Safe" ) )
 			
 	if not ammo then
 		local item = getItems( source )[ slot ]
@@ -128,7 +128,7 @@ local function moveWorldItemToElement( item, element )
 	local id = getElementData( item, "id" )
 	local itemID = getElementData( item, "itemID" )
 	local itemValue = getElementData( item, "itemValue" )
-	local name = getElementModel( element ) == 2147 and "Fridge" or ( getElementType( element ) == "vehicle" and "Vehicle" or ( getElementType( element ) == "player" and "Player" or "Safe" ) )
+	local name = getElementModel( element ) == 2147 and "Fridge" or getElementModel(source) == 3761 and "Shelf" or ( getElementType( element ) == "vehicle" and "Vehicle" or ( getElementType( element ) == "player" and "Player" or "Safe" ) )
 	
 	if giveItem( element, itemID, itemValue ) then
 		output(source, element, itemID)
@@ -154,7 +154,7 @@ local function moveFromElement( element, slot, ammo, index )
 		return
 	end
 	
-	local name = getElementModel( element ) == 2147 and "Fridge" or ( getElementType( element ) == "vehicle" and "Vehicle" or "Safe" )
+	local name = getElementModel( element ) == 2147 and "Fridge" or getElementModel(source) == 3761 and "Shelf" or ( getElementType( element ) == "vehicle" and "Vehicle" or "Safe" )
 	
 	local item = getItems( element )[slot]
 	if item and item[3] == index then

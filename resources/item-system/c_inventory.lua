@@ -323,6 +323,8 @@ addEventHandler( "onClientRender", getRootElement( ),
 							name = "Fridge"
 						elseif getElementModel( hoverElement ) == 2332 then
 							name = "Safe"
+						elseif getElementModel ( hoverElement ) == 3761 then
+							name = "Shelf"
 						end
 						tooltip( boxx + sbox, boxy + ( box - 50 ) / 2, getItemName( item[1], item[2] ), "Move to " .. name .. "." )
 					elseif color == full_color then
@@ -497,7 +499,7 @@ addEventHandler( "onClientClick", getRootElement( ),
 					end
 				elseif hoverWorldItem or clickWorldItem then
 					if state == "down" then
-						if getElementData( hoverWorldItem, "itemID" ) == 81 then
+						if getElementData( hoverWorldItem, "itemID" ) == 81 or getElementData ( hoverWorldItem, "itemID" ) == 103 then
 							triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
 						else
 							clickDown = getTickCount( )
@@ -554,6 +556,8 @@ addEventHandler( "onClientClick", getRootElement( ),
 				end
 				if state == "up" and hoverWorldItem then
 					if getElementData( hoverWorldItem, "itemID" ) == 81 then -- Fridge
+						triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
+					elseif getElementData ( hoverWorldItem, "itemID" ) == 103 then -- Shelf
 						triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
 					elseif getElementData( hoverWorldItem, "itemID" ) == 54 then -- Ghettoblaster
 						item = hoverWorldItem

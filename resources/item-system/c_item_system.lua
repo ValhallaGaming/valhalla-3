@@ -96,7 +96,7 @@ function showItemMenu()
 	wRightClick = guiCreateWindow(ax, ay, 150, 200, itemName, false)
 	
 	local y = 0.13
-	if itemID == 81 then
+	if itemID == 81 or itemID == 103 then
 		bPickup = guiCreateButton(0.05, y, 0.9, 0.1, "Open", true, wRightClick)
 		addEventHandler("onClientGUIClick", bPickup,
 			function(button)
@@ -739,6 +739,9 @@ function useItem(itemSlot)
 			)
 		elseif (itemID==96) then
 			hideInventory()
+		elseif (itemID==103) then
+			outputChatBox ( "Drop this shelf in an interior.", 255, 194, 14 )
+			return
 		end
 
 			
