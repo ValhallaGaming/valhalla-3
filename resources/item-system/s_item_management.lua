@@ -331,7 +331,7 @@ function moveItem(from, to, slot)
 					local itemIndex = saveditems[from][slot][3]
 					if itemIndex then
 						local itemID = saveditems[from][slot][1]
-						if itemID == 48 or itemID == 60 then
+						if itemID == 48 or itemID == 60 or itemID == 103 then
 							return false, "This Item cannot be moved"
 						else
 							local query = mysql_query( handler, "UPDATE items SET type = " .. getType(to) .. ", owner = " .. getID(to) .. " WHERE `index` = " .. itemIndex )
@@ -444,7 +444,7 @@ function getInventorySlots(element)
 			return 20
 		end
 	elseif getElementParent(getElementParent(element)) == getResourceRootElement() then -- World Item
-		return getElementModel(element) == 2147 and 50 or getElementModel(element) == 2147 and 100 or 10
+		return getElementModel(element) == 2147 and 50 or getElementModel(element) == 3761 and 100 or 10
 	else
 		return 20
 	end

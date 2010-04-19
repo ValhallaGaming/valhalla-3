@@ -7,6 +7,7 @@ bPickup, bToggle, bPreviousTrack, bNextTrack, bCloseMenu = nil
 ax, ay = nil
 item = nil
 showinvPlayer = nil
+setElementData( getLocalPlayer(), "exclusiveGUI", false, false ) -- setting this to false prevents possible problems with fridge/shelf inv. 
 
 showFood = true
 showKeys = true

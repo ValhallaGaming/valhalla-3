@@ -355,7 +355,9 @@ addEventHandler( "onClientRender", getRootElement( ),
 					itemName = itemName .. " (" .. itemValue .. ")"
 				end
 				
-				tooltip( cursorX, cursorY, itemName, getItemDescription( itemID, itemValue ) )
+				if ( itemID == 81 or itemID == 103 ) and not getElementData ( localPlayer, "exclusiveGUI" ) then
+					tooltip( cursorX, cursorY, itemName, getItemDescription( itemID, itemValue ) )
+				end	
 				hoverWorldItem = element
 			end
 		end
@@ -500,7 +502,9 @@ addEventHandler( "onClientClick", getRootElement( ),
 				elseif hoverWorldItem or clickWorldItem then
 					if state == "down" then
 						if getElementData( hoverWorldItem, "itemID" ) == 81 or getElementData ( hoverWorldItem, "itemID" ) == 103 then
-							triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
+							if not getElementData ( localPlayer, "exclusiveGUI" ) then
+								triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
+							end	
 						else
 							clickDown = getTickCount( )
 							clickWorldItem = hoverWorldItem
@@ -555,10 +559,10 @@ addEventHandler( "onClientClick", getRootElement( ),
 					clickDown = false
 				end
 				if state == "up" and hoverWorldItem then
-					if getElementData( hoverWorldItem, "itemID" ) == 81 then -- Fridge
-						triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
-					elseif getElementData ( hoverWorldItem, "itemID" ) == 103 then -- Shelf
-						triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
+					if getElementData ( hoverWorldItem, "itemID" ) == 103 or getElementData ( hoverWorldItem, "itemID" ) == 81 and not getElementData ( localPlayer, "exclusiveGUI" ) then -- Shelf/Fridge
+						if not getElementData ( localPlayer, "exclusiveGUI" ) then
+								triggerServerEvent( "openFreakinInventory", getLocalPlayer(), hoverWorldItem, cursorX, cursorY )
+							end	
 					elseif getElementData( hoverWorldItem, "itemID" ) == 54 then -- Ghettoblaster
 						item = hoverWorldItem
 						ax, ay = cursorX, cursorY

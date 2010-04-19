@@ -94,7 +94,7 @@ function getInventorySlots(element)
 			return 20
 		end
 	elseif getElementParent(getElementParent(element)) == getResourceRootElement() then -- World Item
-		return getElementModel(element) == 2147 and 50 or 10
+		return getElementModel(element) == 2147 and 50 or getElementModel(element) == 3761 and 100 or 10
 	else
 		return 20
 	end
