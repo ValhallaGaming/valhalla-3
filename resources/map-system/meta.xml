@@ -9,6 +9,7 @@
 	<script src="World/Busstops_LS_LineAB.lua" type="client"/>
 	<script src="World/Pershing_Square.lua" type="client"/>
 	<script src="World/Gang_Gun_Dealer.lua" type="client"/>
+	<script src="World/Mulholland.lua" type="client"/>
 	<script src="Fixes/swimmingPools.lua" type="client"/>
 	<script src="Fixes/doors.lua" type="client"/>
 
