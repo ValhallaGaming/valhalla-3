@@ -103,8 +103,8 @@ questions[4] = {"When a traffic light is red you should...", "Bring the vehicle 
 questions[5] = {"Drivers must yield to pedestrians:", "At all times.", "On private property.", "Only in a crosswalk. ", 1}
 questions[6] = {"The blind spots where trucks will not be able to see you are:", "Directly behind the body.", "The immediate left of the cab.", "All of the above." , 3}
 questions[7] = {"There is an emergency vehicle coming from behind you with emergency lights on and flashing. You should:", "Slow down and keep moving.", "Pull over to the right and stop.", "Maintain your speed. ", 2}
-questions[8] = {"On a road with two or more lanes traveling in the same direction, the driver should:", " Drive in any lane.", "Drive in the left lane.", "Drive in the right lane except to pass.", 3}
-questions[9] = {"In bad weather, you should make your car easier for others to see by:", " Turning on your headlights.", "Turning on your emergency flashers.", "Flash your high beams.", 1}
+questions[8] = {"On a road with two or more lanes traveling in the same direction, the driver should:", "Drive in any lane.", "Drive in the left lane.", "Drive in the right lane except to pass.", 3}
+questions[9] = {"In bad weather, you should make your car easier for others to see by:", "Turning on your headlights.", "Turning on your emergency flashers.", "Flash your high beams.", 1}
 questions[10] = {"You may not park within how many feet of a fire hydrant?", "10 feet", "15 feet", "20 feet", 2}
 
 guiIntroLabel1 = nil
