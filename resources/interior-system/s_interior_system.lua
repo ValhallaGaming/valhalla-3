@@ -1315,7 +1315,7 @@ function playerKnocking(player)
 					local dbid, entrance, exit = findProperty(player, getElementData(v, "dbid"))
 					if (exit) and (getElementData(v, "dbid") ~= getElementDimension(player))then
 						exports.global:sendLocalText(player, " *" .. getPlayerName(player):gsub("_"," ") .. " begins to knock on the door.", 255, 51, 102)
-						exports.global:sendLocalText(exit, " * Knocks can be heard coming from the door *	(( " .. getPlayerName(player):gsub("_"," ") .. " ))", 255, 51, 102)
+						exports.global:sendLocalText(exit, " * Knocks can be heard coming from the door. *      (( " .. getPlayerName(player):gsub("_"," ") .. " ))", 255, 51, 102)
 					end
 				end
 			else
