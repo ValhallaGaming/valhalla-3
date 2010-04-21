@@ -7,14 +7,6 @@ addEventHandler( "onResourceStart", getResourceRootElement(),
 	end
 )
 
-bankPickup = createPickup(2356.2719, 2361.5007, 2022.5257, 3, 1274)
-exports.pool:allocateElement(bankPickup)
-local shape = getElementColShape(bankPickup)
-setElementInterior(shape, 3)
-setElementInterior(bankPickup, 3)
-setElementDimension(shape, 1249)
-setElementDimension(bankPickup, 1249)
-
 function pickupUse(thePlayer)
 	cancelEvent()
 	
@@ -34,9 +26,26 @@ function pickupUse(thePlayer)
 		
 	local faction = getPlayerTeam(thePlayer)
 	local money = exports.global:getMoney(faction)
-	triggerClientEvent(thePlayer, "showBankUI", bankPickup, isInFaction, isFactionLeader, money, true, 0)
+	triggerClientEvent(thePlayer, "showBankUI", source, isInFaction, isFactionLeader, money, true, 0)
 end
-addEventHandler("onPickupHit", bankPickup, pickupUse)
+
+local pos = {
+	{ x = 595.4248046875, y = -1249.2705078125, z = 408.0260925293 },
+	{ x = 601.0751953125, y = -1249.2900390625, z = 408.0260925293 },
+	{ x = 591.9189453125, y = -1262.9072265625, z = 408.0328674316 },
+}
+
+for k, v in ipairs( pos ) do
+	local bankPickup = createPickup(v.x, v.y, v.z, 3, 1274)
+	exports.pool:allocateElement(bankPickup)
+	local shape = getElementColShape(bankPickup)
+	setElementInterior(shape, 1)
+	setElementInterior(bankPickup, 1)
+	setElementDimension(shape, 1249)
+	setElementDimension(bankPickup, 1249)
+	addEventHandler("onPickupHit", bankPickup, pickupUse)
+end
+
 
 function withdrawMoneyPersonal(amount)
 	local money = getElementData(source, "bankmoney") - amount
