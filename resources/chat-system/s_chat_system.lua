@@ -59,6 +59,9 @@ function advertMessage(thePlayer, commandName, showNumber, ...)
 					message = showNumber .. " " .. message
 					showNumber = 0
 				end
+				if message:sub(-1) ~= "." then
+					message = message .. "."
+				end
 				
 				local cost = math.ceil(string.len(message)/6)
 				if exports.global:takeMoney(thePlayer, cost) then
@@ -68,7 +71,7 @@ function advertMessage(thePlayer, commandName, showNumber, ...)
 					exports.logs:logMessage("ADVERT: " .. message .. ". ((" .. name .. "))", 2)
 					for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
 						if (getElementData(value, "loggedin")==1 and not getElementData(value, "disableAds")) then
-							outputChatBox("   ADVERT: " .. message .. ". ((" .. name .. "))", value, 0, 255, 64)
+							outputChatBox("   ADVERT: " .. message .. " ((" .. name .. "))", value, 0, 255, 64)
 							
 							if (tonumber(showNumber)==1) then
 								outputChatBox("   Contact: #" .. phoneNumber .. ".", value, 0, 255, 64)
