@@ -1406,7 +1406,7 @@ function newsMessage(thePlayer, commandName, ...)
 					end
 				end
 				
-				if (abuse) then
+				if not abuse then
 					exports.logs:logMessage("[IC: News] " .. name .. ": " .. message, 18)
 				else
 					exports.logs:logMessage("[A" .. getElementDimension(thePlayer) .. "][IC: News] " .. name .. ": " .. message, 18)
