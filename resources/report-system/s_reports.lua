@@ -256,12 +256,12 @@ function handleReport(reportedPlayer, reportedReason)
 	local admins = exports.global:getAdmins()
 	local count = 0
 	-- Show to admins
+	local reason1 = reportedReason:sub( 0, 70 )
+	local reason2 = reportedReason:sub( 71 )
 	for key, value in ipairs(admins) do
 		local adminduty = getElementData(value, "adminduty")
 		if (adminduty==1) then
 			outputChatBox(" [#" .. slot .. "] (" .. playerID .. ") " .. tostring(getPlayerName(source)) .. " reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. " at " .. timestring .. ".", value, 0, 255, 255)
-			local reason1 = reportedReason:sub( 0, 70 )
-			local reason2 = reportedReason:sub( 71 )
 			outputChatBox(" [#" .. slot .. "] Reason: " .. reason1, value, 0, 255, 255)
 			if reason2 and #reason2 > 0 then
 				outputChatBox(" [#" .. slot .. "] " .. reason2, value, 0, 255, 255)
@@ -273,6 +273,11 @@ function handleReport(reportedPlayer, reportedReason)
 	end
 	
 	outputChatBox("[" .. timestring .. "] Thank you for submitting your admin report, Your report reference number is #" .. tostring(slot) .. ".", source, 255, 194, 14)
+	outputChatBox("[" .. timestring .. "] You reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. ". Reason: ", value, 255, 194, 14 )
+	outputChatBox("[" .. timestring .. "] " .. reason1, source, 255, 194, 14)
+	if reason2 and #reason2 > 0 then
+		outputChatBox("[" .. timestring .. "] " .. reason2, source, 255, 194, 14)
+	end
 	outputChatBox("[" .. timestring .. "] An admin will respond to your report ASAP. Currently there are " .. count .. " admin" .. ( count == 1 and "" or "s" ) .. " available.", source, 255, 194, 14)
 	outputChatBox("[" .. timestring .. "] You can close this report at any time by typing /endreport.", source, 255, 194, 14)
 	
