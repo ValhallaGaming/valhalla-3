@@ -109,7 +109,7 @@ function showBankUI(isInFaction, isFactionLeader, factionBalance, depositable, l
 				end
 			end
 			
-			if hoursplayed > 12 then
+			if hoursplayed >= 12 then
 				-- TRANSFER BUSINESS
 				lTransferB = guiCreateLabel(0.1, 0.45, 0.2, 0.05, "Transfer:", true, tabBusiness)
 				guiSetFont(lTransferB, "default-bold-small")
@@ -175,7 +175,7 @@ function showBankUI(isInFaction, isFactionLeader, factionBalance, depositable, l
 			end
 		end
 		
-		if hoursplayed > 12 then
+		if hoursplayed >= 12 then
 			-- TRANSFER PERSONAL
 			lTransferP = guiCreateLabel(0.1, 0.45, 0.2, 0.05, "Transfer:", true, tabPersonal)
 			guiSetFont(lTransferP, "default-bold-small")
