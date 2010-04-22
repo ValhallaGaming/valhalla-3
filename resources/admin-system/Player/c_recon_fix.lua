@@ -3,6 +3,8 @@ local localPlayer = getLocalPlayer( )
 
 local function requestFix( )
 	triggerServerEvent( "fixRecon", localPlayer, getElementAttachedTo( localPlayer ) )
+	setElementInterior( localPlayer, getElementInterior( getElementAttachedTo( localPlayer ) ) )
+	setElementDimension( localPlayer, getElementDimension( getElementAttachedTo( localPlayer ) ) )
 	timer = nil
 end
 
