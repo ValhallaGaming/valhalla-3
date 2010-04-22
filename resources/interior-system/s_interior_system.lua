@@ -819,7 +819,8 @@ function getNearbyInteriors(thePlayer, commandName)
 		outputChatBox("Nearby Interiors:", thePlayer, 255, 126, 0)
 		local count = 0
 		
-		for k, thePickup in ipairs(exports.pool:getPoolElementsByType("pickup")) do
+		for k, v in pairs(intTable) do
+			local thePickup = v[1]
 			local name = getElementData( thePickup, "name" )
 			if name then
 				local x, y, z = getElementPosition(thePickup)
@@ -854,15 +855,7 @@ function changeInteriorName( thePlayer, commandName, ...)
 			outputChatBox("Interior name changed to ".. name ..".", thePlayer, 0, 255, 0) -- Output confirmation.
 			
 			-- update the name on the markers...
-			for k, thePickup in ipairs(exports.pool:getPoolElementsByType("pickup")) do
-				local dbid = getElementData( thePickup, "dbid" )
-				if dbid and dbid == id then
-					if getElementData( thePickup, "name" ) then
-						exports['anticheat-system']:changeProtectedElementDataEx( thePickup, "name", name )
-						break
-					end
-				end
-			end
+			exports['anticheat-system']:changeProtectedElementDataEx( intTable[id][1], "name", name )
 		end
 	end
 end
@@ -1305,25 +1298,16 @@ addEventHandler("onPlayerInteriorChange", getRootElement( ),
 
 function playerKnocking(player)
 	if (player) then
-		local px,py,pz = getElementPosition(player)
-		for i, v in pairs(exports.global:getNearbyElements(player, "pickup", 5)) do
+		for i, v in pairs(exports.global:getNearbyElements(player, "pickup", 3)) do
 			if isElement(v) then
-				local mx,my,mz = getElementPosition(v)
-				local dis = getDistanceBetweenPoints3D(px, py, pz, mx, my, mz)
 				local pd = getElementDimension(player)
-				if (dis <= 3) then
-					local dbid, entrance, exit = findProperty(player, getElementData(v, "dbid"))
-					if (exit) and (getElementData(v, "dbid") ~= getElementDimension(player))then
-						exports.global:sendLocalText(player, " *" .. getPlayerName(player):gsub("_"," ") .. " begins to knock on the door.", 255, 51, 102)
-						exports.global:sendLocalText(exit, " * Knocks can be heard coming from the door. *      ((" .. getPlayerName(player):gsub("_"," ") .. "))", 255, 51, 102)
-					end
+				local dbid, entrance, exit = findProperty(player, getElementData(v, "dbid"))
+				if (exit) and (getElementData(v, "dbid") ~= getElementDimension(player))then
+					exports.global:sendLocalText(player, " *" .. getPlayerName(player):gsub("_"," ") .. " begins to knock on the door.", 255, 51, 102)
+					exports.global:sendLocalText(exit, " * Knocks can be heard coming from the door. *      ((" .. getPlayerName(player):gsub("_"," ") .. "))", 255, 51, 102)
 				end
-			else
-				outputChatBox("Not an element.", source)
 			end
 		end
-	else
-		outputChatBox("No Source")
 	end
 end
 addCommandHandler("knock", playerKnocking)
