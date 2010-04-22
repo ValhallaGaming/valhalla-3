@@ -294,11 +294,16 @@ function alertPendingReport(id)
 		local reportedID = getElementData(reportedPlayer, "playerid")
 		
 		-- Show to admins
+		local reason1 = reportedReason:sub( 0, 70 )
+		local reason2 = reportedReason:sub( 71 )
 		for key, value in ipairs(admins) do
 			local adminduty = getElementData(value, "adminduty")
 			if (adminduty==1) then
 				outputChatBox(" [#" .. id .. "] is still not answered: (" .. playerID .. ") " .. tostring(getPlayerName(reportingPlayer)) .. " reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. " at " .. timestring .. ".", value, 0, 255, 255)
-				outputChatBox(" [#" .. id .. "] " .. "Reason: " .. tostring(reportedReason), value, 0, 255, 255)
+				outputChatBox(" [#" .. id .. "] " .. "Reason: " .. reason1, value, 0, 255, 255)
+				if reason2 and #reason2 > 0 then
+					outputChatBox(" [#" .. id .. "] " .. reason2, value, 0, 255, 255)
+				end
 			end
 		end
 	end
