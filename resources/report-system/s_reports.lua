@@ -2,6 +2,14 @@ mysql = exports.mysql
 
 reports = { }
 
+
+local getPlayerName_ = getPlayerName
+getPlayerName = function( ... )
+	s = getPlayerName_( ... )
+	return s and s:gsub( "_", " " ) or s
+end
+
+
 function resourceStart(res)
 	for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
 		exports['anticheat-system']:changeProtectedElementDataEx(value, "report")
