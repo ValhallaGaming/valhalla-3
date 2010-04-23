@@ -71,7 +71,12 @@ end
 -- returns the number of available item slots for that element
 local function isTruck( element )
 	local model = getElementModel( element )
-	return model == 499 or model == 482 or model == 498 or model == 609 or model == 524 or model == 455 or model == 414 or model == 582 or model == 443 or model == 514 or model == 413 or model == 515 or model == 440 or model == 459 or model == 408 or model == 456
+	return model == 498 or model == 609 or model == 499 or model == 524 or model == 455 or model == 414 or model == 443 or model == 403 or model == 514 or model == 515 or model == 456
+end	
+	
+local function isSUV( element )
+	local model = getElementModel( element )
+	return model == 482 or model == 440 or model == 418 or model == 413 or model == 400 or model == 489 or model == 579 or model == 459 or model == 582
 end
 
 function getInventorySlots(element)
@@ -88,8 +93,10 @@ function getInventorySlots(element)
 			return 5
 		elseif getVehicleType( element ) == "Bike" then
 			return 6
-		elseif isTruck( element ) then
+		elseif isSUV( element ) then
 			return 50
+		elseif isTruck( element ) then
+			return 70
 		else
 			return 20
 		end
